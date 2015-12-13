@@ -4,15 +4,21 @@
 
 var dnGearSimApp = angular.module('dnGearSimApp', [
   'ngRoute',
+  'setupController',
   'equipControllers',
   'translationService',
   'dntServices',
+  'navController',
 ]);
 
 dnGearSimApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/euip', {
+      when('/setup', {
+        templateUrl: 'partials/setup.html',
+        controller: 'SetupCtrl'
+      }).
+      when('/equip', {
         templateUrl: 'partials/equip.html',
         controller: 'EquipCtrl'
       }).
@@ -21,6 +27,6 @@ dnGearSimApp.config(['$routeProvider',
         controller: 'PhoneDetailCtrl'
       }).
       otherwise({
-        redirectTo: '/euip'
+        redirectTo: '/setup'
       });
   }]);

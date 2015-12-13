@@ -9,20 +9,24 @@
   <script src="//cdn.jsdelivr.net/zip.js/0.1/zip.js"></script>
   <script src="//cdn.jsdelivr.net/zip.js/0.1/inflate.js"></script>
   
+  <script src="js/navController.js"></script>
+  <script src="js/setupController.js"></script>
   <script src="js/equipControllers.js"></script>
   <script src="js/translationService.js"></script>
   <script src="js/dntServices.js"></script>
   <script src="js/app.js"></script>
   
-  <script src="//spacem.github.io/dntviewer/simplerreader.js"></script>
-  <script src="//spacem.github.io/dntviewer/dntreader.js"></script>
-  <script src="//spacem.github.io/dntviewer/dntranslations.js"></script>
+  <script src="../dntviewer/simplerreader.js"></script>
+  <script src="../dntviewer/dntreader.js"></script>
+  <script src="../dntviewer/dntranslations.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="dngearsim.css">
 </head>
 <body ng-app="dnGearSimApp">
+<div ng-controller="NavCtrl" dngearsim-nav class="container-fluid">
+</div>
 <div ng-view class="container-fluid">
 </div>
 </body>

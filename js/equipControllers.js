@@ -1,5 +1,5 @@
 angular.module('equipControllers', ['translationService', 'dntServices'])
-.controller('EquipCtrl', ['$scope','translations','jobs','equipment',function($scope,translations, jobs, equipment) {
+.controller('EquipCtrl', ['$scope','translations','jobs','equipment','$timeout',function($scope,translations, jobs, equipment,$timeout) {
   $scope.job = {id: -1, name: '-- loading --'};
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
@@ -27,9 +27,9 @@ angular.module('equipControllers', ['translationService', 'dntServices'])
     equipInit();
   };
   
-  translations.init(reportProgress, function() { $scope.$apply(translationsInit); } );
-  jobs.init(reportProgress, function() { $scope.$apply(jobInit); } );
-  equipment.init(reportProgress, function() { $scope.$apply(equipInit); } );
+  translations.init(reportProgress, function() { $timeout(translationsInit); } );
+  jobs.init(reportProgress, function() { $timeout(jobInit); } );
+  equipment.init(reportProgress, function() { $timeout(equipInit); } );
   
   function translationsInit() {
       console.log('translations loaded');

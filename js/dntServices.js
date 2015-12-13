@@ -1,17 +1,47 @@
-var m = angular.module('dntServices', ['translationService']);
-m.factory('dntLoader', [function() {
+var m = angular.module('dntServices', ['translationService','ngRoute']);
+m.factory('dntInit', ['equipment','jobs',function(equipment, jobs) {
+  return function(progress) {
+    
+    progress('starting init');
+    
+    var allFactories = [equipment, jobs];
+    
+    function initFactory(index) {
+    
+      if(index < allFactories.length) {
+        allFactories[index].loader.reset();
+        allFactories[index].init(progress, function() { 
+          if(allFactories[index].isLoaded()) {
+            progress('dnt loaded');
+            initFactory(index+1);
+          }
+        });
+      }
+      else {
+        progress('All data initialised successfully');
+      }
+    }
+    
+    initFactory(0);
+  }
+}]);
+m.factory('dntLoader', ['$routeParams',function($routeParams) {
+  
+  var createdLoaders = [];
+  
   return {
     create : function(file) {
-      var location = localStorage.getItem('location');
       
       var completeCallback = null;
       var progressCallback = null;
       
-      return {
+      var loader = {
         reader : new DntReader(),
         
         loaded : false,
         startedLoading : false,
+        
+        file : file,
         
         init : function(progress, complete) {
           
@@ -27,13 +57,14 @@ m.factory('dntLoader', [function() {
               var t = this;
               
               this.reader.loadDntFromServerFile(
-                location + '/' + file,
+                $routeParams['location'] + '/' + file,
                 function(msg) { progressCallback(msg) }, 
                 function() {
                   console.info('dnt loading complete : ' + file);
                   t.loaded = true;
                   completeCallback();
-                } );
+                },
+                function(msg) { progressCallback(msg) }  );
             }
           }
         },
@@ -46,10 +77,36 @@ m.factory('dntLoader', [function() {
           }
           
           return null;
+        },
+        
+        reset : function() {
+          this.reader = new DntReader();
+          this.loaded = false;
+          this.startedLoading = false;
         }
+      }
+    
+      createdLoaders.push(loader);
+      return loader;
+    },
+  
+    resetAll : function() {
+      angular.forEach(createdLoaders, function(value, key) {
+        value.reset();
+      });
+    },
+    
+    initAll : function(progress) {
+      this.resetAll();
+      
+      var allLoaders = 
+      
+      angular.forEach(createdLoaders, function(value, key) {
+        progress('init: ' + value.file);
+        value.init(progress, function() { 'completed loading ' + value.file });
+      });
     }
   }
-}
 }]);
 m.factory('equipment', ['dntLoader', 'translations', function(dntLoader, translations) {
   var file = 'itemtable_equipment.dnt';

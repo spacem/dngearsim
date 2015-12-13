@@ -1,14 +1,19 @@
-angular.module('translationService', []).
-factory('translations', [function() {
+angular.module('translationService', ['ngRoute']).
+factory('translations', ['$routeParams', function($routeParams) {
 
   var dnTranslations = new DnTranslations();
-  var location = localStorage.getItem('location');
   var tFile = 'uistring.xml';
 
   var completeCallback = [];
   var progressCallback = [];
-    
+
   return {
+    
+    reset : function() {
+      dnTranslations = new DnTranslations();
+      this.loaded = false;
+      this.startedLoading = false;
+    },
     
     loaded : false,
     startedLoading : false,
@@ -27,14 +32,18 @@ factory('translations', [function() {
           var t = this;
           
           dnTranslations.loadDefaultFile(
-            location + '/' + tFile, 
+            $routeParams['location'] + '/' + tFile, 
             function(msg) {
               angular.forEach(progressCallback, function(value, key) { value(msg); });
             }, 
             function() {
               t.loaded = true;
               angular.forEach(completeCallback, function(value, key) { value(); });
-            } );
+            },
+            function(msg) {
+              angular.forEach(progressCallback, function(value, key) { value(msg); });
+            }
+            );
         }
       }
     },

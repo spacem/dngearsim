@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-xs-4">
+    <div class="form-group">
+    <label>URL for the dnt/xml files:</label>
+    <input type="text" class="form-control" ng-model="location" />
+    </div>
+    <span ng-repeat="hostedFile in hostedFiles"> 
+      <button class="btn btn-link" ng-click="$parent.location = hostedFile.url">{{ hostedFile.region }} {{ hostedFile.name }}</a>
+    </span>
+  </div>
+  <div class="col-xs-8">
+    <div class="form-group">
+    <label></label><br />
+    <button class="btn" ng-click="saveLocation()">Save Location</button>
+    <button class="btn" ng-click="resetSessionData()">Reset Session Data</button>
+    <div ng-repeat="testResult in testResults track by $index"> 
+      {{testResult}}
+    </div>
+  </div>
+</div>
