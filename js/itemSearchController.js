@@ -1,5 +1,7 @@
-angular.module('equipControllers', ['translationService', 'dntServices'])
-.controller('EquipCtrl', ['$scope','translations','jobs','equipment','$timeout',function($scope,translations, jobs, equipment,$timeout) {
+angular.module('itemSearchController', ['translationService', 'dntServices'])
+.controller('ItemSearchCtrl',
+['$scope','$routeParams','translations','jobs','equipment','plates','talisman','techs','rebootEquipment','getAllItems','$timeout',
+function($scope,$routeParams,translations, jobs,equipment,plates,talisman,techs,rebootEquipment,getAllItems,$timeout) {
   $scope.job = {id: -1, name: '-- loading --'};
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
@@ -8,7 +10,7 @@ angular.module('equipControllers', ['translationService', 'dntServices'])
   $scope.nameSearch = '';
   $scope.results = [];
   $scope.selection = [];
-  $scope.equipment = null;
+  $scope.items = null;
   $scope.maxDisplay = 15;
   $scope.currentResults = 0;
   $scope.grades = [
@@ -21,6 +23,10 @@ angular.module('equipControllers', ['translationService', 'dntServices'])
     ];
     
   $scope.grade = $scope.grades[0];
+  
+  $scope.getLocation = function() {
+     return $routeParams.location;
+  };
     
   $scope.search = function() {
     console.log('clicked search');
@@ -29,12 +35,29 @@ angular.module('equipControllers', ['translationService', 'dntServices'])
   
   translations.init(reportProgress, function() { $timeout(translationsInit); } );
   jobs.init(reportProgress, function() { $timeout(jobInit); } );
-  equipment.init(reportProgress, function() { $timeout(equipInit); } );
+  
+  var itemFactories = [
+    equipment,plates,talisman,techs,rebootEquipment
+    ];
+  
+  angular.forEach(itemFactories, function(value, key) {
+    value.init(reportProgress, function() { $timeout(itemInit); } );
+  });
+  
+  $scope.isLoadComplete = function() {
+    for(var i=0;i<itemFactories.length;++i) {
+      if(!itemFactories[i].isLoaded()) {
+        return false;
+      }
+    }
+    
+    return true;
+  };
   
   function translationsInit() {
       console.log('translations loaded');
       jobInit();
-      equipInit();
+      itemInit();
   }
   
   function reportProgress(msg) {
@@ -51,7 +74,7 @@ angular.module('equipControllers', ['translationService', 'dntServices'])
       newJobs.splice(0, 0, $scope[0]);
       $scope.jobs = newJobs;
       $scope.allJobs = jobs.getAllJobs();
-      equipInit();
+      itemInit();
     }
   }
   
@@ -73,15 +96,15 @@ angular.module('equipControllers', ['translationService', 'dntServices'])
   $scope.getResults = function() {
     console.log('getting results');
     
-      if($scope.equipment == null) {
+      if($scope.items == null) {
         return [];
       }
     
       var newResults = [];
-      var numEquip = $scope.equipment.length;
+      var numEquip = $scope.items.length;
       var curDisplay = 0;
       for(var i=0;i<numEquip&&curDisplay<$scope.maxDisplay;++i) {
-        var e = $scope.equipment[i];
+        var e = $scope.items[i];
         if(e.levelLimit >= $scope.minLevel && e.levelLimit <= $scope.maxLevel) {
           if($scope.grade.id > 0) {
             if($scope.grade.id != e.rank) {
@@ -110,12 +133,10 @@ angular.module('equipControllers', ['translationService', 'dntServices'])
       return newResults;
   };
   
-  function equipInit() {
-    if(translations.loaded && equipment.isLoaded() && jobs.isLoaded()) {
+  function itemInit() {
+    if(translations.loaded && jobs.isLoaded()) {
       console.log('trying to init equip');
-      if($scope.equipment == null) {
-        $scope.equipment = equipment.getEquipment();
-      }
+      $scope.items = getAllItems();
     }
   }
 }]);

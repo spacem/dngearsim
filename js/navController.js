@@ -2,13 +2,20 @@ angular.module('navController', ['ngRoute'])
 .controller('NavCtrl', 
   ['$scope','$route','$routeParams',
   function($scope,$route,$routeParams) {
+      
+    var setupAction = { path: 'setup', name: 'setup' }
+    var noLocationMenu = [setupAction];
+    var normalMenu = [
+      setupAction, 
+      {path: 'item-search', name:'item search'}
+      ];
     
     $scope.getActions = function() {
       if($routeParams.location != null) {
-        return ['setup', 'equip'];
+        return normalMenu;
       }
       else {
-        return ['setup'];
+        return noLocationMenu;
       }
     };
     $scope.getUrl = function(action) {

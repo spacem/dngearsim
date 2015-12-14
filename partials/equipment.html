@@ -1,0 +1,27 @@
+<h2>Equipment Details</h2>
+<div class="row" ng-hide="item != null">
+  <div class="col-xs-12">
+  Loading...
+  </div>
+</div>
+<div ng-hide="item == null">
+  <div class="row">
+    <div class="col-xs-12">
+      {{item.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-1">
+      {{item.getRankName()}}
+      {{item.getTypeName()}}
+      level {{item.levelLimit}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div ng-repeat="stat in item.stats">
+      {{stat.name}} : {{stat.max}}
+      </div>
+    </div>
+  </div>
+</div>

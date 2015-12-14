@@ -22,6 +22,13 @@
      </label>
   </div>
   <div class="col-xs-1">
+    <label>Item Type: 
+    <select ng-model="job" class="form-control"
+     ng-options="type.name for type in types track by type.id">
+    </select>
+    </label>
+  </div>
+  <div class="col-xs-1">
     <label>Class: 
     <select ng-model="job" class="form-control"
      ng-options="job.name for job in jobs track by job.id">
@@ -29,7 +36,7 @@
     </label>
   </div>
 </div>
-<div class="row" ng-show="equipment == null">
+<div class="row" ng-hide="isLoadComplete()">
   <div class="col-xs-12">
   Loading...
   </div>
@@ -39,10 +46,13 @@
     {{result.levelLimit}}
   </div>
   <div class="col-xs-2">
-    {{result.name}}
+    <a ng-href="#/equipment/{{result.id}}?location={{$parent.getLocation()}}">{{result.name}}</a>
   </div>
   <div class="col-xs-1">
-    {{getRankName(result.rank)}}
+    {{result.getRankName()}}
+  </div>
+  <div class="col-xs-1">
+    {{result.getTypeName()}}
   </div>
   <div class="col-xs-1">
     {{getJobName(result.needJobClass)}}
@@ -51,7 +61,7 @@
       <!-- <button class="btn btn-link" aria-label="Add">Add +</button> -->
   </div>
 </div>
-<div class="row" ng-show="equipment != null && currentResults >= maxDisplay">
+<div class="row" ng-show="items != null && currentResults >= maxDisplay">
   <div class="col-xs-1"></div>
   <div class="col-xs-1">
     <button class="btn btn-link" ng-click="maxDisplay = currentResults + 10;">Show More</button>

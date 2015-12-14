@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
-    <span ng-repeat="action in getActions() track by $index"> 
-      <a ng-href="{{$parent.getUrl(action)}}">{{action}}</a> |
+    <span ng-repeat="action in getActions()"> 
+      <a ng-href="{{$parent.getUrl(action.path)}}">{{action.name}}</a> |
     </span>
   </div>
 </div>

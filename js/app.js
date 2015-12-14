@@ -5,7 +5,8 @@
 var dnGearSimApp = angular.module('dnGearSimApp', [
   'ngRoute',
   'setupController',
-  'equipControllers',
+  'equipmentController',
+  'itemSearchController',
   'translationService',
   'dntServices',
   'navController',
@@ -18,13 +19,13 @@ dnGearSimApp.config(['$routeProvider',
         templateUrl: 'partials/setup.html',
         controller: 'SetupCtrl'
       }).
-      when('/equip', {
-        templateUrl: 'partials/equip.html',
-        controller: 'EquipCtrl'
+      when('/item-search', {
+        templateUrl: 'partials/item-search.html',
+        controller: 'ItemSearchCtrl'
       }).
-      when('/euip/:phoneId', {
-        templateUrl: 'partials/phone-detail.html',
-        controller: 'PhoneDetailCtrl'
+      when('/equipment/:itemId', {
+        templateUrl: 'partials/equipment.html',
+        controller: 'EquipmentCtrl'
       }).
       otherwise({
         redirectTo: '/setup'

@@ -1,15 +1,17 @@
 var m = angular.module('dntServices', ['translationService','ngRoute']);
-m.factory('dntInit', ['equipment','jobs',function(equipment, jobs) {
+m.factory('dntInit',
+['equipment','plates','talisman','techs','rebootEquipment','jobs',
+function(equipment,plates,talisman,techs,rebootEquipment,jobs) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [equipment, jobs];
+    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,jobs];
     
     function initFactory(index) {
     
       if(index < allFactories.length) {
-        allFactories[index].loader.reset();
+        allFactories[index].resetLoader();
         allFactories[index].init(progress, function() { 
           if(allFactories[index].isLoaded()) {
             progress('dnt loaded');
@@ -23,6 +25,30 @@ m.factory('dntInit', ['equipment','jobs',function(equipment, jobs) {
     }
     
     initFactory(0);
+  }
+}]);
+m.factory('getAllItems',
+['equipment','plates','talisman','techs','rebootEquipment',
+function(equipment,plates,talisman,techs,rebootEquipment) {
+    
+  return function() {
+    
+    var factories = [
+      equipment,
+      plates,
+      talisman,
+      techs,
+      rebootEquipment
+      ];
+
+    var allItems = [];
+    
+    angular.forEach(factories, function(value, key) {
+      if(value.isLoaded()) {
+        allItems = allItems.concat(value.getItems());
+      }
+      });
+    return allItems;
   }
 }]);
 m.factory('dntLoader', ['$routeParams',function($routeParams) {
@@ -108,41 +134,158 @@ m.factory('dntLoader', ['$routeParams',function($routeParams) {
     }
   }
 }]);
-m.factory('equipment', ['dntLoader', 'translations', function(dntLoader, translations) {
-  var file = 'itemtable_equipment.dnt';
+m.factory('buildItemFactory', ['$routeParams','translations','dntLoader',function($routeParams,translations,dntLoader) {
+  var statNums = [];
+  statNums[0] = 'str';
+  statNums[1] = 'agi';
+  statNums[2] = 'int';
+  statNums[3] = 'vit';
+  statNums[4] = 'minPhys';
+  statNums[5] = 'maxPhys';
+  statNums[6] = 'minMag';
+  statNums[7] = 'maxMag';
+  statNums[10] = 'para';
+  statNums[12] = 'crit';
+  statNums[18] = 'light%';
+  statNums[19] = 'dark%';
+  statNums[29] = 'fd';
+  statNums[51] = 'agi%';
+  statNums[52] = 'int%';
+  statNums[53] = 'vit%';
+  statNums[103] = 'cdmg';
+  statNums[104] = 'cdmg%';
   
-  return {
-    loader : dntLoader.create(file),
-    
-    isLoaded : function() {
-      return this.loader.loaded;
-    },
-    
-    init : function(progress, complete) {
-      translations.init(progress, complete);
-      this.loader.init(progress, complete);
-    },
-    
-    getEquipment : function () {
-      var equips = [];
-      
-      var numRows = this.loader.reader.numRows;
-      for(var r=0;r<numRows;++r) {
-        var d = this.loader.reader.data[r];
-        var equip = {
-          name : translations.translate(d['NameIDParam']).replace(/\{|\}/g,'').replace(/\,/g,' '),
-          levelLimit : d['LevelLimit'],
-          enchantId : d['EnchantId'],
-          needJobClass : d['NeedJobClass'],
-          rank : d['Rank'],
-        };
-        equips.push(equip);
+  function getStats(data) {
+    var currentState = 1;
+    var minValue = 0;
+    var currentData = {};
+    var statVals = []
+    for(var prop in data) {
+      if(prop == 'State' + (currentState-1) + '_Min') {
+        currentData.min = data[prop];
       }
+      else if(prop == 'State' + (currentState-1) + '_Max') {
+        currentData.max = data[prop];
+      }
+      else if(prop == 'State' + (currentState-1) + '_GenProb') {
+        currentData.genProb = data[prop];
+      }
+      else if(prop == 'State' + currentState) {
+        currentState++;
+        
+        var stateId = data[prop];
+        if(stateId == -1) {
+          break;
+        }
+        
+        currentData = {name: statNums[stateId],num: stateId};
+        if(currentData.name == null) {
+          currentData.name = stateId;
+        }
+        
+        statVals.push(currentData);
+      }
+    }
+    
+    return statVals;
+  }
+  
+  var rankNames = {
+    1 : 'normal',
+    2 : 'magic',
+    3 : 'epic',
+    4 : 'unique',
+    5 : 'legendary',
+  };
+  
+  var typeNames = {
+    0 : 'weapon',
+    1 : 'equipment',
+    5 : 'plate',
+    38 : 'enhancement',
+    132 : 'talisman',
+  }
+  
+  function build(d) {    
+    return {
+      name : translations.translate(d['NameIDParam']).replace(/\{|\}/g,'').replace(/\,/g,' '),
+      levelLimit : d['LevelLimit'],
+      needJobClass : d['NeedJobClass'],
+      rank : d['Rank'],
+      id : d['id'],
+      type : d['Type'],
+      getRankName : function() { return rankNames[this.rank] },
+      getTypeName : function() {
+        var typeName = typeNames[this.type];
+        if(typeName == null) {
+          return this.type;
+        }
+        else {
+          return typeName;
+        }
+      },
+      getEnchantments : function() {
+        // TODO: lookup values in other dnt
+        return d['EnchantId'];
+      },
+      stats : null,
+      initStats : function() {
+        if(this.stats == null) {
+          this.stats = getStats(d);
+        }
+      }
+    };
+  }
+  
+  function getItems(data) {
+    var items = [];
+    var numRows = data.length;
+    for(var r=0;r<numRows;++r) {
+      var d = data[r];
+      var equip = build(data[r]);
+      items.push(equip);
+    }
+    
+    return items;
+  }
+  
+  return function(fileName) {
+    var loader = dntLoader.create(fileName);
+    return {
+      isLoaded : function() {
+        return loader.loaded;
+      },
+
+      init : function(progress, complete) {
+        loader.init(progress, complete);
+      },
       
-      return equips;
+      resetLoader : function() {
+        loader.reset();
+      },
+
+      getItems : function () {
+        return getItems(loader.reader.data);
+      }
     }
   }
 }]);
+m.factory('plates', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_glyph.dnt');
+}]);
+m.factory('talisman', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_talisman.dnt');
+}]);
+m.factory('techs', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_skilllevelup.dnt');
+}]);
+m.factory('rebootEquipment', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_reboot.dnt');
+}]);
+m.factory('equipment', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_equipment.dnt');
+}]);
+
 m.factory('jobs', ['dntLoader', 'translations', function(dntLoader, translations) {
   var file = 'jobtable.dnt';
   
@@ -156,6 +299,10 @@ m.factory('jobs', ['dntLoader', 'translations', function(dntLoader, translations
     init : function(progress, complete) {
       translations.init(progress, complete);
       this.loader.init(progress, complete);
+    },
+      
+    resetLoader : function() {
+      this.loader.reset();
     },
     
     getFinalJobs : function () {
