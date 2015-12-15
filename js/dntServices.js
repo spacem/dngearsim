@@ -390,6 +390,15 @@ m.factory('enchantment', ['dntLoader', 'getStats', function(dntLoader, getStats)
         complete();
       }
     },
+      
+    resetLoader : function() {
+      this.values = null;
+      this.rValues = null;
+      this.loader.reset();
+      this.loader = dntLoader.create(fileName);
+      this.rLoader.reset();
+      this.rLoader = dntLoader.create(rFileName);
+    },
   }
 }
 ]);

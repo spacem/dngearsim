@@ -39,7 +39,9 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
   function progress(msg) {
     $timeout(
       function() {
-        $scope.testResults.push(msg);
+        if($scope.testResults != null) {
+          $scope.testResults.push(msg);
+        }
       });
   }
   
