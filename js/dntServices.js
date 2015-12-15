@@ -1,20 +1,19 @@
 var m = angular.module('dntServices', ['translationService','ngRoute']);
 m.factory('dntInit',
-['equipment','plates','talisman','techs','rebootEquipment','jobs',
-function(equipment,plates,talisman,techs,rebootEquipment,jobs) {
+['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment',
+function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,jobs];
+    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment];
     
     function initFactory(index) {
     
       if(index < allFactories.length) {
-        allFactories[index].resetLoader();
         allFactories[index].init(progress, function() { 
           if(allFactories[index].isLoaded()) {
-            progress('dnt loaded');
+            progress('dnt loaded: ' + allFactories[index].fileName);
             initFactory(index+1);
           }
         });
@@ -25,6 +24,18 @@ function(equipment,plates,talisman,techs,rebootEquipment,jobs) {
     }
     
     initFactory(0);
+  }
+}]);
+m.factory('dntReset',
+['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment',
+function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment) {
+  return function(progress) {
+    
+    progress('resetting loaded data');
+    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment];
+    angular.forEach(allFactories, function(value, key) {
+      value.resetLoader();
+      });
   }
 }]);
 m.factory('getAllItems',
@@ -134,7 +145,7 @@ m.factory('dntLoader', ['$routeParams',function($routeParams) {
     }
   }
 }]);
-m.factory('buildItemFactory', ['$routeParams','translations','dntLoader',function($routeParams,translations,dntLoader) {
+m.factory('getStats', [function() {
   var statNums = [];
   statNums[0] = 'str';
   statNums[1] = 'agi';
@@ -155,7 +166,7 @@ m.factory('buildItemFactory', ['$routeParams','translations','dntLoader',functio
   statNums[103] = 'cdmg';
   statNums[104] = 'cdmg%';
   
-  function getStats(data) {
+  return function(data) {
     var currentState = 1;
     var minValue = 0;
     var currentData = {};
@@ -165,6 +176,10 @@ m.factory('buildItemFactory', ['$routeParams','translations','dntLoader',functio
         currentData.min = data[prop];
       }
       else if(prop == 'State' + (currentState-1) + '_Max') {
+        currentData.max = data[prop];
+      }
+      else if(prop == 'State' + (currentState-1) + 'Value') {
+        currentData.min = data[prop];
         currentData.max = data[prop];
       }
       else if(prop == 'State' + (currentState-1) + '_GenProb') {
@@ -190,6 +205,11 @@ m.factory('buildItemFactory', ['$routeParams','translations','dntLoader',functio
     return statVals;
   }
   
+}]);
+m.factory('buildItemFactory', 
+['$routeParams','translations','dntLoader','getStats',
+function($routeParams,translations,dntLoader,getStats) {
+
   var rankNames = {
     1 : 'normal',
     2 : 'magic',
@@ -224,9 +244,9 @@ m.factory('buildItemFactory', ['$routeParams','translations','dntLoader',functio
           return typeName;
         }
       },
-      getEnchantments : function() {
+      getEnchantmentId : function() {
         // TODO: lookup values in other dnt
-        return d['EnchantId'];
+        return d['EnchantID'];
       },
       stats : null,
       initStats : function() {
@@ -250,22 +270,37 @@ m.factory('buildItemFactory', ['$routeParams','translations','dntLoader',functio
   }
   
   return function(fileName) {
-    var loader = dntLoader.create(fileName);
     return {
+
+      loader : dntLoader.create(fileName),
+      items : null,
+      fileName : fileName,
       isLoaded : function() {
-        return loader.loaded;
+        return this.items != null || this.loader.loaded;
       },
 
       init : function(progress, complete) {
-        loader.init(progress, complete);
+        if(this.items == null) {
+          var t = this;
+          this.loader.init(progress, function() {
+            t.items = getItems(t.loader.reader.data);
+            t.loader = dntLoader.create(fileName);
+            complete();
+          });
+        }
+        else {
+          complete();
+        }
       },
       
       resetLoader : function() {
-        loader.reset();
+        this.items = null;
+        this.loader.reset();
+        this.loader = dntLoader.create(fileName);
       },
 
       getItems : function () {
-        return getItems(loader.reader.data);
+        return this.items;
       }
     }
   }
@@ -285,20 +320,95 @@ m.factory('rebootEquipment', ['buildItemFactory', function(buildItemFactory) {
 m.factory('equipment', ['buildItemFactory', function(buildItemFactory) {
   return buildItemFactory('itemtable_equipment.dnt');
 }]);
+m.factory('enchantment', ['dntLoader', 'getStats', function(dntLoader, getStats) {
+  var fileName ='enchanttable.dnt'; 
+  var rFileName ='enchanttable_reboot.dnt'; 
 
-m.factory('jobs', ['dntLoader', 'translations', function(dntLoader, translations) {
-  var file = 'jobtable.dnt';
   
+  function initEnchantments(data) {
+    var enhancements = [];
+    var numRows = data.length;
+    for(var r=0;r<numRows;++r) {
+      var d = data[r];
+      
+      var enchantId = d['EnchantID'];
+      
+      if(enhancements[enchantId] == null) {
+        enhancements[enchantId] = [];
+      }
+      
+      enhancements[enchantId].push({
+        data : d,
+        stats : null,
+        initStats : function() {
+          if(this.stats == null) {
+            this.stats = getStats(d);
+          }
+        }
+      });
+    }
+    
+    return enhancements;
+  }
+  
+  function loaderComplete(item, complete) {
+    if(item.isLoaded()) {
+      item.values = initEnchantments(item.loader.reader.data);
+      item.rValues = initEnchantments(item.rLoader.reader.data);
+      item.loader = dntLoader.create(fileName);
+      item.rLoader = dntLoader.create(rFileName);
+      complete();
+    }
+  }
+
   return {
-    loader : dntLoader.create(file),
+    
+    fileName : fileName,
+    rFileName : rFileName,
+  
+    loader : dntLoader.create(fileName),
+    rLoader : dntLoader.create(rFileName),
+    
+    values : null,
+    rValues : null,
+    
+    isLoaded : function() {
+      return (this.loader.loaded && this.rLoader.loaded) || this.values != null || this.rValues != null;
+    },
+    
+    init : function(progress, complete) {
+      if(!this.isLoaded()) {
+        var t = this;
+        if(!this.loader.startedLoading) {
+          this.loader.init(progress, function() { loaderComplete(t, complete) });
+        }
+        if(!this.rLoader.startedLoading) {
+          this.rLoader.init(progress, function() { loaderComplete(t, complete) });
+        }
+      }
+      else {
+        complete();
+      }
+    },
+  }
+}
+]);
+m.factory('jobs', ['dntLoader', 'translations', function(dntLoader, translations) {
+  
+  var fileName ='jobtable.dnt'; 
+  return {
+    fileName : fileName,
+  
+    loader : dntLoader.create(fileName),
     
     isLoaded : function() {
       return this.loader.loaded;
     },
     
     init : function(progress, complete) {
-      translations.init(progress, complete);
-      this.loader.init(progress, complete);
+      this.loader.init(progress, function() {
+        complete();
+        });
     },
       
     resetLoader : function() {

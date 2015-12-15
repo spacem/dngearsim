@@ -1,7 +1,7 @@
 angular.module('setupController', ['translationService', 'dntServices','ngRoute'])
 .controller('SetupCtrl', 
-  ['$scope','$route','$routeParams','$timeout','translations','dntInit',
-   function($scope, $route, $routeParams, $timeout, translations, dntInit) {
+  ['$scope','$route','$routeParams','$timeout','translations','dntInit','dntReset',
+   function($scope, $route, $routeParams, $timeout, translations, dntInit, dntReset) {
   
   var noLocation = '';
   var sessionLocation = $routeParams.location;
@@ -49,6 +49,7 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
   
   $scope.saveLocation = function() {
     translations.reset();
+    dntReset(progress);
     if($scope.location != noLocation) {
       var params = $routeParams;
       params['location'] = $scope.location;

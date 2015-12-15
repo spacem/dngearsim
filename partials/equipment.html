@@ -8,13 +8,14 @@
   <div class="row">
     <div class="col-xs-12">
       {{item.name}}
+      - 
+      {{item.getRankName()}}
+      {{item.getTypeName()}}
+      level {{item.levelLimit}}
     </div>
   </div>
   <div class="row">
     <div class="col-xs-1">
-      {{item.getRankName()}}
-      {{item.getTypeName()}}
-      level {{item.levelLimit}}
     </div>
   </div>
   <div class="row">
@@ -23,5 +24,33 @@
       {{stat.name}} : {{stat.max}}
       </div>
     </div>
+  </div>
+  <div class="row" ng-hide="enchantments != null">
+    <div class="col-xs-12" >
+    Loading...
+    </div>
+  </div>
+  <div class="row" ng-repeat="e in enchantments">
+    <div class="col-xs-1">
+      +{{e.data.EnchantLevel}}
+    </div>
+    <div class="col-xs-1">
+      {{e.data.NeedCoin / 10000}}g
+    </div>
+    <div class="col-xs-1">
+      Ratio: {{e.data.EnchantRatio}}
+    </div>
+    <div class="col-xs-1">
+      {{e.data.BreakRatio}} chance to break
+    </div>
+    <div class="col-xs-1">
+      Might go down between {{e.data.MinDown}} and {{e.data.MaxDown}} levels
+    </div>
+    <div class="col-xs-2">
+      <span ng-repeat="stat in e.stats">
+      {{stat.name}}: {{stat.max}}
+      </span>
+    </div>
+  </div>
   </div>
 </div>
