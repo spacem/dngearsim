@@ -132,7 +132,19 @@ function(
           }
           
           if($scope.nameSearch != '') {
-            if(e.name.toUpperCase().indexOf($scope.nameSearch.toUpperCase()) == -1) {
+            var nameSearches = $scope.nameSearch.split(' ');
+            if(nameSearches.length == 0) {
+              nameSearches = [$scope.nameSearch];
+            }
+            var allMatch = true;
+            for(var ns=0;ns<nameSearches.length;++ns) {
+              if(e.name.toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
+                allMatch = false;
+                break;
+              }
+            }
+            
+            if(!allMatch) {
               continue;
             }
           }

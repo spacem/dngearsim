@@ -278,9 +278,7 @@ m.factory('enchantment', ['dntLoader', 'hCodeValues', function(dntLoader, hCodeV
         data : d,
         stats : null,
         initStats : function() {
-          if(this.stats == null) {
-            this.stats = hCodeValues.getStats(d);
-          }
+          this.stats = hCodeValues.getStats(this.data);
         }
       });
     }
