@@ -19,7 +19,7 @@ dnGearSimApp.config(['$routeProvider',
         templateUrl: 'partials/setup.html',
         controller: 'SetupCtrl'
       }).
-      when('/item-search', {
+      when('/item-search/:itemType', {
         templateUrl: 'partials/item-search.html',
         controller: 'ItemSearchCtrl'
       }).

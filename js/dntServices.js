@@ -1,12 +1,12 @@
-var m = angular.module('dntServices', ['translationService','ngRoute']);
+var m = angular.module('dntServices', ['translationService','ngRoute','valueServices']);
 m.factory('dntInit',
-['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment',
-function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment) {
+['equipment','plates','talisman','techs','rebootEquipment','wellspring','gems','cash','cash2014','cash2015','jobs','enchantment',
+function(equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,jobs,enchantment) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment];
+    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,jobs,enchantment];
     
     function initFactory(index) {
     
@@ -27,31 +27,23 @@ function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment) {
   }
 }]);
 m.factory('dntReset',
-['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment',
-function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment) {
+['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment','wellspring','gems','cash','cash2014','cash2015',
+function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment,wellspring,gems,cash,cash2014,cash2015) {
   return function(progress) {
     
     progress('resetting loaded data');
-    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment];
+    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,jobs,enchantment];
     angular.forEach(allFactories, function(value, key) {
       value.resetLoader();
       });
   }
 }]);
 m.factory('getAllItems',
-['equipment','plates','talisman','techs','rebootEquipment',
-function(equipment,plates,talisman,techs,rebootEquipment) {
+['equipment','plates','talisman','techs','rebootEquipment','wellspring','gems','cash','cash2014','cash2015',
+function(equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015) {
     
-  return function() {
+  return function(factories) {
     
-    var factories = [
-      equipment,
-      plates,
-      talisman,
-      techs,
-      rebootEquipment
-      ];
-
     var allItems = [];
     
     angular.forEach(factories, function(value, key) {
@@ -145,87 +137,10 @@ m.factory('dntLoader', ['$routeParams',function($routeParams) {
     }
   }
 }]);
-m.factory('getStats', [function() {
-  var statNums = [];
-  statNums[0] = 'str';
-  statNums[1] = 'agi';
-  statNums[2] = 'int';
-  statNums[3] = 'vit';
-  statNums[4] = 'minPhys';
-  statNums[5] = 'maxPhys';
-  statNums[6] = 'minMag';
-  statNums[7] = 'maxMag';
-  statNums[10] = 'para';
-  statNums[12] = 'crit';
-  statNums[18] = 'light%';
-  statNums[19] = 'dark%';
-  statNums[29] = 'fd';
-  statNums[51] = 'agi%';
-  statNums[52] = 'int%';
-  statNums[53] = 'vit%';
-  statNums[103] = 'cdmg';
-  statNums[104] = 'cdmg%';
-  
-  return function(data) {
-    var currentState = 1;
-    var minValue = 0;
-    var currentData = {};
-    var statVals = []
-    for(var prop in data) {
-      if(prop == 'State' + (currentState-1) + '_Min') {
-        currentData.min = data[prop];
-      }
-      else if(prop == 'State' + (currentState-1) + '_Max') {
-        currentData.max = data[prop];
-      }
-      else if(prop == 'State' + (currentState-1) + 'Value') {
-        currentData.min = data[prop];
-        currentData.max = data[prop];
-      }
-      else if(prop == 'State' + (currentState-1) + '_GenProb') {
-        currentData.genProb = data[prop];
-      }
-      else if(prop == 'State' + currentState) {
-        currentState++;
-        
-        var stateId = data[prop];
-        if(stateId == -1) {
-          break;
-        }
-        
-        currentData = {name: statNums[stateId],num: stateId};
-        if(currentData.name == null) {
-          currentData.name = stateId;
-        }
-        
-        statVals.push(currentData);
-      }
-    }
-    
-    return statVals;
-  }
-  
-}]);
 m.factory('buildItemFactory', 
-['$routeParams','translations','dntLoader','getStats',
-function($routeParams,translations,dntLoader,getStats) {
+['$routeParams','translations','dntLoader','hCodeValues',
+function($routeParams,translations,dntLoader,hCodeValues) {
 
-  var rankNames = {
-    1 : 'normal',
-    2 : 'magic',
-    3 : 'epic',
-    4 : 'unique',
-    5 : 'legendary',
-  };
-  
-  var typeNames = {
-    0 : 'weapon',
-    1 : 'equipment',
-    5 : 'plate',
-    38 : 'enhancement',
-    132 : 'talisman',
-  }
-  
   function build(d) {    
     return {
       name : translations.translate(d['NameIDParam']).replace(/\{|\}/g,'').replace(/\,/g,' '),
@@ -234,9 +149,9 @@ function($routeParams,translations,dntLoader,getStats) {
       rank : d['Rank'],
       id : d['id'],
       type : d['Type'],
-      getRankName : function() { return rankNames[this.rank] },
+      getRankName : function() { return hCodeValues.rankNames[this.rank] },
       getTypeName : function() {
-        var typeName = typeNames[this.type];
+        var typeName = hCodeValues.typeNames[this.type];
         if(typeName == null) {
           return this.type;
         }
@@ -251,7 +166,7 @@ function($routeParams,translations,dntLoader,getStats) {
       stats : null,
       initStats : function() {
         if(this.stats == null) {
-          this.stats = getStats(d);
+          this.stats = hCodeValues.getStats(d);
         }
       }
     };
@@ -269,8 +184,10 @@ function($routeParams,translations,dntLoader,getStats) {
     return items;
   }
   
-  return function(fileName) {
+  return function(fileName, type) {
     return {
+
+      type: type,
 
       loader : dntLoader.create(fileName),
       items : null,
@@ -306,21 +223,41 @@ function($routeParams,translations,dntLoader,getStats) {
   }
 }]);
 m.factory('plates', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_glyph.dnt');
+  return buildItemFactory('itemtable_glyph.dnt', 'plates');
 }]);
 m.factory('talisman', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_talisman.dnt');
+  return buildItemFactory('itemtable_talisman.dnt', 'talisman');
 }]);
 m.factory('techs', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_skilllevelup.dnt');
+  return buildItemFactory('itemtable_skilllevelup.dnt', 'techs');
 }]);
 m.factory('rebootEquipment', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_reboot.dnt');
+  return buildItemFactory('itemtable_reboot.dnt', 'equipment');
 }]);
 m.factory('equipment', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_equipment.dnt');
+  return buildItemFactory('itemtable_equipment.dnt', 'equipment');
 }]);
-m.factory('enchantment', ['dntLoader', 'getStats', function(dntLoader, getStats) {
+
+
+
+m.factory('cash2015', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_common2015.dnt', 'cash');
+}]);
+m.factory('cash2014', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_common2014.dnt', 'cash');
+}]);
+m.factory('cash', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_cash.dnt', 'cash');
+}]);
+m.factory('gems', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_dragonjewel.dnt', 'gems');
+}]);
+m.factory('wellspring', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_source.dnt', 'wellspring');
+}]);
+
+
+m.factory('enchantment', ['dntLoader', 'hCodeValues', function(dntLoader, hCodeValues) {
   var fileName ='enchanttable.dnt'; 
   var rFileName ='enchanttable_reboot.dnt'; 
 
@@ -342,7 +279,7 @@ m.factory('enchantment', ['dntLoader', 'getStats', function(dntLoader, getStats)
         stats : null,
         initStats : function() {
           if(this.stats == null) {
-            this.stats = getStats(d);
+            this.stats = hCodeValues.getStats(d);
           }
         }
       });

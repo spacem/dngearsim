@@ -1,64 +1,43 @@
-angular.module('equipmentController', ['translationService', 'dntServices'])
+angular.module('equipmentController', ['ui.bootstrap','translationService', 'dntServices'])
 .controller('EquipmentCtrl',
 
-['$scope','$routeParams','translations','equipment','plates','talisman','techs','rebootEquipment','getAllItems','$timeout','enchantment',
-function($scope,$routeParams,translations,equipment,plates,talisman,techs,rebootEquipment,getAllItems,$timeout,enchantment) {
-  translations.init(reportProgress, function() { $timeout(translationsInit); } );
+['$scope','$routeParams','$timeout','enchantment','item',
+function($scope,$routeParams,$timeout,enchantment,item) {
   
-  var itemFactories = [
-    equipment,plates,talisman,techs,rebootEquipment,enchantment
-    ];
+  console.log('got: ' + $scope.name);
+  
+  item.initStats();
+  $scope.enchantments = null;
+  $scope.item = item;
+  
+  var itemFactories = [];
+  if($scope.item.getEnchantmentId() > 0) {
+    itemFactories.push(enchantment);
+  }
+  else {
+    $scope.enchantments = [];
+  }
   
   angular.forEach(itemFactories, function(value, key) {
     value.init(reportProgress, function() { $timeout(itemInit); } );
   });
-  
-  $scope.item = null;
-  $scope.enchantments = null;
-  
-  $scope.isLoadComplete = function() {
-    for(var i=0;i<itemFactories.length;++i) {
-      if(!itemFactories[i].isLoaded()) {
-        return false;
-      }
-    }
-    
-    return true;
-  };
-  
-  function translationsInit() {
-      console.log('translations loaded');
-      itemInit();
-  }
-  
+
   function itemInit() {
-    if(translations.loaded) {
-      if($scope.item == null) {
-        console.log('trying to find item');
-        var allItems = getAllItems();
-        angular.forEach(allItems, function(value, key) {
-          if(value.id == $routeParams.itemId) {
-            value.initStats();
-            $scope.item = value;
-          }
-        });
-      }
-      
-      if($scope.item != null && enchantment.isLoaded()) {
+
+    if(enchantment.isLoaded()) {
+      if($scope.enchantments == null) {
+        var eid = $scope.item.getEnchantmentId();
+        $scope.enchantments = enchantment.values[eid];
         if($scope.enchantments == null) {
-          var eid = $scope.item.getEnchantmentId();
-          $scope.enchantments = enchantment.values[eid];
-          if($scope.enchantments == null) {
-            $scope.enchantments = enchantment.rValues[eid];
-          }
-          if($scope.enchantments == null) {
-            $scope.enchantments = [];
-          }
-          else {
-            angular.forEach($scope.enchantments, function(value,key) {
-              value.initStats();
-            });
-          }
+          $scope.enchantments = enchantment.rValues[eid];
+        }
+        if($scope.enchantments == null) {
+          $scope.enchantments = [];
+        }
+        else {
+          angular.forEach($scope.enchantments, function(value,key) {
+            value.initStats();
+          });
         }
       }
     }

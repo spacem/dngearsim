@@ -1,7 +1,15 @@
 angular.module('itemSearchController', ['translationService', 'dntServices'])
 .controller('ItemSearchCtrl',
-['$scope','$routeParams','translations','jobs','equipment','plates','talisman','techs','rebootEquipment','getAllItems','$timeout',
-function($scope,$routeParams,translations, jobs,equipment,plates,talisman,techs,rebootEquipment,getAllItems,$timeout) {
+['$scope','$routeParams','$timeout','$uibModal',
+'translations',
+ 'jobs','equipment','plates','talisman','techs','rebootEquipment','wellspring','gems','cash','cash2014','cash2015',
+ 'getAllItems','hCodeValues',
+function(
+  $scope,$routeParams,$timeout,$uibModal,
+  translations,
+  jobs,equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,
+  getAllItems,hCodeValues) {
+  
   $scope.job = {id: -1, name: '-- loading --'};
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
@@ -34,15 +42,26 @@ function($scope,$routeParams,translations, jobs,equipment,plates,talisman,techs,
   };
   
   translations.init(reportProgress, function() { $timeout(translationsInit); } );
-  jobs.init(reportProgress, function() { $timeout(jobInit); } );
+  function translationsInit() {
+    console.log('translations loaded');
+    jobs.init(reportProgress, function() { $timeout(jobInit); } );
+    angular.forEach(itemFactories, function(value, key) {
+      value.init(reportProgress, function() { $timeout(itemInit); } );
+    });
+  }
   
-  var itemFactories = [
-    equipment,plates,talisman,techs,rebootEquipment
-    ];
-  
-  angular.forEach(itemFactories, function(value, key) {
-    value.init(reportProgress, function() { $timeout(itemInit); } );
-  });
+  var allItemFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015];
+  var itemFactories = [];
+  if($routeParams.itemType == null) {
+    itemFactories = allItemFactories;
+  }
+  else {
+    for(var f=0;f<allItemFactories.length;++f) {
+      if(allItemFactories[f].type == $routeParams.itemType) {
+        itemFactories.push(allItemFactories[f]);
+      }
+    }
+  }
   
   $scope.isLoadComplete = function() {
     for(var i=0;i<itemFactories.length;++i) {
@@ -53,12 +72,6 @@ function($scope,$routeParams,translations, jobs,equipment,plates,talisman,techs,
     
     return true;
   };
-  
-  function translationsInit() {
-      console.log('translations loaded');
-      jobInit();
-      itemInit();
-  }
   
   function reportProgress(msg) {
       // $scope.progress += '|' + msg;
@@ -133,10 +146,27 @@ function($scope,$routeParams,translations, jobs,equipment,plates,talisman,techs,
       return newResults;
   };
   
+  $scope.open = function (item) {
+    console.log('opening item ' + item.name);
+    var modalInstance = $uibModal.open({
+      animation: true,
+      backdrop : true,
+      keyboard : true,
+      templateUrl: 'partials/equipment.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'EquipmentCtrl',
+      size: 'lg',
+      resolve: {
+        item: function () {
+          return item;
+        }
+      }
+    });
+  }
+  
   function itemInit() {
     if(translations.loaded && jobs.isLoaded()) {
       console.log('trying to init equip');
-      $scope.items = getAllItems();
+      $scope.items = getAllItems(itemFactories);
     }
   }
 }]);

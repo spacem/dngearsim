@@ -10,24 +10,18 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
   }
   
   $scope.location = sessionLocation;
-  
+  if($scope.location == noLocation) {
+    $scope.testResults = ['No location set'];
+  }
+  else {
+    $scope.testResults = ['Using location ' + $scope.location];
+  }
   
   $scope.hostedFiles = [
     {region: 'na', name: 'nov15', url : 'https://spacedb.firebaseapp.com/nov15'},
     {region: 'na', name: 'latest', url : 'https://spacedb.firebaseapp.com/latest'}
     ];
     
-    
-  function init() {
-    if($scope.location != noLocation) {
-      $scope.testResults = [
-        'Using location ' + $scope.location,
-        'Loading all data used by the app',
-        'Feel free to navigate to other screens at any time'];
-      translations.init(progress, translationsComplete);
-    }
-  }
-  init();
   
   $scope.resetSessionData = function() {
     $scope.testResults = ['session data reset.. reloading page'];
@@ -56,6 +50,18 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
       var params = $routeParams;
       params['location'] = $scope.location;
       $route.updateParams(params);
+      $scope.testResults = [
+        'Location saved',
+        'Using location ' + $scope.location];
+    }
+  }
+  
+  $scope.testLocation = function() {
+    if($scope.location != noLocation) {
+      $scope.testResults = [
+        'Using location ' + $scope.location,
+        'Loading all data used by the app'];
+      translations.init(progress, translationsComplete);
     }
   }
 }]);

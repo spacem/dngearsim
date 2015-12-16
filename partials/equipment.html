@@ -1,21 +1,16 @@
-<h2>Equipment Details</h2>
-<div class="row" ng-hide="item != null">
-  <div class="col-xs-12">
-  Loading...
-  </div>
+<div class="modal-header">
+  <h3>
+    {{item.name}}
+    - 
+    {{item.getRankName()}}
+    {{item.getTypeName()}}
+    level {{item.levelLimit}}
+  </h3>
 </div>
-<div ng-hide="item == null">
-  <div class="row">
+<div class="modal-body">
+  <div class="row" ng-hide="item != null">
     <div class="col-xs-12">
-      {{item.name}}
-      - 
-      {{item.getRankName()}}
-      {{item.getTypeName()}}
-      level {{item.levelLimit}}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-1">
+    Loading...
     </div>
   </div>
   <div class="row">
@@ -52,5 +47,7 @@
       </span>
     </div>
   </div>
-  </div>
+</div>
+<div class="modal-footer">
+    <!-- <button class="btn" ng-click="cancel()">Close</button> --!>
 </div>

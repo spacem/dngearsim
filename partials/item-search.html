@@ -21,13 +21,14 @@
     </select>
      </label>
   </div>
+  <!--
   <div class="col-xs-1">
     <label>Item Type: 
     <select ng-model="job" class="form-control"
      ng-options="type.name for type in types track by type.id">
     </select>
     </label>
-  </div>
+  </div>-->
   <div class="col-xs-1">
     <label>Class: 
     <select ng-model="job" class="form-control"
@@ -46,14 +47,16 @@
     {{result.levelLimit}}
   </div>
   <div class="col-xs-2">
-    <a ng-href="#/equipment/{{result.id}}?location={{$parent.getLocation()}}">{{result.name}}</a>
+    <!-- <a ng-href="#/equipment/{{result.id}}?location={{$parent.getLocation()}}">{{result.name}}</a> -->
+    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
   </div>
   <div class="col-xs-1">
     {{result.getRankName()}}
   </div>
+  <!--
   <div class="col-xs-1">
     {{result.getTypeName()}}
-  </div>
+  </div> -->
   <div class="col-xs-1">
     {{getJobName(result.needJobClass)}}
   </div>
