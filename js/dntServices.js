@@ -177,8 +177,10 @@ function($routeParams,translations,dntLoader,hCodeValues) {
     var numRows = data.length;
     for(var r=0;r<numRows;++r) {
       var d = data[r];
-      var equip = build(data[r]);
-      items.push(equip);
+      if(d.State1_GenProb > 0) {
+        var equip = build(data[r]);
+        items.push(equip);
+      }
     }
     
     return items;
