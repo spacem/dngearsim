@@ -1,9 +1,8 @@
 <div class="row">
-
   <ul class="nav nav-tabs">
-    <li role="presentation" class="{{action.extraCss}}" ng-repeat="action in getActions()"> 
+    <li role="presentation" class="{{action.extraCss}} bg-info" ng-repeat="action in getActions()"> 
       <a href="{{$parent.getUrl(action.path)}}">{{action.name}}</a>
     </li>
   </ul>
-
 </div>
+<div class="row">&nbsp;</div>

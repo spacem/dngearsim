@@ -33,11 +33,12 @@ m.factory('hCodeValues', [function() {
     },
   
     rankNames : {
-      1 : 'normal',
-      2 : 'magic',
-      3 : 'epic',
-      4 : 'unique',
-      5 : 'legendary',
+      0 : { name : 'normal', checked: true },
+      1 : { name : 'magic', checked: true },
+      2 : { name : 'rare', checked: true },
+      3 : { name : 'epic', checked: true },
+      4 : { name : 'unique', checked: true },
+      5 : { name : 'legendary', checked: true },
     },
     
     typeNames : {

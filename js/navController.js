@@ -10,9 +10,9 @@ angular.module('navController', ['ngRoute'])
       {path: 'item-search/equipment', name:'equipment'},
       {path: 'item-search/talisman', name:'talisman'},
       {path: 'item-search/plates', name:'plates'},
-      {path: 'item-search/techs', name:'techs'},
-      {path: 'item-search/cash', name:'cash'},
-      {path: 'item-search/wellspring', name:'wellspring'},
+      // {path: 'item-search/techs', name:'techs'},
+      // {path: 'item-search/cash', name:'cash'},
+      // {path: 'item-search/wellspring', name:'wellspring'},
       {path: 'item-search/gems', name:'gems'},
       ];
     

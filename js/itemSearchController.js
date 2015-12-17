@@ -13,24 +13,15 @@ function(
   $scope.job = {id: -1, name: '-- loading --'};
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
-  $scope.minLevel = 80;
-  $scope.maxLevel = 90;
+  $scope.minLevel = 1;
+  $scope.maxLevel = 99;
   $scope.nameSearch = '';
   $scope.results = [];
   $scope.selection = [];
   $scope.items = null;
   $scope.maxDisplay = 15;
   $scope.currentResults = 0;
-  $scope.grades = [
-    {id: 0, name: '--'},
-    {id: 1, name: 'normal'},
-    {id: 2, name: 'magic'},
-    {id: 3, name: 'epic'},
-    {id: 4, name: 'unique'},
-    {id: 5, name: 'legendary'},
-    ];
-    
-  $scope.grade = $scope.grades[0];
+  $scope.grades = hCodeValues.rankNames;
   
   $scope.getLocation = function() {
      return $routeParams.location;
@@ -91,10 +82,6 @@ function(
     }
   }
   
-  $scope.getRankName = function(rank) {
-    return $scope.grades[rank].name;
-  };
-  
   $scope.getJobName = function(job) {
     var numJobs = $scope.allJobs.length;
     for(var i=0;i<numJobs;++i) {
@@ -119,10 +106,9 @@ function(
       for(var i=0;i<numEquip&&curDisplay<$scope.maxDisplay;++i) {
         var e = $scope.items[i];
         if(e.levelLimit >= $scope.minLevel && e.levelLimit <= $scope.maxLevel) {
-          if($scope.grade.id > 0) {
-            if($scope.grade.id != e.rank) {
-              continue;
-            }
+          
+          if(!$scope.grades[e.rank].checked) {
+            continue;
           }
           
           if($scope.job != null && $scope.job.id > 0) {

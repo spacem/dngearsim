@@ -1,69 +1,58 @@
 <div class="row">
-  <div class="col-xs-1">
-     <label>Min Level:
-     <input type="text" class="form-control" ng-model="minLevel" />
-     </label>
+  <div class="col-xs-12">
+    <div class="form-group">
+      <label class="checkbox-inline" ng-repeat="(id,value) in grades">
+        <input type="checkbox" ng-model="value.checked" value="{{id}}"> {{value.name}}
+      </label>
+    </div>
   </div>
-  <div class="col-xs-1">
-     <label>Max Level:
-     <input type="text" class="form-control" ng-model="maxLevel" />
-     </label>
-  </div>
-  <div class="col-xs-1">
-     <label>Name:
-     <input type="text" class="form-control" ng-model="nameSearch" />
-     </label>
-  </div>
-  <div class="col-xs-1">
-     <label>Grade:
-    <select ng-model="grade" class="form-control"
-     ng-options="grade.name for grade in grades track by grade.id">
-    </select>
-     </label>
-  </div>
-  <!--
-  <div class="col-xs-1">
-    <label>Item Type: 
-    <select ng-model="job" class="form-control"
-     ng-options="type.name for type in types track by type.id">
-    </select>
-    </label>
-  </div>-->
-  <div class="col-xs-1">
+  <div class="col-xs-6 col-md-3">
     <label>Class: 
+    </label>
     <select ng-model="job" class="form-control"
      ng-options="job.name for job in jobs track by job.id">
     </select>
-    </label>
+  </div>
+  <div class="col-xs-3 col-md-1">
+     <label>Min&nbsp;Level:
+     </label>
+     <input type="text" class="form-control" ng-model="minLevel" />
+  </div>
+  <div class="col-xs-3 col-md-1">
+     <label>Max&nbsp;Level:
+     </label>
+     <input type="text" class="form-control" ng-model="maxLevel" />
+  </div>
+  <div class="col-xs-12 col-md-7">
+     <label>Name:</label>
+     <input type="text" class="form-control" ng-model="nameSearch" />
   </div>
 </div>
+<div class="row">&nbsp;</div>
 <div class="row" ng-hide="isLoadComplete()">
   <div class="col-xs-12">
   Loading...
   </div>
 </div>
-<div class="row" ng-repeat="result in getResults()">
-  <div class="col-xs-1 text-right">
+<table class="table table-striped">
+<tr class="row" ng-repeat="result in getResults()">
+  <td class="col-xs-1">
+    {{$parent.grades[result.rank].name}}
+  </td>
+  <td class="col-xs-1">
     {{result.levelLimit}}
-  </div>
-  <div class="col-xs-2">
-    <!-- <a ng-href="#/equipment/{{result.id}}?location={{$parent.getLocation()}}">{{result.name}}</a> -->
-    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
-  </div>
-  <div class="col-xs-1">
-    {{result.getRankName()}}
-  </div>
-  <!--
-  <div class="col-xs-1">
-    {{result.getTypeName()}}
-  </div> -->
-  <div class="col-xs-1">
+  </td>
+  <td class="col-xs-1">
     {{getJobName(result.needJobClass)}}
-  </div>
-  <div class="col-xs-1">
+  </td>
+  <td class="col-xs-8">
+    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
+  </td>
+  <td class="col-xs-1">
       <!-- <button class="btn btn-link" aria-label="Add">Add +</button> -->
-  </div>
-</div>
+  </td>
+</tr>
+</table>
 <div class="row" ng-show="items != null && currentResults >= maxDisplay">
   <div class="col-xs-1"></div>
   <div class="col-xs-1">
