@@ -2,12 +2,12 @@ angular.module('itemSearchController', ['translationService', 'dntServices'])
 .controller('ItemSearchCtrl',
 ['$scope','$routeParams','$timeout','$uibModal',
 'translations',
- 'jobs','equipment','plates','talisman','techs','rebootEquipment','wellspring','gems','cash','cash2014','cash2015',
+ 'jobs','equipment','plates','talisman','techs','rebootEquipment','wellspring','titles','gems','cash','cash2014','cash2015',
  'getAllItems','hCodeValues',
 function(
   $scope,$routeParams,$timeout,$uibModal,
   translations,
-  jobs,equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,
+  jobs,equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,
   getAllItems,hCodeValues) {
   
   $scope.job = {id: -1, name: '-- loading --'};
@@ -41,7 +41,7 @@ function(
     });
   }
   
-  var allItemFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015];
+  var allItemFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015];
   var itemFactories = [];
   if($routeParams.itemType == null) {
     itemFactories = allItemFactories;
@@ -70,7 +70,7 @@ function(
   }
   
   function jobInit() {
-      console.log('called the job init func');
+    console.log('called the job init func');
     if(translations.loaded && jobs.isLoaded()) {
       console.log('trying to init jobs');
       console.log('job dropdown should be set');
@@ -105,9 +105,9 @@ function(
       var curDisplay = 0;
       for(var i=0;i<numEquip&&curDisplay<$scope.maxDisplay;++i) {
         var e = $scope.items[i];
-        if(e.levelLimit >= $scope.minLevel && e.levelLimit <= $scope.maxLevel) {
+        if(e != null && e.levelLimit >= $scope.minLevel && e.levelLimit <= $scope.maxLevel) {
           
-          if(!$scope.grades[e.rank].checked) {
+          if(e.rank != null && !$scope.grades[e.rank].checked) {
             continue;
           }
           
@@ -135,6 +135,7 @@ function(
             }
           }
           
+          e.initStats();
           newResults.push(e);
           curDisplay++;
         }

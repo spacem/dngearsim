@@ -1,12 +1,12 @@
 var m = angular.module('dntServices', ['translationService','ngRoute','valueServices']);
 m.factory('dntInit',
-['equipment','plates','talisman','techs','rebootEquipment','wellspring','gems','cash','cash2014','cash2015','jobs','enchantment',
-function(equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,jobs,enchantment) {
+['equipment','plates','talisman','techs','rebootEquipment','wellspring','titles','gems','cash','cash2014','cash2015','jobs','enchantment',
+function(equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,jobs,enchantment) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,jobs,enchantment];
+    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,jobs,enchantment];
     
     function initFactory(index) {
     
@@ -27,12 +27,12 @@ function(equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,ca
   }
 }]);
 m.factory('dntReset',
-['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment','wellspring','gems','cash','cash2014','cash2015',
-function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment,wellspring,gems,cash,cash2014,cash2015) {
+['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment','wellspring','titles','gems','cash','cash2014','cash2015',
+function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment,wellspring,titles,gems,cash,cash2014,cash2015) {
   return function(progress) {
     
     progress('resetting loaded data');
-    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015,jobs,enchantment];
+    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,jobs,enchantment];
     angular.forEach(allFactories, function(value, key) {
       value.resetLoader();
       });
@@ -141,9 +141,13 @@ m.factory('buildItemFactory',
 ['$routeParams','translations','dntLoader','hCodeValues',
 function($routeParams,translations,dntLoader,hCodeValues) {
 
-  function build(d) {    
+  function build(d) {
+    var nameId = d.NameIDParam;
+    if(nameId == null) {
+      nameId = d.NameID;
+    }
     return {
-      name : translations.translate(d['NameIDParam']).replace(/\{|\}/g,'').replace(/\,/g,' '),
+      name : translations.translate(nameId).replace(/\{|\}/g,'').replace(/\,/g,' '),
       levelLimit : d['LevelLimit'],
       needJobClass : d['NeedJobClass'],
       rank : d['Rank'],
@@ -177,7 +181,7 @@ function($routeParams,translations,dntLoader,hCodeValues) {
     var numRows = data.length;
     for(var r=0;r<numRows;++r) {
       var d = data[r];
-      if(d.State1_GenProb > 0) {
+      if(d.State1_GenProb > 0 || d.StateValue1 > 0) {
         var equip = build(data[r]);
         items.push(equip);
       }
@@ -202,9 +206,18 @@ function($routeParams,translations,dntLoader,hCodeValues) {
         if(this.items == null) {
           var t = this;
           this.loader.init(progress, function() {
-            t.items = getItems(t.loader.reader.data);
-            t.loader = dntLoader.create(fileName);
-            complete();
+            if(translations.loaded) {
+              t.items = getItems(t.loader.reader.data);
+              t.loader = dntLoader.create(fileName);
+              complete();
+            }
+            else {
+              translations.init(progress, function() {
+                t.items = getItems(t.loader.reader.data);
+                t.loader = dntLoader.create(fileName);
+                complete();
+              });
+            }
           });
         }
         else {
@@ -256,6 +269,9 @@ m.factory('gems', ['buildItemFactory', function(buildItemFactory) {
 }]);
 m.factory('wellspring', ['buildItemFactory', function(buildItemFactory) {
   return buildItemFactory('itemtable_source.dnt', 'wellspring');
+}]);
+m.factory('titles', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('appellationtable.dnt', 'titles');
 }]);
 
 

@@ -6,7 +6,6 @@ function($scope,$routeParams,$timeout,$uibModalInstance,enchantment,item) {
   
   console.log('got: ' + $scope.name);
   
-  item.initStats();
   $scope.enchantments = null;
   $scope.item = item;
   $scope.curEnchantmentNum = 10;

@@ -1,35 +1,42 @@
 var m = angular.module('valueServices', []);
 m.factory('hCodeValues', [function() {
   
+  function toOneDec(stat) {
+    return Math.round(stat.max*10)/10;
+  }
+  function toPercent(stat) {
+    return (Math.round(stat.max*1000)/10) + '%';
+  }
+  
   return {
     stats : {
-      0  : 'str',
-      1  : 'agi',
-      2  : 'int',
-      3  : 'vit',
-      4  : 'minPdmg',
-      5  : 'maxPdmg',
-      6  : 'minMdmg',
-      7  : 'maxMdmg',
-      8  : 'def',
-      9  : 'mdef',
-      10 : 'para',
-      12 : 'crit',
-      13 : 'crit resist',
-      16 : 'fire%',
-      18 : 'light%',
-      19 : 'dark%',
-      29 : 'fd',
-      51 : 'agi%',
-      52 : 'int%',
-      53 : 'vit%',
-      54 : 'minPdmg%',
-      55 : 'maxPdmg%',
-      56 : 'minMdmg%',
-      57 : 'maxMdmg%',
-      58 : 'def%',
-      103: 'cdmg',
-      104: 'cdmg%'
+      0  : {name: 'str', display: toOneDec },
+      1  : {name: 'agi', display: toOneDec },
+      2  : {name: 'int', display: toOneDec },
+      3  : {name: 'vit', display: toOneDec },
+      4  : {name: 'minPdmg', display: toOneDec },
+      5  : {name: 'maxPdmg', display: toOneDec },
+      6  : {name: 'minMdmg', display: toOneDec },
+      7  : {name: 'maxMdmg', display: toOneDec },
+      8  : {name: 'def', display: toOneDec },
+      9  : {name: 'mdef', display: toOneDec },
+      10 : {name: 'para', display: toOneDec },
+      12 : {name: 'crit', display: toOneDec },
+      13 : {name: 'crit resist', display: toOneDec },
+      16 : {name: 'fire%', display: toPercent },
+      18 : {name: 'light%', display: toPercent },
+      19 : {name: 'dark%', display: toPercent },
+      29 : {name: 'fd', display: toOneDec },
+      51 : {name: 'agi%', display: toPercent },
+      52 : {name: 'int%', display: toPercent },
+      53 : {name: 'vit%', display: toPercent },
+      54 : {name: 'minPdmg%', display: toPercent },
+      55 : {name: 'maxPdmg%', display: toPercent },
+      56 : {name: 'minMdmg%', display: toPercent },
+      57 : {name: 'maxMdmg%', display: toPercent },
+      58 : {name: 'def%', display: toPercent },
+      103: {name: 'cdmg', display: toOneDec },
+      104: {name: 'cdmg%', display: toPercent },
     },
   
     rankNames : {
@@ -67,6 +74,10 @@ m.factory('hCodeValues', [function() {
           currentData.min = data[prop];
           currentData.max = data[prop];
         }
+        else if(prop == 'StateValue' + (currentState-1)) {
+          currentData.min = data[prop];
+          currentData.max = data[prop];
+        }
         else if(prop == 'State' + (currentState-1) + '_GenProb') {
           currentData.genProb = data[prop];
         }
@@ -78,7 +89,26 @@ m.factory('hCodeValues', [function() {
             break;
           }
           
-          currentData = {name: this.stats[stateId],num: stateId};
+          var t = this;
+          var stat =this.stats[stateId];
+          var name = stateId;
+          if(stat != null) {
+            name = stat.name;
+          }
+          currentData = {
+            stat : stat,
+            name: name,
+            num: stateId,
+            getDisplay : function() {
+              if(this.stat != null && this.stat.display != null) {
+                return this.stat.display(this);
+              }
+              else {
+                return this.max;
+              }
+            }
+          };
+
           if(currentData.name == null) {
             currentData.name = stateId;
           }

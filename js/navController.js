@@ -13,6 +13,7 @@ angular.module('navController', ['ngRoute'])
       // {path: 'item-search/techs', name:'techs'},
       // {path: 'item-search/cash', name:'cash'},
       // {path: 'item-search/wellspring', name:'wellspring'},
+      {path: 'item-search/titles', name:'titles'},
       {path: 'item-search/gems', name:'gems'},
       ];
     

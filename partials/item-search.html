@@ -47,6 +47,11 @@
   </td>
   <td class="col-xs-8">
     <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
+    <div>
+      <span ng-repeat="stat in result.stats">
+        | {{stat.name}}: {{stat.getDisplay()}}
+      </span>|
+    </div>
   </td>
   <td class="col-xs-1">
       <!-- <button class="btn btn-link" aria-label="Add">Add +</button> -->

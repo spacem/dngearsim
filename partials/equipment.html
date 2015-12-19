@@ -3,7 +3,6 @@
     {{item.name}}
     - 
     {{item.getRankName().name}}
-    {{item.getTypeName()}}
     level {{item.levelLimit}}
   </h3><small>{{item.id}}</small>
 </div>
@@ -16,7 +15,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div ng-repeat="stat in item.stats">
-      {{stat.name}} : {{stat.max}}
+      {{stat.name}} : {{stat.getDisplay()}}
       </div>
     </div>
   </div>
