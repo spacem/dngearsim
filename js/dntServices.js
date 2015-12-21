@@ -1,12 +1,17 @@
 var m = angular.module('dntServices', ['translationService','ngRoute','valueServices']);
+m.factory('getAllItemFactories',
+['equipment','plates','talisman','techs','rebootEquipment','pvpEquipment','wellspring','titles','gems','cash','cash2014','cash2015',
+function(equipment,plates,talisman,techs,rebootEquipment,pvpEquipment,wellspring,titles,gems,cash,cash2014,cash2015) {
+  return function() { return [equipment,plates,talisman,techs,rebootEquipment,pvpEquipment,wellspring,titles,gems,cash,cash2014,cash2015] };
+}]);
 m.factory('dntInit',
-['equipment','plates','talisman','techs','rebootEquipment','wellspring','titles','gems','cash','cash2014','cash2015','jobs','enchantment',
-function(equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,jobs,enchantment) {
+['getAllItemFactories','jobs','enchantment',
+function(getAllItemFactories,jobs,enchantment) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,jobs,enchantment];
+    var allFactories = [jobs,enchantment].concat(getAllItemFactories());
     
     function initFactory(index) {
     
@@ -27,20 +32,20 @@ function(equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,
   }
 }]);
 m.factory('dntReset',
-['equipment','plates','talisman','techs','rebootEquipment','jobs','enchantment','wellspring','titles','gems','cash','cash2014','cash2015',
-function(equipment,plates,talisman,techs,rebootEquipment,jobs,enchantment,wellspring,titles,gems,cash,cash2014,cash2015) {
+['getAllItemFactories','jobs','enchantment',
+function(getAllItemFactories, jobs,enchantment) {
   return function(progress) {
     
     progress('resetting loaded data');
-    var allFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,jobs,enchantment];
+    var allFactories = [jobs,enchantment].concat(getAllItemFactories());
     angular.forEach(allFactories, function(value, key) {
       value.resetLoader();
       });
   }
 }]);
 m.factory('getAllItems',
-['equipment','plates','talisman','techs','rebootEquipment','wellspring','gems','cash','cash2014','cash2015',
-function(equipment,plates,talisman,techs,rebootEquipment,wellspring,gems,cash,cash2014,cash2015) {
+[
+function() {
     
   return function(factories) {
     
@@ -252,8 +257,9 @@ m.factory('rebootEquipment', ['buildItemFactory', function(buildItemFactory) {
 m.factory('equipment', ['buildItemFactory', function(buildItemFactory) {
   return buildItemFactory('itemtable_equipment.dnt', 'equipment');
 }]);
-
-
+m.factory('pvpEquipment', ['buildItemFactory', function(buildItemFactory) {
+  return buildItemFactory('itemtable_pvp.dnt', 'equipment');
+}]);
 
 m.factory('cash2015', ['buildItemFactory', function(buildItemFactory) {
   return buildItemFactory('itemtable_common2015.dnt', 'cash');

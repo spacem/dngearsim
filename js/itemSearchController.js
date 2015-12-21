@@ -2,12 +2,14 @@ angular.module('itemSearchController', ['translationService', 'dntServices'])
 .controller('ItemSearchCtrl',
 ['$scope','$routeParams','$timeout','$uibModal',
 'translations',
- 'jobs','equipment','plates','talisman','techs','rebootEquipment','wellspring','titles','gems','cash','cash2014','cash2015',
- 'getAllItems','hCodeValues',
+'getAllItemFactories',
+'jobs',
+'getAllItems','hCodeValues',
 function(
   $scope,$routeParams,$timeout,$uibModal,
   translations,
-  jobs,equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015,
+  getAllItemFactories,
+  jobs,
   getAllItems,hCodeValues) {
   
   $scope.job = {id: -1, name: '-- loading --'};
@@ -41,7 +43,7 @@ function(
     });
   }
   
-  var allItemFactories = [equipment,plates,talisman,techs,rebootEquipment,wellspring,titles,gems,cash,cash2014,cash2015];
+  var allItemFactories = getAllItemFactories();
   var itemFactories = [];
   if($routeParams.itemType == null) {
     itemFactories = allItemFactories;
