@@ -1,24 +1,20 @@
-var m = angular.module('dntServices', ['translationService','ngRoute','valueServices']);
-m.factory('getAllItemFactories',
-['equipment','plates','talisman','techs','rebootEquipment','pvpEquipment','wellspring','titles','gems','cash','cash2014','cash2015',
-function(equipment,plates,talisman,techs,rebootEquipment,pvpEquipment,wellspring,titles,gems,cash,cash2014,cash2015) {
-  return function() { return [equipment,plates,talisman,techs,rebootEquipment,pvpEquipment,wellspring,titles,gems,cash,cash2014,cash2015] };
-}]);
+var m = angular.module('dntServices', ['translationService','ngRoute','valueServices','itemService']);
+
 m.factory('dntInit',
-['getAllItemFactories','jobs','enchantment',
-function(getAllItemFactories,jobs,enchantment) {
+['items','jobs','enchantment',
+function(items,jobs,enchantment) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [jobs,enchantment].concat(getAllItemFactories());
+    var allFactories = [jobs,enchantment].concat(items.all);
     
     function initFactory(index) {
     
       if(index < allFactories.length) {
         allFactories[index].init(progress, function() { 
           if(allFactories[index].isLoaded()) {
-            progress('dnt loaded: ' + allFactories[index].fileName);
+            progress('dnt loaded: ' + allFactories[index].mainDnt);
             initFactory(index+1);
           }
         });
@@ -32,12 +28,12 @@ function(getAllItemFactories,jobs,enchantment) {
   }
 }]);
 m.factory('dntReset',
-['getAllItemFactories','jobs','enchantment',
-function(getAllItemFactories, jobs,enchantment) {
+['items','jobs','enchantment',
+function(items, jobs,enchantment) {
   return function(progress) {
     
     progress('resetting loaded data');
-    var allFactories = [jobs,enchantment].concat(getAllItemFactories());
+    var allFactories = [jobs,enchantment].concat(items.all);
     angular.forEach(allFactories, function(value, key) {
       value.resetLoader();
       });
@@ -59,229 +55,103 @@ function() {
     return allItems;
   }
 }]);
-m.factory('dntLoader', ['$routeParams',function($routeParams) {
+
+m.factory('dntData', ['$routeParams', function($routeParams) {
   
-  var createdLoaders = [];
-  
-  return {
-    create : function(file) {
+  function createLoader(file) {
       
-      var completeCallback = null;
-      var progressCallback = null;
-      
-      var loader = {
-        reader : new DntReader(),
-        
-        loaded : false,
-        startedLoading : false,
-        
-        file : file,
-        
-        init : function(progress, complete) {
-          
-          if(this.loaded) {
-            complete();
-          }
-          else {
-            progressCallback = progress;
-            completeCallback = complete;
-            
-            if(!this.startedLoading) {
-              this.startedLoading = true;
-              var t = this;
-              
-              this.reader.loadDntFromServerFile(
-                $routeParams['location'] + '/' + file,
-                function(msg) { progressCallback(msg) }, 
-                function() {
-                  console.info('dnt loading complete : ' + file);
-                  t.loaded = true;
-                  completeCallback();
-                },
-                function(msg) { progressCallback(msg) }  );
-            }
-          }
-        },
-        
-        findRowNumById : function(id) {
-          for(var r=0;r<this.reader.numRows;++r) {
-            if(this.reader.data[r]['id'] == id) {
-              return r;
-            }
-          }
-          
-          return null;
-        },
-        
-        reset : function() {
-          this.reader = new DntReader();
-          this.loaded = false;
-          this.startedLoading = false;
-        }
-      }
+    var completeCallback = null;
+    var progressCallback = null;
     
-      createdLoaders.push(loader);
-      return loader;
-    },
-  
-    resetAll : function() {
-      angular.forEach(createdLoaders, function(value, key) {
-        value.reset();
-      });
-    },
-    
-    initAll : function(progress) {
-      this.resetAll();
+    var loader = {
+      reader : new DntReader(),
       
-      var allLoaders = 
+      loaded : false,
+      startedLoading : false,
       
-      angular.forEach(createdLoaders, function(value, key) {
-        progress('init: ' + value.file);
-        value.init(progress, function() { 'completed loading ' + value.file });
-      });
-    }
-  }
-}]);
-m.factory('buildItemFactory', 
-['$routeParams','translations','dntLoader','hCodeValues',
-function($routeParams,translations,dntLoader,hCodeValues) {
-
-  function build(d) {
-    var nameId = d.NameIDParam;
-    if(nameId == null) {
-      nameId = d.NameID;
-    }
-    return {
-      name : translations.translate(nameId).replace(/\{|\}/g,'').replace(/\,/g,' '),
-      levelLimit : d['LevelLimit'],
-      needJobClass : d['NeedJobClass'],
-      rank : d['Rank'],
-      id : d['id'],
-      type : d['Type'],
-      getRankName : function() { return hCodeValues.rankNames[this.rank] },
-      getTypeName : function() {
-        var typeName = hCodeValues.typeNames[this.type];
-        if(typeName == null) {
-          return this.type;
-        }
-        else {
-          return typeName;
-        }
-      },
-      getEnchantmentId : function() {
-        // TODO: lookup values in other dnt
-        return d['EnchantID'];
-      },
-      stats : null,
-      initStats : function() {
-        if(this.stats == null) {
-          this.stats = hCodeValues.getStats(d);
-        }
-      }
-    };
-  }
-  
-  function getItems(data) {
-    var items = [];
-    var numRows = data.length;
-    for(var r=0;r<numRows;++r) {
-      var d = data[r];
-      if(d.State1_GenProb > 0 || d.StateValue1 > 0) {
-        var equip = build(data[r]);
-        items.push(equip);
-      }
-    }
-    
-    return items;
-  }
-  
-  return function(fileName, type) {
-    return {
-
-      type: type,
-
-      loader : dntLoader.create(fileName),
-      items : null,
-      fileName : fileName,
-      isLoaded : function() {
-        return this.items != null || this.loader.loaded;
-      },
-
+      file : file,
+      
       init : function(progress, complete) {
-        if(this.items == null) {
-          var t = this;
-          this.loader.init(progress, function() {
-            if(translations.loaded) {
-              t.items = getItems(t.loader.reader.data);
-              t.loader = dntLoader.create(fileName);
-              complete();
-            }
-            else {
-              translations.init(progress, function() {
-                t.items = getItems(t.loader.reader.data);
-                t.loader = dntLoader.create(fileName);
-                complete();
-              });
-            }
-          });
-        }
-        else {
+        
+        if(this.loaded) {
           complete();
         }
+        else {
+          progressCallback = progress;
+          completeCallback = complete;
+          
+          if(!this.startedLoading) {
+            this.startedLoading = true;
+            var t = this;
+            
+            this.reader.loadDntFromServerFile(
+              $routeParams['location'] + '/' + file,
+              function(msg) { progressCallback(msg) }, 
+              function() {
+                console.info('dnt loading complete : ' + file);
+                t.loaded = true;
+                completeCallback();
+              },
+              function(msg) { progressCallback(msg) }  );
+          }
+        }
       },
       
-      resetLoader : function() {
-        this.items = null;
-        this.loader.reset();
-        this.loader = dntLoader.create(fileName);
+      findRowNumById : function(id) {
+        for(var r=0;r<this.reader.numRows;++r) {
+          if(this.reader.data[r]['id'] == id) {
+            return r;
+          }
+        }
+        
+        return null;
       },
-
-      getItems : function () {
-        return this.items;
+      
+      reset : function() {
+        this.reader = new DntReader();
+        this.loaded = false;
+        this.startedLoading = false;
       }
     }
-  }
-}]);
-m.factory('plates', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_glyph.dnt', 'plates');
-}]);
-m.factory('talisman', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_talisman.dnt', 'talisman');
-}]);
-m.factory('techs', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_skilllevelup.dnt', 'techs');
-}]);
-m.factory('rebootEquipment', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_reboot.dnt', 'equipment');
-}]);
-m.factory('equipment', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_equipment.dnt', 'equipment');
-}]);
-m.factory('pvpEquipment', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_pvp.dnt', 'equipment');
-}]);
-
-m.factory('cash2015', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_common2015.dnt', 'cash');
-}]);
-m.factory('cash2014', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_common2014.dnt', 'cash');
-}]);
-m.factory('cash', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_cash.dnt', 'cash');
-}]);
-m.factory('gems', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_dragonjewel.dnt', 'gems');
-}]);
-m.factory('wellspring', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('itemtable_source.dnt', 'wellspring');
-}]);
-m.factory('titles', ['buildItemFactory', function(buildItemFactory) {
-  return buildItemFactory('appellationtable.dnt', 'titles');
+  
+    return loader;
+  };
+  
+  return {
+    loaders : {},
+    
+    init : function (fileName, progress, complete) {
+      if(!(fileName in this.loaders)) {
+        this.loaders[fileName] = createLoader(fileName);
+      }
+      this.loaders[fileName].init(progress, complete)
+    },
+    getData : function (fileName) {
+      if(this.isLoaded(fileName)) {
+        return this.loaders[fileName].reader.data;
+      }
+      else {
+        return [];
+      }
+    },
+    isLoaded : function(fileName) {
+      return fileName in this.loaders && this.loaders[fileName].loaded;
+    },
+    reset : function(fileName) {
+      if(fileName in this.loaders) {
+        this.loaders[fileName].reset();
+      }
+    },
+    resetAll : function() {
+      angular.forEach(this.loaders, function(value, key) {
+        value.reset();
+      });
+    }
+  };
 }]);
 
 
-m.factory('enchantment', ['dntLoader', 'hCodeValues', function(dntLoader, hCodeValues) {
+m.factory('enchantment', ['dntData', 'hCodeValues', function(dntData, hCodeValues) {
   var fileName ='enchanttable.dnt'; 
   var rFileName ='enchanttable_reboot.dnt'; 
 
@@ -312,10 +182,8 @@ m.factory('enchantment', ['dntLoader', 'hCodeValues', function(dntLoader, hCodeV
   
   function loaderComplete(item, complete) {
     if(item.isLoaded()) {
-      item.values = initEnchantments(item.loader.reader.data);
-      item.rValues = initEnchantments(item.rLoader.reader.data);
-      item.loader = dntLoader.create(fileName);
-      item.rLoader = dntLoader.create(rFileName);
+      item.values = initEnchantments(dntData.getData(fileName));
+      item.rValues = initEnchantments(dntData.getData(rFileName));
       complete();
     }
   }
@@ -324,26 +192,19 @@ m.factory('enchantment', ['dntLoader', 'hCodeValues', function(dntLoader, hCodeV
     
     fileName : fileName,
     rFileName : rFileName,
-  
-    loader : dntLoader.create(fileName),
-    rLoader : dntLoader.create(rFileName),
     
     values : null,
     rValues : null,
     
     isLoaded : function() {
-      return (this.loader.loaded && this.rLoader.loaded) || this.values != null || this.rValues != null;
+      return (dntData.isLoaded(fileName) && dntData.isLoaded(rFileName)) || this.values != null || this.rValues != null;
     },
     
     init : function(progress, complete) {
       if(!this.isLoaded()) {
         var t = this;
-        if(!this.loader.startedLoading) {
-          this.loader.init(progress, function() { loaderComplete(t, complete) });
-        }
-        if(!this.rLoader.startedLoading) {
-          this.rLoader.init(progress, function() { loaderComplete(t, complete) });
-        }
+        dntData.init(fileName, progress, function() { loaderComplete(t, complete) });
+        dntData.init(rFileName, progress, function() { loaderComplete(t, complete) });
       }
       else {
         complete();
@@ -353,43 +214,40 @@ m.factory('enchantment', ['dntLoader', 'hCodeValues', function(dntLoader, hCodeV
     resetLoader : function() {
       this.values = null;
       this.rValues = null;
-      this.loader.reset();
-      this.loader = dntLoader.create(fileName);
-      this.rLoader.reset();
-      this.rLoader = dntLoader.create(rFileName);
+      dntData.reset(fileName);
+      dntData.reset(rFileName);
     },
   }
 }
 ]);
-m.factory('jobs', ['dntLoader', 'translations', function(dntLoader, translations) {
+m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
   
   var fileName ='jobtable.dnt'; 
   return {
     fileName : fileName,
-  
-    loader : dntLoader.create(fileName),
     
     isLoaded : function() {
-      return this.loader.loaded;
+      return dntData.isLoaded(fileName);
     },
     
     init : function(progress, complete) {
-      this.loader.init(progress, function() {
+      dntData.init(fileName, progress, function() {
         complete();
         });
     },
       
     resetLoader : function() {
-      this.loader.reset();
+      dntData.reset(fileName);
     },
     
     getFinalJobs : function () {
       var jobs = [];
-      var numRows = this.loader.reader.numRows;
+      var data = dntData.getData(fileName);
+      var numRows = data.length;
       for(var r=0;r<numRows;++r) {
-        var d = this.loader.reader.data[r];
-        if(d['JobNumber'] == 2) {
-          jobs[jobs.length] = this.createJob(r);
+        var d = data[r];
+        if(d.JobNumber == 2) {
+          jobs[jobs.length] = this.createJob(d);
         }
       }
       
@@ -398,50 +256,42 @@ m.factory('jobs', ['dntLoader', 'translations', function(dntLoader, translations
     
     getAllJobs : function () {
       var jobs = [];
-      var numRows = this.loader.reader.numRows;
+      var data = dntData.getData(fileName);
+      var numRows = data.length;
       for(var r=0;r<numRows;++r) {
-        jobs[jobs.length] = this.createJob(r);
+        jobs[jobs.length] = this.createJob(data[r]);
       }
       
       return jobs;
     },
     
-    createJob : function(r) {
-      
-      var d = this.loader.reader.data[r];
+    createJob : function(d) {
       var t = this;
       return {
-          id : this.getJobId(r),
-          name : translations.translate(this.getJobName(r)),
+          id : d.id,
+          name : translations.translate(d.JobName),
           isClassJob : function(c) {
-            return t.isClassJob2(r, c);
+            return t.isClassJob2(d, c);
           }
         };
     },
     
-    getJobId : function (r) {
-      return this.loader.reader.data[r]['id'];
-    },
-    
-    getJobName : function (r) {
-      return this.loader.reader.data[r]['JobName'];
-    },
-    
-    isClassJob2 : function (r, c) {
-      if(this.loader.reader.data[r]['id'] == c) {
+    isClassJob2 : function (d, c) {
+      if(d.id == c) {
         return true;
       }
       
-      var parentJob = this.loader.reader.data[r]['ParentJob'];
+      var parentJob = d.ParentJob;
       
       if(parentJob == c) return true;
       if(c == 0) return true;
 
-      var numRows = this.loader.reader.numRows;
+      var data = dntData.getData(fileName);
+      var numRows = data.length;
       for(var r2=0;r2<numRows;++r2) {
-        var d = this.loader.reader.data[r2];
-        if(d.id == parentJob) {
-          return this.isClassJob2(r2, c);
+        var d2 = data[r2];
+        if(d2.id == parentJob) {
+          return this.isClassJob2(d2, c);
         }
       }
     }

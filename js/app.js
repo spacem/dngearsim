@@ -9,6 +9,7 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   'itemSearchController',
   'translationService',
   'dntServices',
+  'itemService',
   'navController',
 ]);
 

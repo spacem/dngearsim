@@ -2,13 +2,13 @@ angular.module('itemSearchController', ['translationService', 'dntServices'])
 .controller('ItemSearchCtrl',
 ['$scope','$routeParams','$timeout','$uibModal',
 'translations',
-'getAllItemFactories',
+'items',
 'jobs',
 'getAllItems','hCodeValues',
 function(
   $scope,$routeParams,$timeout,$uibModal,
   translations,
-  getAllItemFactories,
+  items,
   jobs,
   getAllItems,hCodeValues) {
   
@@ -43,7 +43,7 @@ function(
     });
   }
   
-  var allItemFactories = getAllItemFactories();
+  var allItemFactories = items.all;
   var itemFactories = [];
   if($routeParams.itemType == null) {
     itemFactories = allItemFactories;
