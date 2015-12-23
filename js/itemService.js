@@ -12,12 +12,18 @@ function(translations,dntData,hCodeValues) {
       getName : function() {
         if(this.name == null) {
 
-          var nameId = d.NameIDParam;
-          if(nameId == null || nameId == '') {
-            nameId = d.NameID;
+          var nameValue = d.NameIDParam;
+          if(nameValue == null || nameValue == '') {
+            nameValue = d.NameID;
           }
     
-          this.name = translations.translate(nameId).replace(/\{|\}/g,'').replace(/\,/g,' ');
+          var translatedName = translations.translate(nameValue);
+          if(typeof translatedName == 'string') {
+            this.name = translatedName.replace(/\{|\}/g,'').replace(/\,/g,' ');
+          }
+          else {
+            this.name = translatedName.toString();
+          }
         }
         return this.name;
       },
@@ -206,6 +212,9 @@ function(translations,dntData,hCodeValues) {
         partsDnt: 'partstable_cash.dnt', 
         weaponDnt: 'weapontable_cash.dnt', 
         type: 'cash' },
+      event: {
+        mainDnt: 'itemtable_event.dnt', 
+        type: 'cash' },
     };
     
     var allItems = []
@@ -214,10 +223,8 @@ function(translations,dntData,hCodeValues) {
       addMethods(value);
       allItems.push(value);
     });
-    
-    
+
     itemTypes.all = allItems;
-    
     
   return itemTypes;
   
