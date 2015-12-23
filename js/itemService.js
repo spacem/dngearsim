@@ -4,18 +4,33 @@ m.factory('items',
 ['translations','dntData','hCodeValues',
 function(translations,dntData,hCodeValues) {
 
-  function build(d) {
+  function createItem(d, p) {
     var nameId = d.NameIDParam;
     if(nameId == null) {
       nameId = d.NameID;
     }
+    
     return {
-      name : translations.translate(nameId).replace(/\{|\}/g,'').replace(/\,/g,' '),
+      name : null,
+      getName : function() {
+        if(this.name == null) {
+          this.name = translations.translate(nameId).replace(/\{|\}/g,'').replace(/\,/g,' ');
+        }
+        return this.name;
+      },
       levelLimit : d['LevelLimit'],
       needJobClass : d['NeedJobClass'],
       rank : d['Rank'],
       id : d['id'],
       type : d['Type'],
+      getPotentialRatio : function() {
+        if(p != null && p.PotentialRatio > 0 && p.PotentialRatio != 1 && p.PotentialRatio != 100) {
+          return Math.round(p.PotentialRatio*10)/10 + '%';
+        }
+        else {
+          return null;
+        }
+      },
       getRankName : function() { return hCodeValues.rankNames[this.rank] },
       getTypeName : function() {
         var typeName = hCodeValues.typeNames[this.type];
@@ -33,24 +48,56 @@ function(translations,dntData,hCodeValues) {
       stats : null,
       initStats : function() {
         if(this.stats == null) {
-          this.stats = hCodeValues.getStats(d);
+          var stats = hCodeValues.getStats(d); 
+          if(p != null) {
+            var potentialStats = hCodeValues.getStats(p);
+            angular.forEach(potentialStats, function(pValue, pKey) {
+              var added = false;
+              angular.forEach(stats, function(sValue, sKey) {
+                if(pValue.num == sValue.num) {
+                  sValue.min = Number(sValue.min) + Number(pValue.min);
+                  sValue.max = Number(sValue.max) +  Number(pValue.max);
+                  added = true;
+                }
+              });
+            
+              if(!added) {
+                stats.push(pValue);
+              }
+            });
+          }
+          
+          this.stats = stats;
         }
       }
     };
   }
   
-  function getItems(data) {
-    var items = [];
+  function loadItems(item) {
+    var data = dntData.getData(item.mainDnt);
+
+    item.items = [];
     var numRows = data.length;
     for(var r=0;r<numRows;++r) {
       var d = data[r];
-      if(d.State1_GenProb > 0 || d.StateValue1 > 0) {
-        var equip = build(data[r]);
-        items.push(equip);
+      if(d.State1_GenProb > 0 || d.StateValue1 > 0 || d.TypeParam1 > 0) {
+        
+        var potentials = [];
+        if(d.TypeParam1 > 0 && 'potentialDnt' in item) {
+          potentials = dntData.find(item.potentialDnt, 'PotentialID', d.TypeParam1);
+        }
+        
+        var numPotentials = potentials.length;
+        if(numPotentials == 0) {
+          item.items.push(createItem(d, null));
+        }
+        else {
+          for(var p=0;p<numPotentials;++p) {
+            item.items.push(createItem(d, potentials[p]));
+          }
+        }
       }
     }
-    
-    return items;
   }
   
   function addMethods(item) {
@@ -61,24 +108,28 @@ function(translations,dntData,hCodeValues) {
     };
 
     item.init = function(progress, complete) {
-      if(item.items == null) {
-          dntData.init(item.mainDnt, progress, function() {
-          if(translations.loaded) {
-            item.items = getItems(dntData.getData(item.mainDnt));
-            dntData.reset(item.mainDnt);
-            complete();
-          }
-          else {
-            translations.init(progress, function() {
-              item.items = getItems(dntData.getData(item.mainDnt));
-              dntData.reset(item.mainDnt);
-              complete();
-            });
-          }
-        });
+
+      if(item.items != null) {
+        complete();
       }
       else {
-        complete();
+        
+        if(!translations.startedLoading) {
+          translations.init(progress, function() { item.init(progress, complete) });
+        }
+        
+        if(!dntData.hasStartedLoading(item.mainDnt)) {
+          dntData.init(item.mainDnt, progress, function() { item.init(progress, complete) });
+        }
+        
+        if('potentialDnt' in item && !dntData.hasStartedLoading(item.potentialDnt)) {
+          dntData.init(item.potentialDnt, progress, function() { item.init(progress, complete) });
+        }
+        
+        if(translations.loaded && dntData.isLoaded(item.mainDnt) && (!('potentialDnt' in item) || dntData.isLoaded(item.potentialDnt))) {
+          loadItems(item);
+          complete();
+        }
       }
     };
     
@@ -95,23 +146,41 @@ function(translations,dntData,hCodeValues) {
   var items = {
     
       titles : { mainDnt : 'appellationtable.dnt', type : 'titles' },
-      plates: { mainDnt : 'itemtable_glyph.dnt', type: 'plates' },
-      talisman: { mainDnt: 'itemtable_talisman.dnt', type: 'talisman' },
-      techs: { mainDnt: 'itemtable_skilllevelup.dnt', type: 'techs' },
-      gems: { mainDnt: 'itemtable_dragonjewel.dnt', type: 'gems' },
       wellspring: { mainDnt: 'itemtable_source.dnt', type: 'wellspring' },
+      
+      techs: { 
+        mainDnt: 'itemtable_skilllevelup.dnt', 
+        potentialDnt: 'potentialtable.dnt', 
+        type: 'techs' },
+      
+      talisman: { 
+        mainDnt: 'itemtable_talisman.dnt', 
+        type: 'talisman', 
+        potentialDnt: 'potentialtable_talismanitem.dnt' },
+      
+      gems: { 
+        mainDnt: 'itemtable_dragonjewel.dnt', 
+        potentialDnt: 'potentialtable_dragonjewel.dnt',
+        type: 'gems' },
+      
+      plates: { 
+        mainDnt : 'itemtable_glyph.dnt', 
+        potentialDnt: 'potentialtable_glyph.dnt',
+        type: 'plates' },
 
       equipment: {
         mainDnt: 'itemtable_equipment.dnt', 
         partsDnt: 'partstable.dnt', 
         weaponDnt: 'weapontable.dnt', 
         enchantDnt: 'enchanttable.dnt', 
+        potentialDnt: 'potentialtable.dnt',
         type: 'equipment' },
       rebootEquipment: { 
         mainDnt: 'itemtable_reboot.dnt', 
         partsDnt: 'partstable_reboot.dnt', 
         weaponDnt: 'weapontable_reboot.dnt', 
         enchantDnt: 'enchanttable_reboot.dnt', 
+        potentialDnt: 'potentialtable_reboot.dnt',
         type: 'equipment' },
       pvpEquipment: { 
         mainDnt: 'itemtable_pvp.dnt',

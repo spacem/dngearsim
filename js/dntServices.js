@@ -119,6 +119,7 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
   
   return {
     loaders : {},
+    findIndexes : {},
     
     init : function (fileName, progress, complete) {
       if(!(fileName in this.loaders)) {
@@ -134,8 +135,48 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
         return [];
       }
     },
+    find : function(fileName, column, value) {
+      if(this.isLoaded(fileName)) {
+        if(!(fileName in this.findIndexes)){
+          this.findIndexes[fileName] = {};
+        }
+        
+        if(!(column in this.findIndexes[fileName])) {
+          var index = {}
+          this.findIndexes[fileName][column] = index;
+          
+          var results = [];
+          
+          var data = this.loaders[fileName].reader.data;
+          var len = data.length;
+          for(var r=0;r<len;++r) {
+            var d = data[r];
+            var val = d[column];
+
+            if(!(val in index)) {
+              index[val] = [d];
+            }
+            else {
+              index[val].push(d);
+            }
+          }
+        }
+        
+        if(value in this.findIndexes[fileName][column]) {
+          return this.findIndexes[fileName][column][value];
+        }
+        else {
+          return [];
+        }
+      }
+      
+      return [];
+    },
     isLoaded : function(fileName) {
       return fileName in this.loaders && this.loaders[fileName].loaded;
+    },
+    hasStartedLoading : function(fileName) {
+      return this.isLoaded(fileName) || (fileName in this.loaders && this.loaders[fileName].startedLoading);
     },
     reset : function(fileName) {
       if(fileName in this.loaders) {

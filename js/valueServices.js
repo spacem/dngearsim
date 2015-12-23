@@ -26,7 +26,9 @@ m.factory('hCodeValues', [function() {
       16 : {name: 'fire%', display: toPercent },
       18 : {name: 'light%', display: toPercent },
       19 : {name: 'dark%', display: toPercent },
+      25 : {name: 'hp', display: toOneDec },
       29 : {name: 'fd', display: toOneDec },
+      50 : {name: 'str%', display: toPercent },
       51 : {name: 'agi%', display: toPercent },
       52 : {name: 'int%', display: toPercent },
       53 : {name: 'vit%', display: toPercent },
@@ -35,6 +37,7 @@ m.factory('hCodeValues', [function() {
       56 : {name: 'minMdmg%', display: toPercent },
       57 : {name: 'maxMdmg%', display: toPercent },
       58 : {name: 'def%', display: toPercent },
+      74 : {name: 'move%', display: toPercent },
       103: {name: 'cdmg', display: toOneDec },
       104: {name: 'cdmg%', display: toPercent },
     },
@@ -60,7 +63,6 @@ m.factory('hCodeValues', [function() {
   
     getStats : function(data) {
       var currentState = 1;
-      var minValue = 0;
       var currentData = {};
       var statVals = []
       for(var prop in data) {

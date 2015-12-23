@@ -10,6 +10,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,enchantment,item) {
   $scope.item = item;
   $scope.curEnchantmentNum = 10;
   $scope.enchantment = null;
+  $scope.potentialRatio = item.getPotentialRatio();
   $scope.setEnchantment = function() {
     for(var i=0;i<$scope.enchantments.length;++i) {
       if($scope.curEnchantmentNum == $scope.enchantments[i].data.EnchantLevel) {

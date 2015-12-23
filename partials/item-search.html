@@ -46,7 +46,7 @@
     {{getJobName(result.needJobClass)}}
   </td>
   <td class="col-xs-8">
-    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
+    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.getName()}}</button>
     <div>
       <span ng-repeat="stat in result.stats">
         | {{stat.name}}: {{stat.getDisplay()}}

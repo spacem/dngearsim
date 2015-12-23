@@ -126,7 +126,7 @@ function(
             }
             var allMatch = true;
             for(var ns=0;ns<nameSearches.length;++ns) {
-              if(e.name.toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
+              if(e.getName().toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
                 allMatch = false;
                 break;
               }
@@ -148,7 +148,7 @@ function(
   };
   
   $scope.open = function (item) {
-    console.log('opening item ' + item.name);
+    console.log('opening item ' + item.getName());
     var modalInstance = $uibModal.open({
       animation: true,
       backdrop : true,
