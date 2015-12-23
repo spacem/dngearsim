@@ -13,6 +13,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.potentialRatio = item.getPotentialRatio();
   $scope.enchantmentStats = [];
   $scope.enchantmentCost = '';
+  $scope.setStats = null;
   
   $scope.setEnchantment = function() {
     for(var i=0;i<$scope.enchantments.length;++i) {
@@ -56,20 +57,55 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   };
   
   if('enchantDnt' in item.itemType) {
-    dntData.init(item.itemType.enchantDnt, reportProgress, function() { $timeout(itemInit); } );
+    dntData.init(item.itemType.enchantDnt, reportProgress, function() { $timeout(enchantInit); } );
   }
   else {
     $scope.enchantments = [];
   }
 
-  function itemInit() {
+  function enchantInit() {
 
-    if(dntData.isLoaded(item.itemType.enchantDnt)) {
+    if(dntData.isLoaded($scope.item.itemType.enchantDnt)) {
       if($scope.enchantments == null) {
         
         var eid = $scope.item.getEnchantmentId();
-        $scope.enchantments = dntData.find(item.itemType.enchantDnt, 'EnchantID', eid);
+        $scope.enchantments = dntData.find($scope.item.itemType.enchantDnt, 'EnchantID', eid);
         $scope.setEnchantment();
+      }
+    }
+  }
+  
+  $scope.usePartDnt = '';
+  if($scope.item.type == 1) {
+    $scope.usePartDnt = 'partsDnt';
+  }
+  else if($scope.item.type == 0) {
+    $scope.usePartDnt = 'weaponDnt';
+  }
+  
+  if($scope.usePartDnt in item.itemType && 'setDnt' in item.itemType) {
+    dntData.init(item.itemType.setDnt, reportProgress, function() { $timeout(setInit); } );
+    dntData.init(item.itemType[$scope.usePartDnt], reportProgress, function() { $timeout(setInit); } );
+  }
+  else {
+      $scope.setStats = [];
+  }
+
+  function setInit() {
+
+    if(dntData.isLoaded($scope.item.itemType[$scope.usePartDnt]) && dntData.isLoaded($scope.item.itemType.setDnt)) {
+
+      if($scope.setStats == null) {
+        
+        $scope.setStats = [];
+        
+        var parts = dntData.find($scope.item.itemType[$scope.usePartDnt], 'id', $scope.item.id);
+        if(parts.length > 0) {
+          var sets = dntData.find($scope.item.itemType.setDnt, 'id', parts[0].SetItemID);
+          if(sets.length > 0) {
+            $scope.setStats = hCodeValues.getStats(sets[0]);
+          }
+        }
       }
     }
   }

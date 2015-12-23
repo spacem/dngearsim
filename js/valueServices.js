@@ -24,8 +24,11 @@ m.factory('hCodeValues', [function() {
       12 : {name: 'crit', display: toOneDec },
       13 : {name: 'crit resist', display: toOneDec },
       16 : {name: 'fire%', display: toPercent },
+      17 : {name: 'ice%', display: toPercent },
       18 : {name: 'light%', display: toPercent },
       19 : {name: 'dark%', display: toPercent },
+      20 : {name: 'fire def%', display: toPercent },
+      21 : {name: 'ice def%', display: toPercent },
       25 : {name: 'hp', display: toOneDec },
       29 : {name: 'fd', display: toOneDec },
       50 : {name: 'str%', display: toPercent },
@@ -63,41 +66,23 @@ m.factory('hCodeValues', [function() {
   
     getStats : function(data) {
       var currentState = 1;
-      var currentData = {};
       var statVals = []
-      for(var prop in data) {
-        if(prop == 'State' + (currentState-1) + '_Min') {
-          currentData.min = data[prop];
-        }
-        else if(prop == 'State' + (currentState-1) + '_Max') {
-          currentData.max = data[prop];
-        }
-        else if(prop == 'State' + (currentState-1) + 'Value') {
-          currentData.min = data[prop];
-          currentData.max = data[prop];
-        }
-        else if(prop == 'StateValue' + (currentState-1)) {
-          currentData.min = data[prop];
-          currentData.max = data[prop];
-        }
-        else if(prop == 'State' + (currentState-1) + '_GenProb') {
-          currentData.genProb = data[prop];
-        }
-        else if(prop == 'State' + currentState) {
-          currentState++;
+      for(;;) {
+        
+        var stateProp = 'State' + currentState;
+        if(stateProp in data) {
           
-          var stateId = data[prop];
+          var stateId = data[stateProp];
           if(stateId == -1) {
             break;
           }
-          
-          var t = this;
+
           var stat =this.stats[stateId];
           var name = stateId;
           if(stat != null) {
             name = stat.name;
           }
-          currentData = {
+          var currentData = {
             stat : stat,
             name: name,
             num: stateId,
@@ -114,8 +99,48 @@ m.factory('hCodeValues', [function() {
           if(currentData.name == null) {
             currentData.name = stateId;
           }
+        
+          var prop;
+          prop = 'State' + currentState + '_Min';
+          if(prop in data) {
+            currentData.min = data[prop];
+          }
+        
+          prop = 'State' + currentState + '_Max';
+          if(prop in data) {
+            currentData.max = data[prop];
+          }
           
+          prop = 'State' + currentState + 'Value';
+          if(prop in data) {
+            currentData.min = data[prop];
+            currentData.max = data[prop];
+          }
+          
+          prop = 'StateValue' + currentState;
+          if(prop in data) {
+            currentData.min = data[prop];
+            currentData.max = data[prop];
+          }
+          
+          prop = 'State' + currentState + '_GenProb';
+          if(prop in data) {
+            currentData.genProb = data[prop];
+          }
+          
+          prop = 'NeedSetNum' + currentState;
+          if(prop in data) {
+            if(data[prop] == 0) {
+              break;
+            }
+            currentData.needSetNum = data[prop];
+          }
+
+          currentState++;
           statVals.push(currentData);
+        }
+        else {
+          break;
         }
       }
       

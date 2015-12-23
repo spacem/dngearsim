@@ -179,10 +179,11 @@ function(translations,dntData,hCodeValues) {
 
       equipment: {
         mainDnt: 'itemtable_equipment.dnt', 
-        partsDnt: 'partstable.dnt', 
-        weaponDnt: 'weapontable.dnt', 
+        partsDnt: 'partstable_equipment.dnt', 
+        weaponDnt: 'weapontable_equipment.dnt', 
         enchantDnt: 'enchanttable.dnt', 
         potentialDnt: 'potentialtable.dnt',
+        setDnt: 'setitemtable.dnt',
         type: 'equipment' },
       rebootEquipment: { 
         mainDnt: 'itemtable_reboot.dnt', 
@@ -190,30 +191,36 @@ function(translations,dntData,hCodeValues) {
         weaponDnt: 'weapontable_reboot.dnt', 
         enchantDnt: 'enchanttable_reboot.dnt', 
         potentialDnt: 'potentialtable_reboot.dnt',
+        setDnt: 'setitemtable.dnt',
         type: 'equipment' },
       pvpEquipment: { 
         mainDnt: 'itemtable_pvp.dnt',
         partsDnt: 'partstable_pvp.dnt', 
         weaponDnt: 'weapontable_pvp.dnt', 
         enchantDnt: 'enchanttable.dnt', 
+        setDnt: 'setitemtable.dnt',
         type: 'equipment' },
       cash2015: { 
         mainDnt: 'itemtable_common2015.dnt', 
         partsDnt: 'partstable_common2015.dnt', 
         weaponDnt: 'weapontable_common2015.dnt', 
+        setDnt: 'setitemtable_cash.dnt',
         type: 'cash' },
       cash2014: { 
         mainDnt: 'itemtable_common2014.dnt', 
         partsDnt: 'partstable_common2014.dnt', 
         weaponDnt: 'weapontable_common2014.dnt', 
+        setDnt: 'setitemtable_cash.dnt',
         type: 'cash' },
       cash: { 
         mainDnt: 'itemtable_cash.dnt', 
         partsDnt: 'partstable_cash.dnt', 
         weaponDnt: 'weapontable_cash.dnt', 
+        setDnt: 'setitemtable_cash.dnt',
         type: 'cash' },
       event: {
         mainDnt: 'itemtable_event.dnt', 
+        setDnt: 'setitemtable_cash.dnt',
         type: 'cash' },
     };
     
