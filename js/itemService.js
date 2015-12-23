@@ -4,16 +4,19 @@ m.factory('items',
 ['translations','dntData','hCodeValues',
 function(translations,dntData,hCodeValues) {
 
-  function createItem(d, p) {
-    var nameId = d.NameIDParam;
-    if(nameId == null) {
-      nameId = d.NameID;
-    }
+  function createItem(itemType, d, p) {
     
     return {
+      itemType : itemType,
       name : null,
       getName : function() {
         if(this.name == null) {
+
+          var nameId = d.NameIDParam;
+          if(nameId == null || nameId == '') {
+            nameId = d.NameID;
+          }
+    
           this.name = translations.translate(nameId).replace(/\{|\}/g,'').replace(/\,/g,' ');
         }
         return this.name;
@@ -73,77 +76,77 @@ function(translations,dntData,hCodeValues) {
     };
   }
   
-  function loadItems(item) {
-    var data = dntData.getData(item.mainDnt);
+  function loadItems(itemType) {
+    var data = dntData.getData(itemType.mainDnt);
 
-    item.items = [];
+    itemType.items = [];
     var numRows = data.length;
     for(var r=0;r<numRows;++r) {
       var d = data[r];
       if(d.State1_GenProb > 0 || d.StateValue1 > 0 || d.TypeParam1 > 0) {
         
         var potentials = [];
-        if(d.TypeParam1 > 0 && 'potentialDnt' in item) {
-          potentials = dntData.find(item.potentialDnt, 'PotentialID', d.TypeParam1);
+        if(d.TypeParam1 > 0 && 'potentialDnt' in itemType) {
+          potentials = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
         }
         
         var numPotentials = potentials.length;
         if(numPotentials == 0) {
-          item.items.push(createItem(d, null));
+          itemType.items.push(createItem(itemType, d, null));
         }
         else {
           for(var p=0;p<numPotentials;++p) {
-            item.items.push(createItem(d, potentials[p]));
+            itemType.items.push(createItem(itemType, d, potentials[p]));
           }
         }
       }
     }
   }
   
-  function addMethods(item) {
+  function addMethods(itemType) {
 
-    item.items = null;
-    item.isLoaded = function() {
-      return item.items != null || dntData.isLoaded(item.mainDnt);
+    itemType.items = null;
+    itemType.isLoaded = function() {
+      return itemType.items != null || dntData.isLoaded(itemType.mainDnt);
     };
 
-    item.init = function(progress, complete) {
+    itemType.init = function(progress, complete) {
 
-      if(item.items != null) {
+      if(itemType.items != null) {
         complete();
       }
       else {
         
         if(!translations.startedLoading) {
-          translations.init(progress, function() { item.init(progress, complete) });
+          translations.init(progress, function() { itemType.init(progress, complete) });
         }
         
-        if(!dntData.hasStartedLoading(item.mainDnt)) {
-          dntData.init(item.mainDnt, progress, function() { item.init(progress, complete) });
+        if(!dntData.hasStartedLoading(itemType.mainDnt)) {
+          dntData.init(itemType.mainDnt, progress, function() { itemType.init(progress, complete) });
         }
         
-        if('potentialDnt' in item && !dntData.hasStartedLoading(item.potentialDnt)) {
-          dntData.init(item.potentialDnt, progress, function() { item.init(progress, complete) });
+        if('potentialDnt' in itemType && !dntData.hasStartedLoading(itemType.potentialDnt)) {
+          dntData.init(itemType.potentialDnt, progress, function() { itemType.init(progress, complete) });
         }
         
-        if(translations.loaded && dntData.isLoaded(item.mainDnt) && (!('potentialDnt' in item) || dntData.isLoaded(item.potentialDnt))) {
-          loadItems(item);
+        if(translations.loaded && dntData.isLoaded(itemType.mainDnt) && (!('potentialDnt' in itemType) || dntData.isLoaded(itemType.potentialDnt))) {
+          loadItems(itemType);
           complete();
         }
       }
     };
     
-    item.resetLoader = function() {
-      item.items = null;
-      dntData.reset(item.mainDnt);
+    itemType.resetLoader = function() {
+      itemType.items = null;
+      dntData.reset(itemType.mainDnt);
     };
 
-    item.getItems = function () {
-      return item.items;
+    itemType.getItems = function () {
+      return itemType.items;
     }
   }
   
-  var items = {
+  var itemTypes = {
     
       titles : { mainDnt : 'appellationtable.dnt', type : 'titles' },
       wellspring: { mainDnt: 'itemtable_source.dnt', type: 'wellspring' },
@@ -205,14 +208,17 @@ function(translations,dntData,hCodeValues) {
         type: 'cash' },
     };
     
-    items.all = [];
+    var allItems = []
     
-    angular.forEach(items, function(value, key) {
+    angular.forEach(itemTypes, function(value, key) {
       addMethods(value);
-      items.all.push(value);
+      allItems.push(value);
     });
     
     
-  return items;
+    itemTypes.all = allItems;
+    
+    
+  return itemTypes;
   
 }]);

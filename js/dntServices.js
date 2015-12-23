@@ -1,13 +1,13 @@
 var m = angular.module('dntServices', ['translationService','ngRoute','valueServices','itemService']);
 
 m.factory('dntInit',
-['items','jobs','enchantment',
-function(items,jobs,enchantment) {
+['items','jobs',
+function(items,jobs) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [jobs,enchantment].concat(items.all);
+    var allFactories = [jobs].concat(items.all);
     
     function initFactory(index) {
     
@@ -28,15 +28,17 @@ function(items,jobs,enchantment) {
   }
 }]);
 m.factory('dntReset',
-['items','jobs','enchantment',
-function(items, jobs,enchantment) {
+['items','jobs','dntData',
+function(items, jobs,dntData) {
   return function(progress) {
     
     progress('resetting loaded data');
-    var allFactories = [jobs,enchantment].concat(items.all);
+    var allFactories = [jobs].concat(items.all);
     angular.forEach(allFactories, function(value, key) {
       value.resetLoader();
       });
+      
+      dntData.resetAll();
   }
 }]);
 m.factory('getAllItems',
@@ -192,75 +194,6 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
 }]);
 
 
-m.factory('enchantment', ['dntData', 'hCodeValues', function(dntData, hCodeValues) {
-  var fileName ='enchanttable.dnt'; 
-  var rFileName ='enchanttable_reboot.dnt'; 
-
-  
-  function initEnchantments(data) {
-    var enhancements = [];
-    var numRows = data.length;
-    for(var r=0;r<numRows;++r) {
-      var d = data[r];
-      
-      var enchantId = d['EnchantID'];
-      
-      if(enhancements[enchantId] == null) {
-        enhancements[enchantId] = [];
-      }
-      
-      enhancements[enchantId].push({
-        data : d,
-        stats : null,
-        initStats : function() {
-          this.stats = hCodeValues.getStats(this.data);
-        }
-      });
-    }
-    
-    return enhancements;
-  }
-  
-  function loaderComplete(item, complete) {
-    if(item.isLoaded()) {
-      item.values = initEnchantments(dntData.getData(fileName));
-      item.rValues = initEnchantments(dntData.getData(rFileName));
-      complete();
-    }
-  }
-
-  return {
-    
-    fileName : fileName,
-    rFileName : rFileName,
-    
-    values : null,
-    rValues : null,
-    
-    isLoaded : function() {
-      return (dntData.isLoaded(fileName) && dntData.isLoaded(rFileName)) || this.values != null || this.rValues != null;
-    },
-    
-    init : function(progress, complete) {
-      if(!this.isLoaded()) {
-        var t = this;
-        dntData.init(fileName, progress, function() { loaderComplete(t, complete) });
-        dntData.init(rFileName, progress, function() { loaderComplete(t, complete) });
-      }
-      else {
-        complete();
-      }
-    },
-      
-    resetLoader : function() {
-      this.values = null;
-      this.rValues = null;
-      dntData.reset(fileName);
-      dntData.reset(rFileName);
-    },
-  }
-}
-]);
 m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
   
   var fileName ='jobtable.dnt'; 

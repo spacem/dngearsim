@@ -26,7 +26,7 @@
   </div>
   <div class="row" ng-hide="enchantments != null">
     <div class="col-xs-12" >
-    Loading...
+    Loading Enchantments...
     </div>
   </div>
   <div>
@@ -39,30 +39,30 @@
   </div>
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-1">
-      +{{enchantment.data.EnchantLevel}}
+      +{{enchantment.EnchantLevel}}
     </div>
     <div class="col-xs-1">
-      {{enchantment.data.NeedCoin / 10000}}g
+      {{enchantmentCost}}
     </div>
     <div class="col-xs-9">
-      <span ng-repeat="stat in enchantment.stats">
+      <span ng-repeat="stat in enchantmentStats">
       {{stat.name}}: {{stat.max}}
       </span>
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-10">
-      Ratio: {{enchantment.data.EnchantRatio}}
+      Ratio: {{enchantment.EnchantRatio}}
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-10">
-      {{enchantment.data.BreakRatio}} chance to break
+      {{enchantment.BreakRatio}} chance to break
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-10">
-      Might go down between {{enchantment.data.MinDown}} and {{enchantment.data.MaxDown}} levels
+      Might go down between {{enchantment.MinDown}} and {{enchantment.MaxDown}} levels
     </div>
   </div>
 </div>
