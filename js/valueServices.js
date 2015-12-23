@@ -40,6 +40,8 @@ m.factory('hCodeValues', [function() {
       56 : {name: 'minMdmg%', display: toPercent },
       57 : {name: 'maxMdmg%', display: toPercent },
       58 : {name: 'def%', display: toPercent },
+      59 : {name: 'mdef%', display: toPercent },
+      62 : {name: 'crit%', display: toPercent },
       74 : {name: 'move%', display: toPercent },
       103: {name: 'cdmg', display: toOneDec },
       104: {name: 'cdmg%', display: toPercent },
