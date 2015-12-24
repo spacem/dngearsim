@@ -27,20 +27,7 @@ function(translations,hCodeValues) {
       var stats = hCodeValues.getStats(d);
       if(p != null) {
         var potentialStats = hCodeValues.getStats(p);
-        angular.forEach(potentialStats, function(pValue, pKey) {
-          var added = false;
-          angular.forEach(stats, function(sValue, sKey) {
-            if(pValue.num == sValue.num) {
-              sValue.min = Number(sValue.min) + Number(pValue.min);
-              sValue.max = Number(sValue.max) +  Number(pValue.max);
-              added = true;
-            }
-          });
-        
-          if(!added) {
-            stats.push(pValue);
-          }
-        });
+        stats = hCodeValues.mergeStats(stats, potentialStats);
       }
       
       item.stats = stats;

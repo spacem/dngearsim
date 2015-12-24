@@ -13,7 +13,7 @@
   </div>
   <div class="col-xs-12 col-md-9">
     <table class="table table-striped">
-    <tr class="row" ng-repeat="result in items track by $index">
+    <tr class="row" ng-repeat="result in items.items track by $index">
       <td class="col-xs-1">
         {{result.rank.name}}
       </td>
@@ -24,7 +24,10 @@
         {{getJobName(result.needJobClass)}}
       </td>
       <td class="col-xs-8">
-        <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
+        <button class="btn btn-link" ng-click="$parent.open(group, result, $index)">
+          <span ng-show="result.enchantmentNum > 0">+{{result.enchantmentNum}}</span>
+          {{result.name}}
+        </button>
         <div>
           <span ng-repeat="stat in result.stats">
             | {{stat.name}}: {{stat.displayValue}}

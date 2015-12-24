@@ -150,6 +150,26 @@ m.factory('hCodeValues', [function() {
       }
       
       return statVals;
+    },
+    
+    mergeStats : function(stats1, stats2) {
+      var stats = stats1.slice();
+      angular.forEach(stats2, function(pValue, pKey) {
+        var added = false;
+        angular.forEach(stats, function(sValue, sKey) {
+          if(pValue.num == sValue.num) {
+            sValue.min = Number(sValue.min) + Number(pValue.min);
+            sValue.max = Number(sValue.max) +  Number(pValue.max);
+            added = true;
+          }
+        });
+      
+        if(!added) {
+          stats.push(pValue);
+        }
+      });
+        
+      return stats;
     }
   }
 }]);

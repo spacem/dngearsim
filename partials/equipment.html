@@ -1,5 +1,6 @@
 <div class="modal-header">
   <h3>
+    <span ng-show="item.enchantmentNum > 0">+{{item.enchantmentNum}}</span>
     {{item.name}}
     - 
     {{item.rank.name}}
@@ -23,12 +24,12 @@
       </div>
     </div>
     <div class="col-xs-6">
-      <div class="row" ng-hide="setStats != null">
+      <div class="row" ng-hide="item.setStats != null">
         <div class="col-xs-12" >
         Loading Set Stats...
         </div>
       </div>
-      <div class="row" ng-show="setStats != null" ng-repeat="stat in setStats">
+      <div class="row" ng-show="item.setStats != null" ng-repeat="stat in item.setStats">
         <div class="col-xs-12" >
           {{stat.needSetNum}}-Increases {{stat.name}}: {{stat.displayValue}}
         </div>
@@ -56,7 +57,7 @@
       {{enchantmentCost}}
     </div>
     <div class="col-xs-9">
-      <span ng-repeat="stat in enchantmentStats">
+      <span ng-repeat="stat in item.enchantmentStats">
       {{stat.name}}: {{stat.displayValue}}
       </span>
     </div>

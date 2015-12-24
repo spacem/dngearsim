@@ -1,16 +1,16 @@
 angular.module('savedItemController', ['saveService'])
 .controller('SavedCtrl', 
-  ['$scope','getSavedItems','removeSavedItem','$uibModal',
-  function($scope,getSavedItems,removeSavedItem,$uibModal) {
+  ['$scope','getSavedItems','updatedSavedItems','$uibModal',
+  function($scope,getSavedItems,updatedSavedItems,$uibModal) {
     $scope.savedItems = getSavedItems();
     $scope.anyItems = Object.keys($scope.savedItems).length > 0;
     
     $scope.removeItem = function(group, index) {
-      removeSavedItem(group, index);
-      $scope.savedItems = getSavedItems();
+      $scope.savedItems[group].items.splice(index);
+      updatedSavedItems(group, $scope.savedItems[group].items);
     }
 
-    $scope.open = function (item) {
+    $scope.open = function (group, item, index) {
       console.log('opening item ' + item.name);
       var modalInstance = $uibModal.open({
         animation: true,
@@ -24,6 +24,11 @@ angular.module('savedItemController', ['saveService'])
             return item;
           }
         }
+      });
+      
+      modalInstance.result.then(function (selectedItem) {}, function () {
+        $scope.savedItems[group].items[index] = item;
+        updatedSavedItems(group, $scope.savedItems[group].items);
       });
     }
   }]

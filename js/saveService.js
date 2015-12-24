@@ -1,39 +1,53 @@
 var m = angular.module('saveService', ['ngRoute']);
-m.factory('saveItem', ['getSavedItems', function(getSavedItems) {
-  return function(item, group) {
+m.factory('saveItem', ['getSavedItems','updatedSavedItems', function(getSavedItems,updatedSavedItems) {
+  return function(group, item) {
 
     var items = getSavedItems();
-    if(!(group in items)) {
-      items[group] = [];
+    if(group in items && Array.isArray(items[group].items)) {
+      
+      items[group].items.push(item);
+      updatedSavedItems(group, items[group].items);
     }
-    
-    items[group].push(item);
-    
-    var stringifiedData = JSON.stringify(items);
-    sessionStorage.setItem('savedItems', LZString.compress(stringifiedData));
+    else {
+      updatedSavedItems(group, [item]);
+    }
   };
 }]);
-m.factory('removeSavedItem', ['getSavedItems', function(getSavedItems) {
-  return function(group, index) {
+
+m.factory('updatedSavedItems', ['getSavedItems', function(getSavedItems) {
+  return function(group, updatedItems) {
 
     var items = getSavedItems();
-    items[group].splice(index, 1);
-    if(items[group].length == 0) {
-      delete items[group];
+    if(group in items) {
+      if(updatedItems.length == 0) {
+        delete items[group];
+      }
+      else {
+        items[group].items = updatedItems;
+      }
+    }
+    else {
+      items[group] = {items : updatedItems};
     }
     
     var stringifiedData = JSON.stringify(items);
-    sessionStorage.setItem('savedItems', LZString.compress(stringifiedData));
+    console.log('saving: ' + stringifiedData);
+    localStorage.setItem('savedItems', LZString.compress(stringifiedData));
   };
 }]);
+
 m.factory('getSavedItems', ['$routeParams', function($routeParams) {
   return function() {
     try {
-      var stringifiedData = LZString.decompress(sessionStorage.getItem('savedItems'));
-      return JSON.parse(stringifiedData);
+      var stringifiedData = LZString.decompress(localStorage.getItem('savedItems'));
+      var savedItems = JSON.parse(stringifiedData);
+      if(savedItems != null) {
+        return savedItems;
+      }
     }
     catch(ex) {
-      return {};
     }
+    
+    return {};
   };
 }]);

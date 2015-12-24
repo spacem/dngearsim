@@ -54,7 +54,7 @@ function(
   };
   
   $scope.saveItem = function(item) {
-    saveItem(item, 'Saved Items');
+    saveItem('Saved Items', item);
   };
   
   translations.init(reportProgress, function() { $timeout(translationsInit); } );
@@ -193,7 +193,9 @@ function(
   function itemInit() {
     if(translations.loaded && jobs.isLoaded()) {
       console.log('trying to init equip');
-      $scope.items = getAllItems(itemFactories);
+      if($scope.isLoadComplete()) {
+        $scope.items = getAllItems(itemFactories);
+      }
     }
   }
 }]);

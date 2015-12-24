@@ -9,20 +9,21 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.enchantments = null;
   $scope.item = item;
   $scope.enchantment = null;
-  $scope.enchantmentStats = [];
+  $scope.item.enchantmentStats = [];
   $scope.enchantmentCost = '';
-  $scope.setStats = null;
+  $scope.item.setStats = null;
+  $scope.item.setId = null;
   
   $scope.setEnchantment = function() {
-    if(typeof $scope.item.curEnchantmentNum != 'number') {
-      $scope.item.curEnchantmentNum = 10;
+    if(typeof $scope.item.enchantmentNum != 'number') {
+      $scope.item.enchantmentNum = 10;
     }
     
     for(var i=0;i<$scope.enchantments.length;++i) {
-      if($scope.item.curEnchantmentNum == $scope.enchantments[i].EnchantLevel) {
+      if($scope.item.enchantmentNum == $scope.enchantments[i].EnchantLevel) {
         $scope.enchantment = $scope.enchantments[i];
         
-        $scope.enchantmentStats = hCodeValues.getStats($scope.enchantment);
+        $scope.item.enchantmentStats = hCodeValues.getStats($scope.enchantment);
         if($scope.enchantment.NeedCoin < 10000) {
           $scope.enchantmentCost = Math.round($scope.enchantment.NeedCoin / 1000)/10 + 'g';
         }
@@ -37,19 +38,19 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   }
   
   $scope.nextEnchantment = function() {
-    if($scope.item.curEnchantmentNum < $scope.enchantments.length) {
-      $scope.item.curEnchantmentNum++;
+    if($scope.item.enchantmentNum < $scope.enchantments.length) {
+      $scope.item.enchantmentNum++;
       $scope.setEnchantment();
     }
   }
   
   $scope.prevEnchantment = function() {
-    if($scope.item.curEnchantmentNum > 1) {
-      $scope.item.curEnchantmentNum--;
+    if($scope.item.enchantmentNum > 1) {
+      $scope.item.enchantmentNum--;
       $scope.setEnchantment();
     }
     else {
-      $scope.item.curEnchantmentNum = 0;
+      $scope.item.enchantmentNum = 0;
       $scope.enchantment = null;
     }
   }
@@ -92,22 +93,23 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
     dntData.init($scope.itemType[$scope.usePartDnt], reportProgress, function() { $timeout(setInit); } );
   }
   else {
-      $scope.setStats = [];
+      $scope.item.setStats = [];
   }
 
   function setInit() {
 
     if(dntData.isLoaded($scope.itemType[$scope.usePartDnt]) && dntData.isLoaded($scope.itemType.setDnt)) {
 
-      if($scope.setStats == null) {
+      if($scope.item.setStats == null) {
         
-        $scope.setStats = [];
+        $scope.item.setStats = [];
         
         var parts = dntData.find($scope.itemType[$scope.usePartDnt], 'id', $scope.item.id);
         if(parts.length > 0) {
+          $scope.item.setId = parts[0].SetItemID;
           var sets = dntData.find($scope.itemType.setDnt, 'id', parts[0].SetItemID);
           if(sets.length > 0) {
-            $scope.setStats = hCodeValues.getStats(sets[0]);
+            $scope.item.setStats = hCodeValues.getStats(sets[0]);
           }
         }
       }
