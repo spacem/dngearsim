@@ -1,0 +1,40 @@
+<div class="row" ng-hide="anyItems">
+  <div class="col-xs-12">
+  Nothing saved
+  </div>
+</div>
+<div class="row" ng-show="anyItems" ng-repeat="(group, items) in savedItems track by $index">
+  <div class="col-xs-12 col-md-3">
+    <div class="row">
+      <div class="col-xs-8 col-md-12">
+      <h3>{{group}}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-9">
+    <table class="table table-striped">
+    <tr class="row" ng-repeat="result in items track by $index">
+      <td class="col-xs-1">
+        {{result.rank.name}}
+      </td>
+      <td class="col-xs-1">
+        {{result.levelLimit}}
+      </td>
+      <td class="col-xs-1">
+        {{getJobName(result.needJobClass)}}
+      </td>
+      <td class="col-xs-8">
+        <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
+        <div>
+          <span ng-repeat="stat in result.stats">
+            | {{stat.name}}: {{stat.displayValue}}
+          </span>|
+        </div>
+      </td>
+      <td class="col-xs-1">
+          <button class="btn btn-link" ng-click="$parent.$parent.removeItem(group, $index);">Remove</button>
+      </td>
+    </tr>
+    </table>
+  </div>
+</div>

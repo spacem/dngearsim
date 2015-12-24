@@ -8,9 +8,11 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   'equipmentController',
   'itemSearchController',
   'translationService',
+  'navController',
+  'savedItemController',
   'dntServices',
   'itemService',
-  'navController',
+  'saveService',
 ]);
 
 dnGearSimApp.config(['$routeProvider',
@@ -19,6 +21,10 @@ dnGearSimApp.config(['$routeProvider',
       when('/setup', {
         templateUrl: 'partials/setup.html',
         controller: 'SetupCtrl'
+      }).
+      when('/saved', {
+        templateUrl: 'partials/saved.html',
+        controller: 'SavedCtrl'
       }).
       when('/item-search/:itemType', {
         templateUrl: 'partials/item-search.html',

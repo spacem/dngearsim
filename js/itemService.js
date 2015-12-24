@@ -1,84 +1,98 @@
 var m = angular.module('itemService', ['translationService','ngRoute','valueServices','dntServices']);
 
+m.factory('initItem',
+['translations','hCodeValues',
+function(translations,hCodeValues) {
+  return function(item) {
+
+    var d = item.data;
+    var p = item.potential;
+
+    if(item.name == null) {
+      var nameValue = d.NameIDParam;
+      if(nameValue == null || nameValue == '') {
+        nameValue = d.NameID;
+      }
+
+      var translatedName = translations.translate(nameValue);
+      if(typeof translatedName == 'string') {
+        item.name = translatedName.replace(/\{|\}/g,'').replace(/\,/g,' ');
+      }
+      else {
+        item.name = translatedName.toString();
+      }
+    }
+    
+    if(item.stats == null) {
+      var stats = hCodeValues.getStats(d);
+      if(p != null) {
+        var potentialStats = hCodeValues.getStats(p);
+        angular.forEach(potentialStats, function(pValue, pKey) {
+          var added = false;
+          angular.forEach(stats, function(sValue, sKey) {
+            if(pValue.num == sValue.num) {
+              sValue.min = Number(sValue.min) + Number(pValue.min);
+              sValue.max = Number(sValue.max) +  Number(pValue.max);
+              added = true;
+            }
+          });
+        
+          if(!added) {
+            stats.push(pValue);
+          }
+        });
+      }
+      
+      item.stats = stats;
+    }
+    
+    delete item.data;
+    delete item.potential;
+  }
+}]);
+
 m.factory('items',
 ['translations','dntData','hCodeValues',
 function(translations,dntData,hCodeValues) {
 
-  function createItem(itemType, d, p) {
+  function createItem(itemTypeName, d, p) {
     
-    return {
-      itemType : itemType,
-      name : null,
-      getName : function() {
-        if(this.name == null) {
-
-          var nameValue = d.NameIDParam;
-          if(nameValue == null || nameValue == '') {
-            nameValue = d.NameID;
-          }
-    
-          var translatedName = translations.translate(nameValue);
-          if(typeof translatedName == 'string') {
-            this.name = translatedName.replace(/\{|\}/g,'').replace(/\,/g,' ');
-          }
-          else {
-            this.name = translatedName.toString();
-          }
-        }
-        return this.name;
-      },
-      levelLimit : d['LevelLimit'],
-      needJobClass : d['NeedJobClass'],
-      rank : d['Rank'],
-      id : d['id'],
-      type : d['Type'],
-      getPotentialRatio : function() {
-        if(p != null && p.PotentialRatio > 0 && p.PotentialRatio != 1 && p.PotentialRatio != 100) {
-          return Math.round(p.PotentialRatio*10)/10 + '%';
-        }
-        else {
-          return null;
-        }
-      },
-      getRankName : function() { return hCodeValues.rankNames[this.rank] },
-      getTypeName : function() {
-        var typeName = hCodeValues.typeNames[this.type];
-        if(typeName == null) {
-          return this.type;
-        }
-        else {
-          return typeName;
-        }
-      },
-      getEnchantmentId : function() {
-        // TODO: lookup values in other dnt
-        return d['EnchantID'];
-      },
-      stats : null,
-      initStats : function() {
-        if(this.stats == null) {
-          var stats = hCodeValues.getStats(d); 
-          if(p != null) {
-            var potentialStats = hCodeValues.getStats(p);
-            angular.forEach(potentialStats, function(pValue, pKey) {
-              var added = false;
-              angular.forEach(stats, function(sValue, sKey) {
-                if(pValue.num == sValue.num) {
-                  sValue.min = Number(sValue.min) + Number(pValue.min);
-                  sValue.max = Number(sValue.max) +  Number(pValue.max);
-                  added = true;
-                }
-              });
-            
-              if(!added) {
-                stats.push(pValue);
-              }
-            });
-          }
-          
-          this.stats = stats;
-        }
+    function getTypeName(type) {
+      var typeName = hCodeValues.typeNames[type];
+      if(typeName == null) {
+        return type;
       }
+      else {
+        return typeName;
+      }
+    }
+    
+    function getPotentialRatio(p) {
+      if(p != null && p.PotentialRatio > 0 && p.PotentialRatio != 1 && p.PotentialRatio != 100) {
+        return Math.round(p.PotentialRatio*10)/10 + '%';
+      }
+      else {
+        return null;
+      }
+    }
+    
+    // data and potential are used to initialise name and stats
+    // this is only done when needed
+    // they are then removed from the object
+    return {
+      data : d,
+      potential : p,
+      name : null,
+      stats : null,
+      itemTypeName : itemTypeName,
+      levelLimit : d.LevelLimit,
+      needJobClass : d.NeedJobClass,
+      id : d.id,
+      typeId : d.Type,
+      potentialRatio : getPotentialRatio(p),
+      typeName : getTypeName(d.Type),
+      rank : hCodeValues.rankNames[d.Rank],
+      enchantmentId : d.EnchantID,
     };
   }
   
@@ -89,20 +103,36 @@ function(translations,dntData,hCodeValues) {
     var numRows = data.length;
     for(var r=0;r<numRows;++r) {
       var d = data[r];
-      if(d.State1_GenProb > 0 || d.StateValue1 > 0 || d.TypeParam1 > 0) {
-        
-        var potentials = [];
-        if(d.TypeParam1 > 0 && 'potentialDnt' in itemType) {
-          potentials = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
-        }
-        
-        var numPotentials = potentials.length;
-        if(numPotentials == 0) {
-          itemType.items.push(createItem(itemType, d, null));
-        }
-        else {
-          for(var p=0;p<numPotentials;++p) {
-            itemType.items.push(createItem(itemType, d, potentials[p]));
+      // skip certain types like pouches, res scrolls, etc
+      if(d.Type != 8 &&
+        d.Type != 29 &&
+        d.Type != 114 &&
+        d.Type != 79 &&
+        d.Type != 174 &&
+        d.Type != 130 &&
+        d.Type != 24 &&
+        d.Type != 182 &&
+        d.Type != 78 &&
+        d.Type != 20 &&
+        d.Type != 46 &&
+        d.Type != 9) {
+          
+        // skip items with no data
+        if(d.State1_GenProb > 0 || d.StateValue1 > 0 || d.TypeParam1 > 0) {
+          
+          var potentials = [];
+          if(d.TypeParam1 > 0 && 'potentialDnt' in itemType) {
+            potentials = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
+          }
+          
+          var numPotentials = potentials.length;
+          if(numPotentials == 0) {
+            itemType.items.push(createItem(itemType.name, d, null));
+          }
+          else {
+            for(var p=0;p<numPotentials;++p) {
+              itemType.items.push(createItem(itemType.name, d, potentials[p]));
+            }
           }
         }
       }
@@ -227,6 +257,7 @@ function(translations,dntData,hCodeValues) {
     var allItems = []
     
     angular.forEach(itemTypes, function(value, key) {
+      value.name = key;
       addMethods(value);
       allItems.push(value);
     });

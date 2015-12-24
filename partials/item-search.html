@@ -37,7 +37,7 @@
 <table class="table table-striped">
 <tr class="row" ng-repeat="result in getResults()">
   <td class="col-xs-1">
-    {{$parent.grades[result.rank].name}}
+    {{result.rank.name}}
   </td>
   <td class="col-xs-1">
     {{result.levelLimit}}
@@ -46,15 +46,15 @@
     {{getJobName(result.needJobClass)}}
   </td>
   <td class="col-xs-8">
-    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.getName()}}</button>
+    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
     <div>
       <span ng-repeat="stat in result.stats">
-        | {{stat.name}}: {{stat.getDisplay()}}
+        | {{stat.name}}: {{stat.displayValue}}
       </span>|
     </div>
   </td>
   <td class="col-xs-1">
-      <!-- <button class="btn btn-link" aria-label="Add">Add +</button> -->
+      <button class="btn btn-link" ng-click="$parent.saveItem(result);">Save</button>
   </td>
 </tr>
 </table>

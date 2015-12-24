@@ -26,6 +26,7 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
   $scope.resetSessionData = function() {
     $scope.testResults = ['session data reset.. reloading page'];
     sessionStorage.clear();
+    localStorage.clear();
     this.saveLocation();
     $timeout(function() { location.reload(true); });
   }

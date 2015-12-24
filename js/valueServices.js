@@ -55,18 +55,19 @@ m.factory('hCodeValues', [function() {
     },
   
     rankNames : {
-      0 : { name : 'normal', checked: true },
-      1 : { name : 'magic', checked: true },
-      2 : { name : 'rare', checked: true },
-      3 : { name : 'epic', checked: true },
-      4 : { name : 'unique', checked: true },
-      5 : { name : 'legendary', checked: true },
+      0 : { id: 0, name : 'normal', checked: true },
+      1 : { id: 1, name : 'magic', checked: true },
+      2 : { id: 2, name : 'rare', checked: true },
+      3 : { id: 3, name : 'epic', checked: true },
+      4 : { id: 4, name : 'unique', checked: true },
+      5 : { id: 5, name : 'legendary', checked: true },
     },
     
     typeNames : {
       0 : 'weapon',
       1 : 'equipment',
       5 : 'plate',
+      8 : 'pouch',
       38 : 'enhancement',
       90 : 'welspring',
       132 : 'talisman',
@@ -85,30 +86,9 @@ m.factory('hCodeValues', [function() {
           if(stateId == -1) {
             break;
           }
-
-          var stat =this.stats[stateId];
-          var name = stateId;
-          if(stat != null) {
-            name = stat.name;
-          }
-          var currentData = {
-            stat : stat,
-            name: name,
-            num: stateId,
-            getDisplay : function() {
-              if(this.stat != null && this.stat.display != null) {
-                return this.stat.display(this);
-              }
-              else {
-                return this.max;
-              }
-            }
-          };
-
-          if(currentData.name == null) {
-            currentData.name = stateId;
-          }
-        
+          
+          var currentData = { id: stateId };
+          
           var prop;
           prop = 'State' + currentState + '_Min';
           if(prop in data) {
@@ -144,9 +124,25 @@ m.factory('hCodeValues', [function() {
             }
             currentData.needSetNum = data[prop];
           }
+          
+          currentData.stat = this.stats[stateId];
+          if(currentData.stat != null) {
+            currentData.name = currentData.stat.name;
+            currentData.displayValue = currentData.stat.display(currentData);
+          }
+          else {
+            currentData.name = stateId;
+            currentData.displayValue = currentData.max;
+          }
 
           currentState++;
-          statVals.push(currentData);
+          
+          if(currentData.num != 0 ||
+            currentData.max != 0 ||
+            currentData.min != 0) {
+              
+            statVals.push(currentData);
+          }
         }
         else {
           break;

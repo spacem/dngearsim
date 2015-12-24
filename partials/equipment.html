@@ -2,22 +2,22 @@
   <h3>
     {{item.name}}
     - 
-    {{item.getRankName().name}}
+    {{item.rank.name}}
     level {{item.levelLimit}}
-  </h3><small>{{item.id}}</small>
+  </h3><small>{{item.typeName}}: {{item.itemTypeName}} / {{item.id}}</small>
 </div>
 <div class="modal-body">
   <div class="row">
     <div class="col-xs-6">
-      <div class="row" ng-show="potentialRatio != null">
+      <div class="row" ng-show="item.potentialRatio != null">
         <div class="col-xs-12">
-          Craft Chance: {{potentialRatio}}
+          Craft Chance: {{item.potentialRatio}}
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
           <div ng-repeat="stat in item.stats">
-          {{stat.name}} : {{stat.getDisplay()}}
+          {{stat.name}} : {{stat.displayValue}}
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
       </div>
       <div class="row" ng-show="setStats != null" ng-repeat="stat in setStats">
         <div class="col-xs-12" >
-          {{stat.needSetNum}}-Increases {{stat.name}}: {{stat.getDisplay()}}
+          {{stat.needSetNum}}-Increases {{stat.name}}: {{stat.displayValue}}
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="col-xs-9">
       <span ng-repeat="stat in enchantmentStats">
-      {{stat.name}}: {{stat.getDisplay()}}
+      {{stat.name}}: {{stat.displayValue}}
       </span>
     </div>
   </div>

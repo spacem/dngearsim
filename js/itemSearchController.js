@@ -1,22 +1,41 @@
-angular.module('itemSearchController', ['translationService', 'dntServices'])
+angular.module('itemSearchController', ['translationService', 'dntServices', 'saveService'])
 .controller('ItemSearchCtrl',
 ['$scope','$routeParams','$timeout','$uibModal',
 'translations',
 'items',
 'jobs',
 'getAllItems','hCodeValues',
+'saveItem',
+'initItem',
 function(
   $scope,$routeParams,$timeout,$uibModal,
   translations,
   items,
   jobs,
-  getAllItems,hCodeValues) {
+  getAllItems,hCodeValues,
+  saveItem,
+  initItem) {
   
   $scope.job = {id: -1, name: '-- loading --'};
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
-  $scope.minLevel = 1;
-  $scope.maxLevel = 99;
+  
+  var minLevel = Number(localStorage.getItem('minLevel'));
+  if(!(minLevel > 0 && minLevel < 100)) {
+    minLevel = 1;
+  }
+  var maxLevel = Number(localStorage.getItem('maxLevel'));
+  if(!(maxLevel > 0 && maxLevel < 100)) {
+    maxLevel = 99;
+  }
+  
+  $scope.save = function() {
+    localStorage.setItem('minLevel', $scope.minLevel);
+    localStorage.setItem('maxLevel', $scope.maxLevel);
+  };
+  
+  $scope.minLevel = minLevel;
+  $scope.maxLevel = maxLevel;
   $scope.nameSearch = '';
   $scope.results = [];
   $scope.selection = [];
@@ -32,6 +51,10 @@ function(
   $scope.search = function() {
     console.log('clicked search');
     equipInit();
+  };
+  
+  $scope.saveItem = function(item) {
+    saveItem(item, 'unsorted');
   };
   
   translations.init(reportProgress, function() { $timeout(translationsInit); } );
@@ -101,6 +124,8 @@ function(
       if($scope.items == null) {
         return [];
       }
+      
+      $scope.save();
     
       var newResults = [];
       var numEquip = $scope.items.length;
@@ -109,7 +134,7 @@ function(
         var e = $scope.items[i];
         if(e != null && e.levelLimit >= $scope.minLevel && e.levelLimit <= $scope.maxLevel) {
           
-          if(e.rank != null && !$scope.grades[e.rank].checked) {
+          if(e.rank != null && !$scope.grades[e.rank.id].checked) {
             continue;
           }
           
@@ -124,9 +149,10 @@ function(
             if(nameSearches.length == 0) {
               nameSearches = [$scope.nameSearch];
             }
+            initItem(e);
             var allMatch = true;
             for(var ns=0;ns<nameSearches.length;++ns) {
-              if(e.getName().toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
+              if(e.name.toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
                 allMatch = false;
                 break;
               }
@@ -137,7 +163,7 @@ function(
             }
           }
           
-          e.initStats();
+          initItem(e);
           newResults.push(e);
           curDisplay++;
         }
@@ -148,7 +174,7 @@ function(
   };
   
   $scope.open = function (item) {
-    console.log('opening item ' + item.getName());
+    console.log('opening item ' + item.name);
     var modalInstance = $uibModal.open({
       animation: true,
       backdrop : true,
