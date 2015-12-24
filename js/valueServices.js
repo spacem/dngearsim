@@ -87,7 +87,7 @@ m.factory('hCodeValues', [function() {
             break;
           }
           
-          var currentData = { id: stateId };
+          var currentData = {};
           
           var prop;
           prop = 'State' + currentState + '_Min';
@@ -125,15 +125,7 @@ m.factory('hCodeValues', [function() {
             currentData.needSetNum = data[prop];
           }
           
-          currentData.stat = this.stats[stateId];
-          if(currentData.stat != null) {
-            currentData.name = currentData.stat.name;
-            currentData.displayValue = currentData.stat.display(currentData);
-          }
-          else {
-            currentData.name = stateId;
-            currentData.displayValue = currentData.max;
-          }
+          this.setupStat(currentData, stateId);
 
           currentState++;
           
@@ -152,21 +144,46 @@ m.factory('hCodeValues', [function() {
       return statVals;
     },
     
+    setupStat : function(stat, id) {
+      stat.id = id;
+      stat.stat = this.stats[id];
+      if(stat.stat != null) {
+        stat.name = stat.stat.name;
+        stat.displayValue = stat.stat.display(stat);
+      }
+      else {
+        stat.name = id;
+        stat.displayValue = stat.max;
+      }
+    },
+    
     mergeStats : function(stats1, stats2) {
-      var stats = stats1.slice();
-      angular.forEach(stats2, function(pValue, pKey) {
-        var added = false;
-        angular.forEach(stats, function(sValue, sKey) {
-          if(pValue.num == sValue.num) {
-            sValue.min = Number(sValue.min) + Number(pValue.min);
-            sValue.max = Number(sValue.max) +  Number(pValue.max);
-            added = true;
-          }
-        });
+      var statMap = {};
       
-        if(!added) {
-          stats.push(pValue);
+      angular.forEach(stats1, function(value, key) {
+        if(value.id in statMap) {
+          statMap[value.id] += Number(value.max);
         }
+        else {
+          statMap[value.id] = Number(value.max);
+        }
+      });
+      
+      angular.forEach(stats2, function(value, key) {
+        if(value.id in statMap) {
+          statMap[value.id] += Number(value.max);
+        }
+        else {
+          statMap[value.id] = Number(value.max);
+        }
+      });
+      
+      var stats = [];
+      var t = this;
+      angular.forEach(statMap, function(value, key) {
+        var stat = { max : value };
+        t.setupStat(stat, key);
+        stats.push(stat);
       });
         
       return stats;

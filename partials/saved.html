@@ -30,7 +30,7 @@
         </button>
         <div>
           <span ng-repeat="stat in result.stats">
-            | {{stat.name}}: {{stat.displayValue}}
+            |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
           </span>|
         </div>
       </td>
@@ -39,5 +39,11 @@
       </td>
     </tr>
     </table>
+  </div>
+  <div class="col-xs-12">
+    Combined stats:<br />
+    <span ng-repeat="stat in $parent.combinedStats[group]">
+      |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
+    </span>|
   </div>
 </div>
