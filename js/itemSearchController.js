@@ -54,7 +54,7 @@ function(
   };
   
   $scope.saveItem = function(item) {
-    saveItem(item, 'unsorted');
+    saveItem(item, 'Saved Items');
   };
   
   translations.init(reportProgress, function() { $timeout(translationsInit); } );
