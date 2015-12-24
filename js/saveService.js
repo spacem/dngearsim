@@ -32,14 +32,14 @@ m.factory('updatedSavedItems', ['getSavedItems', function(getSavedItems) {
     
     var stringifiedData = JSON.stringify(items);
     console.log('saving: ' + stringifiedData);
-    localStorage.setItem('savedItems', LZString.compress(stringifiedData));
+    localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
   };
 }]);
 
 m.factory('getSavedItems', ['$routeParams', function($routeParams) {
   return function() {
     try {
-      var stringifiedData = LZString.decompress(localStorage.getItem('savedItems'));
+      var stringifiedData = LZString.decompressFromUTF16(localStorage.getItem('savedItems'));
       var savedItems = JSON.parse(stringifiedData);
       if(savedItems != null) {
         return savedItems;
