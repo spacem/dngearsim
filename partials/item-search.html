@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-show="isLoadComplete()">
   <div class="col-xs-12" ng-hide="simpleSearch">
     <div class="form-group">
       <label class="checkbox-inline" ng-repeat="(id,value) in grades">
@@ -7,36 +7,36 @@
     </div>
   </div>
   <div class="col-xs-6 col-md-3" ng-hide="simpleSearch">
-    <label>Class: 
+    <label>class: 
     </label>
     <select ng-model="job" class="form-control"
      ng-options="job.name for job in jobs track by job.id">
     </select>
   </div>
   <div class="col-xs-3 col-md-1" ng-hide="simpleSearch">
-     <label>Min&nbsp;Level:
+     <label>min&nbsp;Level:
      </label>
-     <input type="text" class="form-control" ng-model="minLevel" />
+     <input type="text" class="form-control" ng-model="minLevel" select-all-on-click />
   </div>
   <div class="col-xs-3 col-md-1" ng-hide="simpleSearch">
-     <label>Max&nbsp;Level:
+     <label>max&nbsp;Level:
      </label>
-     <input type="text" class="form-control" ng-model="maxLevel" />
+     <input type="text" class="form-control" ng-model="maxLevel" select-all-on-click />
   </div>
   <div class="col-xs-12 col-md-7">
-     <label>Name:</label>
-     <input type="text" class="form-control" ng-model="nameSearch" />
+     <label>name:</label>
+     <input type="text" class="form-control" ng-model="nameSearch" select-all-on-click />
   </div>
   <div class="col-xs-12">
     
   </div>
 </div>
-<div class="row">&nbsp;</div>
 <div class="row" ng-hide="isLoadComplete()">
   <div class="col-xs-12">
-  Loading...
+  loading...
   </div>
 </div>
+<div class="row">&nbsp;</div>
 <table class="table">
 <tr class="row" ng-repeat="result in getResults()">
   <td>

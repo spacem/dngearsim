@@ -5,7 +5,27 @@ angular.module('useOptionsController', ['ui.bootstrap','translationService', 'dn
 function($scope,$routeParams,$timeout,$uibModalInstance,item,group,dntData,hCodeValues,items,getSavedItems,saveItem) {
   
   $scope.item = item;
-  $scope.savedItems = getSavedItems();
+  $scope.savedItems = {};
+  
+  $timeout(function() {
+    $scope.savedItems = getSavedItems();
+    $scope.itemType = items[item.itemTypeName];
+    $scope.usePartDnt = '';
+    if($scope.item.typeId == 1) {
+      $scope.usePartDnt = 'partsDnt';
+    }
+    else if($scope.item.typeId == 0) {
+      $scope.usePartDnt = 'weaponDnt';
+    }
+    if($scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
+      dntData.init($scope.itemType.setDnt, reportProgress, function() { $timeout(setInit); } );
+      dntData.init($scope.itemType[$scope.usePartDnt], reportProgress, function() { $timeout(setInit); } );
+    }
+    else {
+        $scope.item.setStats = [];
+    }
+  });
+
   $scope.groupName = group;
   if($scope.groupName == null) {
     $scope.groupName = 'Unamed Group';
@@ -19,22 +39,6 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,group,dntData,hCode
     
     saveItem($scope.groupName, $scope.item);
     $uibModalInstance.dismiss('ok');
-  }
-  
-  $scope.itemType = items[item.itemTypeName];
-  $scope.usePartDnt = '';
-  if($scope.item.typeId == 1) {
-    $scope.usePartDnt = 'partsDnt';
-  }
-  else if($scope.item.typeId == 0) {
-    $scope.usePartDnt = 'weaponDnt';
-  }
-  if($scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
-    dntData.init($scope.itemType.setDnt, reportProgress, function() { $timeout(setInit); } );
-    dntData.init($scope.itemType[$scope.usePartDnt], reportProgress, function() { $timeout(setInit); } );
-  }
-  else {
-      $scope.item.setStats = [];
   }
   
   $timeout(function() {

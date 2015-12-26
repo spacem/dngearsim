@@ -31,16 +31,26 @@ function(
     maxLevel = 99;
   }
   
+  $scope.nameSearch = localStorage.getItem('nameSearch');
+  if($scope.nameSearch == null) {
+    $scope.nameSearch == '';
+  }
+
   $scope.save = function() {
     if(!$scope.simpleSearch) {
       localStorage.setItem('minLevel', $scope.minLevel);
       localStorage.setItem('maxLevel', $scope.maxLevel);
+      
+      if($scope.job != null) {
+        localStorage.setItem('jobNumber', $scope.job.id);
+      }
+      
+      localStorage.setItem('nameSearch', $scope.nameSearch);
     }
   };
   
   $scope.minLevel = minLevel;
   $scope.maxLevel = maxLevel;
-  $scope.nameSearch = '';
   $scope.results = [];
   $scope.selection = [];
   $scope.items = null;
@@ -129,10 +139,21 @@ function(
       console.log('trying to init jobs');
       console.log('job dropdown should be set');
       var newJobs = jobs.getFinalJobs();
-      newJobs.splice(0, 0, $scope[0]);
-      $scope.jobs = newJobs;
-      $scope.allJobs = jobs.getAllJobs();
-      itemInit();
+      
+      var lastJobNumber = Number(localStorage.getItem('jobNumber'));
+      if(lastJobNumber != null) {
+        angular.forEach(newJobs, function(value, key) {
+          if(value.id == lastJobNumber) {
+            $scope.job = value;
+          }
+        });
+        
+        $scope.jobs[0].name = '';
+        newJobs.splice(0, 0, $scope.jobs[0]);
+        $scope.jobs = newJobs;
+        $scope.allJobs = jobs.getAllJobs();
+        itemInit();
+      }
     }
   }
   
@@ -161,15 +182,21 @@ function(
       var curDisplay = 0;
       for(var i=0;i<numEquip&&curDisplay<$scope.maxDisplay;++i) {
         var e = $scope.items[i];
-        if(e != null && e.levelLimit >= $scope.minLevel && e.levelLimit <= $scope.maxLevel) {
+        if(e != null) {
           
-          if(e.rank != null && !$scope.grades[e.rank.id].checked) {
-            continue;
-          }
-          
-          if($scope.job != null && $scope.job.id > 0) {
-            if(!$scope.job.isClassJob(e.needJobClass)) {
+          if(!$scope.simpleSearch) {
+            if(e.levelLimit < $scope.minLevel || e.levelLimit > $scope.maxLevel) {
               continue;
+            }
+            
+            if(e.rank != null && !$scope.grades[e.rank.id].checked) {
+              continue;
+            }
+            
+            if($scope.job != null && $scope.job.id > 0) {
+              if(!$scope.job.isClassJob(e.needJobClass)) {
+                continue;
+              }
             }
           }
           
