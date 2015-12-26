@@ -2,10 +2,12 @@
   <h3>
     <span ng-show="item.enchantmentNum > 0">+{{item.enchantmentNum}}</span>
     {{item.name}}
-    - 
+    <small>
     {{item.rank.name}}
     level {{item.levelLimit}}
-  </h3><small>{{item.typeName}}: {{item.itemTypeName}} / {{item.id}}</small>
+    </small>
+  </h3>
+  <small>{{item.typeName}}: {{item.itemTypeName}} / {{item.id}}</small>
 </div>
 <div class="modal-body">
   <div class="row">

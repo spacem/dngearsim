@@ -20,18 +20,22 @@ function(
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
   
+  $scope.simpleSearch = $routeParams.itemType == 'titles';
+  
   var minLevel = Number(localStorage.getItem('minLevel'));
-  if(!(minLevel > 0 && minLevel < 100)) {
+  if(!(minLevel > 0 && minLevel < 100) || $scope.simpleSearch) {
     minLevel = 1;
   }
   var maxLevel = Number(localStorage.getItem('maxLevel'));
-  if(!(maxLevel > 0 && maxLevel < 100)) {
+  if(!(maxLevel > 0 && maxLevel < 100) || $scope.simpleSearch) {
     maxLevel = 99;
   }
   
   $scope.save = function() {
-    localStorage.setItem('minLevel', $scope.minLevel);
-    localStorage.setItem('maxLevel', $scope.maxLevel);
+    if(!$scope.simpleSearch) {
+      localStorage.setItem('minLevel', $scope.minLevel);
+      localStorage.setItem('maxLevel', $scope.maxLevel);
+    }
   };
   
   $scope.minLevel = minLevel;
@@ -76,7 +80,7 @@ function(
           return item;
         },
         group: function () {
-          return 'Unnamed group';
+          return 'unnamed group';
         }
       }
     });

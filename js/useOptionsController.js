@@ -15,9 +15,9 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,group,dntData,hCode
     $uibModalInstance.dismiss('cancel');
   };
   
-  $scope.ok = function(group) {
+  $scope.ok = function() {
     
-    saveItem(group, $scope.item);
+    saveItem($scope.groupName, $scope.item);
     $uibModalInstance.dismiss('ok');
   }
   
@@ -36,6 +36,12 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,group,dntData,hCode
   else {
       $scope.item.setStats = [];
   }
+  
+  $timeout(function() {
+    var input = document.getElementById('groupNameInput');
+    input.focus();
+    input.setSelectionRange(0, 9999);
+  });
 
   function setInit() {
 

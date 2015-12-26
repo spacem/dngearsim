@@ -1,0 +1,45 @@
+body {
+  background: url(images/background.jpeg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.chunkyness {
+  background-color: #070506;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  border-color: #8d8578;
+  border-style: solid;
+  border-width: 6px;
+  border-radius: 10px;
+}
+.modal-content {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  border-color: #8d8578;
+  border-style: solid;
+  border-width: 6px;
+  border-radius: 10px;
+}
+.normal-grade {
+  color: #8d8578;
+}
+.-grade {
+  color: #8d8578;
+}
+.magic-grade {
+  color: #4a5510;
+}
+.rare-grade {
+  color: #5891c1;
+}
+.epic-grade {
+  color: #cc782f;
+}
+.unique-grade {
+  color: #6119a9;
+}
+.legendary-grade {
+  color: #dc2355;
+}

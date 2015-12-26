@@ -11,6 +11,7 @@
   <script src="//cdn.jsdelivr.net/zip.js/0.1/inflate.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   
   <script src="js/savedItemController.js"></script>
   <script src="js/navController.js"></script>
@@ -36,31 +37,34 @@
   <link rel="stylesheet" href="dngearsim.css">
 </head>
 <body ng-app="dnGearSimApp">
-<div class="container-fluid">
+<div id="head" class="container-fluid chunkyness">
   <div class="row">
-    <div class="xs-col-12 bg-info">
+    <div class="xs-col-12">
       <div class="container">
-      <h3>dngearsim <small>Dragon Nest Gear Simulator</small></h3>
+      <h3>
+        dngearsim <small>Dragon Nest Gear Simulator</small>
+        <img class="hidden-xs" align="right" src="images/saints-haven.png" />
+      </h3>
       </div>
     </div>
   </div>
 </div>
-<div class="container-fluid">
+<div id="head-break" class="container-fluid">
   <div class="row">
     &nbsp;
   </div>
 </div>
-<div ng-controller="NavCtrl" dngearsim-nav class="container">
+<div id="nav" ng-controller="NavCtrl" dngearsim-nav class="container">
 </div>
-<div ng-view class="container">
+<div id="app" ng-view class="container">
 </div>
-<div class="container-fluid">
+<div id="footer-break" class="container-fluid">
   <div class="row">
     &nbsp;
   </div>
 </div>
 <footer>
-  <div class="container-fluid bg-info navbar-fixed-bottom">
+  <div class="container-fluid chunkyness navbar-fixed-bottom">
   <div class="container text-right">
     <a href="https://github.com/spacem/dngearsim">https://github.com/spacem/dngearsim</a>
   </div>
