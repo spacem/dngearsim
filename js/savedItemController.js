@@ -17,9 +17,9 @@ angular.module('savedItemController', ['saveService','valueServices'])
       console.log('opening item for save ' + item.name);
       var modalInstance = $uibModal.open({
         animation: false,
-        backdrop : true,
+        backdrop : false,
         keyboard : true,
-        templateUrl: 'partials/use-options.html?bust=' + Math.random().toString(36).slice(2),
+        templateUrl: 'partials/use-options.html', //?bust=' + Math.random().toString(36).slice(2),
         controller: 'UseOptionsCtrl',
         size: 'lg',
         resolve: {
@@ -88,10 +88,10 @@ angular.module('savedItemController', ['saveService','valueServices'])
     $scope.open = function (group, item, index) {
       console.log('opening item ' + item.name);
       var modalInstance = $uibModal.open({
-        animation: true,
-        backdrop : true,
+        animation: false,
+        backdrop : false,
         keyboard : true,
-        templateUrl: 'partials/equipment.html?bust=' + Math.random().toString(36).slice(2),
+        templateUrl: 'partials/equipment.html', //?bust=' + Math.random().toString(36).slice(2),
         controller: 'EquipmentCtrl',
         size: 'lg',
         resolve: {
