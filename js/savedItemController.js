@@ -1,15 +1,37 @@
 angular.module('savedItemController', ['saveService','valueServices'])
 .controller('SavedCtrl', 
-  ['$scope','getSavedItems','updatedSavedItems','$uibModal','hCodeValues',
-  function($scope,getSavedItems,updatedSavedItems,$uibModal,hCodeValues) {
-    $scope.savedItems = getSavedItems();
-    $scope.anyItems = Object.keys($scope.savedItems).length > 0;
+  ['$scope','getSavedItems','updatedSavedItems','$uibModal','hCodeValues','saveItem',
+  function($scope,getSavedItems,updatedSavedItems,$uibModal,hCodeValues,saveItem) {
     $scope.combinedStats = {};
     
+    $scope.init = function() {
+      $scope.savedItems = getSavedItems();
+      $scope.anyItems = Object.keys($scope.savedItems).length > 0;
+
+      angular.forEach($scope.savedItems, function(value, key) {
+        $scope.combinedStats[key] = $scope.getCombinedStats(key);
+      });
+    }
+    
+    $scope.addItem = function(group, item) {
+      saveItem('Saved Items', item);
+      $scope.init();
+    }
+    
     $scope.removeItem = function(group, index) {
-      $scope.savedItems[group].items.splice(index);
+      $scope.savedItems[group].items.splice(index, 1);
       updatedSavedItems(group, $scope.savedItems[group].items);
-      $scope.combinedStats[group] = $scope.getCombinedStats(group);
+      
+      $scope.init();
+    }
+    
+    $scope.getFullStats = function(item) {
+      if('fullStats' in item && item.fullStats != null) {
+        return item.fullStats;
+      }
+      else {
+        return item.stats;
+      }
     }
     
     $scope.getCombinedStats = function(group) {
@@ -43,10 +65,6 @@ angular.module('savedItemController', ['saveService','valueServices'])
       
       return stats;
     }
-    
-    angular.forEach($scope.savedItems, function(value, key) {
-      $scope.combinedStats[key] = $scope.getCombinedStats(key);
-    });
 
     $scope.open = function (group, item, index) {
       console.log('opening item ' + item.name);
@@ -70,5 +88,7 @@ angular.module('savedItemController', ['saveService','valueServices'])
         $scope.combinedStats[group] = $scope.getCombinedStats(group);
       });
     }
+    
+    $scope.init();
   }]
 );

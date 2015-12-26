@@ -19,11 +19,15 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
       $scope.item.enchantmentNum = 10;
     }
     
+    $scope.item.fullStats = null;
+    $scope.item.enchantmentStats = null;
+    
     for(var i=0;i<$scope.enchantments.length;++i) {
       if($scope.item.enchantmentNum == $scope.enchantments[i].EnchantLevel) {
         $scope.enchantment = $scope.enchantments[i];
         
         $scope.item.enchantmentStats = hCodeValues.getStats($scope.enchantment);
+        $scope.item.fullStats = hCodeValues.mergeStats($scope.item.enchantmentStats, $scope.item.stats);
         if($scope.enchantment.NeedCoin < 10000) {
           $scope.enchantmentCost = Math.round($scope.enchantment.NeedCoin / 1000)/10 + 'g';
         }

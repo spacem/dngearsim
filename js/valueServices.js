@@ -90,10 +90,6 @@ m.factory('hCodeValues', [function() {
           var currentData = {};
           
           var prop;
-          prop = 'State' + currentState + '_Min';
-          if(prop in data) {
-            currentData.min = data[prop];
-          }
         
           prop = 'State' + currentState + '_Max';
           if(prop in data) {
@@ -102,14 +98,17 @@ m.factory('hCodeValues', [function() {
           
           prop = 'State' + currentState + 'Value';
           if(prop in data) {
-            currentData.min = data[prop];
             currentData.max = data[prop];
           }
           
           prop = 'StateValue' + currentState;
           if(prop in data) {
-            currentData.min = data[prop];
-            currentData.max = data[prop];
+            currentData.max = Number(data[prop]);
+          }
+          
+          prop = 'State' + currentState + '_Min';
+          if(prop in data && currentData.max != data[prop]) {
+            currentData.min = Number(data[prop]);
           }
           
           prop = 'State' + currentState + '_GenProb';
@@ -146,10 +145,10 @@ m.factory('hCodeValues', [function() {
     
     setupStat : function(stat, id) {
       stat.id = id;
-      stat.stat = this.stats[id];
-      if(stat.stat != null) {
-        stat.name = stat.stat.name;
-        stat.displayValue = stat.stat.display(stat);
+      var statDef = this.stats[id];
+      if(statDef != null) {
+        stat.name = statDef.name;
+        stat.displayValue = statDef.display(stat);
       }
       else {
         stat.name = id;
@@ -159,6 +158,7 @@ m.factory('hCodeValues', [function() {
     
     mergeStats : function(stats1, stats2) {
       var statMap = {};
+      
       
       angular.forEach(stats1, function(value, key) {
         if(value.id in statMap) {
@@ -178,15 +178,15 @@ m.factory('hCodeValues', [function() {
         }
       });
       
-      var stats = [];
-      var t = this;
-      angular.forEach(statMap, function(value, key) {
-        var stat = { max : value };
-        t.setupStat(stat, key);
-        stats.push(stat);
-      });
+      var newStats = [];
+      
+      for(var key in statMap) {
+        var stat = { max : statMap[key] };
+        this.setupStat(stat, key);
+        newStats.push(stat);
+      }
         
-      return stats;
+      return newStats;
     }
   }
 }]);

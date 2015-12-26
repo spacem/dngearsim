@@ -29,20 +29,21 @@
           {{result.name}}
         </button>
         <div>
-          <span ng-repeat="stat in result.stats">
+          <span ng-repeat="stat in $parent.$parent.getFullStats(result)">
             |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
           </span>|
         </div>
       </td>
       <td class="col-xs-1">
-          <button class="btn btn-link" ng-click="$parent.$parent.removeItem(group, $index);">Remove</button>
+          <button class="btn btn-link" ng-click="$parent.$parent.addItem(group, result);">copy</button>
+          <button class="btn btn-link" ng-click="$parent.$parent.removeItem(group, $index);">remove</button>
       </td>
     </tr>
     </table>
   </div>
   <div class="col-xs-12">
     Combined stats:<br />
-    <span ng-repeat="stat in $parent.combinedStats[group]">
+    <span ng-repeat="stat in $parent.combinedStats[group] track by stat.id">
       |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
     </span>|
   </div>
