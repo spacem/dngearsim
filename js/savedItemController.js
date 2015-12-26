@@ -14,8 +14,27 @@ angular.module('savedItemController', ['saveService','valueServices'])
     }
     
     $scope.addItem = function(group, item) {
-      saveItem('Saved Items', item);
-      $scope.init();
+      console.log('opening item for save ' + item.name);
+      var modalInstance = $uibModal.open({
+        animation: false,
+        backdrop : true,
+        keyboard : true,
+        templateUrl: 'partials/use-options.html?bust=' + Math.random().toString(36).slice(2),
+        controller: 'UseOptionsCtrl',
+        size: 'lg',
+        resolve: {
+          item: function () {
+            return item;
+          },
+          group: function () {
+            return group;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {}, function () {
+        $scope.init();
+      });
     }
     
     $scope.removeItem = function(group, index) {

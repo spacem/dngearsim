@@ -36,25 +36,24 @@
 </div>
 <table class="table table-striped">
 <tr class="row" ng-repeat="result in getResults()">
-  <td class="col-xs-1">
-    {{result.rank.name}}
-  </td>
-  <td class="col-xs-1">
-    {{result.levelLimit}}
-  </td>
-  <td class="col-xs-1">
-    {{getJobName(result.needJobClass)}}
-  </td>
-  <td class="col-xs-8">
-    <button class="btn btn-link" ng-click="$parent.open(result)">{{result.name}}</button>
-    <div>
-      <span ng-repeat="stat in result.stats">
-        |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
-      </span>|
+  <td>
+    <div class="col-xs-12 col-sm-9">
+      <button class="btn btn-link" ng-click="$parent.open(result)">
+        <span ng-show="result.enchantmentNum > 0">+{{result.enchantmentNum}}</span>
+        {{result.name}}
+      </button>
     </div>
-  </td>
-  <td class="col-xs-1">
+    <div class="col-xs-12 col-sm-3">
+      {{getJobName(result.needJobClass)}} {{result.rank.name}} level {{result.levelLimit}}
+    </div>
+    <div class="col-xs-12 col-md-9">
+      <span ng-repeat="stat in $parent.getFullStats(result)">
+        |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
+      </span>
+    </div>
+    <div class="col-xs-12 col-md-3 text-right">
       <button class="btn btn-link" ng-click="$parent.saveItem(result);">use</button>
+    </div>
   </td>
 </tr>
 </table>

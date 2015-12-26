@@ -53,8 +53,33 @@ function(
     equipInit();
   };
   
+  $scope.getFullStats = function(item) {
+    if('fullStats' in item && item.fullStats != null) {
+      return item.fullStats;
+    }
+    else {
+      return item.stats;
+    }
+  }
+  
   $scope.saveItem = function(item) {
-    saveItem('Saved Items', item);
+    console.log('opening item for save ' + item.name);
+    var modalInstance = $uibModal.open({
+      animation: false,
+      backdrop : true,
+      keyboard : true,
+      templateUrl: 'partials/use-options.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'UseOptionsCtrl',
+      size: 'lg',
+      resolve: {
+        item: function () {
+          return item;
+        },
+        group: function () {
+          return 'Unnamed group';
+        }
+      }
+    });
   };
   
   translations.init(reportProgress, function() { $timeout(translationsInit); } );

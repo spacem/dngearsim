@@ -4,15 +4,20 @@
 
 var dnGearSimApp = angular.module('dnGearSimApp', [
   'ngRoute',
-  'setupController',
-  'equipmentController',
-  'itemSearchController',
-  'translationService',
+  
   'navController',
+  
+  'setupController',
+  'translationService',
   'savedItemController',
+  
+  'equipmentController',
+  'useOptionsController',
+  
   'dntServices',
   'itemService',
   'saveService',
+  'itemSearchController',
 ]);
 
 dnGearSimApp.config(['$routeProvider',
