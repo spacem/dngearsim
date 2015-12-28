@@ -145,11 +145,27 @@ function(translations,dntData,hCodeValues) {
         }
         
         if(!dntData.hasStartedLoading(itemType.mainDnt)) {
-          dntData.init(itemType.mainDnt, progress, function() { itemType.init(progress, complete) });
+          var colsToLoad = {
+            NameID: true, DescriptionID: true, NameIDParam: true, DescriptionIDParam: true,
+            Type: true,TypeParam1: true,TypeParam2: true, TypeParam3: true, LevelLimit: true, NeedJobClass: true, Rank: true,
+            State1: true, StateValue1: true, State1_Max: true, State1_GenProb: true,
+            State2: true, StateValue2: true, State2_Max: true,
+            State3: true, StateValue3: true, State3_Max: true,
+            State4: true, StateValue4: true, State4_Max: true,
+            State5: true, StateValue5: true, State5_Max: true,
+            State6: true, StateValue6: true, State6_Max: true,
+            State7: true, StateValue7: true, State7_Max: true,
+            State8: true, StateValue8: true, State8_Max: true,
+            State9: true, StateValue9: true, State9_Max: true,
+            State10: true,StateValue10: true,State10_Max: true,
+            EnchantID: true, ItemCategoryType: true
+          };
+        
+          dntData.init(itemType.mainDnt, colsToLoad, progress, function() { itemType.init(progress, complete) });
         }
         
         if('potentialDnt' in itemType && !dntData.hasStartedLoading(itemType.potentialDnt)) {
-          dntData.init(itemType.potentialDnt, progress, function() { itemType.init(progress, complete) });
+          dntData.init(itemType.potentialDnt, null, progress, function() { itemType.init(progress, complete) });
         }
         
         if(translations.loaded && dntData.isLoaded(itemType.mainDnt) && (!('potentialDnt' in itemType) || dntData.isLoaded(itemType.potentialDnt))) {

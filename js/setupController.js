@@ -10,6 +10,7 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
   }
   
   $scope.location = sessionLocation;
+  $scope.uistringLocation = '';
   if($scope.location == noLocation) {
     $scope.testResults = ['No location set'];
   }
@@ -17,19 +18,38 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
     $scope.testResults = ['Using location ' + $scope.location];
   }
   
+  $scope.translationResults = [];
+  
   $scope.hostedFiles = [
-    {region: 'na', name: 'nov15', url : 'https://spacedb.firebaseapp.com/nov15'},
-    {region: 'na', name: 'latest', url : 'https://spacedb.firebaseapp.com/latest'}
+    {region: 'na', name: 'dec-2015', url : 'https://dnfiles.firebaseapp.com/na'},
+    {region: 'cdn', name: 'dec-2015', url : 'https://dnfiles.firebaseapp.com/cdn'},
+    {region: 'sea', name: 'dec-2015', url : 'https://dnfiles.firebaseapp.com/sea'},
     ];
-    
   
   $scope.resetSessionData = function() {
     $scope.testResults = ['session data reset.. reloading page'];
+    translations.reset();
     sessionStorage.clear();
     localStorage.clear();
     this.saveLocation();
-    $timeout(function() { location.reload(true); });
+    $timeout(function() {   
+      location.hash = '';
+      location.reload(true);
+    });
   }
+  
+  $scope.loadUiString = function() {
+    $scope.translationResults = [];
+    localStorage.removeItem('UIStrings');
+    translations.reset();
+    translations.location = $scope.uistringLocation;
+    translations.init(progressTranslations, translationsStatus);
+  }
+  
+  function translationsStatus() {
+    progressTranslations('current translations contain words like ' + translations.translate(329) + ', ' + translations.translate(323) + ' and ' + translations.translate(335));  }
+  
+  translations.init(progressTranslations, translationsStatus);
   
   function progress(msg) {
     $timeout(
@@ -40,8 +60,13 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
       });
   }
   
-  function translationsComplete() {
-    dntInit(progress);
+  function progressTranslations(msg) {
+    $timeout(
+      function() {
+        if($scope.translationResults != null) {
+          $scope.translationResults.push(msg);
+        }
+      });
   }
   
   $scope.saveLocation = function() {
@@ -62,7 +87,10 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
       $scope.testResults = [
         'Using location ' + $scope.location,
         'Loading all data used by the app'];
-      translations.init(progress, translationsComplete);
+
+      translations.init(progress, function () {
+        dntInit(progress);
+      });
     }
   }
 }]);

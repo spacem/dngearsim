@@ -1,8 +1,8 @@
 angular.module('translationService', ['ngRoute']).
-factory('translations', ['$routeParams', function($routeParams) {
+factory('translations', ['$routeParams',function($routeParams) {
 
   var dnTranslations = new DnTranslations();
-  var tFile = 'uistring.xml';
+  var tFile = 'uistring.zip';
 
   var completeCallback = [];
   var progressCallback = [];
@@ -13,14 +13,18 @@ factory('translations', ['$routeParams', function($routeParams) {
       dnTranslations = new DnTranslations();
       this.loaded = false;
       this.startedLoading = false;
+      completeCallback = [];
+      progressCallback = [];
     },
     
     loaded : false,
     startedLoading : false,
+    
+    location : null,
   
     init : function(progress, complete) {
 
-      if(this.loaded) {
+      if(this.isLoaded()) {
         complete();
       }
       else {
@@ -31,8 +35,16 @@ factory('translations', ['$routeParams', function($routeParams) {
           this.startedLoading = true;
           var t = this;
           
+          var fileName = null;
+          if(this.location != null && this.location != '') {
+            fileName = this.location + '/' + tFile;
+          }
+          else if($routeParams['location'] != null) {
+            fileName = $routeParams['location'] + '/' + tFile;
+          }
+          
           dnTranslations.loadDefaultFile(
-            $routeParams['location'] + '/' + tFile, 
+            fileName, 
             function(msg) {
               angular.forEach(progressCallback, function(value, key) { value(msg); });
             }, 
@@ -43,9 +55,19 @@ factory('translations', ['$routeParams', function($routeParams) {
             function(msg) {
               angular.forEach(progressCallback, function(value, key) { value(msg); });
             }
-            );
+          );
         }
       }
+    },
+    
+    isLoaded : function() {
+      if(!this.loaded) {
+        this.loaded = dnTranslations.loadFromSession();
+        if(this.loaded) {
+          this.startedLoading = true;
+        }
+      }
+      return this.loaded;
     },
     
     translate : function(value) {

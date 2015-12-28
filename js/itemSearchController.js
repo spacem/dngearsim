@@ -33,7 +33,7 @@ function(
   
   $scope.nameSearch = localStorage.getItem('nameSearch');
   if($scope.nameSearch == null) {
-    $scope.nameSearch == '';
+    $scope.nameSearch = '';
   }
 
   $scope.save = function() {

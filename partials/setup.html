@@ -1,25 +1,58 @@
 <div class="row">
   <div class="col-xs-12 col-md-4">
     <div class="form-group">
-    <label>URL for the dnt/xml files:</label>
+    <label>Location of dnt files:</label>
     <input type="text" class="form-control" ng-model="location" />
     </div>
     <span ng-repeat="hostedFile in hostedFiles"> 
-      <button class="btn btn-link" ng-click="$parent.location = hostedFile.url">{{ hostedFile.region }} {{ hostedFile.name }}</a>
+      <button class="btn btn-link" ng-click="$parent.location = hostedFile.url">{{ hostedFile.region }} {{ hostedFile.name }}</button>
     </span>
   </div>
-  <div class="col-xs-12 col-md-8">
+  <div class="col-xs-12 col-md-3">
     <div class="form-group">
     <label></label><br />
-    <button class="btn" ng-click="saveLocation()">Save Location</button>
-    <button class="btn" ng-click="testLocation()">Test Location</button>
-    <button class="btn" ng-click="resetSessionData()">Reset Session</button>
+    <button class="btn btn-default" ng-click="saveLocation()">Save Location</button>
+    <button class="btn btn-default" ng-click="testLocation()">Test Location</button>
     </div>
-    <div>
-      <div class="row" ng-repeat="testResult in testResults track by $index"> 
-        <div class="col-xs-12">
-          {{testResult}}
-        </div>
+      <div class="bg-danger">
+        <label>Reset all session data<br /> - including saved items<br />
+        <button class="btn btn-default" ng-click="resetSessionData()">Reset Session</button></label>
+      </div>
+  </div>
+  <div class="col-xs-12 col-md-5">
+    <div ng-repeat="testResult in testResults track by $index">
+      {{testResult}}
+    </div>
+  </div>
+</div>
+<div class="row">
+  &nbsp;
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    <div class="form-group">
+    <label>Location of uistring.xml (for translations):</label>
+    <input type="text" class="form-control" ng-model="uistringLocation" />
+    </div>
+    <span ng-repeat="hostedFile in hostedFiles"> 
+      <button class="btn btn-link" ng-click="$parent.uistringLocation = hostedFile.url">{{ hostedFile.region }} {{ hostedFile.name }}</button>
+    </span>
+  </div>
+  <div class="col-xs-12 col-md-3">
+    <div class="form-group">
+    <label></label><br />
+    <button class="btn btn-default" ng-click="loadUiString()">Load Translations</button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  &nbsp;
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row" ng-repeat="result in translationResults track by $index"> 
+      <div class="col-xs-12">
+        {{result}}
       </div>
     </div>
   </div>

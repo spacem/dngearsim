@@ -1,20 +1,54 @@
 var m = angular.module('dntServices', ['translationService','ngRoute','valueServices','itemService']);
 
 m.factory('dntInit',
-['items','jobs',
-function(items,jobs) {
+['items','jobs','dntData','initItem',
+function(items,jobs,dntData,initItem) {
   return function(progress) {
     
     progress('starting init');
     
     var allFactories = [jobs].concat(items.all);
     
+    var dntFiles = {};
+    angular.forEach(items, function(item, key) {
+      if(key != 'all') {
+        angular.forEach(item, function(value, prop) {
+          if(prop.indexOf('Dnt') == prop.length-3) {
+            dntFiles[value] = { 
+              init: function(progress, complete) {
+                dntData.init(value, null, progress, complete);
+              },
+              isLoaded: function() {
+                return dntData.isLoaded(value);
+              },
+              fileName: value,
+            };
+          }
+        });
+      }
+    });
+    
+    angular.forEach(dntFiles, function(value, key) {
+      allFactories.push(value);
+    });
+    
     function initFactory(index) {
     
       if(index < allFactories.length) {
         allFactories[index].init(progress, function() { 
           if(allFactories[index].isLoaded()) {
-            progress('dnt loaded: ' + allFactories[index].mainDnt);
+            if('fileName' in allFactories[index]) {
+              progress('dnt loaded: ' + allFactories[index].fileName);
+            }
+            else {
+              
+              var loadedItems = allFactories[index].getItems();
+              angular.forEach(loadedItems, function(value, key) {
+                initItem(value);
+              });
+              
+              progress('initialised ' + loadedItems.length + ' items from: ' + allFactories[index].mainDnt);
+            }
             initFactory(index+1);
           }
         });
@@ -60,7 +94,7 @@ function() {
 
 m.factory('dntData', ['$routeParams', function($routeParams) {
   
-  function createLoader(file) {
+  function createLoader(file, colsToLoad) {
       
     var completeCallback = null;
     var progressCallback = null;
@@ -86,9 +120,10 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
             this.startedLoading = true;
             var t = this;
             
+            this.reader.colsToLoad = colsToLoad;
             this.reader.loadDntFromServerFile(
               $routeParams['location'] + '/' + file,
-              function(msg) { progressCallback(msg) }, 
+              function(msg) { if(progressCallback != null) progressCallback(msg) }, 
               function() {
                 console.info('dnt loading complete : ' + file);
                 t.loaded = true;
@@ -123,9 +158,9 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
     loaders : {},
     findIndexes : {},
     
-    init : function (fileName, progress, complete) {
+    init : function (fileName, colsToLoad, progress, complete) {
       if(!(fileName in this.loaders)) {
-        this.loaders[fileName] = createLoader(fileName);
+        this.loaders[fileName] = createLoader(fileName, colsToLoad);
       }
       this.loaders[fileName].init(progress, complete)
     },
@@ -196,7 +231,11 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
 
 m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
   
-  var fileName ='jobtable.dnt'; 
+  var fileName ='jobtable.dnt';
+  var colsToLoad = {
+        JobName: true,JobNumber: true,BaseClass: true,ParentJob: true
+  };
+  
   return {
     fileName : fileName,
     
@@ -205,7 +244,7 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
     },
     
     init : function(progress, complete) {
-      dntData.init(fileName, progress, function() {
+      dntData.init(fileName, colsToLoad, progress, function() {
         complete();
         });
     },

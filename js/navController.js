@@ -1,7 +1,7 @@
-angular.module('navController', ['ngRoute'])
+angular.module('navController', ['ngRoute','translationService'])
 .controller('NavCtrl', 
-  ['$scope','$route','$routeParams','$location',
-  function($scope,$route,$routeParams,$location) {
+  ['$scope','$route','$routeParams','$location','translations',
+  function($scope,$route,$routeParams,$location,translations) {
       
     var setupAction = { path: 'setup', name: 'setup' }
     var noLocationMenu = [setupAction];
@@ -16,10 +16,9 @@ angular.module('navController', ['ngRoute'])
       {path: 'item-search/gems', name:'gems'},
       {path: 'saved', name:'saved'},
       ];
-    
     $scope.getActions = function() {
       var menu = null;
-      if($routeParams.location != null) {
+      if($routeParams.location != null && translations.isLoaded()) {
         menu = normalMenu;
       }
       else {

@@ -66,7 +66,12 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.itemType = items[item.itemTypeName];
   
   if('enchantDnt' in $scope.itemType) {
-    dntData.init($scope.itemType.enchantDnt, reportProgress, function() { $timeout(enchantInit); } );
+    var colsToLoad = {
+      EnchantID: true,EnchantLevel: true,EnchantRatio: true,BreakRatio: true,MinDown: true,MaxDown: true,NeedCoin: true,
+      State1: true,State1Value: true,State2: true,State2Value: true,State3: true,State3Value: true,State4: true,State4Value: true,State5: true,State5Value: true,State6: true,State6Value: true,State7: true,State7Value: true,State8: true,State8Value: true,State9: true,State9Value: true,State10: true,State10Value: true
+    };
+    
+    dntData.init($scope.itemType.enchantDnt, colsToLoad, reportProgress, function() { $timeout(enchantInit); } );
   }
   else {
     $scope.enchantments = [];
@@ -93,8 +98,9 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   }
   
   if($scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
-    dntData.init($scope.itemType.setDnt, reportProgress, function() { $timeout(setInit); } );
-    dntData.init($scope.itemType[$scope.usePartDnt], reportProgress, function() { $timeout(setInit); } );
+    dntData.init($scope.itemType.setDnt, null, reportProgress, function() { $timeout(setInit); } );
+    var colsToLoad = { SetItemID: true };
+    dntData.init($scope.itemType[$scope.usePartDnt], colsToLoad, reportProgress, function() { $timeout(setInit); } );
   }
   else {
       $scope.item.setStats = [];
