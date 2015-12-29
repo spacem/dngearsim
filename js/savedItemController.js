@@ -4,6 +4,13 @@ angular.module('savedItemController', ['saveService','valueServices'])
   function($scope,getSavedItems,updatedSavedItems,$uibModal,hCodeValues,saveItem) {
     $scope.combinedStats = {};
     
+    $scope.currentGroup = '';
+    $scope.showCombinedStats = false;
+    
+    $scope.setCurrentGroup = function(group) {
+      $scope.currentGroup = group;
+    }
+    
     $scope.init = function() {
       $scope.savedItems = getSavedItems();
       $scope.anyItems = Object.keys($scope.savedItems).length > 0;

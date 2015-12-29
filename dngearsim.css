@@ -5,6 +5,9 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
+.group-header {
+  color: #070506;
+}
 .chunkyness {
   background-color: #070506;
   opacity: 0.8;

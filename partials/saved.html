@@ -4,13 +4,24 @@
   </div>
 </div>
 <div id="savedGroup" class="row" ng-show="anyItems" ng-repeat="(group, items) in savedItems track by $index">
-  <div class="col-xs-12 col-md-3">
+  <div class="col-xs-12 group-header" ng-show="currentGroup != group">
+    <button class="btn btn-link btn-block" ng-click="$parent.setCurrentGroup(group)">
+      <div class="row">
+        <div class="col-xs-12">
+          <h3 class="text-left">{{group}}<br /><small>{{items.items.length}} items</small></h3>
+        </div>
+      </div>
+    </button>
+  </div>
+  <div class="col-xs-12 col-md-3" ng-hide="currentGroup != group">
     <div class="row">
-      <div class="col-xs-12 col-md-12">
-      <h3>{{group}}</h3>
+      <div class="col-xs-12 col-md-12" ng-click="$parent.setCurrentGroup('')">
+        <button class="btn btn-link btn-block">
+          <h3 class="text-left">{{group}}</h3>
+        </button>
       </div>
       <div class="col-xs-12 col-md-12">
-        <h4>combined stats:</h4>
+        <h4>combined stats</h4>
       </div>
       <div class="col-xs-5 col-md-12" ng-repeat="stat in $parent.combinedStats[group] track by stat.id">
         {{stat.name}}: {{stat.displayValue}}
@@ -18,7 +29,7 @@
     </div>
     <div class="row">&nbsp;</div>
   </div>
-  <div class="col-xs-12 col-md-9">
+  <div class="col-xs-12 col-md-9" ng-hide="currentGroup != group">
     <table class="table">
     <tr class="row" ng-repeat="result in items.items track by $index">
       <td>
@@ -43,8 +54,5 @@
       </td>
     </tr>
     </table>
-  </div>
-  <div class="col-xs-12">
-    &nbsp;
   </div>
 </div>
