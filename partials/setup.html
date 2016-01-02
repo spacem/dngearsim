@@ -1,11 +1,12 @@
+
 <div class="row">
   <div class="col-xs-12 col-md-4">
     <div class="form-group">
-    <label>Location of dnt files:</label>
+    <label>Custom location of dnt files (for ALT region):</label>
     <input type="text" class="form-control" ng-model="location" />
     </div>
-    <span ng-repeat="hostedFile in hostedFiles"> 
-      <button class="btn btn-link" ng-click="$parent.location = hostedFile.url">{{ hostedFile.region }} {{ hostedFile.name }}</button>
+    <span ng-repeat="hostedFile in hostedFiles">
+      <button class="btn btn-link" ng-click="$parent.location = hostedFile.url" title="{{hostedFile.name}}">{{ hostedFile.region }}</button>
     </span>
   </div>
   <div class="col-xs-12 col-md-3">
@@ -14,10 +15,6 @@
     <button class="btn btn-default" ng-click="saveLocation()">Save Location</button>
     <button class="btn btn-default" ng-click="testLocation()">Test Location</button>
     </div>
-      <div class="bg-danger">
-        <label>Reset all session data<br /> - including saved items<br />
-        <button class="btn btn-default" ng-click="resetSessionData()">Reset Session</button></label>
-      </div>
   </div>
   <div class="col-xs-12 col-md-5">
     <div ng-repeat="testResult in testResults track by $index">
@@ -29,19 +26,32 @@
   &nbsp;
 </div>
 <div class="row">
-  <div class="col-xs-12 col-md-4">
-    <div class="form-group">
-    <label>Location of uistring.xml (for translations):</label>
-    <input type="text" class="form-control" ng-model="uistringLocation" />
+  <div class="col-xs-12">
+    <div class="row">
+      &nbsp;
     </div>
-    <span ng-repeat="hostedFile in hostedFiles"> 
-      <button class="btn btn-link" ng-click="$parent.uistringLocation = hostedFile.url">{{ hostedFile.region }} {{ hostedFile.name }}</button>
-    </span>
+    <div class="bg-danger">
+      <button class="btn btn-default" ng-click="resetSessionData()">Reset Session</button>
+      <label>WARNING: Will reset all session data - including all saved items</label>
+    </div>
+    <div class="row">
+      &nbsp;
+    </div>
   </div>
-  <div class="col-xs-12 col-md-3">
-    <div class="form-group">
-    <label></label><br />
-    <button class="btn btn-default" ng-click="loadUiString()">Load Translations</button>
+</div>
+<div class="row">
+  &nbsp;
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      &nbsp;
+    </div>
+    <div>
+      <button class="btn btn-default" ng-click="loadUiString()">Reload Translations</button>
+    </div>
+    <div class="row">
+      &nbsp;
     </div>
   </div>
 </div>

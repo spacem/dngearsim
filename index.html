@@ -14,20 +14,25 @@
   <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   
   <script src="js/directives.js"></script>
+  <script src="js/filters.js"></script>
   
   <script src="js/savedItemController.js"></script>
   <script src="js/navController.js"></script>
   <script src="js/setupController.js"></script>
   <script src="js/itemSearchController.js"></script>
+  <script src="js/regionController.js"></script>
   
   <script src="js/useOptionsController.js"></script>
   <script src="js/equipmentController.js"></script>
+  <script src="js/viewGroupController.js"></script>
   
   <script src="js/translationService.js"></script>
   <script src="js/dntServices.js"></script>
   <script src="js/valueServices.js"></script>
   <script src="js/itemService.js"></script>
   <script src="js/saveService.js"></script>
+  <script src="js/regionService.js"></script>
+  <script src="js/exportLinkServices.js"></script>
   
   <script src="js/app.js"></script>
   
@@ -45,8 +50,10 @@
     <div class="xs-col-12">
       <div class="container">
       <h3>
-        dngearsim <small>Dragon Nest Gear Simulator</small>
-        <img class="hidden-xs" align="right" src="images/saints-haven.png" />
+        <a href="#">dngearsim</a> <small>Dragon Nest Gear Simulator</small>
+        
+        <dngearsim-region ng-controller="RegionCtrl">
+        </dngearsim-region>
       </h3>
       </div>
     </div>
@@ -58,8 +65,6 @@
   </div>
 </div>
 <div id="nav" ng-controller="NavCtrl" dngearsim-nav class="container">
-</div>
-<div id="app" ng-view class="container">
 </div>
 <div id="footer-break" class="container-fluid">
   <div class="row">

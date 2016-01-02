@@ -1,21 +1,12 @@
-angular.module('savedItemController', ['saveService','valueServices','itemService','exportLinkServices'])
-.controller('SavedCtrl', 
-  ['$scope','getSavedItems','updatedSavedItems','$uibModal','hCodeValues','$routeParams','importGroup','items','itemColumnsToLoad','dntData','createItem','initItem','$timeout','$http','translations','dntReset','createGroupLink',
-  function($scope,getSavedItems,updatedSavedItems,$uibModal,hCodeValues,$routeParams,importGroup,items,itemColumnsToLoad,dntData,createItem,initItem,$timeout,$http,translations,dntReset,createGroupLink) {
+angular.module('viewGroupController', ['saveService','valueServices','itemService','exportLinkServices'])
+.controller('ViewGroupCtrl', 
+  ['$scope','getSavedItems','updatedSavedItems','$uibModal','hCodeValues','$location','$routeParams','importGroup','items','itemColumnsToLoad','dntData','createItem','initItem','$timeout','$http','translations','dntReset','createGroupLink',
+  function($scope,getSavedItems,updatedSavedItems,$uibModal,hCodeValues,$location,$routeParams,importGroup,items,itemColumnsToLoad,dntData,createItem,initItem,$timeout,$http,translations,dntReset,createGroupLink) {
     $scope.combinedStats = {};
     
     $scope.currentGroup = '';
     $scope.showCombinedStats = false;
     $scope.isLoading = false;
-    
-    $scope.setCurrentGroup = function(group) {
-      $scope.currentGroup = '';
-      if(group in $scope.savedItems) {
-        $timeout(function() {
-          $scope.currentGroup = group;
-        }, 200);
-      }
-    }
     
     $scope.buildExportLink = function(groupName) {
       if(groupName in $scope.savedItems) {
@@ -23,24 +14,47 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
       }
     }
     
-    $scope.getGroupSummary = function(group) {
-      var summary = '';
-      if($scope.savedItems[group].lastUpdate > 0) {
-        var lastUpdate = new Date($scope.savedItems[group].lastUpdate);
-        summary += lastUpdate.toLocaleDateString() + ' ' + lastUpdate.toLocaleTimeString();
-      }
-      if(group != $scope.currentGroup) {
-        summary += ' | contains ' + $scope.savedItems[group].items.length + ' items';
-      }
-      
-      return summary;
-    }
-    
     $scope.init = function() {
 
-      $scope.savedItems = getSavedItems();
-      $scope.setShortUrls();
-      $scope.setCombinedStats();
+      if('g' in $routeParams && 'i' in $routeParams && $location.path() == '/view-group') {
+        var importGroupName = $routeParams.g;
+          
+        var items = [];
+        
+        var itemString = $routeParams.i;
+        
+        angular.forEach(itemString.split(','), function(itemStr, index) {
+          var item = {};
+          
+          angular.forEach(itemStr.split(':'), function(itemBit, bitIndex) {
+            if(itemBit.charAt(0) == 'I') {
+              item.id = parseInt(itemBit.substr(1), 36);
+            }
+            else if(itemBit.charAt(0) == 'E') {
+              item.enchantmentNum = parseInt(itemBit.substr(1), 36);
+            }
+            else if(itemBit.charAt(0) == 'P') {
+              item.pid = parseInt(itemBit.substr(1), 36);
+            }
+            else if(itemBit.charAt(0) == 'S') {
+              item.setId = parseInt(itemBit.substr(1), 36);
+            }
+            else if(itemBit.charAt(0) == '_') {
+              item.itemTypeName = itemBit.substr(1);
+            }
+          });
+          
+          if(item.id > 0) {
+            items.push(item);
+          }
+        });
+
+        $scope.savedItems = {};
+        $scope.savedItems[importGroupName] = {};
+        $scope.savedItems[importGroupName].items = items;
+        $scope.currentGroup = importGroupName;
+        $scope.doInitItems(importGroupName);
+      }
       
       $scope.anyItems = Object.keys($scope.savedItems).length > 0;
     }
@@ -58,11 +72,6 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
       });
     }
     
-    $scope.copyGroup = function(group) {
-      importGroup(group, $scope.savedItems[group].items);
-      $scope.init();
-    }
-    
     $scope.doInitItems = function(group) {
       $scope.isLoading = true;
       
@@ -78,7 +87,7 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
       var path = $scope.buildExportLink(group);
       var longUrl = window.location.href.split("#")[0] + path;
       var data = { longUrl: longUrl };
-      
+      console.log(data);
     	$http.post(
     	  'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyD5t5o7ZcSAvM-xMwc14ft2BA-MKQA7LMo', data).success(
     	    function(data,status,headers,config){
@@ -180,8 +189,8 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
         dntReset();
         
         $timeout(function() {
-          updatedSavedItems(groupName, newItems);
-          $scope.savedItems = getSavedItems();
+          $scope.savedItems = {};
+          $scope.savedItems[groupName] = {items: newItems, lastUpdate: group.lastUpdate };
           $scope.setCombinedStats();
           $scope.setShortUrls();
           $scope.isLoading = false;
@@ -190,39 +199,6 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
     }
     
     function progress() {
-    }
-    
-    $scope.addItem = function(group, item) {
-      console.log('opening item for save ' + item.name);
-      var modalInstance = $uibModal.open({
-        animation: false,
-        backdrop : false,
-        keyboard : true,
-        templateUrl: 'partials/use-options.html', //?bust=' + Math.random().toString(36).slice(2),
-        controller: 'UseOptionsCtrl',
-        size: 'lg',
-        resolve: {
-          item: function () {
-            return item;
-          },
-          group: function () {
-            return group;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (selectedItem) {}, function () {
-        $timeout(function() {
-          $scope.init();
-        });
-      });
-    }
-    
-    $scope.removeItem = function(group, index) {
-      $scope.savedItems[group].items.splice(index, 1);
-      updatedSavedItems(group, $scope.savedItems[group].items);
-      
-      $scope.init();
     }
     
     $scope.getFullStats = function(item) {
@@ -281,15 +257,12 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
           }
         }
       });
-      
-      modalInstance.result.then(function (selectedItem) {}, function () {
-        
-        $timeout(function() {
-          $scope.savedItems[group].items[index] = item;
-          updatedSavedItems(group, $scope.savedItems[group].items);
-          $scope.init();
-        });
-      });
+    }
+    
+    $scope.copyGroup = function(group) {
+      importGroup(group, $scope.savedItems[group].items);
+      $location.path('/saved');
+      console.log('should have changed');
     }
     
     $scope.init();

@@ -9,31 +9,19 @@
   </div>
 </div>
 <div id="savedGroup" class="row" ng-show="anyItems" ng-repeat="(group, items) in savedItems track by $index" ng-hide="isLoading">
-  <div class="col-xs-12 group-header" ng-show="currentGroup != group">
-    <button class="btn btn-link btn-block" ng-click="$parent.setCurrentGroup(group)">
-      <div class="row">
-        <div class="col-xs-12">
-          <h3 class="text-left">{{group}}<br />
-          <small>{{$parent.getGroupSummary(group)}}</small></h3>
-        </div>
-      </div>
-    </button>
-  </div>
-  <div class="col-xs-12 col-md-3" ng-hide="currentGroup != group">
+  <div class="col-xs-12 col-md-3">
     <div class="row">
-      <div class="col-xs-12 col-md-12" ng-click="$parent.setCurrentGroup('')">
-        <button class="btn btn-link btn-block">
+      <div class="col-xs-12 col-md-12">
+        <div>
           <h3 class="text-left">{{group}}<br />
-          <small>{{$parent.getGroupSummary(group)}}</small></h3>
-        </button>
+        </div>
       </div>
       <div class="col-xs-6 col-md-12">
         <button class="btn btn-link" ng-click="$parent.createShortUrl(group)" ng-hide="items.shortUrl != null">create permalink</button>
         <a class="btn btn-link" href="{{items.shortUrl}}" ng-show="items.shortUrl != null">{{items.shortUrl}}</a>
       </div>
-      <div class="col-xs-6 col-md-12">
-        <button class="btn btn-link" ng-click="$parent.copyGroup(group)">copy</button> | 
-        <button class="btn btn-link" ng-click="$parent.doInitItems(group)">reload</button>
+      <div class="col-xs-12">
+        <button class="btn btn-link" ng-click="$parent.copyGroup(group)">copy into saved groups</button>
       </div>
       <div class="col-xs-12 col-md-12">
         <h4>combined stats</h4>
@@ -44,7 +32,7 @@
     </div>
     <div class="row">&nbsp;</div>
   </div>
-  <div class="col-xs-12 col-md-9" ng-hide="currentGroup != group">
+  <div class="col-xs-12 col-md-9">
     <table class="table">
     <tr class="row" ng-repeat="result in items.items track by $index">
       <td>
@@ -61,10 +49,6 @@
         <span ng-repeat="stat in $parent.$parent.getFullStats(result)">
           |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
         </span>
-      </div>
-      <div class="col-xs-12 col-md-3 text-right">
-          <button class="btn btn-link" ng-click="$parent.$parent.addItem(group, result);">re-use</button>
-          <button class="btn btn-link" ng-click="$parent.$parent.removeItem(group, $index);">remove</button>
       </div>
       </td>
     </tr>

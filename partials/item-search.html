@@ -1,4 +1,9 @@
-<div class="row" ng-show="isLoadComplete()">
+<div class="row" ng-show="isLoading()">
+  <div class="col-xs-12 loading">
+  loading...
+  </div>
+</div>
+<div class="row" ng-hide="isLoading()">
   <div class="col-xs-12" ng-hide="simpleSearch">
     <div class="form-group">
       <label class="checkbox-inline" ng-repeat="(id,value) in grades">
@@ -31,13 +36,8 @@
     
   </div>
 </div>
-<div class="row" ng-hide="isLoadComplete()">
-  <div class="col-xs-12">
-  loading...
-  </div>
-</div>
 <div class="row">&nbsp;</div>
-<table class="table">
+<table class="table" ng-hide="isLoading()">
 <tr class="row" ng-repeat="result in getResults()">
   <td>
     <div class="col-xs-12 col-sm-9">
@@ -60,9 +60,9 @@
   </td>
 </tr>
 </table>
-<div class="row" ng-show="items != null && currentResults >= maxDisplay">
+<div class="row" ng-show="currentResults >= maxDisplay && !isLoading()">
   <div class="col-xs-1"></div>
-  <div class="col-xs-1">
+  <div class="col-xs-11">
     <button class="btn btn-link" ng-click="maxDisplay = currentResults + 10;">Show More</button>
   </div>
 </div>

@@ -1,16 +1,20 @@
 angular.module('setupController', ['translationService', 'dntServices','ngRoute'])
 .controller('SetupCtrl', 
-  ['$scope','$route','$routeParams','$timeout','translations','dntInit','dntReset',
-   function($scope, $route, $routeParams, $timeout, translations, dntInit, dntReset) {
+  ['$scope','$route','$timeout','translations','dntInit','dntReset','region',
+   function($scope, $route, $timeout, translations, dntInit, dntReset, region) {
+  
+  $scope.advancedSetup = false;
+  $scope.isLoading = translations.startedLoading && !translations.isLoaded();
+  $scope.translationResults = [];
+  $scope.hostedFiles = region.hostedFiles;
   
   var noLocation = '';
-  var sessionLocation = $routeParams.location;
+  var sessionLocation = region.alternativeFiles.url;
   if(sessionLocation == null) {
     sessionLocation = noLocation;
   }
   
   $scope.location = sessionLocation;
-  $scope.uistringLocation = '';
   if($scope.location == noLocation) {
     $scope.testResults = ['No location set'];
   }
@@ -18,16 +22,26 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
     $scope.testResults = ['Using location ' + $scope.location];
   }
   
-  $scope.translationResults = [];
-  
-  $scope.hostedFiles = [
-    {region: 'na', name: 'dec-2015', url : 'https://dnfiles.firebaseapp.com/na'},
-    {region: 'cdn', name: 'dec-2015', url : 'https://dnfiles.firebaseapp.com/cdn'},
-    {region: 'sea', name: 'dec-2015', url : 'https://dnfiles.firebaseapp.com/sea'},
-    ];
+  $scope.setLocation = function(url) {
+    $scope.location = url;
+    $scope.isLoading = true;
+    $scope.saveLocation();
+    dntReset();
+
+    $scope.translationResults = [];
+    var existingFile = localStorage.getItem('UIStrings_file');
+    if(existingFile == null || existingFile.indexOf(url) == -1) {
+      localStorage.removeItem('UIStrings');
+    }
+    translations.reset();
+    translations.location = url;
+    translations.init(progressTranslations, translationsStatus);
+  }
   
   $scope.resetSessionData = function() {
     $scope.testResults = ['session data reset.. reloading page'];
+    region.tlocation = null;
+    region.dntLocation = null;
     translations.reset();
     sessionStorage.clear();
     localStorage.clear();
@@ -41,15 +55,16 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
   $scope.loadUiString = function() {
     $scope.translationResults = [];
     localStorage.removeItem('UIStrings');
+    dntReset();
     translations.reset();
-    translations.location = $scope.uistringLocation;
+    translations.location = region.tlocation.url;
     translations.init(progressTranslations, translationsStatus);
   }
   
   function translationsStatus() {
-    progressTranslations('current translations contain words like ' + translations.translate(329) + ', ' + translations.translate(323) + ' and ' + translations.translate(335));  }
-  
-  translations.init(progressTranslations, translationsStatus);
+    progressTranslations('current translations contain words like ' + translations.translate(329) + ', ' + translations.translate(323) + ' and ' + translations.translate(335));
+    $scope.isLoading = false;
+  }
   
   function progress(msg) {
     $timeout(
@@ -70,12 +85,15 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
   }
   
   $scope.saveLocation = function() {
-    translations.reset();
-    dntReset(progress);
+    dntReset();
     if($scope.location != noLocation) {
-      var params = $routeParams;
-      params['location'] = $scope.location;
-      $route.updateParams(params);
+      region.alternativeFiles.url = $scope.location;
+      
+      region.init();
+      if(region.alternativeFiles.region == region.tlocation.region) {
+        translations.reset();
+        translations.init(progressTranslations, translationsStatus);
+      }
       $scope.testResults = [
         'Location saved',
         'Using location ' + $scope.location];

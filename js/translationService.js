@@ -11,6 +11,7 @@ factory('translations', ['$routeParams',function($routeParams) {
     
     reset : function() {
       dnTranslations = new DnTranslations();
+      dnTranslations.sizeLimit = 100;
       this.loaded = false;
       this.startedLoading = false;
       completeCallback = [];
@@ -28,6 +29,7 @@ factory('translations', ['$routeParams',function($routeParams) {
         complete();
       }
       else {
+        progressCallback = [];
         progressCallback.push(progress);
         completeCallback.push(complete);
   
@@ -38,9 +40,11 @@ factory('translations', ['$routeParams',function($routeParams) {
           var fileName = null;
           if(this.location != null && this.location != '') {
             fileName = this.location + '/' + tFile;
-          }
-          else if($routeParams['location'] != null) {
-            fileName = $routeParams['location'] + '/' + tFile;
+            
+            if(fileName != localStorage.getItem("UIStrings_file")) {
+              localStorage.removeItem('UIStrings');
+              localStorage.removeItem('UIStrings_file');
+            }
           }
           
           dnTranslations.loadDefaultFile(
@@ -51,6 +55,7 @@ factory('translations', ['$routeParams',function($routeParams) {
             function() {
               t.loaded = true;
               angular.forEach(completeCallback, function(value, key) { value(); });
+              completeCallback = [];
             },
             function(msg) {
               angular.forEach(progressCallback, function(value, key) { value(msg); });
@@ -62,6 +67,13 @@ factory('translations', ['$routeParams',function($routeParams) {
     
     isLoaded : function() {
       if(!this.loaded) {
+        var fileName = this.location + '/' + tFile;
+        
+        if(fileName != localStorage.getItem("UIStrings_file")) {
+          localStorage.removeItem('UIStrings');
+          localStorage.removeItem('UIStrings_file');
+        }
+
         this.loaded = dnTranslations.loadFromSession();
         if(this.loaded) {
           this.startedLoading = true;

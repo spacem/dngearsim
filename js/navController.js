@@ -1,12 +1,14 @@
 angular.module('navController', ['ngRoute','translationService'])
 .controller('NavCtrl', 
-  ['$scope','$route','$routeParams','$location','translations',
-  function($scope,$route,$routeParams,$location,translations) {
-      
+  ['$scope','$route','$location','translations','region','$rootScope','$timeout','$window',
+  function($scope,$route,$location,translations,region,$rootScope,$timeout,$window) {
+
     var setupAction = { path: 'setup', name: 'setup' }
+    
+    var noMenu = [];
     var noLocationMenu = [setupAction];
     var normalMenu = [
-      setupAction, 
+      {path: 'saved', name:'saved'},
       {path: 'item-search/equipment', name:'equipment'},
       {path: 'item-search/talisman', name:'talisman'},
       {path: 'item-search/plates', name:'plates'},
@@ -14,15 +16,36 @@ angular.module('navController', ['ngRoute','translationService'])
       {path: 'item-search/cash', name:'cash'},
       {path: 'item-search/titles', name:'titles'},
       {path: 'item-search/gems', name:'gems'},
-      {path: 'saved', name:'saved'},
+      setupAction, 
       ];
+      
+    region.init();
+
+    $scope.isLoading = function() {
+      return translations.startedLoading && 
+            !translations.isLoaded() &&
+            region.tlocation != null &&
+            region.tlocation.url != '' &&
+            !$scope.noRegion();
+    }
+    
+    $scope.noRegion = function() {
+      return region.dntLocation == null;
+    }
+      
     $scope.getActions = function() {
       var menu = null;
-      if($routeParams.location != null && translations.isLoaded()) {
-        menu = normalMenu;
+      if(region.dntLocation != null && region.dntLocation.url == '') {
+        menu = noLocationMenu; 
+      }
+      else if(region.tlocation != null && region.tlocation.url == '') {
+        menu = noLocationMenu; 
+      }
+      else if($location.path() == '/view-group' || region.dntLocation == null) {
+        menu = noMenu;
       }
       else {
-        menu = noLocationMenu;
+        menu = normalMenu;
       }
       
       angular.forEach(menu, function(value, key) {
@@ -36,13 +59,6 @@ angular.module('navController', ['ngRoute','translationService'])
       
       return menu;
     };
-    $scope.getUrl = function(action) {
-      var retVal = "#/" + action;
-      if($routeParams.location != null) {
-        retVal += '?location=' + $routeParams.location;
-      }
-      return retVal;
-    }
   }
 ])
 .directive('dngearsimNav', function() {

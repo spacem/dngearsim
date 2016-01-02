@@ -1,8 +1,8 @@
 angular.module('equipmentController', ['ui.bootstrap','translationService', 'dntServices'])
 .controller('EquipmentCtrl',
 
-['$scope','$routeParams','$timeout','$uibModalInstance','item','dntData','hCodeValues','items',
-function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues,items) {
+['$scope','$routeParams','$timeout','$uibModalInstance','item','dntData','hCodeValues','items','itemColumnsToLoad',
+function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues,items,itemColumnsToLoad) {
   
   console.log('got: ' + $scope.name);
   
@@ -15,30 +15,31 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.item.setId = null;
   
   $scope.setEnchantment = function() {
-    if(typeof $scope.item.enchantmentNum != 'number') {
-      $scope.item.enchantmentNum = 10;
-    }
-    
-    $scope.item.fullStats = null;
-    $scope.item.enchantmentStats = null;
-    
-    for(var i=0;i<$scope.enchantments.length;++i) {
-      if($scope.item.enchantmentNum == $scope.enchantments[i].EnchantLevel) {
-        $scope.enchantment = $scope.enchantments[i];
-        
-        $scope.item.enchantmentStats = hCodeValues.getStats($scope.enchantment);
-        $scope.item.fullStats = hCodeValues.mergeStats($scope.item.enchantmentStats, $scope.item.stats);
-        if($scope.enchantment.NeedCoin < 10000) {
-          $scope.enchantmentCost = Math.round($scope.enchantment.NeedCoin / 1000)/10 + 'g';
+    if($scope.enchantments.length > 0) {
+
+      if(typeof $scope.item.enchantmentNum != 'number') {
+        $scope.item.enchantmentNum = 10;
+      }
+      
+      $scope.item.fullStats = null;
+      $scope.item.enchantmentStats = null;
+      
+      for(var i=0;i<$scope.enchantments.length;++i) {
+        if($scope.item.enchantmentNum == $scope.enchantments[i].EnchantLevel) {
+          $scope.enchantment = $scope.enchantments[i];
+          
+          $scope.item.enchantmentStats = hCodeValues.getStats($scope.enchantment);
+          $scope.item.fullStats = hCodeValues.mergeStats($scope.item.enchantmentStats, $scope.item.stats);
+          if($scope.enchantment.NeedCoin < 10000) {
+            $scope.enchantmentCost = Math.round($scope.enchantment.NeedCoin / 1000)/10 + 'g';
+          }
+          else {
+            $scope.enchantmentCost = Math.round($scope.enchantment.NeedCoin / 10000) + 'g';
+          }
+          return;
         }
-        else {
-          $scope.enchantmentCost = Math.round($scope.enchantment.NeedCoin / 10000) + 'g';
-        }
-        return;
       }
     }
-    
-    return {};
   }
   
   $scope.nextEnchantment = function() {
@@ -66,12 +67,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.itemType = items[item.itemTypeName];
   
   if('enchantDnt' in $scope.itemType) {
-    var colsToLoad = {
-      EnchantID: true,EnchantLevel: true,EnchantRatio: true,BreakRatio: true,MinDown: true,MaxDown: true,NeedCoin: true,
-      State1: true,State1Value: true,State2: true,State2Value: true,State3: true,State3Value: true,State4: true,State4Value: true,State5: true,State5Value: true,State6: true,State6Value: true,State7: true,State7Value: true,State8: true,State8Value: true,State9: true,State9Value: true,State10: true,State10Value: true
-    };
-    
-    dntData.init($scope.itemType.enchantDnt, colsToLoad, reportProgress, function() { $timeout(enchantInit); } );
+    dntData.init($scope.itemType.enchantDnt, itemColumnsToLoad.enchantDnt, reportProgress, function() { $timeout(enchantInit); } );
   }
   else {
     $scope.enchantments = [];
@@ -99,8 +95,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   
   if($scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
     dntData.init($scope.itemType.setDnt, null, reportProgress, function() { $timeout(setInit); } );
-    var colsToLoad = { SetItemID: true };
-    dntData.init($scope.itemType[$scope.usePartDnt], colsToLoad, reportProgress, function() { $timeout(setInit); } );
+    dntData.init($scope.itemType[$scope.usePartDnt], itemColumnsToLoad.partsDnt, reportProgress, function() { $timeout(setInit); } );
   }
   else {
       $scope.item.setStats = [];

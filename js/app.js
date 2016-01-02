@@ -6,10 +6,12 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   'ngRoute',
   
   'navController',
+  'regionController',
   
   'setupController',
   'translationService',
   'savedItemController',
+  'viewGroupController',
   
   'equipmentController',
   'useOptionsController',
@@ -17,9 +19,12 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   'dntServices',
   'itemService',
   'saveService',
+  'regionService',
+  
   'itemSearchController',
   
   'directives',
+  'filters',
 ]);
 
 dnGearSimApp.config(['$routeProvider',
@@ -41,7 +46,11 @@ dnGearSimApp.config(['$routeProvider',
         templateUrl: 'partials/equipment.html',
         controller: 'EquipmentCtrl'
       }).
+      when('/view-group', {
+        templateUrl: 'partials/view-group.html',
+        controller: 'ViewGroupCtrl'
+      }).
       otherwise({
-        redirectTo: '/setup'
+        redirectTo: '/saved'
       });
   }]);

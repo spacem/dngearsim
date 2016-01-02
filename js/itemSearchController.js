@@ -7,6 +7,7 @@ angular.module('itemSearchController', ['translationService', 'dntServices', 'sa
 'getAllItems','hCodeValues',
 'saveItem',
 'initItem',
+'region',
 function(
   $scope,$routeParams,$timeout,$uibModal,
   translations,
@@ -14,26 +15,49 @@ function(
   jobs,
   getAllItems,hCodeValues,
   saveItem,
-  initItem) {
+  initItem,
+  region) {
   
   $scope.job = {id: -1, name: '-- loading --'};
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
-  
+  $scope.minLevel = 1;
+  $scope.maxLevel = 99;
+  $scope.results = [];
+  $scope.selection = [];
+  $scope.maxDisplay = 15;
+  $scope.currentResults = 0;
+  $scope.grades = hCodeValues.rankNames;
   $scope.simpleSearch = $routeParams.itemType == 'titles';
   
   var minLevel = Number(localStorage.getItem('minLevel'));
-  if(!(minLevel > 0 && minLevel < 100) || $scope.simpleSearch) {
-    minLevel = 1;
+  if(minLevel > 0 && minLevel < 100) {
+    $scope.minLevel = minLevel;
   }
   var maxLevel = Number(localStorage.getItem('maxLevel'));
-  if(!(maxLevel > 0 && maxLevel < 100) || $scope.simpleSearch) {
-    maxLevel = 99;
+  if(maxLevel > 0 && maxLevel < 100) {
+    $scope.maxLevel = maxLevel;
   }
   
   $scope.nameSearch = localStorage.getItem('nameSearch');
   if($scope.nameSearch == null) {
     $scope.nameSearch = '';
+  }
+  
+  region.init();
+  translations.init(reportProgress, function() { $timeout(init); } );
+  
+  var allItemFactories = items.all;
+  var itemFactories = [];
+  if($routeParams.itemType == null) {
+    itemFactories = allItemFactories;
+  }
+  else {
+    for(var f=0;f<allItemFactories.length;++f) {
+      if(allItemFactories[f].type == $routeParams.itemType) {
+        itemFactories.push(allItemFactories[f]);
+      }
+    }
   }
 
   $scope.save = function() {
@@ -47,24 +71,6 @@ function(
       
       localStorage.setItem('nameSearch', $scope.nameSearch);
     }
-  };
-  
-  $scope.minLevel = minLevel;
-  $scope.maxLevel = maxLevel;
-  $scope.results = [];
-  $scope.selection = [];
-  $scope.items = null;
-  $scope.maxDisplay = 15;
-  $scope.currentResults = 0;
-  $scope.grades = hCodeValues.rankNames;
-  
-  $scope.getLocation = function() {
-     return $routeParams.location;
-  };
-    
-  $scope.search = function() {
-    console.log('clicked search');
-    equipInit();
   };
   
   $scope.getFullStats = function(item) {
@@ -90,42 +96,57 @@ function(
           return item;
         },
         group: function () {
+
+          var group = localStorage.getItem('lastSavedGroup');
+          if(group != null) {
+            return group;
+          }
           return 'unnamed group';
         }
       }
     });
   };
   
-  translations.init(reportProgress, function() { $timeout(translationsInit); } );
-  function translationsInit() {
+  function init() {
     console.log('translations loaded');
     jobs.init(reportProgress, function() { $timeout(jobInit); } );
     angular.forEach(itemFactories, function(value, key) {
-      value.init(reportProgress, function() { $timeout(itemInit); } );
+      if(!value.loading) {
+        value.init(reportProgress, function() { $timeout(itemInit); } );
+      }
     });
   }
   
-  var allItemFactories = items.all;
-  var itemFactories = [];
-  if($routeParams.itemType == null) {
-    itemFactories = allItemFactories;
-  }
-  else {
-    for(var f=0;f<allItemFactories.length;++f) {
-      if(allItemFactories[f].type == $routeParams.itemType) {
-        itemFactories.push(allItemFactories[f]);
+  $scope.isLoading = function() {
+    if(!jobs.isLoaded()) {
+      console.log('jobs not loaded');
+      if(!jobs.hasStartedLoading()) {
+        init();
       }
+      return true;      
     }
-  }
-  
-  $scope.isLoadComplete = function() {
+    
+    if(!translations.isLoaded()) {
+      console.log('transations not loaded');
+      if(!translations.startedLoading) {
+        translations.init(reportProgress, function() { $timeout(translationsInit); } );
+      }
+
+      return true;
+    }
+
     for(var i=0;i<itemFactories.length;++i) {
       if(!itemFactories[i].isLoaded()) {
-        return false;
+        console.log(itemFactories[i].name + ' not loaded');
+        
+        if(!itemFactories[i].loading) {
+          init();
+        }
+        return true;
       }
     }
     
-    return true;
+    return false;
   };
   
   function reportProgress(msg) {
@@ -135,7 +156,7 @@ function(
   
   function jobInit() {
     console.log('called the job init func');
-    if(translations.loaded && jobs.isLoaded()) {
+    if(translations.isLoaded() && jobs.isLoaded()) {
       console.log('trying to init jobs');
       console.log('job dropdown should be set');
       var newJobs = jobs.getFinalJobs();
@@ -157,31 +178,22 @@ function(
     }
   }
   
-  $scope.getJobName = function(job) {
-    var numJobs = $scope.allJobs.length;
-    for(var i=0;i<numJobs;++i) {
-      if($scope.allJobs[i].id == job) {
-        return $scope.allJobs[i].name;
-      }
-    }
-    
-    return '-';
-  };
-  
   $scope.getResults = function() {
-    console.log('getting results');
-    
-      if($scope.items == null) {
+      if($scope.isLoading()) {
+        return [];
+      }
+      var allItems = getAllItems(itemFactories);
+      if(allItems == null) {
         return [];
       }
       
       $scope.save();
     
       var newResults = [];
-      var numEquip = $scope.items.length;
+      var numEquip = allItems.length;
       var curDisplay = 0;
       for(var i=0;i<numEquip&&curDisplay<$scope.maxDisplay;++i) {
-        var e = $scope.items[i];
+        var e = allItems[i];
         if(e != null) {
           
           if(!$scope.simpleSearch) {
@@ -235,7 +247,7 @@ function(
       animation: false,
       backdrop : false,
       keyboard : true,
-      templateUrl: 'partials/equipment.html', //?bust=' + Math.random().toString(36).slice(2),
+      templateUrl: 'partials/equipment.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'EquipmentCtrl',
       size: 'lg',
       resolve: {
@@ -247,10 +259,11 @@ function(
   }
   
   function itemInit() {
-    if(translations.loaded && jobs.isLoaded()) {
+    if(translations.isLoaded() && jobs.isLoaded()) {
       console.log('trying to init equip');
-      if($scope.isLoadComplete()) {
-        $scope.items = getAllItems(itemFactories);
+      if(!$scope.isLoading()) {
+        // do something?
+        console.log('should be done');
       }
     }
   }

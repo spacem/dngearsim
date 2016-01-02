@@ -46,3 +46,106 @@ body {
 .legendary-grade {
   color: #dc2355;
 }
+.modal-loading {
+  background: url(images/loading.gif) no-repeat center center;
+  height: 240px;
+}
+.loading {
+  background: url(images/loading.gif) no-repeat center center;
+  height: 240px;
+  border-color: #8d8578;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 10px;
+}
+.btn{
+white-space:normal !important;
+word-wrap:break-word;
+word-break: normal;
+}
+.dark-toggle {
+  float: left;
+  display: block;
+  background: url(images/dark_toggle.png) no-repeat center center;
+  height: 25px;
+  width: 45px;
+  color: #8d8578;
+  border-style: none;
+  font-size: 50%;
+}
+.light-toggle {
+  float: left;
+  display: block;
+  background: url(images/light_toggle.png) no-repeat center center;
+  height: 25px;
+  width: 45px;
+  color: white;
+  border-style: none;
+  font-size: 50%;
+}
+.toggle-text {
+  background-color: #070506;
+  float: left;
+  display: block;
+  height: 25px;
+  color: white;
+  border-style: none;
+  font-size: 70%;
+  border-color: #070506;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 10px;
+}
+.flag {
+  float: right;
+  display: block;
+  background: url(images/flag.png) no-repeat center center;
+  height: 32px;
+  width: 40px; 
+  border-style: none;
+}
+.toggle-box {
+  display: inline;
+  float: right;
+  background-color: #070506;
+  border-color: #8d8578;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 10px;
+}
+
+.no-region {
+	position: relative;
+	background: #070506;
+	border: 4px solid #8d8578;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  float: right;
+  height: 140px;
+  width: 180px;
+  color: #777;
+  text-align: center;
+}
+.no-region:after, .no-region:before {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.no-region:after {
+	border-color: rgba(0, 0, 0, 0);
+	border-bottom-color: #070506;
+	border-width: 30px;
+	margin-left: -30px;
+}
+.no-region:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-bottom-color: #8d8578;
+	border-width: 36px;
+	margin-left: -36px;
+}

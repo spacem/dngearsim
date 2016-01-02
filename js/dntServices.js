@@ -64,12 +64,11 @@ function(items,jobs,dntData,initItem) {
 m.factory('dntReset',
 ['items','jobs','dntData',
 function(items, jobs,dntData) {
-  return function(progress) {
+  return function() {
     
-    progress('resetting loaded data');
     var allFactories = [jobs].concat(items.all);
     angular.forEach(allFactories, function(value, key) {
-      value.resetLoader();
+      value.reset();
       });
       
       dntData.resetAll();
@@ -92,49 +91,63 @@ function() {
   }
 }]);
 
-m.factory('dntData', ['$routeParams', function($routeParams) {
+m.factory('dntData', [function() {
   
-  function createLoader(file, colsToLoad) {
-      
-    var completeCallback = null;
-    var progressCallback = null;
-    
+  function createLoader(dntLocation, file, colsToLoad) {
+
     var loader = {
-      reader : new DntReader(),
+      reader: new DntReader(),
       
-      loaded : false,
-      startedLoading : false,
+      loaded: false,
+      startedLoading: false,
       
-      file : file,
+      file: file,
       
-      init : function(progress, complete) {
+      dntLocation: dntLocation,
+      progressCallback: null,
+      completeCallbacks : [],
+      
+      init: function(progress, complete) {
         
         if(this.loaded) {
           complete();
         }
         else {
-          progressCallback = progress;
-          completeCallback = complete;
+          this.progressCallback = progress;
+          this.completeCallbacks.push(complete);
           
           if(!this.startedLoading) {
             this.startedLoading = true;
             var t = this;
             
             this.reader.colsToLoad = colsToLoad;
-            this.reader.loadDntFromServerFile(
-              $routeParams['location'] + '/' + file,
-              function(msg) { if(progressCallback != null) progressCallback(msg) }, 
-              function() {
-                console.info('dnt loading complete : ' + file);
-                t.loaded = true;
-                completeCallback();
-              },
-              function(msg) { progressCallback(msg) }  );
+            
+            if(this.dntLocation != null && 
+              this.dntLocation.url != null &&
+              this.dntLocation.url.length > 0) {
+
+              this.reader.loadDntFromServerFile(
+                this.dntLocation.url + '/' + file,
+                function(msg) { if(t.progressCallback != null) t.progressCallback(msg) }, 
+                function() {
+                  console.info('dnt loading complete : ' + file);
+                  t.loaded = true;
+                  
+                  angular.forEach(t.completeCallbacks, function(value, key) {
+                    value();
+                  });
+                  t.completeCallbacks = [];
+                },
+                function(msg) { t.progressCallback(msg) }  );
+            }
+            else {
+              console.log("dnt location not set!");
+            }
           }
         }
       },
       
-      findRowNumById : function(id) {
+      findRowNumById: function(id) {
         for(var r=0;r<this.reader.numRows;++r) {
           if(this.reader.data[r]['id'] == id) {
             return r;
@@ -144,7 +157,7 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
         return null;
       },
       
-      reset : function() {
+      reset: function() {
         this.reader = new DntReader();
         this.loaded = false;
         this.startedLoading = false;
@@ -157,10 +170,21 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
   return {
     loaders : {},
     findIndexes : {},
+    dntLocation : null,
+    
+    setLocation: function(location) {
+      this.dntLocation = location;
+      angular.forEach(this.loaders, function(value, key) {
+        if(value.dntLocation != location) {
+          value.dntLocation = location;
+          value.reset();
+        }
+      });
+    },
     
     init : function (fileName, colsToLoad, progress, complete) {
       if(!(fileName in this.loaders)) {
-        this.loaders[fileName] = createLoader(fileName, colsToLoad);
+        this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);
       }
       this.loaders[fileName].init(progress, complete)
     },
@@ -218,6 +242,8 @@ m.factory('dntData', ['$routeParams', function($routeParams) {
     reset : function(fileName) {
       if(fileName in this.loaders) {
         this.loaders[fileName].reset();
+        delete this.loaders[fileName];
+        delete this.findIndexes[fileName];
       }
     },
     resetAll : function() {
@@ -243,13 +269,17 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
       return dntData.isLoaded(fileName);
     },
     
+    hasStartedLoading: function() {
+      return dntData.hasStartedLoading(fileName);
+    },
+    
     init : function(progress, complete) {
       dntData.init(fileName, colsToLoad, progress, function() {
         complete();
         });
     },
       
-    resetLoader : function() {
+    reset : function() {
       dntData.reset(fileName);
     },
     

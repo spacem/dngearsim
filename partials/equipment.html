@@ -14,7 +14,7 @@
     <div class="col-xs-6">
       <div class="row" ng-show="item.potentialRatio != null">
         <div class="col-xs-12">
-          Craft Chance: {{item.potentialRatio}}
+          potential ratio: {{item.potentialRatio}}
         </div>
       </div>
       <div class="row">
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div class="row" ng-hide="enchantments != null">
-    <div class="col-xs-12" >
+    <div class="col-xs-12 modal-loading">
     loading enchantments...
     </div>
   </div>
@@ -66,20 +66,20 @@
   </div>
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-10">
-      Ratio: {{enchantment.EnchantRatio}}
+      enchant ratio: {{enchantment.EnchantRatio | percentage}}
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-10">
-      {{enchantment.BreakRatio}} chance to break
+      break ratio: {{enchantment.BreakRatio | percentage}}
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-10">
-      Might go down between {{enchantment.MinDown}} and {{enchantment.MaxDown}} levels
+      min down: {{enchantment.MinDown}} | max down: {{enchantment.MaxDown}}
     </div>
   </div>
 </div>
 <div class="modal-footer">
-    <button class="btn" ng-click="cancel()">Close</button>
+    <button class="btn" ng-click="cancel()">close</button>
 </div>
