@@ -14,7 +14,7 @@ function(items,jobs,dntData,initItem) {
       if(key != 'all') {
         angular.forEach(item, function(value, prop) {
           if(prop.indexOf('Dnt') == prop.length-3) {
-            dntFiles[value] = { 
+            var newFactory = { 
               init: function(progress, complete) {
                 dntData.init(value, null, progress, complete);
               },
@@ -23,13 +23,11 @@ function(items,jobs,dntData,initItem) {
               },
               fileName: value,
             };
+            
+            allFactories.push(newFactory);
           }
         });
       }
-    });
-    
-    angular.forEach(dntFiles, function(value, key) {
-      allFactories.push(value);
     });
     
     function initFactory(index) {
@@ -54,7 +52,7 @@ function(items,jobs,dntData,initItem) {
         });
       }
       else {
-        progress('All data initialised successfully');
+        progress('Full initialise complete');
       }
     }
     
@@ -129,7 +127,7 @@ m.factory('dntData', [function() {
               this.reader.loadDntFromServerFile(
                 this.dntLocation.url + '/' + file,
                 function(msg) { if(t.progressCallback != null) t.progressCallback(msg) }, 
-                function() {
+                function(result, fileName) {
                   console.info('dnt loading complete : ' + file);
                   t.loaded = true;
                   
@@ -145,16 +143,6 @@ m.factory('dntData', [function() {
             }
           }
         }
-      },
-      
-      findRowNumById: function(id) {
-        for(var r=0;r<this.reader.numRows;++r) {
-          if(this.reader.data[r]['id'] == id) {
-            return r;
-          }
-        }
-        
-        return null;
       },
       
       reset: function() {
@@ -184,47 +172,71 @@ m.factory('dntData', [function() {
     
     init : function (fileName, colsToLoad, progress, complete) {
       if(!(fileName in this.loaders)) {
-        this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);
+        if(fileName.length > 0) {
+          this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);
+        }
       }
       this.loaders[fileName].init(progress, complete)
     },
     getData : function (fileName) {
       if(this.isLoaded(fileName)) {
-        return this.loaders[fileName].reader.data;
+        var reader = this.loaders[fileName].reader;
+        var retVal = new Array(reader.numRows);
+        for(var i=0;i<reader.numRows;++i) {
+          retVal[i] = reader.getRow(i);
+        }
+        
+        return retVal;
       }
       else {
         return [];
       }
     },
     find : function(fileName, column, value) {
+      var results = this.findFast(fileName, column, value);
+      var retVal = [];
+      var numResults = results.length;
+      for(var i=0;i<numResults;++i) {
+        retVal.push(this.getRow(fileName, results[i]));
+      }
+      
+      return retVal;
+    },
+    findFast : function(fileName, column, value) {
+      
       if(this.isLoaded(fileName)) {
         if(!(fileName in this.findIndexes)){
           this.findIndexes[fileName] = {};
         }
         
-        if(!(column in this.findIndexes[fileName])) {
+        var reader = this.loaders[fileName].reader;
+        var colIndex = reader.columnIndexes[column];
+        
+        var findIndex = this.findIndexes[fileName];
+        
+        if(!(column in findIndex)) {
           var index = {}
-          this.findIndexes[fileName][column] = index;
+          findIndex[column] = index;
           
           var results = [];
           
-          var data = this.loaders[fileName].reader.data;
+          var data = reader.data;
           var len = data.length;
           for(var r=0;r<len;++r) {
             var d = data[r];
-            var val = d[column];
+            var val = d[colIndex];
 
             if(!(val in index)) {
-              index[val] = [d];
+              index[val] = [r];
             }
             else {
-              index[val].push(d);
+              index[val].push(r);
             }
           }
         }
         
-        if(value in this.findIndexes[fileName][column]) {
-          return this.findIndexes[fileName][column][value];
+        if(value in findIndex[column]) {
+          return findIndex[column][value];
         }
         else {
           return [];
@@ -250,6 +262,31 @@ m.factory('dntData', [function() {
       angular.forEach(this.loaders, function(value, key) {
         value.reset();
       });
+    },
+    getNumRows : function(fileName) {
+      return this.loaders[fileName].reader.numRows;
+    },
+    getRow : function(fileName, index) {
+      if(this.isLoaded(fileName)) {
+        return this.loaders[fileName].reader.getRow(index);
+      }
+      else {
+        return {};
+      }
+    },
+    lookupValue: function(fileName, data, columnName) {
+      return data[this.loaders[fileName].reader.columnNames[columnName]];
+    },
+    convertData: function(fileName, data) {
+      return this.loaders[fileName].reader.convertData(data);
+    },
+    getValue : function(fileName, index, columnName) {
+      if(this.isLoaded(fileName)) {
+        return this.loaders[fileName].reader.getValue(index, columnName);
+      }
+      else {
+        return null;
+      }
     }
   };
 }]);
@@ -264,6 +301,7 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
   
   return {
     fileName : fileName,
+    allJobs : null,
     
     isLoaded : function() {
       return dntData.isLoaded(fileName);
@@ -280,17 +318,17 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
     },
       
     reset : function() {
+      this.allJobs = null;
       dntData.reset(fileName);
     },
     
     getFinalJobs : function () {
       var jobs = [];
-      var data = dntData.getData(fileName);
-      var numRows = data.length;
+      var alljobs = this.getAllJobs();
+      var numRows = alljobs.length;
       for(var r=0;r<numRows;++r) {
-        var d = data[r];
-        if(d.JobNumber == 2) {
-          jobs[jobs.length] = this.createJob(d);
+        if(alljobs[r].d.JobNumber == 2) {
+          jobs.push(alljobs[r]);
         }
       }
       
@@ -298,19 +336,23 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
     },
     
     getAllJobs : function () {
-      var jobs = [];
-      var data = dntData.getData(fileName);
-      var numRows = data.length;
-      for(var r=0;r<numRows;++r) {
-        jobs[jobs.length] = this.createJob(data[r]);
+      if(this.allJobs == null) {
+        var jobs = [];
+        var data = dntData.getData(fileName);
+        var numRows = data.length;
+        for(var r=0;r<numRows;++r) {
+          jobs[jobs.length] = this.createJob(data[r]);
+        }
+        
+        this.allJobs = jobs;
       }
-      
-      return jobs;
+      return this.allJobs;
     },
     
     createJob : function(d) {
       var t = this;
       return {
+          d : d,
           id : d.id,
           name : translations.translate(d.JobName),
           isClassJob : function(c) {
@@ -329,13 +371,10 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
       if(parentJob == c) return true;
       if(c == 0) return true;
 
-      var data = dntData.getData(fileName);
-      var numRows = data.length;
+      var parentJobData = dntData.find(fileName, 'id', parentJob);
+      var numRows = parentJobData.length;
       for(var r2=0;r2<numRows;++r2) {
-        var d2 = data[r2];
-        if(d2.id == parentJob) {
-          return this.isClassJob2(d2, c);
-        }
+        return this.isClassJob2(parentJobData[r2], c);
       }
     }
   }

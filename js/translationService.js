@@ -2,7 +2,7 @@ angular.module('translationService', ['ngRoute']).
 factory('translations', ['$routeParams',function($routeParams) {
 
   var dnTranslations = new DnTranslations();
-  var tFile = 'uistring.zip';
+  var tFile = 'uistring.lzjson';
 
   var completeCallback = [];
   var progressCallback = [];

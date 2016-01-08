@@ -4,7 +4,7 @@ m.factory('region', ['translations','dntReset','dntData','$route',function(trans
   var alternativeFiles = {region: 'ALT', name: 'Alternative user specified files', url : ''};
   
   var hostedFiles =[
-      {region: 'NA', name: 'English files from Nexon North America', url : 'https://dnfiles.firebaseapp.com/na'},
+      {region: 'NA', name: 'English files from Nexon North America', url : 'https://dnna.firebaseapp.com'},
       {region: 'CDN', name: 'Chinese files from Shanda', url : 'https://dnfiles.firebaseapp.com/cdn'},
       {region: 'SEA', name: 'South East Asia - English files from Cherry Credits', url : 'https://dnfiles.firebaseapp.com/sea'},
       alternativeFiles,

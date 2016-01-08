@@ -3,42 +3,92 @@ var m = angular.module('itemService', ['translationService','ngRoute','valueServ
 m.factory('initItem',
 ['translations','hCodeValues',
 function(translations,hCodeValues) {
-  return function(item) {
+  
 
-    var d = item.data;
-    var p = item.potential;
-
-    if(item.name == null) {
-      var nameValue = d.NameIDParam;
-      if(nameValue == null || nameValue == '') {
-        nameValue = d.NameID;
-      }
-
-      var translatedName = translations.translate(nameValue);
-      if(typeof translatedName == 'string') {
-        item.name = translatedName.replace(/\{|\}/g,'').replace(/\,/g,' ');
-      }
-      else {
-        item.name = translatedName.toString();
+  function getTypeName(type) {
+    var typeName = hCodeValues.typeNames[type];
+    if(typeName == null) {
+      return type;
+    }
+    else {
+      return typeName;
+    }
+  }
+  
+  function getPotentialRatio(p, totalRatio) {
+    
+    if(p != null && p.PotentialRatio > 0) {
+      var ratio = Math.round(p.PotentialRatio/totalRatio*100*100)/100;
+      if(ratio != 100) {
+        return ratio + '%';
       }
     }
+
+    return null;
+  }
+  
+  return function(item) {
     
-    if(item.stats == null) {
-      var stats = hCodeValues.getStats(d);
-      if(p != null) {
-        var potentialStats = hCodeValues.getStats(p);
-        stats = hCodeValues.mergeStats(stats, potentialStats);
+    if('data' in item) {
+      var d = item.data;
+      var p = item.potential;
+  
+      if(item.name == null) {
+        var nameValue = d.NameIDParam;
+        if(nameValue == null || nameValue == '') {
+          nameValue = d.NameID;
+        }
+  
+        var translatedName = translations.translate(nameValue);
+        if(typeof translatedName == 'string') {
+          item.name = translatedName.replace(/\{|\}/g,'').replace(/\,/g,' ');
+        }
+        else {
+          item.name = translatedName.toString();
+        }
       }
       
-      item.stats = stats;
+      if(item.stats == null) {
+        var stats = hCodeValues.getStats(d);
+        if(p != null) {
+          var potentialStats = hCodeValues.getStats(p);
+          stats = hCodeValues.mergeStats(stats, potentialStats);
+        }
+        
+        item.stats = stats;
+      }
+      
+      if(item.levelLimit == null) {
+        item.levelLimit = d.LevelLimit;
+      }
+      
+      if(item.id == null) {
+        item.id = d.id;
+      }
+      
+      if(item.typeId == null) {
+        item.typeId = d.Type;
+      }
+      
+      if(item.potentialRatio == null) {
+        item.potentialRatio = getPotentialRatio(p, item.totalRatio);
+      }
+      
+      if(item.typeName == null) {
+        item.typeName = getTypeName(d.Type);
+      }
+      
+      if(item.enchantmentId == null ) {
+        item.enchantmentId = d.EnchantID;
+      }
+      
+      if(p != null) {
+        item.pid = p.id;
+      }
+      
+      delete item.data;
+      delete item.potential;
     }
-    
-    if(p != null) {
-      item.pid = p.id;
-    }
-    
-    delete item.data;
-    delete item.potential;
   }
 }]);
 
@@ -77,46 +127,25 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad) {
   
   return function(itemTypeName, d, p, totalRatio) {
     
-    function getTypeName(type) {
-      var typeName = hCodeValues.typeNames[type];
-      if(typeName == null) {
-        return type;
-      }
-      else {
-        return typeName;
-      }
-    }
-    
-    function getPotentialRatio(p) {
-      
-      if(p != null && p.PotentialRatio > 0) {
-        var ratio = Math.round(p.PotentialRatio/totalRatio*100*100)/100;
-        if(ratio != 100) {
-          return ratio + '%';
-        }
-      }
-
-      return null;
-    }
-    
     // data and potential are used to initialise name and stats
     // this is only done when needed
     // they are then removed from the object
     return {
       data : d,
       potential : p,
+      totalRatio: totalRatio,
       id: d.id,
       name : null,
       stats : null,
       itemTypeName : itemTypeName,
       levelLimit : d.LevelLimit,
       needJobClass : d.NeedJobClass,
-      id : d.id,
-      typeId : d.Type,
-      potentialRatio : getPotentialRatio(p),
-      typeName : getTypeName(d.Type),
+      id : null,
+      typeId : null,
+      potentialRatio : null,
+      typeName : null,
       rank : hCodeValues.rankNames[d.Rank],
-      enchantmentId : d.EnchantID,
+      enchantmentId : null,
     };
   }
 }]);
@@ -126,32 +155,39 @@ m.factory('items',
 function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
 
   function loadItems(itemType) {
-    var data = dntData.getData(itemType.mainDnt);
-
+    
     itemType.items = [];
-    var numRows = data.length;
+    var numRows = dntData.getNumRows(itemType.mainDnt);
     for(var r=0;r<numRows;++r) {
-      var d = data[r];
+      var dType = dntData.getValue(itemType.mainDnt, r, 'Type');
+      var dLevelLimit = dntData.getValue(itemType.mainDnt, r, 'LevelLimit');
+      
       // skip certain types like pouches, res scrolls, etc
-      if(d.Type != 8 &&
-        d.Type != 29 &&
-        d.Type != 114 &&
-        d.Type != 79 &&
-        d.Type != 174 &&
-        d.Type != 130 &&
-        d.Type != 24 &&
-        d.Type != 182 &&
-        d.Type != 78 &&
-        d.Type != 20 &&
-        d.Type != 46 &&
-        d.Type != 9) {
+      if(dType != 8 &&
+        dType != 29 &&
+        dType != 114 &&
+        dType != 79 &&
+        dType != 174 &&
+        dType != 130 &&
+        dType != 24 &&
+        dType != 182 &&
+        dType != 78 &&
+        dType != 20 &&
+        dType != 46 &&
+        dType != 9 &&
+        dLevelLimit >= itemType.minLevel) {
+
+        var dState1_GenProb = dntData.getValue(itemType.mainDnt, r, 'State1_GenProb');
+        var dStateValue1 = dntData.getValue(itemType.mainDnt, r, 'StateValue1');
+        var dTypeParam1 = dntData.getValue(itemType.mainDnt, r, 'TypeParam1');
           
         // skip items with no data
-        if(d.State1_GenProb > 0 || d.StateValue1 > 0 || d.TypeParam1 > 0) {
+        if(dState1_GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0) {
+          var d = dntData.getRow(itemType.mainDnt, r);
           
           var potentials = [];
-          if(d.TypeParam1 > 0 && 'potentialDnt' in itemType) {
-            potentials = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
+          if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
+            potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
           }
           
           var totalRatio = 0;
@@ -207,7 +243,9 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         
         translations.init(progress, function() { doComplete(complete) });
         dntData.init(itemType.mainDnt, itemColumnsToLoad.mainDnt, progress, function() { doComplete(complete) });
-        dntData.init(itemType.potentialDnt, null, progress, function() { doComplete(complete) });
+        if('potentialDnt' in itemType) {
+          dntData.init(itemType.potentialDnt, null, progress, function() { doComplete(complete) });
+        }
 
         doComplete(complete);
       }
@@ -226,28 +264,32 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
   
   var itemTypes = {
     
-      title : { mainDnt : 'appellationtable.dnt', type : 'titles' },
-      wspr: { mainDnt: 'itemtable_source.dnt', type: 'wellspring' },
+      title : { mainDnt : 'appellationtable.dnt', type : 'titles', minLevel: 0 },
+      // wspr: { mainDnt: 'itemtable_source.dnt', type: 'wellspring', minLevel: 24 },
       
       tech: { 
         mainDnt: 'itemtable_skilllevelup.dnt', 
         potentialDnt: 'potentialtable.dnt', 
-        type: 'techs' },
+        type: 'techs', 
+        minLevel: 24 },
       
       tman: { 
         mainDnt: 'itemtable_talisman.dnt', 
         type: 'talisman', 
-        potentialDnt: 'potentialtable_talismanitem.dnt' },
+        potentialDnt: 'potentialtable_talismanitem.dnt',
+        minLevel: 24 },
       
       gem: { 
         mainDnt: 'itemtable_dragonjewel.dnt', 
         potentialDnt: 'potentialtable_dragonjewel.dnt',
-        type: 'gems' },
+        type: 'gems',
+        minLevel: 24 },
       
       plate: { 
         mainDnt : 'itemtable_glyph.dnt', 
         potentialDnt: 'potentialtable_glyph.dnt',
-        type: 'plates' },
+        type: 'plates',
+        minLevel: 16 },
 
       eq: {
         mainDnt: 'itemtable_equipment.dnt', 
@@ -256,7 +298,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         enchantDnt: 'enchanttable.dnt', 
         potentialDnt: 'potentialtable.dnt',
         setDnt: 'setitemtable.dnt',
-        type: 'equipment' },
+        type: 'equipment',
+        minLevel: 24 },
       rbeq: { 
         mainDnt: 'itemtable_reboot.dnt', 
         partsDnt: 'partstable_reboot.dnt', 
@@ -264,36 +307,42 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         enchantDnt: 'enchanttable_reboot.dnt', 
         potentialDnt: 'potentialtable_reboot.dnt',
         setDnt: 'setitemtable.dnt',
-        type: 'equipment' },
+        type: 'equipment',
+        minLevel: 24 },
       pvpeq: { 
         mainDnt: 'itemtable_pvp.dnt',
         partsDnt: 'partstable_pvp.dnt', 
         weaponDnt: 'weapontable_pvp.dnt', 
         enchantDnt: 'enchanttable.dnt', 
         setDnt: 'setitemtable.dnt',
-        type: 'equipment' },
+        type: 'equipment',
+        minLevel: 24 },
       c2015: { 
         mainDnt: 'itemtable_common2015.dnt', 
         partsDnt: 'partstable_common2015.dnt', 
         weaponDnt: 'weapontable_common2015.dnt', 
         setDnt: 'setitemtable_cash.dnt',
-        type: 'cash' },
+        type: 'cash',
+        minLevel: 0 },
       c2014: { 
         mainDnt: 'itemtable_common2014.dnt', 
         partsDnt: 'partstable_common2014.dnt', 
         weaponDnt: 'weapontable_common2014.dnt', 
         setDnt: 'setitemtable_cash.dnt',
-        type: 'cash' },
+        type: 'cash',
+        minLevel: 0 },
       cash: { 
         mainDnt: 'itemtable_cash.dnt', 
         partsDnt: 'partstable_cash.dnt', 
         weaponDnt: 'weapontable_cash.dnt', 
         setDnt: 'setitemtable_cash.dnt',
-        type: 'cash' },
+        type: 'cash',
+        minLevel: 0 },
       event: {
         mainDnt: 'itemtable_event.dnt', 
         setDnt: 'setitemtable_cash.dnt',
-        type: 'cash' },
+        type: 'cash',
+        minLevel: 0 },
     };
     
     var allItems = [];

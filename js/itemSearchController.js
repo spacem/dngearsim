@@ -68,9 +68,8 @@ function(
       if($scope.job != null) {
         localStorage.setItem('jobNumber', $scope.job.id);
       }
-      
-      localStorage.setItem('nameSearch', $scope.nameSearch);
     }
+    localStorage.setItem('nameSearch', $scope.nameSearch);
   };
   
   $scope.getFullStats = function(item) {
@@ -230,8 +229,9 @@ function(
               continue;
             }
           }
-          
-          initItem(e);
+          else {
+            initItem(e);
+          }
           newResults.push(e);
           curDisplay++;
         }
@@ -247,7 +247,7 @@ function(
       animation: false,
       backdrop : false,
       keyboard : true,
-      templateUrl: 'partials/equipment.html?bust=' + Math.random().toString(36).slice(2),
+      templateUrl: 'partials/equipment.html', //?bust=' + Math.random().toString(36).slice(2),
       controller: 'EquipmentCtrl',
       size: 'lg',
       resolve: {

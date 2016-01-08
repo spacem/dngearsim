@@ -30,7 +30,55 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
         summary += lastUpdate.toLocaleDateString() + ' ' + lastUpdate.toLocaleTimeString();
       }
       if(group != $scope.currentGroup) {
-        summary += ' | contains ' + $scope.savedItems[group].items.length + ' items';
+        
+        var typeCounts = {};
+        var cashItems = 0;
+        var titles = 0;
+        angular.forEach($scope.savedItems[group].items, function(value, key) {
+          if(value.itemTypeName in items && items[value.itemTypeName].type == 'cash') {
+            cashItems++;
+          }
+          else if(value.itemTypeName in items && items[value.itemTypeName].type == 'titles') {
+            titles++;
+          }
+          else if(value.typeId in typeCounts) {
+            typeCounts[value.typeId]++;
+          }
+          else {
+            typeCounts[value.typeId] = 1;
+          }
+        });
+        
+        summary += ' | contains ';
+        if($scope.savedItems[group].items.length == 0) {
+          summary += 'no items'
+        }
+        else {
+          var first = true;
+          angular.forEach(typeCounts, function(value, key) {
+            if(!first) {
+              summary += ', ';
+            }
+            first = false;
+            summary += value + ' ' + hCodeValues.typeNames[key];
+          });
+          
+          if(cashItems > 0) {
+            if(!first) {
+              summary += ', ';
+            }
+            first = false;
+            summary += cashItems + ' cash';
+          }
+          
+          if(titles > 0) {
+            if(!first) {
+              summary += ', ';
+            }
+            first = false;
+            summary += titles + ' title';
+          }
+        }
       }
       
       return summary;
@@ -165,11 +213,15 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
     
                 var enchantments = dntData.find(itemType.enchantDnt, 'EnchantID', item.enchantmentId);
                 angular.forEach(enchantments, function(enchantment, index) {
-                  if(enchantment.enchantmentNum == newItem.enchantmentNum) {
+                  if(enchantment.EnchantLevel == newItem.enchantmentNum) {
                     newItem.enchantmentStats = hCodeValues.getStats(enchantment);
                     newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
                   }
                 });
+              }
+              else {
+                item.enchantmentNum = 0;
+                newItem.fullStats = newItem.stats;
               }
               
               newItems.push(newItem);

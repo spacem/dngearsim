@@ -15,14 +15,15 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.item.setId = null;
   
   $scope.setEnchantment = function() {
+      
+    $scope.item.fullStats = $scope.item.stats;
+    $scope.item.enchantmentStats = [];
+      
     if($scope.enchantments.length > 0) {
 
       if(typeof $scope.item.enchantmentNum != 'number') {
         $scope.item.enchantmentNum = 10;
       }
-      
-      $scope.item.fullStats = null;
-      $scope.item.enchantmentStats = null;
       
       for(var i=0;i<$scope.enchantments.length;++i) {
         if($scope.item.enchantmentNum == $scope.enchantments[i].EnchantLevel) {
@@ -50,7 +51,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   }
   
   $scope.prevEnchantment = function() {
-    if($scope.item.enchantmentNum > 1) {
+    if($scope.item.enchantmentNum > 0) {
       $scope.item.enchantmentNum--;
       $scope.setEnchantment();
     }

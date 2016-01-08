@@ -1,9 +1,15 @@
 angular.module('regionController', ['ngRoute','translationService','regionService'])
 .controller('RegionCtrl', 
-  ['$scope','$route','$routeParams','$location','translations','region',
-  function($scope,$route,$routeParams,$location,translations,region) {
+  ['$scope','$timeout','$route','$routeParams','$location','translations','region',
+  function($scope,$timeout,$route,$routeParams,$location,translations,region) {
 
     region.init();
+    translations.init(
+      function(msg) { console.log(msg) }, 
+      function() {
+        $timeout();
+      });
+    
     $scope.hostedFiles = region.hostedFiles;
     $scope.dntLocation = region.dntLocation;
     $scope.tlocation = region.tlocation;

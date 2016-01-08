@@ -174,11 +174,15 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
     
                 var enchantments = dntData.find(itemType.enchantDnt, 'EnchantID', item.enchantmentId);
                 angular.forEach(enchantments, function(enchantment, index) {
-                  if(enchantment.enchantmentNum == newItem.enchantmentNum) {
+                  if(enchantment.EnchantLevel == newItem.enchantmentNum) {
                     newItem.enchantmentStats = hCodeValues.getStats(enchantment);
                     newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
                   }
                 });
+              }
+              else {
+                item.enchantmentNum = 0;
+                newItem.fullStats = newItem.stats;
               }
               
               newItems.push(newItem);
