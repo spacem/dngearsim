@@ -241,23 +241,6 @@ function(
       return newResults;
   };
   
-  $scope.open = function (item) {
-    console.log('opening item ' + item.name);
-    var modalInstance = $uibModal.open({
-      animation: false,
-      backdrop : false,
-      keyboard : true,
-      templateUrl: 'partials/equipment.html', //?bust=' + Math.random().toString(36).slice(2),
-      controller: 'EquipmentCtrl',
-      size: 'lg',
-      resolve: {
-        item: function () {
-          return item;
-        }
-      }
-    });
-  }
-  
   function itemInit() {
     if(translations.isLoaded() && jobs.isLoaded()) {
       console.log('trying to init equip');

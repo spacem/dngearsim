@@ -19,8 +19,7 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <div ng-repeat="stat in item.stats">
-          {{stat.name}} : {{stat.displayValue}}
+          <div dnsim-stats stats="item.stats">
           </div>
         </div>
       </div>
@@ -31,9 +30,8 @@
         loading set stats...
         </div>
       </div>
-      <div class="row" ng-show="item.setStats != null" ng-repeat="stat in item.setStats">
-        <div class="col-xs-12" >
-          {{stat.needSetNum}}-Increases {{stat.name}}: {{stat.displayValue}}
+      <div class="row" ng-show="item.setStats != null">
+        <div class="col-xs-12" dnsim-stats stats="item.setStats">
         </div>
       </div>
     </div>
@@ -59,8 +57,7 @@
       {{enchantmentCost}}
     </div>
     <div class="col-xs-9">
-      <span ng-repeat="stat in item.enchantmentStats">
-      |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}} 
+      <span dnsim-stats stats="item.enchantmentStats" separator="'|'">
       </span>
     </div>
   </div>

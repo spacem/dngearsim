@@ -205,15 +205,6 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
     function progress() {
     }
     
-    $scope.getFullStats = function(item) {
-      if('fullStats' in item && item.fullStats != null) {
-        return item.fullStats;
-      }
-      else {
-        return item.stats;
-      }
-    }
-    
     $scope.getCombinedStats = function(group) {
       var stats = [];
       var sets = {};
@@ -244,23 +235,6 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
       });
       
       return stats;
-    }
-
-    $scope.open = function (group, item, index) {
-      console.log('opening item ' + item.name);
-      var modalInstance = $uibModal.open({
-        animation: false,
-        backdrop : false,
-        keyboard : true,
-        templateUrl: 'partials/equipment.html', //?bust=' + Math.random().toString(36).slice(2),
-        controller: 'EquipmentCtrl',
-        size: 'lg',
-        resolve: {
-          item: function () {
-            return item;
-          }
-        }
-      });
     }
     
     $scope.copyGroup = function(group) {

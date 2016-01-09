@@ -41,18 +41,13 @@
 <tr class="row" ng-repeat="result in getResults()">
   <td>
     <div class="col-xs-12 col-sm-9">
-      <button class="btn btn-link {{result.rank.name}}-grade" ng-click="$parent.open(result)">
-        <span ng-show="result.enchantmentNum > 0">+{{result.enchantmentNum}}</span>
-        {{result.name}}
-      </button>
+      <dnsim-item-link item="result" />
     </div>
     <div class="col-xs-12 col-sm-3" ng-hide="simpleSearch">
       {{getJobName(result.needJobClass)}} {{result.rank.name}} level {{result.levelLimit}}
     </div>
     <div class="col-xs-12 col-md-9">
-      <span ng-repeat="stat in $parent.getFullStats(result)">
-        |&nbsp;{{stat.name}}:&nbsp;{{stat.displayValue}}
-      </span>
+      <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
     </div>
     <div class="col-xs-12 col-md-3 text-right">
       <button class="btn btn-link" ng-click="$parent.saveItem(result);">use</button>

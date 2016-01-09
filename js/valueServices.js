@@ -4,43 +4,50 @@ m.factory('hCodeValues', [function() {
   function toOneDec(stat) {
     return Math.round(stat.max*10)/10;
   }
+  function toNoDec(stat) {
+    return Math.round(stat.max);
+  }
   function toPercent(stat) {
     return (Math.round(stat.max*1000)/10) + '%';
   }
   
   return {
     stats : {
-      0  : {name: 'str', display: toOneDec },
-      1  : {name: 'agi', display: toOneDec },
-      2  : {name: 'int', display: toOneDec },
-      3  : {name: 'vit', display: toOneDec },
-      4  : {name: 'minPdmg', display: toOneDec },
-      5  : {name: 'maxPdmg', display: toOneDec },
-      6  : {name: 'minMdmg', display: toOneDec },
-      7  : {name: 'maxMdmg', display: toOneDec },
-      8  : {name: 'def', display: toOneDec },
-      9  : {name: 'mdef', display: toOneDec },
-      10 : {name: 'para', display: toOneDec },
-      10 : {name: 'para resist', display: toOneDec },
-      12 : {name: 'crit', display: toOneDec },
-      13 : {name: 'crit resist', display: toOneDec },
-      15 : {name: 'stun resist', display: toOneDec },
+      0  : {name: 'str', display: toNoDec },
+      1  : {name: 'agi', display: toNoDec },
+      2  : {name: 'int', display: toNoDec },
+      3  : {name: 'vit', display: toNoDec },
+      4  : {name: 'pdmg', display: toNoDec, combineWith: 5 },
+      5  : {name: 'maxPdmg', display: toNoDec, hide: true },
+      6  : {name: 'mdmg', display: toNoDec, combineWith: 7 },
+      7  : {name: 'maxMdmg', display: toNoDec, hide: true },
+      8  : {name: 'def', display: toNoDec },
+      9  : {name: 'mdef', display: toNoDec },
+      10 : {name: 'para', display: toNoDec },
+      11 : {name: 'para resist', display: toNoDec },
+      12 : {name: 'crit', display: toNoDec },
+      13 : {name: 'crit resist', display: toNoDec },
+      14 : {name: 'stun', display: toNoDec },
+      15 : {name: 'stun resist', display: toNoDec },
       16 : {name: 'fire%', display: toPercent },
       17 : {name: 'ice%', display: toPercent },
       18 : {name: 'light%', display: toPercent },
       19 : {name: 'dark%', display: toPercent },
       20 : {name: 'fire def%', display: toPercent },
       21 : {name: 'ice def%', display: toPercent },
-      25 : {name: 'hp', display: toOneDec },
-      29 : {name: 'fd', display: toOneDec },
+      22 : {name: 'light def%', display: toPercent },
+      23 : {name: 'dark def%', display: toPercent },
+      25 : {name: 'hp', display: toNoDec },
+      26 : {name: 'mp', display: toNoDec },
+      29 : {name: 'fd', display: toNoDec },
       50 : {name: 'str%', display: toPercent },
       51 : {name: 'agi%', display: toPercent },
       52 : {name: 'int%', display: toPercent },
       53 : {name: 'vit%', display: toPercent },
-      54 : {name: 'minPdmg%', display: toPercent },
-      55 : {name: 'maxPdmg%', display: toPercent },
-      56 : {name: 'minMdmg%', display: toPercent },
-      57 : {name: 'maxMdmg%', display: toPercent },
+      54 : {name: 'pdmg%', display: toPercent, combineWith: 55 },
+      55 : {name: 'maxPdmg%', display: toPercent, hide: true },
+      56 : {name: 'mdmg%', display: toPercent, combineWith: 57 },
+      57 : {name: 'maxMdmg%', display: toPercent, hide: true },
       58 : {name: 'def%', display: toPercent },
       59 : {name: 'mdef%', display: toPercent },
       60 : {name: 'para%', display: toPercent },
@@ -49,9 +56,9 @@ m.factory('hCodeValues', [function() {
       75 : {name: 'hp%', display: toPercent },
       77 : {name: 'mp recover%', display: toPercent },
       81 : {name: 'safe move%', display: toPercent },
-      103: {name: 'crit dmg', display: toOneDec },
+      103: {name: 'crit dmg', display: toNoDec },
       104: {name: 'crit dmg%', display: toPercent },
-      107: {name: 'mp', display: toOneDec },
+      107: {name: 'mp?', display: toNoDec, hide: true },
     },
   
     rankNames : {
@@ -145,15 +152,6 @@ m.factory('hCodeValues', [function() {
     
     setupStat : function(stat, id) {
       stat.id = id;
-      var statDef = this.stats[id];
-      if(statDef != null) {
-        stat.name = statDef.name;
-        stat.displayValue = statDef.display(stat);
-      }
-      else {
-        stat.name = id;
-        stat.displayValue = stat.max;
-      }
     },
     
     mergeStats : function(stats1, stats2) {
