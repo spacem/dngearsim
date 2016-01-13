@@ -44,8 +44,8 @@
       </div>
       <div class="col-xs-6 col-md-hide" ng-show="$parent.calculatedStats[groupName].length == 0">
       </div>
-      <div class="col-xs-6 col-md-12 bg-danger" ng-show="$parent.calculatedStats[groupName].length == 0">
-        use the edit link to set the level and class
+      <div class="col-xs-10 text-right col-md-12 bg-danger" ng-show="$parent.calculatedStats[groupName].length == 0 || $parent.nakedStats[groupName].length == 0">
+        use the edit link to set level and class
       </div>
       <div class="col-xs-3 col-md-12" ng-show="$parent.calculatedStats[groupName].length > 0">
         <h4>calculated stats</h4>
