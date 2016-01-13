@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <h3>
+    {{editGroup.groupName}}
+    <small>
+    {{editGroup.groupSummary}}
+    </small>
+  </h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 ng-class: {'bg-danger' : editGroup.groupNameExists()};">
+      <label>Group Name
+      </label>
+      <input type="text" class="form-control" id="groupNameInput" ng-model="editGroup.groupName" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" />
+    </div>
+    <div class="col-xs-2">
+      <label>Enemy Level
+      </label>
+      <input type="text" class="form-control" id="groupNameInput" ng-model="editGroup.enemyLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" />
+    </div>
+    <div class="col-xs-2">
+      <label>Player Level
+      </label>
+      <input type="text" class="form-control" id="groupNameInput" ng-model="editGroup.playerLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" />
+    </div>
+    <div class="col-xs-8">
+      <label>class: 
+      </label>
+      <select ng-model="editGroup.job" class="form-control"
+       ng-options="job.name for job in editGroup.jobs track by job.id">
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 modal-loading" ng-show="editGroup.isLoading()">
+    loading...
+    </div>
+  </div>
+  <div class="row" ng-hide="editGroup.isLoading()">
+    <div class="col-xs-2">
+      <pre>
+base: {{ editGroup.getStatCap('Cbase', editGroup.enemyLevel) }}
+fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.enemyLevel) }}
+def: {{ editGroup.getStatCap('Cdefense', editGroup.enemyLevel) }}
+crit: {{ editGroup.getStatCap('Ccritical', editGroup.enemyLevel) }}
+crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.enemyLevel) }}
+      </pre>
+    </div>
+    <div class="col-xs-2">
+      <pre>
+base: {{ editGroup.getStatCap('Cbase', editGroup.playerLevel) }}
+fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.playerLevel) }}
+def: {{ editGroup.getStatCap('Cdefense', editGroup.playerLevel) }}
+crit: {{ editGroup.getStatCap('Ccritical', editGroup.playerLevel) }}
+crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.playerLevel) }}
+      </pre>
+    </div>
+    <div class="col-xs-4">
+      <pre>
+Strength: {{ editGroup.getJobBaseStat('Strength')}}
+Agility: {{ editGroup.getJobBaseStat('Agility')}}
+Intelligence: {{ editGroup.getJobBaseStat('Intelligence')}}
+Stamina: {{ editGroup.getJobBaseStat('Stamina')}}
+BaseMP: {{ editGroup.getJobBaseStat('BaseMP')}}
+AggroperPvE: {{ editGroup.getJobBaseStat('AggroperPvE')}}
+      </pre>
+    </div>
+    <div class="col-xs-4">
+      <pre>
+HP: {{ editGroup.getJobConversion('HP')}}
+StrengthAttack: {{ editGroup.getJobConversion('StrengthAttack')}}
+AgilityAttack: {{ editGroup.getJobConversion('AgilityAttack')}}
+IntelligenceAttack: {{ editGroup.getJobConversion('IntelligenceAttack')}}
+PhysicalDefense: {{ editGroup.getJobConversion('PhysicalDefense')}}
+MagicDefense: {{ editGroup.getJobConversion('MagicDefense')}}
+Critical: {{ editGroup.getJobConversion('Critical')}}
+CriticalResistance: {{ editGroup.getJobConversion('CriticalResistance')}}
+Stiff: {{ editGroup.getJobConversion('Stiff')}}
+StiffResistance: {{ editGroup.getJobConversion('StiffResistance')}}
+Stun: {{ editGroup.getJobConversion('Stun')}}
+StunResistance: {{ editGroup.getJobConversion('StunResistance')}}
+MoveSpeed: {{ editGroup.getJobConversion('MoveSpeed')}}
+MoveSpeedRevision: {{ editGroup.getJobConversion('MoveSpeedRevision')}}
+DownDelay: {{ editGroup.getJobConversion('DownDelay')}}
+ElementAttack: {{ editGroup.getJobConversion('ElementAttack')}}
+ElementDefense: {{ editGroup.getJobConversion('ElementDefense')}}
+ElementDefenseMin: {{ editGroup.getJobConversion('ElementDefenseMin')}}
+ElementDefenseMax: {{ editGroup.getJobConversion('ElementDefenseMax')}}
+StrengthIntelligenceToCriticalDamage: {{ editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
+      </pre>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn" ng-click="editGroup.ok()">Save</button>
+  <button class="btn" ng-click="editGroup.cancel()">Cancel</button>
+</div>

@@ -1,27 +1,48 @@
 var m = angular.module('exportLinkServices', ['translationService','ngRoute','valueServices','itemService']);
 
-m.factory('createGroupLink',
-[
-function() {
-  return function(groupName, groupItems) {
-    var itemStrings = [];
-    angular.forEach(groupItems, function(item, key) {
-      var itemString = 'I' + item.id.toString(36) + ':_' + item.itemTypeName;
-      if(item.enchantmentNum > 0) {
-        itemString += ':E' + item.enchantmentNum.toString(36);
-      }
-      if(item.pid > 0) {
-        itemString += ':P' + item.pid.toString(36);
-      }
-      if(item.setId > 0) {
-        itemString += ':S' + item.setId.toString(36);
-      }
+m.factory('exportLinkHelper', ['$http', function($http) {
+  
+  return {
+    createGroupLink: function(groupName, group) {
+      var itemStrings = [];
+      angular.forEach(group.items, function(item, key) {
+        var itemString = 'I' + item.id.toString(36) + ':_' + item.itemTypeName;
+        if(item.enchantmentNum > 0) {
+          itemString += ':E' + item.enchantmentNum.toString(36);
+        }
+        if(item.pid > 0) {
+          itemString += ':P' + item.pid.toString(36);
+        }
+        if(item.setId > 0) {
+          itemString += ':S' + item.setId.toString(36);
+        }
+        
+        itemStrings.push(itemString);
+      });
+  
+      var retVal = '#/view-group?';
       
-      itemStrings.push(itemString);
-    });
+      return retVal + '&g=' + encodeURI(groupName) + '&i=' + itemStrings.join(',');
+    },
 
-    var retVal = '#/view-group?';
-    
-    return retVal + '&g=' + encodeURI(groupName) + '&i=' + itemStrings.join(',');
+    createShortUrl: function(groupName, group) {
+      
+      var path = this.createGroupLink(groupName, group);
+      var longUrl = window.location.href.split("#")[0] + path;
+      var data = { longUrl: longUrl };
+      
+    	$http.post(
+    	  'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyD5t5o7ZcSAvM-xMwc14ft2BA-MKQA7LMo', data).success(
+    	    function(data,status,headers,config){
+        		group.shortUrl = data.id;
+    	      sessionStorage.setItem(path, data.id);
+        	}).
+        	error(function(data,status,headers,config){
+        		console.log(data);
+        		console.log(status);
+        		console.log(headers);
+        		console.log(config);
+        	});
+    }
   }
 }]);

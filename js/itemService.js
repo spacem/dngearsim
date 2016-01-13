@@ -1,14 +1,38 @@
 var m = angular.module('itemService', ['translationService','ngRoute','valueServices','dntServices']);
 
 m.factory('initItem',
-['translations','hCodeValues',
-function(translations,hCodeValues) {
-  
+['translations','hCodeValues','items',
+function(translations,hCodeValues,items) {
 
-  function getTypeName(type) {
-    var typeName = hCodeValues.typeNames[type];
+  function getTypeName(d, itemTypeName) {
+    if(itemTypeName in items && items[itemTypeName].type == 'cash') {
+      return 'cash';
+    }
+    else if(itemTypeName in items && items[itemTypeName].type == 'techs') {
+      return 'techs';
+    }
+    else if(itemTypeName in items && items[itemTypeName].type == 'titles') {
+      return 'titles';
+    }
+    else if(d.Type == 0 && items[itemTypeName].type == 'equipment') {
+      return 'weapons';
+    }
+    else if(
+      d.Type == 1 &&
+      items[itemTypeName].type == 'equipment' &&
+      'NameIDParam' in d &&
+      d.NameIDParam.indexOf('},{2227}') <= 0 &&
+      d.NameIDParam.indexOf('},{2228}') <= 0 &&
+      d.NameIDParam.indexOf('},{2229}') <= 0) {
+        
+      return 'armour';
+    }
+    else if(d.Type == 1 && items[itemTypeName].type == 'equipment') {
+      return 'accessories';
+    }
+    var typeName = hCodeValues.typeNames[d.Type];
     if(typeName == null) {
-      return type;
+      return d.Type;
     }
     else {
       return typeName;
@@ -66,16 +90,12 @@ function(translations,hCodeValues) {
         item.id = d.id;
       }
       
-      if(item.typeId == null) {
-        item.typeId = d.Type;
-      }
-      
       if(item.potentialRatio == null) {
         item.potentialRatio = getPotentialRatio(p, item.totalRatio);
       }
       
       if(item.typeName == null) {
-        item.typeName = getTypeName(d.Type);
+        item.typeName = getTypeName(d, item.itemTypeName);
       }
       
       if(item.enchantmentId == null ) {
@@ -141,7 +161,7 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad) {
       levelLimit : d.LevelLimit,
       needJobClass : d.NeedJobClass,
       id : null,
-      typeId : null,
+      typeId : d.Type,
       potentialRatio : null,
       typeName : null,
       rank : hCodeValues.rankNames[d.Rank],

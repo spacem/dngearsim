@@ -1,18 +1,9 @@
 angular.module('viewGroupController', ['saveService','valueServices','itemService','exportLinkServices'])
 .controller('ViewGroupCtrl', 
-  ['$scope','getSavedItems','updatedSavedItems','$uibModal','hCodeValues','$location','$routeParams','importGroup','items','itemColumnsToLoad','dntData','createItem','initItem','$timeout','$http','translations','dntReset','createGroupLink',
-  function($scope,getSavedItems,updatedSavedItems,$uibModal,hCodeValues,$location,$routeParams,importGroup,items,itemColumnsToLoad,dntData,createItem,initItem,$timeout,$http,translations,dntReset,createGroupLink) {
-    $scope.combinedStats = {};
-    
+  ['$scope','hCodeValues','$location','$routeParams','saveHelper','items','itemColumnsToLoad','dntData','createItem','initItem','$timeout','translations','dntReset','exportLinkHelper','statHelper',
+  function($scope,hCodeValues,$location,$routeParams,saveHelper,items,itemColumnsToLoad,dntData,createItem,initItem,$timeout,translations,dntReset,exportLinkHelper,statHelper) {
     $scope.currentGroup = '';
-    $scope.showCombinedStats = false;
     $scope.isLoading = false;
-    
-    $scope.buildExportLink = function(groupName) {
-      if(groupName in $scope.savedItems) {
-        return createGroupLink(groupName, $scope.savedItems[groupName].items);
-      }
-    }
     
     $scope.init = function() {
 
@@ -60,15 +51,9 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
     }
     
     $scope.setShortUrls = function() {
-      angular.forEach($scope.savedItems, function(value, key) {
-        var longUrl = $scope.buildExportLink(key);
-        $scope.savedItems[key].shortUrl = sessionStorage.getItem(longUrl);
-      });
-    }
-    
-    $scope.setCombinedStats = function() {
-      angular.forEach($scope.savedItems, function(value, key) {
-        $scope.combinedStats[key] = $scope.getCombinedStats(key);
+      angular.forEach($scope.savedItems, function(group, groupName) {
+        var longUrl = exportLinkHelper.createGroupLink(groupName, group);
+        group.shortUrl = sessionStorage.getItem(longUrl);
       });
     }
     
@@ -82,24 +67,8 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
       translations.init(progress,function() { tryInit(group, $scope.savedItems[group]) });
     }
     
-    $scope.createShortUrl = function(group) {
-      
-      var path = $scope.buildExportLink(group);
-      var longUrl = window.location.href.split("#")[0] + path;
-      var data = { longUrl: longUrl };
-      console.log(data);
-    	$http.post(
-    	  'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyD5t5o7ZcSAvM-xMwc14ft2BA-MKQA7LMo', data).success(
-    	    function(data,status,headers,config){
-        		$scope.savedItems[$scope.currentGroup].shortUrl = data.id;
-    	      sessionStorage.setItem(path, data.id);
-        	}).
-        	error(function(data,status,headers,config){
-        		console.log(data);
-        		console.log(status);
-        		console.log(headers);
-        		console.log(config);
-        	});
+    $scope.createShortUrl = function(groupName) {
+      exportLinkHelper.createShortUrl(groupName, $scope.savedItems[groupName]);
     }
     
     function getDntFiles(group) {
@@ -195,7 +164,6 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
         $timeout(function() {
           $scope.savedItems = {};
           $scope.savedItems[groupName] = {items: newItems, lastUpdate: group.lastUpdate };
-          $scope.setCombinedStats();
           $scope.setShortUrls();
           $scope.isLoading = false;
         });
@@ -205,40 +173,8 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
     function progress() {
     }
     
-    $scope.getCombinedStats = function(group) {
-      var stats = [];
-      var sets = {};
-      
-      angular.forEach($scope.savedItems[group].items, function(value, key) {
-        stats = hCodeValues.mergeStats(stats, value.stats);
-        
-        if(value.enchantmentStats != null) {
-          stats = hCodeValues.mergeStats(stats, value.enchantmentStats);
-        }
-        if(value.setStats != null) {
-          if(value.setId in sets) {
-            sets[value.setId].numItems++;
-          }
-          else {
-            sets[value.setId] = { numItems : 1, stats : value.setStats };
-          }
-        }
-      });
-      
-      angular.forEach(sets, function(value, key) {
-        var setStats = [];
-        angular.forEach(value.stats, function(stat, index) {
-          if(stat.needSetNum <= value.numItems) {
-            stats = hCodeValues.mergeStats(stats, [stat]);
-          }
-        });
-      });
-      
-      return stats;
-    }
-    
     $scope.copyGroup = function(group) {
-      importGroup(group, $scope.savedItems[group].items);
+      saveHelper.importGroup(group, $scope.savedItems[group].items);
       $location.path('/saved');
       console.log('should have changed');
     }

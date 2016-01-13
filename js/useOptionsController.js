@@ -1,14 +1,14 @@
 angular.module('useOptionsController', ['ui.bootstrap','translationService', 'dntServices', 'saveService'])
 .controller('UseOptionsCtrl',
 
-['$scope','$routeParams','$timeout','$uibModalInstance','item','group','dntData','hCodeValues','items','getSavedItems','saveItem',
-function($scope,$routeParams,$timeout,$uibModalInstance,item,group,dntData,hCodeValues,items,getSavedItems,saveItem) {
+['$scope','$location','$routeParams','$timeout','$uibModalInstance','item','group','dntData','hCodeValues','items','saveHelper',
+function($scope,$location,$routeParams,$timeout,$uibModalInstance,item,group,dntData,hCodeValues,items,saveHelper) {
   
   $scope.item = item;
   $scope.savedItems = {};
   
   $timeout(function() {
-    $scope.savedItems = getSavedItems();
+    $scope.savedItems = saveHelper.getSavedItems();
     $scope.itemType = items[item.itemTypeName];
     $scope.usePartDnt = '';
     if($scope.item.typeId == 1) {
@@ -37,9 +37,14 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,group,dntData,hCode
   };
   
   $scope.ok = function() {
-    
-    saveItem($scope.groupName, $scope.item);
-    $uibModalInstance.dismiss('ok');
+    saveHelper.saveItem($scope.groupName, $scope.item);
+    $uibModalInstance.close('ok');
+  }
+  
+  $scope.okShow = function() {
+    saveHelper.saveItem($scope.groupName, $scope.item);
+    $uibModalInstance.close('ok');
+    $location.url('/saved/' + $scope.groupName);
   }
   
   $timeout(function() {

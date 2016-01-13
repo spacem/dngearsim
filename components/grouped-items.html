@@ -1,0 +1,6 @@
+<div ng-repeat="group in groups">
+  <h2>{{group.name}}</h2>
+  <div ng-repeat="result in group.items track by $index">
+    <ng-transclude></ng-transclude>
+  </div>
+</div>

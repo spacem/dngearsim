@@ -27,6 +27,30 @@ m.directive('selectAllOnClick', [function() {
   };
 }]);
 
+
+m.directive('dnsimGroupedItems', [function() {
+  return {
+    restrict: 'E',
+    scope: {
+      items: '=items',
+    },
+    transclude: true,
+    templateUrl: 'components/grouped-items.html',
+    link: function($scope, element, attrs) {
+      
+      // for testing put the first item in one group and the others in the next
+      $scope.groups = [
+        {name: 'group1',
+         items: [$scope.items[0]],
+        },
+        {name: 'group2',
+          items: [$scope.items[1], $scope.items[2]],
+        }
+        ];
+    }
+  }
+}]);
+
 m.directive('dnsimItemLink', ['$uibModal', function($uibModal) {
   return {
     restrict: 'E',

@@ -1,6 +1,6 @@
 <div class="row">
   <ul class="nav nav-tabs">
-    <li role="presentation" class="{{action.extraCss}} nav-tab" ng-repeat="action in getActions()"> 
+    <li role="presentation" class="{{action.extraCss}} nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
       <a href="#/{{action.path}}">{{action.name}}</a>
     </li>
   </ul>
@@ -10,11 +10,22 @@
     loading...
   </div>
 </div>
-<div class="row">&nbsp;</div>
+<div class="row" ng-show="isSearch()">&nbsp;</div>
 <div class="row" ng-show="noRegion()">
   No region selected
 </div>
-<div ng-hide="isLoading() || noRegion()">
-<div id="app" ng-view class="container">
-</div>
+<div class="row" ng-hide="isLoading() || noRegion()">
+  <div class="col-xs-3 col-sm-2 col-lg-1" ng-show="isSearch()">
+    <ul class="nav nav-pills col-md-nav-stacked">
+    <li class="nav-tab">
+    <li>
+    <a href="#/{{action.path}}" class="{{action.extraCss}} nav-{{action.name}}" ng-repeat="action in searchMenu track by $index">{{action.name}}</a>
+    </li>
+    </li>
+    </ul>
+  </div>
+  <div ng-class="{'col-xs-9 col-sm-10 col-lg-11': isSearch(), 'col-xs-12': !isSearch()}">
+    <div id="app" ng-view class="container-fluid">
+    </div>
+  </div>
 </div>

@@ -162,10 +162,11 @@ m.factory('dntData', [function() {
     
     setLocation: function(location) {
       this.dntLocation = location;
+      var t = this;
       angular.forEach(this.loaders, function(value, key) {
         if(value.dntLocation != location) {
           value.dntLocation = location;
-          value.reset();
+          t.reset(key);
         }
       });
     },
@@ -176,7 +177,7 @@ m.factory('dntData', [function() {
           this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);
         }
       }
-      this.loaders[fileName].init(progress, complete)
+      this.loaders[fileName].init(progress, complete);
     },
     getData : function (fileName) {
       if(this.isLoaded(fileName)) {
@@ -259,8 +260,9 @@ m.factory('dntData', [function() {
       }
     },
     resetAll : function() {
+      var t = this;
       angular.forEach(this.loaders, function(value, key) {
-        value.reset();
+        t.reset(key);
       });
     },
     getNumRows : function(fileName) {

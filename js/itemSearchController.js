@@ -5,7 +5,7 @@ angular.module('itemSearchController', ['translationService', 'dntServices', 'sa
 'items',
 'jobs',
 'getAllItems','hCodeValues',
-'saveItem',
+'saveHelper',
 'initItem',
 'region',
 function(
@@ -14,21 +14,28 @@ function(
   items,
   jobs,
   getAllItems,hCodeValues,
-  saveItem,
+  saveHelper,
   initItem,
   region) {
   
-  $scope.job = {id: -1, name: '-- loading --'};
+  $scope.job = {id: -1, name: ''};
   $scope.jobs = [$scope.job];
   $scope.allJobs = [];
   $scope.minLevel = 1;
   $scope.maxLevel = 99;
   $scope.results = [];
   $scope.selection = [];
-  $scope.maxDisplay = 15;
+  $scope.maxDisplay = 10;
   $scope.currentResults = 0;
   $scope.grades = hCodeValues.rankNames;
   $scope.simpleSearch = $routeParams.itemType == 'titles';
+  $scope.stat = {id:-1, name:''};
+  $scope.stats = [$scope.stat];
+  angular.forEach(hCodeValues.stats, function(stat, statId) {
+    if(stat.type) {
+      $scope.stats.push(stat);
+    }
+  });
   
   var minLevel = Number(localStorage.getItem('minLevel'));
   if(minLevel > 0 && minLevel < 100) {
@@ -44,17 +51,50 @@ function(
     $scope.nameSearch = '';
   }
   
-  region.init();
-  translations.init(reportProgress, function() { $timeout(init); } );
+  var savedSearchStatId = localStorage.getItem('searchStat');
+  if(savedSearchStatId > -1 && savedSearchStatId in hCodeValues.stats) {
+    $scope.stat = hCodeValues.stats[savedSearchStatId];
+  }
   
-  var allItemFactories = items.all;
-  var itemFactories = [];
-  if($routeParams.itemType == null) {
-    itemFactories = allItemFactories;
+  region.init();
+  if(translations.isLoaded()) {
+    init();
   }
   else {
+    translations.init(reportProgress, function() { $timeout(init); } );
+  }
+  
+  $scope.itemType = $routeParams.itemType;
+  
+  if($routeParams.itemType == 'weapons') {
+    $scope.itemType = 'equipment';
+    $scope.extraFilterFunc = function(d) {
+      return d.typeId == 0;
+    };
+  }
+  else if($routeParams.itemType == 'armour') {
+    $scope.itemType = 'equipment';
+    $scope.extraFilterFunc = function(d) {
+      return d.typeId == 1 && d.typeName == 'armour';
+    }
+  }
+  else if($routeParams.itemType == 'accessories') {
+    $scope.itemType = 'equipment';
+    $scope.extraFilterFunc = function(d) {
+      return d.typeId == 1 && d.typeName == 'accessories';
+    }
+  }
+  else {
+    $scope.itemType = $routeParams.itemType;
+    $scope.extraFilterFunc = function(d) { return true; }
+  }
+
+  var allItemFactories = items.all;
+
+  var itemFactories = [];
+  if($scope.itemType != null) {
     for(var f=0;f<allItemFactories.length;++f) {
-      if(allItemFactories[f].type == $routeParams.itemType) {
+      if(allItemFactories[f].type == $scope.itemType) {
         itemFactories.push(allItemFactories[f]);
       }
     }
@@ -68,18 +108,12 @@ function(
       if($scope.job != null) {
         localStorage.setItem('jobNumber', $scope.job.id);
       }
+      if($scope.stat != null) {
+        localStorage.setItem('searchStat', $scope.stat.id);
+      }
     }
     localStorage.setItem('nameSearch', $scope.nameSearch);
   };
-  
-  $scope.getFullStats = function(item) {
-    if('fullStats' in item && item.fullStats != null) {
-      return item.fullStats;
-    }
-    else {
-      return item.stats;
-    }
-  }
   
   $scope.saveItem = function(item) {
     console.log('opening item for save ' + item.name);
@@ -87,7 +121,7 @@ function(
       animation: false,
       backdrop : false,
       keyboard : true,
-      templateUrl: 'partials/use-options.html', //?bust=' + Math.random().toString(36).slice(2),
+      templateUrl: 'partials/use-options.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'UseOptionsCtrl',
       size: 'lg',
       resolve: {
@@ -108,10 +142,16 @@ function(
   
   function init() {
     console.log('translations loaded');
-    jobs.init(reportProgress, function() { $timeout(jobInit); } );
+    if(jobs.isLoaded()) {
+      jobInit();
+    }
+    else {
+      jobs.init(reportProgress, function() { $timeout(jobInit); } );
+    }
+
     angular.forEach(itemFactories, function(value, key) {
       if(!value.loading) {
-        value.init(reportProgress, function() { $timeout(itemInit); } );
+        value.init(reportProgress, function() { $timeout(); } );
       }
     });
   }
@@ -159,20 +199,19 @@ function(
       console.log('trying to init jobs');
       console.log('job dropdown should be set');
       var newJobs = jobs.getFinalJobs();
+
+      newJobs.splice(0, 0, $scope.jobs[0]);
+      $scope.jobs = newJobs;
+      $scope.allJobs = jobs.getAllJobs();
       
       var lastJobNumber = Number(localStorage.getItem('jobNumber'));
       if(lastJobNumber != null) {
         angular.forEach(newJobs, function(value, key) {
           if(value.id == lastJobNumber) {
             $scope.job = value;
+            return;
           }
         });
-        
-        $scope.jobs[0].name = '';
-        newJobs.splice(0, 0, $scope.jobs[0]);
-        $scope.jobs = newJobs;
-        $scope.allJobs = jobs.getAllJobs();
-        itemInit();
       }
     }
   }
@@ -186,12 +225,22 @@ function(
         return [];
       }
       
+      allItems = allItems.sort(function(item1, item2) {
+          return (item2.levelLimit - item1.levelLimit);
+        });
+      
       $scope.save();
+            
+      var pcStatId = -1;
+      if('pc' in $scope.stat) {
+        pcStatId = $scope.stat.pc;
+      }
     
+      var statVals = [];
       var newResults = [];
       var numEquip = allItems.length;
       var curDisplay = 0;
-      for(var i=0;i<numEquip&&curDisplay<$scope.maxDisplay;++i) {
+      for(var i=0;i<numEquip && (curDisplay<$scope.maxDisplay || $scope.stat.id >= 0);++i) {
         var e = allItems[i];
         if(e != null) {
           
@@ -211,12 +260,17 @@ function(
             }
           }
           
+          initItem(e);
+        
+          if(!$scope.extraFilterFunc(e)) {
+            continue;
+          }
+          
           if($scope.nameSearch != '') {
             var nameSearches = $scope.nameSearch.split(' ');
             if(nameSearches.length == 0) {
               nameSearches = [$scope.nameSearch];
             }
-            initItem(e);
             var allMatch = true;
             for(var ns=0;ns<nameSearches.length;++ns) {
               if(e.name.toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
@@ -229,25 +283,58 @@ function(
               continue;
             }
           }
-          else {
-            initItem(e);
+          
+          if($scope.stat.id >= 0) {
+            var statFound = false;
+            
+            var statVal = {};
+            angular.forEach(e.stats, function(stat, index) {
+              if(stat.id == $scope.stat.id) {
+                statFound = true;
+                statVal.i = curDisplay;
+                statVal.s = Number(stat.max);
+              }
+              else if(stat.id == pcStatId) {
+                statFound = true;
+                statVal.i = curDisplay;
+                statVal.pc = Number(stat.max);
+              }
+            });
+            
+            if(!statFound) {
+              continue;
+            }
+            else {
+              if(statVal.s && statVal.pc) {
+                statVal.s = statVal.s * (1.0 + statVal.pc);
+              }
+              else if(statVal.pc) {
+                statVal.s = statVal.pc;
+              }
+              statVals.push(statVal);
+            }
           }
+          
           newResults.push(e);
           curDisplay++;
         }
       }
-      $scope.currentResults = curDisplay;
+      
+      $scope.currentResults = Math.min(curDisplay, $scope.maxDisplay);
+      
+      if($scope.stat.id >= 0) {
+        statVals = statVals.sort(function(value1, value2) {
+          return value2.s - value1.s;
+        });
+        
+        var statResults = [];
+        for(var i=0;i<$scope.currentResults;++i) {
+          statResults.push(newResults[statVals[i].i]);
+        }
+        newResults = statResults;
+      }
       
       return newResults;
   };
   
-  function itemInit() {
-    if(translations.isLoaded() && jobs.isLoaded()) {
-      console.log('trying to init equip');
-      if(!$scope.isLoading()) {
-        // do something?
-        console.log('should be done');
-      }
-    }
-  }
 }]);

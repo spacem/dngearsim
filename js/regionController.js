@@ -33,7 +33,7 @@ angular.module('regionController', ['ngRoute','translationService','regionServic
       region.setLocation(location);
       $scope.dntLocation = region.dntLocation;
       $scope.tlocation = region.tlocation;
-      $scope.edit = false;
+      $scope.edit = !$scope.edit;
     }
   }
 ])

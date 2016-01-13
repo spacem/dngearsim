@@ -1,4 +1,4 @@
 <button class="btn btn-link {{item.rank.name}}-grade" ng-click="open()">
   <span ng-show="item.enchantmentNum > 0">+{{item.enchantmentNum}}</span>
-  {{item.name}}
+  {{getJobName(item.needJobClass)}} <span ng-show="item.levelLimit > 1">lv{{item.levelLimit}}</span> {{item.name}}
 </button>
