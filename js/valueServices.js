@@ -55,7 +55,7 @@ m.factory('hCodeValues', [function() {
       21 : {id: 21, name: 'ice def', display: toPercent, type: 'def' },
       22 : {id: 22, name: 'light def', display: toPercent, type: 'def' },
       23 : {id: 23, name: 'dark def', display: toPercent, type: 'def' },
-      25 : {id: 25, name: 'hp', display: inThousands, type: 'def', pc: 75, summaryDisplay: true },
+      25 : {id: 25, name: 'hp', display: inThousands, type: 'def', pc: 75 },
       26 : {id: 26, name: 'mp', display: inThousands, pc: 76 },
       29 : {id: 29, name: 'fd', display: toNoDec, type: 'dps' },
       50 : {id: 50, name: 'str%', display: toPercent },
@@ -83,15 +83,18 @@ m.factory('hCodeValues', [function() {
       104: {id: 104, name: 'crit dmg%', display: toPercent },
       107: {id: 107, name: 'mp?', display: toNoDec, hide: true },
       
-      1029: {id: 1000, name: 'fd', display: toPercent },
-      1012: {id: 1001, name: 'crit chance', display: toPercent },
-      1103: {id: 1001, name: 'crit dmg', display: toPercent },
-      
       1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true },
       1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true },
       
-      1008: {id: 1008, name: 'mdef eqhp', display: inThousands, summaryDisplay: false },
-      1009: {id: 1009, name: 'pdef eqhp', display: inThousands, summaryDisplay: false },
+      1008: {id: 1008, name: 'pdef', display: toPercent },
+      1009: {id: 1009, name: 'mdef', display: toPercent },
+      
+      1012: {id: 1001, name: 'crit chance', display: toPercent },
+      1029: {id: 1000, name: 'fd', display: toPercent },
+      1103: {id: 1001, name: 'crit dmg', display: toPercent },
+      
+      2008: {id: 2008, name: 'pdef eqhp', display: inThousands, summaryDisplay: true },
+      2009: {id: 2009, name: 'mdef eqhp', display: inThousands, summaryDisplay: true },
     },
   
     rankNames : {
@@ -260,6 +263,11 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
     },
     
     getCalculatedStats: function(group, combinedStats) {
+      
+      if(!group.conversions || !group.enemyStatCaps) {
+        return [];
+      }
+      
       var statLookup = {};
       var retVal = [];
       angular.forEach(combinedStats, function(stat, index) {
@@ -276,157 +284,134 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
         }
       }
       
-      var str = statLookup[0];
-      if(str) {
-        str = applyPc(str);
-        retVal.push(str);
-      }
-      
-      var agi = statLookup[1];
-      if(agi) {
-        agi = applyPc(agi);
-        retVal.push(agi);
-      }
-      
-      var int = statLookup[2];
-      if(int) {
-        int = applyPc(int);
-        retVal.push(int);
-      }
-      
-      var critDamagePc = 0;
-      var critChance = 0;
-      var minPdmg = {max:0};
-      var maxPdmg = {max:0};
-      var minMdmg = {max:0};
-      var maxMdmg = {max:0};
-      if(group.conversions) {
-        
-        var vit = statLookup[3];
-        if(vit) {
-          vit = applyPc(vit);
-        }
-        var hp = statLookup[25];
-        if(hp) {
-          hp = {id:hp.id, max:Number(hp.max)};
+      function dupeStat(id) {
+        var stat = statLookup[id];
+        if(stat) {
+          return {id: id, max: Number(stat.max)};
         }
         else {
-          hp = {id:25, max:0};
+          return {id: id, max: 0};
         }
-        
-        if(vit) {
-          hp.max += Number(vit.max) * Number(group.conversions.HP);
-        }
-        retVal.push(applyPc(hp));
-        
-        function getPdmg(id) {
-          var dmg = statLookup[id];
-          if(!dmg) {
-            dmg = {id:id, max:0};
-          }
-          var val = Number(dmg.max);
-          if(str) {
-            val += (Number(str.max)*Number(group.conversions.StrengthAttack));
-          }
-          if(agi) {
-            val += (Number(agi.max)*Number(group.conversions.AgilityAttack));
-          }
-          
-          return applyPc({id: dmg.id, max:val});
-        }
-        
-        minPdmg = getPdmg(4);
-        if(minPdmg.max > 0) {
-          retVal.push(minPdmg);
-        }
-        maxPdmg = getPdmg(5);
-        if(maxPdmg.max > 0) {
-          retVal.push(maxPdmg);
-        }
-        
-        function getMdmg(id) {
-          var dmg = statLookup[id];
-          if(!dmg) {
-            dmg = {id:id, max:0};
-          }
-          var val = Number(dmg.max);
-          if(int) {
-            val += (Number(int.max)*Number(group.conversions.IntelligenceAttack));
-          }
-          
-          return applyPc({id: dmg.id, max:val});
-        }
-        
-        minMdmg = getMdmg(6);
-        if(minMdmg.max > 0) {
-          retVal.push(minMdmg);
-        }
-        maxMdmg = getMdmg(7);
-        if(maxMdmg.max > 0) {
-          retVal.push(maxMdmg);
-        }
-        
-        if(group.enemyStatCaps) {
-          var crit = statLookup[12];
-          if(!crit) {
-            crit = {id:12,max:0};
-          }
-          var val = Number(applyPc(crit).max);
-          if(agi) {
-            val += (Number(agi.max)*Number(group.conversions.Critical));
-          }
-          
-          critChance = Math.min(0.89, val / Number(group.enemyStatCaps.Ccritical));
-          retVal.push({id: 1012, max: critChance})
-          
-          var intAndStr = 0
-          if(str) {
-            intAndStr += Number(str.max);
-          }
-          if(int) {
-            intAndStr += Number(int.max);
-          }
-          
-          var critDamage = intAndStr * Number(group.conversions.StrengthIntelligenceToCriticalDamage);
-          var cDmg = statLookup[103];
-          if(cDmg) {
-            critDamage += Number(cDmg.max);
-          }
-          
-          if(critDamage > 0) {
-            cDmg = {id:103,max:critDamage}
-            cDmg = applyPc(cDmg);
-  
-            critDamagePc = cDmg.max / group.enemyStatCaps.CcriticalDamage;
-            retVal.push({id: 1103, max: critDamagePc + 2})
-          }
-        }
-      }
-        
-      var fd = statLookup[29];
-      var fdPc = 0;
-      if(fd && group.enemyStatCaps) {
-        var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
-        fdPc = Math.min(Math.max(0.35*Number(fd.max)/maxFd,Math.pow(Number(fd.max)/maxFd,2.2)),1);
-        // var fdPc = 0.35*fd.max/maxFd;
-        // var fdPc = Math.pow(fd.max/maxFd,2.2);
-        
-        retVal.push({id: 1029, max: fdPc})
       }
       
+      function addStat(stat) {
+        if(stat.max > 0) {
+          retVal.push(stat);
+        }
+      }
+      
+      // base stats
+      var str = dupeStat(0);
+      str = applyPc(str);
+      addStat(str);
+      
+      var agi = dupeStat(1);
+      agi = applyPc(agi);
+      addStat(agi);
+      
+      var int = dupeStat(2);
+      int = applyPc(int);
+      addStat(int);
+
+      var vit = dupeStat(3);
+      vit = applyPc(vit);
+      addStat(vit);
+
+      // add vit to hp
+      var hp = dupeStat(25);
+      hp.max += (vit.max * Number(group.conversions.HP));
+      hp = applyPc(hp);
+      addStat(hp);
+      
+      // defs
+      var def = dupeStat(8);
+      def.max += (vit.max * Number(group.conversions.PhysicalDefense));
+      def = applyPc(def);
+      addStat(def);
+      
+      var defpc = dupeStat(1008);
+      defpc.max = def.max/Number(group.enemyStatCaps.Cdefense);
+      addStat(defpc);
+      
+      var mdef = dupeStat(9);
+      mdef.max += (int.max * Number(group.conversions.MagicDefense));
+      mdef = applyPc(mdef);
+      addStat(mdef);
+      
+      var mdefpc = dupeStat(1009);
+      mdefpc.max = def.max/Number(group.enemyStatCaps.Cdefense);
+      addStat(mdefpc);
+
+      // physical damage
+      var minPdmg = dupeStat(4);
+      minPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
+      minPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
+      applyPc(minPdmg);
+      addStat(minPdmg);
+
+      var maxPdmg = dupeStat(5);
+      maxPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
+      maxPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
+      applyPc(maxPdmg);
+      addStat(maxPdmg);
+      
+      // magic damage
+      var minMdmg = dupeStat(6);
+      minMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
+      applyPc(minMdmg);
+      addStat(minMdmg);
+      
+      var maxMdmg = dupeStat(7);
+      maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
+      applyPc(maxMdmg);
+      addStat(maxMdmg);
+      
+      // crit chance %
+      var crit = dupeStat(12);
+      crit.max += (agi.max*Number(group.conversions.Critical));
+      crit = applyPc(crit);
+      addStat(crit);
+      
+      var critChance = Math.min(0.89, crit.max / Number(group.enemyStatCaps.Ccritical));
+      retVal.push({id: 1012, max: critChance})
+
+      // crit damage %
+      var cDmg = dupeStat(103);
+      cDmg.max += ((str.max+int.max) * Number(group.conversions.StrengthIntelligenceToCriticalDamage));
+      cDmg = applyPc(cDmg);
+      addStat(cDmg);
+
+      var critDamagePc = cDmg.max / group.enemyStatCaps.CcriticalDamage;
+      addStat({id: 1103, max: critDamagePc + 2});
+
+      // fd
+      var fd = dupeStat(29);
+      var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
+      
+      var fdPc = dupeStat(1029);
+      fdPc.max = Math.min(Math.max(0.35*Number(fd.max)/maxFd,Math.pow(Number(fd.max)/maxFd,2.2)),1);
+      addStat(fdPc);
+      
+      // average damages
+      // this needs to be updated to include crit resist
       var avgPdmg = (maxPdmg.max+minPdmg.max)/2;
-      avgPdmg += (critChance * (critDamagePc+1) * avgPdmg);
-      avgPdmg = avgPdmg * (1 + fdPc);
-      if(avgPdmg > 0) {
-        retVal.push({id: 1004, max: avgPdmg});
-      }
-            
+      avgPdmg += (critChance * (critDamagePc+1) * avgPdmg * 0.75);
+      avgPdmg = avgPdmg * (1 + fdPc.max);
+      addStat({id: 1004, max: avgPdmg});
+
       var avgMdmg = (maxMdmg.max+minMdmg.max)/2;
-      avgMdmg += (critChance * (critDamagePc+1) * avgMdmg);
-      avgMdmg = avgMdmg * (1 + fdPc);
-      if(avgMdmg > 0) {
-        retVal.push({id: 1006, max: avgMdmg});
-      }
+      avgMdmg += (critChance * (critDamagePc+1) * avgMdmg * 0.75);
+      avgMdmg = avgMdmg * (1 + fdPc.max);
+      addStat({id: 1006, max: avgMdmg});
+      
+      // Equivalent HP
+      var pdefEqHp = dupeStat(2008);
+      pdefEqHp.max = hp.max / (1-defpc.max);
+      addStat(pdefEqHp);
+      
+      var mdefEqHp = dupeStat(2009);
+      mdefEqHp.max = hp.max / (1-mdefpc.max);
+      addStat(mdefEqHp);
       
       return retVal;
     },
