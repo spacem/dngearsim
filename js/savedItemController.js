@@ -28,71 +28,89 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
       }
     }
     
-    $scope.getGroupSummary = function(group) {
+    $scope.getSaveDate = function(group) {
+      if($scope.savedItems[group].lastUpdate > 0) {
+        var lastUpdate = new Date($scope.savedItems[group].lastUpdate);
+        return lastUpdate.toLocaleDateString();
+      }
+    }
+    
+    $scope.getSaveTime = function(group) {
+      if($scope.savedItems[group].lastUpdate > 0) {
+        var lastUpdate = new Date($scope.savedItems[group].lastUpdate);
+        return lastUpdate.toLocaleTimeString();
+      }
+    }
+    
+    $scope.getSummaryStats = function(group) {
       var summary = '';
-      if(group == $scope.currentGroup) {
-        if($scope.savedItems[group].lastUpdate > 0) {
-          var lastUpdate = new Date($scope.savedItems[group].lastUpdate);
-          summary += lastUpdate.toLocaleDateString();
-        }
-      }
-      else {
-        if($scope.savedItems[group].lastUpdate > 0) {
-          var lastUpdate = new Date($scope.savedItems[group].lastUpdate);
-          summary += lastUpdate.toLocaleDateString() + ' ' + lastUpdate.toLocaleTimeString();
-        }
         
-        var typeCounts = {};
-        var cashItems = 0;
-        var titles = 0;
-        angular.forEach($scope.savedItems[group].items, function(value, key) {
-          if(value.itemTypeName in items && items[value.itemTypeName].type == 'cash') {
-            cashItems++;
+      angular.forEach($scope.calculatedStats[group], function(stat, index) {
+        var def = hCodeValues.stats[stat.id];
+        if(def.summaryDisplay) {
+          if(summary.length > 0) {
+            summary += ' | '
           }
-          else if(value.itemTypeName in items && items[value.itemTypeName].type == 'titles') {
-            titles++;
-          }
-          else if(value.typeId in typeCounts) {
-            typeCounts[value.typeId]++;
-          }
-          else {
-            typeCounts[value.typeId] = 1;
-          }
-        });
-        
-        summary += ' | contains ';
-        if($scope.savedItems[group].items.length == 0) {
-          summary += 'no items'
+          summary += def.name + ': ' + def.display(stat);
         }
-        else {
-          var first = true;
-          angular.forEach(typeCounts, function(value, key) {
-            if(!first) {
-              summary += ', ';
-            }
-            first = false;
-            summary += value + ' ' + hCodeValues.typeNames[key];
-          });
-          
-          if(cashItems > 0) {
-            if(!first) {
-              summary += ', ';
-            }
-            first = false;
-            summary += cashItems + ' cash';
-          }
-          
-          if(titles > 0) {
-            if(!first) {
-              summary += ', ';
-            }
-            first = false;
-            summary += titles + ' title';
-          }
-        }
-      }
+      });
       
       return summary;
+    }
+    
+    $scope.getGroupSummary = function(group) {
+      var summary = '';
+      
+      var typeCounts = {};
+      var cashItems = 0;
+      var titles = 0;
+      angular.forEach($scope.savedItems[group].items, function(value, key) {
+        if(value.itemTypeName in items && items[value.itemTypeName].type == 'cash') {
+          cashItems++;
+        }
+        else if(value.itemTypeName in items && items[value.itemTypeName].type == 'titles') {
+          titles++;
+        }
+        else if(value.typeId in typeCounts) {
+          typeCounts[value.typeId]++;
+        }
+        else {
+          typeCounts[value.typeId] = 1;
+        }
+      });
+      
+      if($scope.savedItems[group].items.length == 0) {
+        return 'contains no items'
+      }
+      else {
+        var summary = '';
+        var first = true;
+        angular.forEach(typeCounts, function(value, key) {
+          if(!first) {
+            summary += ', ';
+          }
+          first = false;
+          summary += value + ' ' + hCodeValues.typeNames[key];
+        });
+        
+        if(cashItems > 0) {
+          if(!first) {
+            summary += ', ';
+          }
+          first = false;
+          summary += cashItems + ' cash';
+        }
+        
+        if(titles > 0) {
+          if(!first) {
+            summary += ', ';
+          }
+          first = false;
+          summary += titles + ' title';
+        }
+      
+        return summary;
+      }
     }
     
     $scope.init = function() {

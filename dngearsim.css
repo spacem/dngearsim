@@ -5,9 +5,6 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
-.group-header {
-  color: #070506;
-}
 .chunkyness {
   background-color: #070506;
   opacity: 0.8;
@@ -185,4 +182,10 @@ word-break: normal;
   -moz-border-bottom-colors: none;
   -moz-border-left-colors: none;
   border-image: none;
+}
+.group-header button.btn-link:hover {
+  text-decoration: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #DDD #DDD #DDD #DDD;
 }

@@ -7,6 +7,24 @@ m.factory('hCodeValues', [function() {
   function toNoDec(stat) {
     return Math.round(stat.max);
   }
+  function inThousands(stat) {
+    var val = Number(stat.max);
+    if(val < 100) {
+      return val;
+    }
+    else if(val < 100000) {
+      return Math.round(val/100)/10 + 'k';
+    }
+    else if(val < 1000000) {
+      return Math.round(val/1000) + 'k';
+    }
+    else if(val < 10000000) {
+      return Math.round(val/10000)/100 + 'm';
+    }
+    else {
+      return Math.round(val/1000000) + 'm';
+    }
+  }
   function toPercent(stat) {
     return (Math.round(stat.max*1000)/10) + '%';
   }
@@ -37,8 +55,8 @@ m.factory('hCodeValues', [function() {
       21 : {id: 21, name: 'ice def', display: toPercent, type: 'def' },
       22 : {id: 22, name: 'light def', display: toPercent, type: 'def' },
       23 : {id: 23, name: 'dark def', display: toPercent, type: 'def' },
-      25 : {id: 25, name: 'hp', display: toNoDec, type: 'def', pc: 75 },
-      26 : {id: 26, name: 'mp', display: toNoDec, pc: 76 },
+      25 : {id: 25, name: 'hp', display: inThousands, type: 'def', pc: 75, summaryDisplay: true },
+      26 : {id: 26, name: 'mp', display: inThousands, pc: 76 },
       29 : {id: 29, name: 'fd', display: toNoDec, type: 'dps' },
       50 : {id: 50, name: 'str%', display: toPercent },
       51 : {id: 51, name: 'agi%', display: toPercent },
@@ -65,12 +83,15 @@ m.factory('hCodeValues', [function() {
       104: {id: 104, name: 'crit dmg%', display: toPercent },
       107: {id: 107, name: 'mp?', display: toNoDec, hide: true },
       
-      1029: {id: 1000, name: 'fd%', display: toPercent },
-      1012: {id: 1001, name: 'crit chance%', display: toPercent },
-      1103: {id: 1001, name: 'crit damage%', display: toPercent },
+      1029: {id: 1000, name: 'fd', display: toPercent },
+      1012: {id: 1001, name: 'crit chance', display: toPercent },
+      1103: {id: 1001, name: 'crit dmg', display: toPercent },
       
-      1004: {id: 1004, name: 'avg pdmg', display: toNoDec },
-      1006: {id: 1006, name: 'avg mdmg', display: toNoDec },
+      1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true },
+      1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true },
+      
+      1008: {id: 1008, name: 'mdef eqhp', display: inThousands, summaryDisplay: false },
+      1009: {id: 1009, name: 'pdef eqhp', display: inThousands, summaryDisplay: false },
     },
   
     rankNames : {
