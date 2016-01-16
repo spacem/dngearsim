@@ -77,10 +77,12 @@ m.factory('saveHelper', [function() {
         angular.forEach(savedItems, function(group, groupName) {
           var types = {};
           angular.forEach(group.items, function(item, index) {
-            if(!(item.typeName in types)) {
-              types[item.typeName] = [];
+            if(item != null) {
+              if(!(item.typeName in types)) {
+                types[item.typeName] = [];
+              }
+              types[item.typeName].push(item);
             }
-            types[item.typeName].push(item);
           });
           
           // add them in a sensible order
@@ -104,9 +106,10 @@ m.factory('saveHelper', [function() {
           addType('plates');
           addType('talisman');
           addType('cash');
+          addType('custom');
           
           angular.forEach(group.items, function(item, index) {
-            if(!(item.typeName in savedItemsByType[groupName])) {
+            if(item != null && !(item.typeName in savedItemsByType[groupName])) {
               savedItemsByType[groupName].typeError = true;
             }
           });
@@ -153,6 +156,42 @@ m.factory('saveHelper', [function() {
       }
       
       return {};
+    },
+    
+    getCustomItems: function() {
+      try {
+        var stringifiedData = LZString.decompressFromUTF16(localStorage.getItem('customItems'));
+        var savedItems = JSON.parse(stringifiedData);
+        return savedItems;
+      }
+      catch(ex) {
+      }
+      
+      return [];
+    },
+    
+    saveCustomItems: function(items) {
+      var stringifiedData = JSON.stringify(items);
+      console.log('saving: ' + stringifiedData);
+      localStorage.setItem('customItems', LZString.compressToUTF16(stringifiedData));
+    },
+    
+    getHiddenTypes: function() {
+      try {
+        var stringifiedData = LZString.decompressFromUTF16(localStorage.getItem('hiddenTypes'));
+        var savedItems = JSON.parse(stringifiedData);
+        return savedItems;
+      }
+      catch(ex) {
+      }
+      
+      return {};
+    },
+    
+    saveHiddenTypes: function(items) {
+      var stringifiedData = JSON.stringify(items);
+      console.log('saving: ' + stringifiedData);
+      localStorage.setItem('hiddenTypes', LZString.compressToUTF16(stringifiedData));
     }
   };
 }]);

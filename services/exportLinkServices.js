@@ -6,18 +6,20 @@ m.factory('exportLinkHelper', ['$http', function($http) {
     createGroupLink: function(groupName, group) {
       var itemStrings = [];
       angular.forEach(group.items, function(item, key) {
-        var itemString = 'I' + item.id.toString(36) + ':_' + item.itemTypeName;
-        if(item.enchantmentNum > 0) {
-          itemString += ':E' + item.enchantmentNum.toString(36);
+        if(item != null && item.id && item.typeName != 'custom') {
+          var itemString = 'I' + item.id.toString(36) + ':_' + item.itemTypeName;
+          if(item.enchantmentNum > 0) {
+            itemString += ':E' + item.enchantmentNum.toString(36);
+          }
+          if(item.pid > 0) {
+            itemString += ':P' + item.pid.toString(36);
+          }
+          if(item.setId > 0) {
+            itemString += ':S' + item.setId.toString(36);
+          }
+          
+          itemStrings.push(itemString);
         }
-        if(item.pid > 0) {
-          itemString += ':P' + item.pid.toString(36);
-        }
-        if(item.setId > 0) {
-          itemString += ':S' + item.setId.toString(36);
-        }
-        
-        itemStrings.push(itemString);
       });
   
       var retVal = '#/view-group?';

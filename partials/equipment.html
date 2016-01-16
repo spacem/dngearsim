@@ -10,7 +10,7 @@
   <small>{{item.typeName}}: {{item.itemTypeName}} / {{item.id}} / {{item.pid}}</small>
 </div>
 <div class="modal-body">
-  <div class="row">
+  <div class="row" ng-hide="item.typeName == 'custom'">
     <div class="col-xs-6">
       <div class="row" ng-show="item.potentialRatio != null">
         <div class="col-xs-12">
@@ -36,43 +36,66 @@
       </div>
     </div>
   </div>
+  <div ng-show="item.typeName == 'talisman'">
+    Select Slot: 100%, 125, 150, 200
+  </div>
+  <div class="row" ng-show="item.typeName == 'custom'">
+    <div class="col-xs-12">
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="number" string-to-number class="form-control" ng-model="newStatVal" step="any" />
+          <select class="form-control" ng-model="stat" class="form-control"
+            ng-options="stat.name for stat in getStats() track by stat.id">
+          </select>
+          {{getNewStatDisplayValue()}} {{getNewStatName()}}<br />
+          <button class="btn btn-default" ng-click="addStat()"> add new stat</button>
+          <br /><br />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row" ng-show="item.typeName == 'custom'" ng-repeat="stat in item.stats track by $index">
+    <div class="col-xs-12">
+        {{$parent.getStatDisplayValue(stat)}}
+        {{$parent.getStatName(stat)}}
+        <button class="btn btn-link" ng-click="$parent.removeStat(stat)">remove</button>
+    </div>
+  </div>
   <div class="row" ng-hide="enchantments != null">
     <div class="col-xs-12 modal-loading">
     loading enchantments...
     </div>
   </div>
-  <div>
+  <div class="row">
     <div class="col-xs-12" ng-show="enchantments.length > 0">
       <div class="form-group">
-        <button class="btn" ng-click="prevEnchantment()">-</button>
-        <button class="btn" ng-click="nextEnchantment()">+</button>
+        <button class="btn btn-link" ng-click="prevEnchantment()">- reduce</button>
+        <button class="btn btn-link" ng-click="nextEnchantment()">+ increase</button>
       </div>
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
-    <div class="col-xs-1">
+    <div class="col-xs-12">
       +{{enchantment.EnchantLevel}}
-    </div>
-    <div class="col-xs-1">
       {{enchantmentCost}}
     </div>
-    <div class="col-xs-9">
+    <div class="col-xs-12">
       <span dnsim-stats stats="item.enchantmentStats" separator="'|'">
       </span>
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
-    <div class="col-xs-10">
+    <div class="col-xs-12">
       enchant ratio: {{enchantment.EnchantRatio | percentage}}
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
-    <div class="col-xs-10">
+    <div class="col-xs-12">
       break ratio: {{enchantment.BreakRatio | percentage}}
     </div>
   </div>
   <div class="row" ng-hide="enchantment == null">
-    <div class="col-xs-10">
+    <div class="col-xs-12">
       min down: {{enchantment.MinDown}} | max down: {{enchantment.MaxDown}}
     </div>
   </div>

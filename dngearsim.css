@@ -45,11 +45,13 @@ body {
 }
 .modal-loading {
   background: url(images/loading.gif) no-repeat center center;
-  height: 240px;
+  height: 147px;
+  background-size:contain;
 }
 .loading {
   background: url(images/loading.gif) no-repeat center center;
-  height: 240px;
+  background-size:contain;
+  height: 147px;
   border-color: #8d8578;
   border-style: solid;
   border-width: 5px;
@@ -188,4 +190,14 @@ word-break: normal;
   border-width: 1px;
   border-style: solid;
   border-color: #DDD #DDD #DDD #DDD;
+}
+.group-header a.btn-link:hover {
+  text-decoration: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #DDD #DDD #DDD #DDD;
+}
+.selected-link {
+  color: #555;
+  padding: 0px;
 }

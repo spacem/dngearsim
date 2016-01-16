@@ -17,7 +17,7 @@ function($scope,$location,$routeParams,$timeout,$uibModalInstance,item,group,dnt
     else if($scope.item.typeId == 0) {
       $scope.usePartDnt = 'weaponDnt';
     }
-    if($scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
+    if($scope.itemType && $scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
       dntData.init($scope.itemType.setDnt, null, reportProgress, function() { $timeout(setInit); } );
       var colsToLoad = { SetItemID: true };
       dntData.init($scope.itemType[$scope.usePartDnt], colsToLoad, reportProgress, function() { $timeout(setInit); } );

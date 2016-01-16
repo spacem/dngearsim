@@ -36,7 +36,13 @@
     loading...
     </div>
   </div>
-  <div class="row" ng-hide="editGroup.isLoading()">
+  <div class="row" ng-hide="editGroup.isLoading() || editGroup.showLoadedData">
+    <div class="col-xs-12">
+      <br />
+      <button class="btn-link" ng-click="editGroup.showLoadedData = true">show loaded data</button>
+    </div>
+  </div>
+  <div class="row" ng-hide="editGroup.isLoading() || !editGroup.showLoadedData">
     <div class="col-xs-2">
       <pre>
 base: {{ editGroup.getStatCap('Cbase', editGroup.enemyLevel) }}

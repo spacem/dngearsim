@@ -1,6 +1,6 @@
 <div class="row">
   <ul class="nav nav-tabs">
-    <li role="presentation" class="{{action.extraCss}} nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
+    <li class="{{action.extraCss}} nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
       <a href="#/{{action.path}}">{{action.name}}</a>
     </li>
   </ul>
@@ -14,18 +14,27 @@
 <div class="row" ng-show="noRegion()">
   No region selected
 </div>
+
 <div class="row" ng-hide="isLoading() || noRegion()">
-  <div class="col-xs-3 col-sm-2 col-lg-1" ng-show="isSearch()">
-    <ul class="nav nav-pills col-md-nav-stacked">
-    <li class="nav-tab">
-    <li>
-    <a href="#/{{action.path}}" class="{{action.extraCss}} nav-{{action.name}}" ng-repeat="action in searchMenu track by $index">{{action.name}}</a>
-    </li>
-    </li>
-    </ul>
-  </div>
-  <div ng-class="{'col-xs-9 col-sm-10 col-lg-11': isSearch(), 'col-xs-12': !isSearch()}">
-    <div id="app" ng-view class="container-fluid">
+    
+  <div class="col-xs-12 col-sm-2" ng-show="isSearch()">
+    <div class="row">
+      <div class="col-xs-2 visible-xs">
+        &nbsp;
+      </div>
+      <div class="col-xs-10">
+        <div class="row">
+          <div class="col-xs-6 col-sm-12 group-header" ng-repeat="action in searchMenu track by $index">
+          
+            <a ng-class="{'btn btn-block selected-link': action.extraCss == 'active', 'btn btn-block btn-link': action.extraCss != 'active'}" href="#/{{action.path}}">
+              <p class="text-left">{{action.name}}</p>
+            </a>
+
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div ng-class="{'col-xs-12 col-sm-10': isSearch(), 'col-xs-12': !isSearch()}" id="app" ng-view>
   </div>
 </div>

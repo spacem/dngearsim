@@ -13,6 +13,8 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.enchantmentCost = '';
   $scope.item.setStats = null;
   $scope.item.setId = null;
+  $scope.stat = {id:-1, name:''};
+  $scope.newStatVal = 0;
   
   $scope.setEnchantment = function() {
       
@@ -60,15 +62,61 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
       $scope.enchantment = null;
     }
   }
+  
+  $scope.getStats = function() {
+    return hCodeValues.stats;
+  }
+  
+  $scope.getNewStatName = function() {
+    return $scope.getStatName($scope.newStat());
+  }
+  
+  $scope.getNewStatDisplayValue = function() {
+    return $scope.getStatDisplayValue($scope.newStat());
+  }
+  
+  $scope.getStatName = function(stat) {
+    if(stat.id in hCodeValues.stats) {
+      return hCodeValues.stats[stat.id].name;
+    }
+  }
+  
+  $scope.getStatDisplayValue = function(stat) {
+    if(stat.id in hCodeValues.stats) {
+      return hCodeValues.stats[stat.id].display(stat);
+    }
+  }
+  
+  $scope.newStat = function() {
+    return {id:$scope.stat.id,max:$scope.newStatVal};
+  }
+  
+  $scope.addStat = function() {
+    if($scope.stat.id > -1) {
+      $scope.item.stats.push($scope.newStat());
+    }
+  }
+  
+  $scope.removeStat = function(stat) {
+    var i = $scope.item.stats.indexOf(stat);
+    if(i != -1) {
+    	$scope.item.stats.splice(i, 1);
+    }
+  }
     
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
   
-  $scope.itemType = items[item.itemTypeName];
-  
-  if('enchantDnt' in $scope.itemType) {
-    dntData.init($scope.itemType.enchantDnt, itemColumnsToLoad.enchantDnt, reportProgress, function() { $timeout(enchantInit); } );
+  if(item.itemTypeName) {
+    $scope.itemType = items[item.itemTypeName];
+    
+    if($scope.itemType && 'enchantDnt' in $scope.itemType) {
+      dntData.init($scope.itemType.enchantDnt, itemColumnsToLoad.enchantDnt, reportProgress, function() { $timeout(enchantInit); } );
+    }
+    else {
+      $scope.enchantments = [];
+    }
   }
   else {
     $scope.enchantments = [];
@@ -94,7 +142,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
     $scope.usePartDnt = 'weaponDnt';
   }
   
-  if($scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
+  if($scope.itemType && $scope.usePartDnt in $scope.itemType && 'setDnt' in $scope.itemType) {
     dntData.init($scope.itemType.setDnt, null, reportProgress, function() { $timeout(setInit); } );
     dntData.init($scope.itemType[$scope.usePartDnt], itemColumnsToLoad.partsDnt, reportProgress, function() { $timeout(setInit); } );
   }

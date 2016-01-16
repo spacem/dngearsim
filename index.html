@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="A tool to view items from the game Dragon Nest.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DN Gear Sim</title>
   
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -16,24 +17,25 @@
   <script src="js/directives.js"></script>
   <script src="js/filters.js"></script>
   
-  <script src="js/savedItemController.js"></script>
-  <script src="js/navController.js"></script>
-  <script src="js/setupController.js"></script>
-  <script src="js/itemSearchController.js"></script>
-  <script src="js/regionController.js"></script>
+  <script src="controllers/savedItemController.js"></script>
+  <script src="controllers/navController.js"></script>
+  <script src="controllers/setupController.js"></script>
+  <script src="controllers/itemSearchController.js"></script>
+  <script src="controllers/regionController.js"></script>
+  <script src="controllers/customItemController.js"></script>
   
-  <script src="js/useOptionsController.js"></script>
-  <script src="js/equipmentController.js"></script>
-  <script src="js/viewGroupController.js"></script>
-  <script src="js/editGroupController.js"></script>
+  <script src="controllers/useOptionsController.js"></script>
+  <script src="controllers/equipmentController.js"></script>
+  <script src="controllers/viewGroupController.js"></script>
+  <script src="controllers/editGroupController.js"></script>
   
-  <script src="js/translationService.js"></script>
-  <script src="js/dntServices.js"></script>
-  <script src="js/valueServices.js"></script>
-  <script src="js/itemService.js"></script>
-  <script src="js/saveService.js"></script>
-  <script src="js/regionService.js"></script>
-  <script src="js/exportLinkServices.js"></script>
+  <script src="services/translationService.js"></script>
+  <script src="services/dntServices.js"></script>
+  <script src="services/valueServices.js"></script>
+  <script src="services/itemService.js"></script>
+  <script src="services/saveService.js"></script>
+  <script src="services/regionService.js"></script>
+  <script src="services/exportLinkServices.js"></script>
   
   <script src="js/app.js"></script>
   
@@ -41,18 +43,21 @@
   <script src="../dntviewer/dntreader.js"></script>
   <script src="../dntviewer/dntranslations.js"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="dngearsim.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
+  
+  <link rel="stylesheet" href="dngearsim.css"></link>
+  
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body ng-app="dnGearSimApp">
+
 <div id="head" class="container-fluid chunkyness">
   <div class="row">
     <div class="xs-col-12">
       <div class="container">
       <h3 class="header-title">
-        <a href="#">dngearsim</a> <small>Dragon Nest Gear Simulator</small>
-        
+        <a href="#">dngearsim</a> <small class="hidden-xs">Dragon Nest Gear Simulator</small>
         <dngearsim-region ng-controller="RegionCtrl">
         </dngearsim-region>
       </h3>
@@ -65,6 +70,7 @@
     &nbsp;
   </div>
 </div>
+
 <div id="nav" ng-controller="NavCtrl" dngearsim-nav class="container">
 </div>
 <div id="footer-break" class="container-fluid">
@@ -73,7 +79,7 @@
   </div>
 </div>
 <footer>
-  <div class="container-fluid chunkyness navbar-fixed-bottom">
+  <div class="hidden-xs container-fluid chunkyness navbar-fixed-bottom">
   <div class="container text-right">
     <a href="https://github.com/spacem/dngearsim">https://github.com/spacem/dngearsim</a>
   </div>

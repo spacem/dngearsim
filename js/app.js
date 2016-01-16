@@ -24,6 +24,7 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   'regionService',
   
   'itemSearchController',
+  'customItemController',
   
   'directives',
   'filters',
@@ -49,6 +50,10 @@ dnGearSimApp.config(['$routeProvider',
       }).
       when('/item-search', {
         redirectTo: '/item-search/titles'
+      }).
+      when('/item-search/custom', {
+        templateUrl: 'partials/custom-items.html',
+        controller: 'CustomItemCtrl as customItems'
       }).
       when('/item-search/:itemType', {
         templateUrl: 'partials/item-search.html',

@@ -25,10 +25,11 @@ angular.module('navController', ['ngRoute','translationService'])
       {path: 'item-search/plates', name:'plates'},
       {path: 'item-search/talisman', name:'talisman'},
       {path: 'item-search/cash', name:'cash'},
+      {path: 'item-search/custom', name:'custom'},
       ];
       
     region.init();
-    
+  
     $scope.isSearch = function() {
       return $location.path().indexOf('/item-search') == 0;
     }
@@ -71,10 +72,12 @@ angular.module('navController', ['ngRoute','translationService'])
           value.extraCss = 'active';
         }
       });
-      
+    
+      $scope.itemType = '';
       angular.forEach($scope.searchMenu, function(value, key) {
         if($location.path() == '/' + value.path) {
-          value.extraCss = 'search-active';
+          value.extraCss = 'active';
+          $scope.itemType = value.name;
         }
         else {
           value.extraCss = 'search-default';

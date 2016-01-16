@@ -26,7 +26,7 @@ m.factory('hCodeValues', [function() {
     }
   }
   function toPercent(stat) {
-    return (Math.round(stat.max*1000)/10) + '%';
+    return (Math.round(stat.max*10000)/100) + '%';
   }
   
   return {
@@ -60,7 +60,7 @@ m.factory('hCodeValues', [function() {
       29 : {id: 29, name: 'fd', display: toNoDec, type: 'dps' },
       50 : {id: 50, name: 'str%', display: toPercent },
       51 : {id: 51, name: 'agi%', display: toPercent },
-      52 : {id: 32, name: 'int%', display: toPercent },
+      52 : {id: 52, name: 'int%', display: toPercent },
       53 : {id: 53, name: 'vit%', display: toPercent },
       54 : {id: 54, name: 'pdmg%', display: toPercent, combineWith: 55 },
       55 : {id: 55, name: 'maxPdmg%', display: toPercent, hide: true },
@@ -83,18 +83,22 @@ m.factory('hCodeValues', [function() {
       104: {id: 104, name: 'crit dmg%', display: toPercent },
       107: {id: 107, name: 'mp?', display: toNoDec, hide: true },
       
+      // stats below here are ones I made up
       1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true },
       1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true },
       
       1008: {id: 1008, name: 'pdef', display: toPercent },
       1009: {id: 1009, name: 'mdef', display: toPercent },
       
-      1012: {id: 1001, name: 'crit chance', display: toPercent },
-      1029: {id: 1000, name: 'fd', display: toPercent },
-      1103: {id: 1001, name: 'crit dmg', display: toPercent },
+      1012: {id: 1012, name: 'crit chance', display: toPercent },
+      1029: {id: 1029, name: 'fd calc', display: toPercent },
+      1103: {id: 1103, name: 'crit dmg', display: toPercent },
       
-      2008: {id: 2008, name: 'pdef eqhp', display: inThousands, summaryDisplay: true },
-      2009: {id: 2009, name: 'mdef eqhp', display: inThousands, summaryDisplay: true },
+      2008: {id: 2008, name: 'eqhp', display: inThousands },
+      2009: {id: 2009, name: 'mdef eqhp', display: inThousands },
+      
+      3000: {id: 3000, name: 'atk pwr', display: toPercent },
+      3008: {id: 2010, name: 'eqhp', display: inThousands, summaryDisplay: true },
     },
   
     rankNames : {
@@ -230,17 +234,12 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
 
   return {
     
-    getCombinedStats: function(group) {
+    getSetStats: function(group) {
       var stats = [];
       var sets = {};
       
       angular.forEach(group.items, function(value, key) {
-        stats = hCodeValues.mergeStats(stats, value.stats);
-        
-        if(value.enchantmentStats != null) {
-          stats = hCodeValues.mergeStats(stats, value.enchantmentStats);
-        }
-        if(value.setStats != null) {
+        if(value != null && value.setStats != null) {
           if(value.setId in sets) {
             sets[value.setId].numItems++;
           }
@@ -262,14 +261,30 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       return stats;
     },
     
+    getCombinedStats: function(group) {
+      var stats = [];
+      
+      angular.forEach(group.items, function(value, key) {
+        if(value != null) {
+          stats = hCodeValues.mergeStats(stats, value.stats);
+          
+          if(value.enchantmentStats != null) {
+            stats = hCodeValues.mergeStats(stats, value.enchantmentStats);
+          }
+        }
+      });
+      
+      return stats;
+    },
+    
     getCalculatedStats: function(group, combinedStats) {
       
+      var retVal = [];
+      var statLookup = {};
       if(!group.conversions || !group.enemyStatCaps) {
         return [];
       }
       
-      var statLookup = {};
-      var retVal = [];
       angular.forEach(combinedStats, function(stat, index) {
         statLookup[stat.id] = stat;
       });
@@ -277,10 +292,7 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       function applyPc(stat) {
         var statDef = hCodeValues.stats[stat.id];
         if(statLookup[statDef.pc]) {
-          return {id:stat.id, max: Number(stat.max)*(1+Number(statLookup[statDef.pc].max))}
-        }
-        else {
-          return stat;
+          stat.max = stat.max*(1+Number(statLookup[statDef.pc].max));
         }
       }
       
@@ -302,31 +314,31 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       
       // base stats
       var str = dupeStat(0);
-      str = applyPc(str);
+      applyPc(str);
       addStat(str);
       
       var agi = dupeStat(1);
-      agi = applyPc(agi);
+      applyPc(agi);
       addStat(agi);
       
       var int = dupeStat(2);
-      int = applyPc(int);
+      applyPc(int);
       addStat(int);
 
       var vit = dupeStat(3);
-      vit = applyPc(vit);
+      applyPc(vit);
       addStat(vit);
 
       // add vit to hp
       var hp = dupeStat(25);
       hp.max += (vit.max * Number(group.conversions.HP));
-      hp = applyPc(hp);
+      applyPc(hp);
       addStat(hp);
       
       // defs
       var def = dupeStat(8);
       def.max += (vit.max * Number(group.conversions.PhysicalDefense));
-      def = applyPc(def);
+      applyPc(def);
       addStat(def);
       
       var defpc = dupeStat(1008);
@@ -335,41 +347,50 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       
       var mdef = dupeStat(9);
       mdef.max += (int.max * Number(group.conversions.MagicDefense));
-      mdef = applyPc(mdef);
+      applyPc(mdef);
       addStat(mdef);
       
       var mdefpc = dupeStat(1009);
-      mdefpc.max = def.max/Number(group.enemyStatCaps.Cdefense);
+      mdefpc.max = mdef.max/Number(group.enemyStatCaps.Cdefense);
       addStat(mdefpc);
+      
+      // attack power - like fd but for bufs
+      // i think there are magic and phis variants of this but doesnt matter
+      var aPwr = dupeStat(3000);
+      addStat(aPwr);
 
       // physical damage
       var minPdmg = dupeStat(4);
       minPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
       minPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
       applyPc(minPdmg);
+      minPdmg.max = minPdmg.max * (1+aPwr.max);
       addStat(minPdmg);
 
       var maxPdmg = dupeStat(5);
       maxPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
       maxPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
       applyPc(maxPdmg);
+      maxPdmg.max = maxPdmg.max * (1+aPwr.max);
       addStat(maxPdmg);
       
       // magic damage
       var minMdmg = dupeStat(6);
       minMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
       applyPc(minMdmg);
+      minMdmg.max = minMdmg.max * (1+aPwr.max);
       addStat(minMdmg);
       
       var maxMdmg = dupeStat(7);
       maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
       applyPc(maxMdmg);
+      maxMdmg.max = maxMdmg.max * (1+aPwr.max);
       addStat(maxMdmg);
       
       // crit chance %
       var crit = dupeStat(12);
       crit.max += (agi.max*Number(group.conversions.Critical));
-      crit = applyPc(crit);
+      applyPc(crit);
       addStat(crit);
       
       var critChance = Math.min(0.89, crit.max / Number(group.enemyStatCaps.Ccritical));
@@ -378,7 +399,7 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       // crit damage %
       var cDmg = dupeStat(103);
       cDmg.max += ((str.max+int.max) * Number(group.conversions.StrengthIntelligenceToCriticalDamage));
-      cDmg = applyPc(cDmg);
+      applyPc(cDmg);
       addStat(cDmg);
 
       var critDamagePc = cDmg.max / group.enemyStatCaps.CcriticalDamage;
@@ -407,11 +428,13 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       // Equivalent HP
       var pdefEqHp = dupeStat(2008);
       pdefEqHp.max = hp.max / (1-defpc.max);
-      addStat(pdefEqHp);
       
       var mdefEqHp = dupeStat(2009);
       mdefEqHp.max = hp.max / (1-mdefpc.max);
-      addStat(mdefEqHp);
+      
+      var eqHp = dupeStat(3008);
+      eqHp.max = (pdefEqHp.max + mdefEqHp.max) / 2;
+      addStat(eqHp);
       
       return retVal;
     },

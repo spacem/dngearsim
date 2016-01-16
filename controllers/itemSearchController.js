@@ -23,8 +23,6 @@ function(
   $scope.allJobs = [];
   $scope.minLevel = 1;
   $scope.maxLevel = 99;
-  $scope.results = [];
-  $scope.selection = [];
   $scope.maxDisplay = 10;
   $scope.currentResults = 0;
   $scope.grades = hCodeValues.rankNames;

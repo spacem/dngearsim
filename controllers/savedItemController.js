@@ -3,8 +3,10 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
   ['$scope','$routeParams','$location','$uibModal','hCodeValues','saveHelper','items','itemColumnsToLoad','dntData','createItem','initItem','$timeout','translations','dntReset','exportLinkHelper','statHelper',
   function($scope,$routeParams,$location,$uibModal,hCodeValues,saveHelper,items,itemColumnsToLoad,dntData,createItem,initItem,$timeout,translations,dntReset,exportLinkHelper,statHelper) {
     $scope.combinedStats = {};
+    $scope.setStats = {};
     $scope.calculatedStats = {};
     $scope.nakedStats = {};
+    $scope.hiddenTypes = saveHelper.getHiddenTypes($scope.hiddenTypes);;
     
     if('groupName' in $routeParams) {
       $scope.currentGroup = $routeParams.groupName;
@@ -26,6 +28,15 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
           $location.url('/saved/' + group);
         }, 200);
       }
+    }
+    
+    $scope.changeTypeVisiblity = function(type) {
+      $scope.hiddenTypes[type] = !$scope.hiddenTypes[type];
+      saveHelper.saveHiddenTypes($scope.hiddenTypes);
+    }
+    
+    $scope.isTypeHidden = function(type) {
+      return $scope.hiddenTypes[type];
     }
     
     $scope.getSaveDate = function(group) {
@@ -59,58 +70,23 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
     }
     
     $scope.getGroupSummary = function(group) {
+      
+      var groupItems = $scope.savedItemsByType[group];
       var summary = '';
       
       var typeCounts = {};
       var cashItems = 0;
       var titles = 0;
-      angular.forEach($scope.savedItems[group].items, function(value, key) {
-        if(value.itemTypeName in items && items[value.itemTypeName].type == 'cash') {
-          cashItems++;
-        }
-        else if(value.itemTypeName in items && items[value.itemTypeName].type == 'titles') {
-          titles++;
-        }
-        else if(value.typeId in typeCounts) {
-          typeCounts[value.typeId]++;
-        }
-        else {
-          typeCounts[value.typeId] = 1;
+      angular.forEach($scope.savedItemsByType[group], function(itemsByType, type) {
+        if(itemsByType.length > 0) {
+          if(summary.length > 0) {
+            summary += ', ';
+          }
+          summary += itemsByType.length + ' ' + type;
         }
       });
       
-      if($scope.savedItems[group].items.length == 0) {
-        return 'contains no items'
-      }
-      else {
-        var summary = '';
-        var first = true;
-        angular.forEach(typeCounts, function(value, key) {
-          if(!first) {
-            summary += ', ';
-          }
-          first = false;
-          summary += value + ' ' + hCodeValues.typeNames[key];
-        });
-        
-        if(cashItems > 0) {
-          if(!first) {
-            summary += ', ';
-          }
-          first = false;
-          summary += cashItems + ' cash';
-        }
-        
-        if(titles > 0) {
-          if(!first) {
-            summary += ', ';
-          }
-          first = false;
-          summary += titles + ' title';
-        }
-      
-        return summary;
-      }
+      return summary;
     }
     
     $scope.init = function() {
@@ -142,9 +118,13 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
     
     $scope.setupStats = function() {
       angular.forEach($scope.savedItems, function(group, groupName) {
+        
         $scope.nakedStats[groupName] = statHelper.getNakedStats(group);
         $scope.combinedStats[groupName] = statHelper.getCombinedStats(group);
+        $scope.setStats[groupName] = statHelper.getSetStats(group);
         var allStats = hCodeValues.mergeStats($scope.nakedStats[groupName], $scope.combinedStats[groupName]);
+        allStats = hCodeValues.mergeStats(allStats, $scope.setStats[groupName]);
+        
         $scope.calculatedStats[groupName] = statHelper.getCalculatedStats(group, allStats);
       });
     }
@@ -172,7 +152,7 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
 
       var dntFiles = {};
       angular.forEach(group.items, function(item, key) {
-        if(item.itemTypeName in items) {
+        if(item != null && item.itemTypeName in items) {
           var itemType = items[item.itemTypeName];
   
           dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
@@ -206,7 +186,13 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
         var newItems = [];
         angular.forEach(group.items, function(item, key) {
           
-          if(item.itemTypeName in items) {
+          if(item == null) {
+            
+          }
+          else if(item.typeName == 'custom') {
+            newItems.push(item);
+          }
+          else if(item.itemTypeName in items) {
             var itemType = items[item.itemTypeName];
             var ds = dntData.find(itemType.mainDnt, 'id', item.id);
             if(ds.length > 0) {
