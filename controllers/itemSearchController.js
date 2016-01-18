@@ -17,6 +17,8 @@ function(
   saveHelper,
   initItem,
   region) {
+
+  document.body.className = 'search-back';
   
   $scope.job = {id: -1, name: ''};
   $scope.jobs = [$scope.job];

@@ -4,6 +4,8 @@ angular.module('customItemController', ['ui.bootstrap','translationService', 'dn
 ['$uibModal','$timeout','saveHelper',
 function($uibModal,$timeout,saveHelper) {
   
+  document.body.className = 'search-back';
+  
   this.defaultItems = [
     {id: 0, typeName:'custom', name: 'Unified HP Boost', stats: [{id: 75, max:0.05}]},
     {id: 0, typeName:'custom', name: 'Lv4 Health Bolster', stats: [{id: 75, max:0.24}]},

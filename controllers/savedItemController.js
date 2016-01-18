@@ -2,6 +2,9 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
 .controller('SavedCtrl', 
   ['$scope','$routeParams','$location','$uibModal','hCodeValues','saveHelper','items','itemColumnsToLoad','dntData','createItem','initItem','$timeout','translations','dntReset','exportLinkHelper','statHelper',
   function($scope,$routeParams,$location,$uibModal,hCodeValues,saveHelper,items,itemColumnsToLoad,dntData,createItem,initItem,$timeout,translations,dntReset,exportLinkHelper,statHelper) {
+    
+    document.body.className = 'saved-back';
+  
     $scope.combinedStats = {};
     $scope.setStats = {};
     $scope.calculatedStats = {};

@@ -1,5 +1,21 @@
 body {
-  background: url(images/background.jpeg) no-repeat center center fixed;
+}
+.search-back {
+  background: url(images/search-background.jpeg)  no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.default-back {
+  background: url(images/background.jpeg)  no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.saved-back {
+  background: url(images/saved-background.jpeg)  no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

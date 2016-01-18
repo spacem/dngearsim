@@ -2,6 +2,8 @@ angular.module('setupController', ['translationService', 'dntServices','ngRoute'
 .controller('SetupCtrl', 
   ['$scope','$route','$timeout','translations','dntInit','dntReset','region',
    function($scope, $route, $timeout, translations, dntInit, dntReset, region) {
+     
+  document.body.className = 'default-back';
   
   $scope.advancedSetup = false;
   $scope.isLoading = translations.startedLoading && !translations.isLoaded();

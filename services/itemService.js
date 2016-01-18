@@ -246,7 +246,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         loadItems(itemType);
         dntData.reset(itemType.mainDnt);
         if('potentialDnt' in itemType) {
-          dntData.reset(itemType.potentialDnt);
+          // could reset but these are shared
+          // dntData.reset(itemType.potentialDnt);
         }
         complete();
       }
@@ -311,6 +312,16 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         type: 'plates',
         minLevel: 16 },
 
+      items: {
+        mainDnt: 'itemtable.dnt', 
+        partsDnt: 'partstable.dnt', 
+        weaponDnt: 'weapontable.dnt', 
+        enchantDnt: 'enchanttable.dnt', 
+        potentialDnt: 'potentialtable.dnt',
+        setDnt: 'setitemtable.dnt',
+        type: 'equipment',
+        minLevel: 80 },
+        
       eq: {
         mainDnt: 'itemtable_equipment.dnt', 
         partsDnt: 'partstable_equipment.dnt', 

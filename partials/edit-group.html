@@ -39,11 +39,11 @@
   <div class="row" ng-hide="editGroup.isLoading() || editGroup.showLoadedData">
     <div class="col-xs-12">
       <br />
-      <button class="btn-link" ng-click="editGroup.showLoadedData = true">show loaded data</button>
+      <button class="btn btn-default" ng-click="editGroup.showLoadedData = true">show loaded data</button>
     </div>
   </div>
   <div class="row" ng-hide="editGroup.isLoading() || !editGroup.showLoadedData">
-    <div class="col-xs-2">
+    <div class="col-sm-2 col-xs-6">
       <pre>
 base: {{ editGroup.getStatCap('Cbase', editGroup.enemyLevel) }}
 fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.enemyLevel) }}
@@ -52,7 +52,7 @@ crit: {{ editGroup.getStatCap('Ccritical', editGroup.enemyLevel) }}
 crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.enemyLevel) }}
       </pre>
     </div>
-    <div class="col-xs-2">
+    <div class="col-sm-2 col-xs-6">
       <pre>
 base: {{ editGroup.getStatCap('Cbase', editGroup.playerLevel) }}
 fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.playerLevel) }}
@@ -61,7 +61,7 @@ crit: {{ editGroup.getStatCap('Ccritical', editGroup.playerLevel) }}
 crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.playerLevel) }}
       </pre>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-sm-4">
       <pre>
 Strength: {{ editGroup.getJobBaseStat('Strength')}}
 Agility: {{ editGroup.getJobBaseStat('Agility')}}
@@ -71,33 +71,33 @@ BaseMP: {{ editGroup.getJobBaseStat('BaseMP')}}
 AggroperPvE: {{ editGroup.getJobBaseStat('AggroperPvE')}}
       </pre>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-sm-4">
       <pre>
 HP: {{ editGroup.getJobConversion('HP')}}
-StrengthAttack: {{ editGroup.getJobConversion('StrengthAttack')}}
-AgilityAttack: {{ editGroup.getJobConversion('AgilityAttack')}}
-IntelligenceAttack: {{ editGroup.getJobConversion('IntelligenceAttack')}}
-PhysicalDefense: {{ editGroup.getJobConversion('PhysicalDefense')}}
-MagicDefense: {{ editGroup.getJobConversion('MagicDefense')}}
+StrAttack: {{ editGroup.getJobConversion('StrengthAttack')}}
+AgiAttack: {{ editGroup.getJobConversion('AgilityAttack')}}
+IntAttack: {{ editGroup.getJobConversion('IntelligenceAttack')}}
+PhysicalDef: {{ editGroup.getJobConversion('PhysicalDefense')}}
+MagicDef: {{ editGroup.getJobConversion('MagicDefense')}}
 Critical: {{ editGroup.getJobConversion('Critical')}}
-CriticalResistance: {{ editGroup.getJobConversion('CriticalResistance')}}
+CriticalResist: {{ editGroup.getJobConversion('CriticalResistance')}}
 Stiff: {{ editGroup.getJobConversion('Stiff')}}
-StiffResistance: {{ editGroup.getJobConversion('StiffResistance')}}
+StiffResist: {{ editGroup.getJobConversion('StiffResistance')}}
 Stun: {{ editGroup.getJobConversion('Stun')}}
-StunResistance: {{ editGroup.getJobConversion('StunResistance')}}
+StunResist: {{ editGroup.getJobConversion('StunResistance')}}
 MoveSpeed: {{ editGroup.getJobConversion('MoveSpeed')}}
 MoveSpeedRevision: {{ editGroup.getJobConversion('MoveSpeedRevision')}}
 DownDelay: {{ editGroup.getJobConversion('DownDelay')}}
 ElementAttack: {{ editGroup.getJobConversion('ElementAttack')}}
 ElementDefense: {{ editGroup.getJobConversion('ElementDefense')}}
-ElementDefenseMin: {{ editGroup.getJobConversion('ElementDefenseMin')}}
-ElementDefenseMax: {{ editGroup.getJobConversion('ElementDefenseMax')}}
-StrengthIntelligenceToCriticalDamage: {{ editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
+ElementDefMin: {{ editGroup.getJobConversion('ElementDefenseMin')}}
+ElementDefMax: {{ editGroup.getJobConversion('ElementDefenseMax')}}
+StrIntToCritDmg: {{ editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
       </pre>
     </div>
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn" ng-click="editGroup.ok()">Save</button>
-  <button class="btn" ng-click="editGroup.cancel()">Cancel</button>
+  <button class="btn btn-default" ng-click="editGroup.ok()">Save</button>
+  <button class="btn btn-default" ng-click="editGroup.cancel()">Cancel</button>
 </div>

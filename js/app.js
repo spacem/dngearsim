@@ -25,6 +25,7 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   
   'itemSearchController',
   'customItemController',
+  'aboutController',
   
   'directives',
   'filters',
@@ -35,6 +36,7 @@ dnGearSimApp.config(['$routeProvider',
     $routeProvider.
       when('/', {
         templateUrl: 'partials/about.html',
+        controller: 'AboutCtrl as about'
       }).
       when('/setup', {
         templateUrl: 'partials/setup.html',
