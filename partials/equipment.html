@@ -69,8 +69,8 @@
   <div class="row">
     <div class="col-xs-12" ng-show="enchantments.length > 0">
       <div class="form-group">
-        <button class="btn btn-default" ng-click="prevEnchantment()">- reduce</button>
-        <button class="btn btn-default" ng-click="nextEnchantment()">+ increase</button>
+        <button class="btn btn-default" ng-click="prevEnchantment()" ng-disabled="item.enchantmentNum < 1">- reduce</button>
+        <button class="btn btn-default" ng-click="nextEnchantment()" ng-disabled="isMaxEnchantLevel()">+ increase</button>
       </div>
     </div>
   </div>

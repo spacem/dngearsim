@@ -303,6 +303,7 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
       gem: { 
         mainDnt: 'itemtable_dragonjewel.dnt', 
         potentialDnt: 'potentialtable_dragonjewel.dnt',
+        enchantDnt: 'enchanttable_dragonjewel.dnt', 
         type: 'gems',
         minLevel: 24 },
       

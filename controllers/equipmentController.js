@@ -24,7 +24,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
     if($scope.enchantments.length > 0) {
 
       if(typeof $scope.item.enchantmentNum != 'number') {
-        $scope.item.enchantmentNum = 10;
+        $scope.item.enchantmentNum = 6;
       }
       
       for(var i=0;i<$scope.enchantments.length;++i) {
@@ -45,6 +45,24 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
     }
   }
   
+  $scope.isMaxEnchantLevel = function() {
+
+    if($scope.enchantments != null &&
+      $scope.enchantments.length > 0 &&
+      typeof $scope.item.enchantmentNum == 'number') {
+
+      for(var i=0;i<$scope.enchantments.length;++i) {
+        if($scope.item.enchantmentNum + 1 == $scope.enchantments[i].EnchantLevel) {
+          return false;
+        }
+      }
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
   $scope.nextEnchantment = function() {
     if($scope.item.enchantmentNum < $scope.enchantments.length) {
       $scope.item.enchantmentNum++;
@@ -53,14 +71,14 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   }
   
   $scope.prevEnchantment = function() {
-    if($scope.item.enchantmentNum > 0) {
+    if($scope.item.enchantmentNum > 1) {
       $scope.item.enchantmentNum--;
-      $scope.setEnchantment();
     }
     else {
       $scope.item.enchantmentNum = 0;
       $scope.enchantment = null;
     }
+    $scope.setEnchantment();
   }
   
   $scope.getStats = function() {
