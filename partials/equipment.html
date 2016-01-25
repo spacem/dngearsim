@@ -81,6 +81,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12" ng-show="enchantments.length > 0">
+      <br />
       <div class="form-group">
         <button class="btn btn-default" ng-click="prevEnchantment()" ng-disabled="item.enchantmentNum < 1">- reduce</button>
         <button class="btn btn-default" ng-click="nextEnchantment()" ng-disabled="isMaxEnchantLevel()">+ increase</button>
@@ -110,6 +111,25 @@
   <div class="row" ng-hide="enchantment == null">
     <div class="col-xs-12">
       min down: {{enchantment.MinDown}} | max down: {{enchantment.MaxDown}}
+    </div>
+  </div>
+  <div class="row" ng-show="item.sparkTypeId > 0">
+    <div class="col-xs-12" ng-hide="sparks != null">
+    loading sparks...
+    </div>
+    <div class="col-xs-12" ng-show="sparks != null && sparks.length > 0 && item.sparkId == null">
+      <br />
+      <button class="btn btn-default" ng-click="nextSpark()" ng-disabled="isMaxEnchantLevel()">add hidden ability</button>
+    </div>
+    <div class="col-xs-12" ng-show="sparks != null && sparks.length > 0 && item.sparkId != null">
+      <br />
+      <button class="btn btn-default" ng-click="removeSpark()">remove</button>
+      <button class="btn btn-default" ng-disabled="isFirstSpark()" ng-click="prevSpark()">prev</button>
+      <button class="btn btn-default" ng-disabled="isMoreSparks()" ng-click="nextSpark()">next</button>
+    </div>
+    <div class="col-xs-12" ng-show="sparks != null && item.sparkStats != null">
+      <span dnsim-stats stats="item.sparkStats" separator="'|'">
+      </span>
     </div>
   </div>
 </div>

@@ -72,6 +72,10 @@ function(translations,hCodeValues,items) {
         }
       }
       
+      if(item.sparkTypeId == null && d.TypeParam2 > 0) {
+        item.sparkTypeId = d.TypeParam2;
+      }
+      
       if(item.stats == null) {
         var stats = hCodeValues.getStats(d);
         if(p != null) {
@@ -138,6 +142,7 @@ m.factory('itemColumnsToLoad',[function() {
     },
     potentialDnt : null,
     setDnt : null,
+    sparkDnt: null
   }
 }]);
 
@@ -166,6 +171,7 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad) {
       typeName : null,
       rank : hCodeValues.rankNames[d.Rank],
       enchantmentId : null,
+      sparkTypeId: null,
     };
   }
 }]);
@@ -329,6 +335,7 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         weaponDnt: 'weapontable_equipment.dnt', 
         enchantDnt: 'enchanttable.dnt', 
         potentialDnt: 'potentialtable.dnt',
+        sparkDnt: 'potentialtable_potentialjewel.dnt',
         setDnt: 'setitemtable.dnt',
         type: 'equipment',
         minLevel: 24 },

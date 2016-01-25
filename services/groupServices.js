@@ -40,7 +40,7 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
               }
             }
             
-            var newItem = createItem(item.itemTypeName, d, p, totalRatio);
+            var newItem = createItem(item.itemTypeName, d, p, null, totalRatio);
             initItem(newItem);
             
             var sets = dntData.find(itemType.setDnt, 'id', item.setId);
@@ -48,7 +48,8 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
               newItem.setId = item.setId;
               newItem.setStats = hCodeValues.getStats(sets[0]);
             }
-            
+
+            newItem.fullStats = newItem.stats;
             if(item.enchantmentNum > 0) {
               newItem.enchantmentNum = item.enchantmentNum;
               
@@ -62,18 +63,24 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
                 newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
               }
               else {
-                var enchantments = dntData.find(itemType.enchantDnt, 'EnchantID', item.enchantmentId);
+                var enchantments = dntData.find(itemType.enchantDnt, 'EnchantID', newItem.enchantmentId);
                 angular.forEach(enchantments, function(enchantment, index) {
                   if(enchantment.EnchantLevel == newItem.enchantmentNum) {
                     newItem.enchantmentStats = hCodeValues.getStats(enchantment);
                     newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
+                    return;
                   }
                 });
               }
             }
-            else {
-              item.enchantmentNum = 0;
-              newItem.fullStats = newItem.stats;
+            
+            if(item.sparkId > 0) {
+              newItem.sparkId = item.sparkId;
+              var sparks = dntData.find(itemType.sparkDnt, 'id', item.sparkId);
+              if(sparks.length > 0) {
+                newItem.sparkStats = hCodeValues.getStats(sparks[0]);
+                newItem.fullStats = hCodeValues.mergeStats(newItem.fullStats, newItem.sparkStats);
+              }
             }
             
             newItems.push(newItem);
@@ -102,6 +109,10 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
           
           if(item.setId > 0 && 'setDnt' in itemType) {
             dntFiles[itemType.setDnt] = itemColumnsToLoad.setDnt;
+          }
+          
+          if(item.sparkId > 0 && 'sparkDnt' in itemType) {
+            dntFiles[itemType.sparkDnt] = itemColumnsToLoad.sparkDnt;
           }
         }
       });

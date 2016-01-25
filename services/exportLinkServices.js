@@ -17,6 +17,9 @@ m.factory('exportLinkHelper', ['$http', function($http) {
           if(item.setId > 0) {
             itemString += ':S' + item.setId.toString(36);
           }
+          if(item.sparkId > 0) {
+            itemString += ':H' + item.sparkId.toString(36);
+          }
           
           itemStrings.push(itemString);
         }

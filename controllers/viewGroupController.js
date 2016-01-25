@@ -33,6 +33,9 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
             else if(itemBit.charAt(0) == 'S') {
               item.setId = parseInt(itemBit.substr(1), 36);
             }
+            else if(itemBit.charAt(0) == 'H') {
+              item.sparkId = parseInt(itemBit.substr(1), 36);
+            }
             else if(itemBit.charAt(0) == '_') {
               item.itemTypeName = itemBit.substr(1);
             }

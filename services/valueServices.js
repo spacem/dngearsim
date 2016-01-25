@@ -175,9 +175,10 @@ m.factory('hCodeValues', [function() {
 
           currentState++;
           
-          if(currentData.num != 0 ||
-            currentData.max != 0 ||
-            currentData.min != 0) {
+          if(currentData.max > 0 ||
+            currentData.max < 0 ||
+            currentData.min < 0 ||
+            currentData.min > 0) {
               
             statVals.push(currentData);
           }
