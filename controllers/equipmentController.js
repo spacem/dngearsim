@@ -142,11 +142,12 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
       dntData.init($scope.itemType.sparkDnt, itemColumnsToLoad.sparkDnt, reportProgress, function() { $timeout(sparkInit); } );
     }
     else {
-      $scope.enchantments = [];
+      $scope.sparks = [];
     }
   }
   else {
     $scope.enchantments = [];
+    $scope.sparks = [];
   }
   
   $scope.setTalisman = function(amount) {
