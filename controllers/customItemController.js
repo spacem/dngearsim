@@ -62,6 +62,8 @@ function($uibModal,$timeout,saveHelper) {
   }
   
   this.getResults = function() {
+
+    localStorage.setItem('nameSearch', this.nameSearch);
     
     var newResults = [];
     var numEquip = this.customItems.length;
