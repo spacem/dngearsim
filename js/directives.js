@@ -58,7 +58,7 @@ m.directive('dnsimItemLink', ['$uibModal', function($uibModal) {
       item: '=item',
       onClose: '&onClose'
     },
-    templateUrl: 'components/item-link.html',
+    templateUrl: 'components/item-link.html?bust=' + Math.random().toString(36).slice(2),
     link: function($scope, element, attrs) {
       $scope.open = function () {
         var modalInstance = $uibModal.open({
@@ -144,7 +144,7 @@ m.directive('dnsimStats', ['hCodeValues',function(hCodeValues) {
             first = false;
           
             if('needSetNum' in stat) {
-              output += stat.needSetNum + '-Increases&nbsp;';
+              output += stat.needSetNum + '&nbsp;';
             }
             
             output += def.name+':&nbsp;'+def.display(stat);

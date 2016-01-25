@@ -9,7 +9,9 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.enchantments = null;
   $scope.item = item;
   $scope.enchantment = null;
-  $scope.item.enchantmentStats = [];
+  if($scope.item.enchantmentStats == null) {
+    $scope.item.enchantmentStats = [];
+  }
   $scope.enchantmentCost = '';
   $scope.item.setStats = null;
   $scope.item.setId = null;
@@ -138,6 +140,25 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   }
   else {
     $scope.enchantments = [];
+  }
+  
+  $scope.setTalisman = function(amount) {
+    if(amount == 0) {
+      $scope.item.enchantmentNum = null;
+      $scope.item.enchantmentStats = [];
+      $scope.item.fullStats = $scope.item.stats;
+    }
+    else {
+      $scope.item.enchantmentNum = amount;
+      
+      var extraStats = [];
+      angular.forEach(item.stats, function(stat, index) {
+        extraStats.push({id: stat.id, max: stat.max * (amount/100)});
+      });
+      
+      $scope.item.enchantmentStats = extraStats;
+      $scope.item.fullStats = hCodeValues.mergeStats($scope.item.enchantmentStats, $scope.item.stats);
+    }
   }
 
   function enchantInit() {

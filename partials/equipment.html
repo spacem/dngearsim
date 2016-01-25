@@ -1,22 +1,21 @@
 <div class="modal-header">
   <h3>
-    <span ng-show="item.enchantmentNum > 0">+{{item.enchantmentNum}}</span>
     {{item.name}}
-    <small>
+    <small> <br class="visible-xs" />
     {{item.rank.name}}
     level {{item.levelLimit}}
     </small>
   </h3>
-  <small>{{item.typeName}}: {{item.itemTypeName}} / {{item.id}} / {{item.pid}}</small>
+  <small>{{item.typeName}}: {{item.itemTypeName}} / {{item.id}} / {{item.pid}}
+    <span ng-show="item.potentialRatio != null">
+      <br />
+      potential&nbsp;ratio:&nbsp;{{item.potentialRatio}}
+    </span>
+  </small>
 </div>
 <div class="modal-body">
   <div class="row" ng-hide="item.typeName == 'custom'">
-    <div class="col-xs-6">
-      <div class="row" ng-show="item.potentialRatio != null">
-        <div class="col-xs-12">
-          potential ratio: {{item.potentialRatio}}
-        </div>
-      </div>
+    <div class="col-xs-8 col-sm-6">
       <div class="row">
         <div class="col-xs-12">
           <div dnsim-stats stats="item.stats">
@@ -24,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-4 col-sm-6">
       <div class="row" ng-hide="item.setStats != null">
         <div class="col-xs-12" >
         loading set stats...
@@ -36,8 +35,22 @@
       </div>
     </div>
   </div>
-  <div ng-show="item.typeName == 'talisman'">
-    Select Slot: 100%, 125, 150, 200
+  <div class="row" ng-show="item.typeName == 'talisman'">
+    <div class="col-xs-5 col-sm-3 col-md-2">
+      <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == null" ng-click="setTalisman(0)">+0%</button>
+      <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == 25" ng-click="setTalisman(25)">+25%</button>
+      <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == 50" ng-click="setTalisman(50)">+50%</button>
+      <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == 100" ng-click="setTalisman(100)">+100%</button>
+    </div>
+    <div class="col-xs-7" ng-show="item.enchantmentNum > 0">
+      <label>Extra:</label>
+      <div dnsim-stats stats="item.enchantmentStats" >
+      </div>
+      <br />
+      <label>Total:</label>
+      <div dnsim-stats stats="item.fullStats" >
+      </div>
+    </div>
   </div>
   <div class="row" ng-show="item.typeName == 'custom'">
     <div class="col-xs-12">

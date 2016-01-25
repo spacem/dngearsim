@@ -1,7 +1,7 @@
-angular.module('savedItemController', ['saveService','valueServices','itemService','exportLinkServices'])
+angular.module('savedItemController', ['saveService','valueServices','itemService','exportLinkServices','groupServices'])
 .controller('SavedCtrl', 
-  ['$scope','$routeParams','$location','$uibModal','hCodeValues','saveHelper','items','itemColumnsToLoad','dntData','createItem','initItem','$timeout','translations','dntReset','exportLinkHelper','statHelper',
-  function($scope,$routeParams,$location,$uibModal,hCodeValues,saveHelper,items,itemColumnsToLoad,dntData,createItem,initItem,$timeout,translations,dntReset,exportLinkHelper,statHelper) {
+  ['$scope','$routeParams','$location','$uibModal','hCodeValues','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','statHelper','groupHelper',
+  function($scope,$routeParams,$location,$uibModal,hCodeValues,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,statHelper,groupHelper) {
     
     document.body.className = 'saved-back';
   
@@ -140,7 +140,7 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
     $scope.reloadGroup = function(group) {
       $scope.isLoading = true;
       
-      angular.forEach(getDntFiles($scope.savedItems[group]), function(columns, fileName) {
+      angular.forEach(groupHelper.getDntFiles($scope.savedItems[group]), function(columns, fileName) {
         dntData.init(fileName, columns, progress, function() { tryInit(group, $scope.savedItems[group]) });
       });
       
@@ -151,34 +151,9 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
       exportLinkHelper.createShortUrl(groupName, $scope.savedItems[groupName]);
     }
     
-    function getDntFiles(group) {
-
-      var dntFiles = {};
-      angular.forEach(group.items, function(item, key) {
-        if(item != null && item.itemTypeName in items) {
-          var itemType = items[item.itemTypeName];
-  
-          dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
-          if(item.pid > 0) {
-            dntFiles[itemType.potentialDnt] = itemColumnsToLoad.potentialDnt;
-          }
-          
-          if(item.enchantmentNum > 0) {
-            dntFiles[itemType.enchantDnt] = itemColumnsToLoad.enchantDnt;
-          }
-          
-          if(item.setId > 0) {
-            dntFiles[itemType.setDnt] = itemColumnsToLoad.setDnt;
-          }
-        }
-      });
-      
-      return dntFiles;
-    }
-    
     function tryInit(groupName, group) {
       var allLoaded = true;
-      angular.forEach(getDntFiles(group), function(columns, fileName) {
+      angular.forEach(groupHelper.getDntFiles(group), function(columns, fileName) {
         if(!dntData.isLoaded(fileName)) {
           allLoaded = false;
           return;
@@ -186,74 +161,9 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
       });
       
       if(allLoaded && $scope.isLoading && translations.isLoaded()) {
-        var newItems = [];
-        angular.forEach(group.items, function(item, key) {
-          
-          if(item == null) {
-            
-          }
-          else if(item.typeName == 'custom') {
-            newItems.push(item);
-          }
-          else if(item.itemTypeName in items) {
-            var itemType = items[item.itemTypeName];
-            var ds = dntData.find(itemType.mainDnt, 'id', item.id);
-            if(ds.length > 0) {
-              var d = ds[0];
-            
-              var totalRatio = 0;
-              var p = null;
-              if(item.pid > 0) {
-                var ps = dntData.find(itemType.potentialDnt, 'id', item.pid);
-                if(ps.length > 0) {
-                  p = ps[0];
-                  
-                  if(p.PotentialID != d.TypeParam1) {
-                    // this happened one time
-                    // not sure how but it corrupted the stats
-                    p = null;
-                  }
-                  else {
-                    var potentials = dntData.find(itemType.potentialDnt, 'PotentialID', p.PotentialID);
-                    angular.forEach(potentials, function(value, key) {
-                      totalRatio += value.PotentialRatio;
-                    });
-                  }
-                }
-              }
-              
-              var newItem = createItem(item.itemTypeName, d, p, totalRatio);
-              initItem(newItem);
-              
-              var sets = dntData.find(itemType.setDnt, 'id', item.setId);
-              if(sets.length > 0) {
-                newItem.setId = item.setId;
-                newItem.setStats = hCodeValues.getStats(sets[0]);
-              }
-              
-              if(item.enchantmentNum > 0) {
-                newItem.enchantmentNum = item.enchantmentNum;
-    
-                var enchantments = dntData.find(itemType.enchantDnt, 'EnchantID', item.enchantmentId);
-                angular.forEach(enchantments, function(enchantment, index) {
-                  if(enchantment.EnchantLevel == newItem.enchantmentNum) {
-                    newItem.enchantmentStats = hCodeValues.getStats(enchantment);
-                    newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
-                  }
-                });
-              }
-              else {
-                item.enchantmentNum = 0;
-                newItem.fullStats = newItem.stats;
-              }
-              
-              newItems.push(newItem);
-            }
-          }
-        });
-        
+        var newItems = groupHelper.reloadGroup(groupName, group);
         saveHelper.updatedSavedItems(groupName, newItems);
-        // dntReset();
+        dntReset();
         
         $timeout(function() {
           $scope.init();

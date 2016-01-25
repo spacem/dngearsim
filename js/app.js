@@ -21,6 +21,7 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   'itemService',
   'saveService',
   'exportLinkServices',
+  'groupServices',
   'regionService',
   
   'itemSearchController',
