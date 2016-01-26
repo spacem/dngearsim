@@ -84,6 +84,7 @@ m.factory('hCodeValues', [function() {
       107: {id: 107, name: 'mp?', display: toNoDec, hide: true },
       
       // stats below here are ones I made up
+      1001: {id: 1001, name: 'avg dmg', display: inThousands, summaryDisplay: true },
       1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true },
       1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true },
       
@@ -119,6 +120,21 @@ m.factory('hCodeValues', [function() {
       90 : 'welspring',
       132 : 'talisman',
       139 : 'gems',
+    },
+    
+    elements : {
+      0 : { id: 0, name: 'not elemental' },
+      1 : { id: 1, name: 'fire', dmgStat: 16 },
+      2 : { id: 2, name: 'ice', dmgStat: 17 },
+      3 : { id: 3, name: 'light', dmgStat: 18 },
+      4 : { id: 4, name: 'dark', dmgStat: 19 },
+    },
+    
+    damageTypes : {
+      0 : { id: 0, name: 'both separate' },
+      1 : { id: 1, name: 'physical' },
+      2 : { id: 2, name: 'magical' },
+      3 : { id: 3, name: 'both combined' },
     },
   
     getStats : function(data) {
@@ -361,32 +377,36 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       addStat(aPwr);
 
       // physical damage
-      var minPdmg = dupeStat(4);
-      minPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
-      minPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
-      applyPc(minPdmg);
-      minPdmg.max = minPdmg.max * (1+aPwr.max);
-      addStat(minPdmg);
-
-      var maxPdmg = dupeStat(5);
-      maxPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
-      maxPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
-      applyPc(maxPdmg);
-      maxPdmg.max = maxPdmg.max * (1+aPwr.max);
-      addStat(maxPdmg);
+      if(!group.damageType || group.damageType.id != 2) {
+        var minPdmg = dupeStat(4);
+        minPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
+        minPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
+        applyPc(minPdmg);
+        minPdmg.max = minPdmg.max * (1+aPwr.max);
+        addStat(minPdmg);
+  
+        var maxPdmg = dupeStat(5);
+        maxPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
+        maxPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
+        applyPc(maxPdmg);
+        maxPdmg.max = maxPdmg.max * (1+aPwr.max);
+        addStat(maxPdmg);
+      }
       
       // magic damage
-      var minMdmg = dupeStat(6);
-      minMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
-      applyPc(minMdmg);
-      minMdmg.max = minMdmg.max * (1+aPwr.max);
-      addStat(minMdmg);
-      
-      var maxMdmg = dupeStat(7);
-      maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
-      applyPc(maxMdmg);
-      maxMdmg.max = maxMdmg.max * (1+aPwr.max);
-      addStat(maxMdmg);
+      if(!group.damageType || group.damageType.id != 1) {
+        var minMdmg = dupeStat(6);
+        minMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
+        applyPc(minMdmg);
+        minMdmg.max = minMdmg.max * (1+aPwr.max);
+        addStat(minMdmg);
+        
+        var maxMdmg = dupeStat(7);
+        maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
+        applyPc(maxMdmg);
+        maxMdmg.max = maxMdmg.max * (1+aPwr.max);
+        addStat(maxMdmg);
+      }
       
       // crit chance %
       var crit = dupeStat(12);
@@ -414,17 +434,34 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       fdPc.max = Math.min(Math.max(0.35*Number(fd.max)/maxFd,Math.pow(Number(fd.max)/maxFd,2.2)),1);
       addStat(fdPc);
       
+      function addAvgDamageStat(id, min, max) {
+        
+        var avgDmg = (min+max)/2;
+        avgDmg += (critChance * (critDamagePc+1) * avgDmg * 0.75);
+        avgDmg = avgDmg * (1 + fdPc.max);
+        
+        if(group.element && group.element.id > 0) {
+          var elementStat = statLookup[hCodeValues.elements[group.element.id].dmgStat];
+          if(elementStat) {
+            avgDmg = avgDmg * (1+Number(elementStat.max));
+          }
+        }
+        
+        addStat({id: id, max: avgDmg});
+      }
+      
       // average damages
-      // this needs to be updated to include crit resist
-      var avgPdmg = (maxPdmg.max+minPdmg.max)/2;
-      avgPdmg += (critChance * (critDamagePc+1) * avgPdmg * 0.75);
-      avgPdmg = avgPdmg * (1 + fdPc.max);
-      addStat({id: 1004, max: avgPdmg});
+      if(!group.damageType || group.damageType.id == 1 || group.damageType.id == 0) {
+        addAvgDamageStat(1004, minPdmg.max, maxPdmg.max);
+      }
 
-      var avgMdmg = (maxMdmg.max+minMdmg.max)/2;
-      avgMdmg += (critChance * (critDamagePc+1) * avgMdmg * 0.75);
-      avgMdmg = avgMdmg * (1 + fdPc.max);
-      addStat({id: 1006, max: avgMdmg});
+      if(!group.damageType || group.damageType.id == 2 || group.damageType.id == 0) {
+        addAvgDamageStat(1006, minMdmg.max, maxMdmg.max);
+      }
+      
+      if(!group.damageType || group.damageType.id == 3) {
+        addAvgDamageStat(1001, minMdmg.max+minPdmg.max, maxMdmg.max+maxPdmg.max);
+      }
       
       // Equivalent HP
       var pdefEqHp = dupeStat(2008);

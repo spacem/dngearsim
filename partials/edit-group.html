@@ -1,9 +1,6 @@
 <div class="modal-header">
   <h3>
     {{editGroup.groupName}}
-    <small>
-    {{editGroup.groupSummary}}
-    </small>
   </h3>
 </div>
 <div class="modal-body">
@@ -13,21 +10,40 @@
       </label>
       <input type="text" class="form-control" id="groupNameInput" ng-model="editGroup.groupName" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" />
     </div>
-    <div class="col-xs-6 col-md-2">
-      <label>Enemy Level
+    <div class="col-xs-4 col-md-2">
+      <label>enemy&nbsp;lvl
       </label>
       <input class="form-control" id="groupNameInput" ng-model="editGroup.enemyLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" string-to-number step="any" />
     </div>
-    <div class="col-xs-6 col-md-2">
-      <label>Player Level
+    <div class="col-xs-4 col-md-2">
+      <label>player&nbsp;lvl
       </label>
       <input class="form-control" id="groupNameInput" ng-model="editGroup.playerLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" string-to-number step="any" />
     </div>
-    <div class="col-xs-12 col-md-8">
+    <div class="col-xs-4 col-md-2">
+      <label>hero&nbsp;lvl
+      </label>
+      <input class="form-control" id="groupNameInput" ng-model="editGroup.heroLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" string-to-number step="any" ng-change="editGroup.setHeroStats()" />
+    </div>
+    <div class="col-xs-12 col-md-6">
       <label>class: 
       </label>
       <select ng-model="editGroup.job" class="form-control"
        ng-options="job.name for job in editGroup.jobs track by job.id">
+      </select>
+    </div>
+    <div class="col-xs-6">
+      <label>damage type: 
+      </label>
+      <select ng-model="editGroup.damageType" class="form-control"
+       ng-options="damage.name for damage in editGroup.damageTypes track by damage.id">
+      </select>
+    </div>
+    <div class="col-xs-6">
+      <label>element: 
+      </label>
+      <select ng-model="editGroup.element" class="form-control"
+       ng-options="element.name for element in editGroup.elements track by element.id">
       </select>
     </div>
   </div>
@@ -43,7 +59,7 @@
     </div>
   </div>
   <div class="row" ng-hide="editGroup.isLoading() || !editGroup.showLoadedData">
-    <div class="col-sm-2 col-xs-6">
+    <div class="col-xs-4 col-md-2">
       <pre>
 base: {{ editGroup.getStatCap('Cbase', editGroup.enemyLevel) }}
 fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.enemyLevel) }}
@@ -52,7 +68,7 @@ crit: {{ editGroup.getStatCap('Ccritical', editGroup.enemyLevel) }}
 crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.enemyLevel) }}
       </pre>
     </div>
-    <div class="col-sm-2 col-xs-6">
+    <div class="col-xs-4 col-md-2">
       <pre>
 base: {{ editGroup.getStatCap('Cbase', editGroup.playerLevel) }}
 fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.playerLevel) }}
@@ -61,7 +77,10 @@ crit: {{ editGroup.getStatCap('Ccritical', editGroup.playerLevel) }}
 crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.playerLevel) }}
       </pre>
     </div>
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-4 col-md-2">
+      <pre dnsim-stats stats="editGroup.heroStats" />
+    </div>
+    <div class="col-xs-12 col-md-3">
       <pre>
 Strength: {{ editGroup.getJobBaseStat('Strength')}}
 Agility: {{ editGroup.getJobBaseStat('Agility')}}
@@ -71,7 +90,7 @@ BaseMP: {{ editGroup.getJobBaseStat('BaseMP')}}
 AggroperPvE: {{ editGroup.getJobBaseStat('AggroperPvE')}}
       </pre>
     </div>
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-12 col-md-3">
       <pre>
 HP: {{ editGroup.getJobConversion('HP')}}
 StrAttack: {{ editGroup.getJobConversion('StrengthAttack')}}

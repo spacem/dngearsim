@@ -55,28 +55,35 @@
     </div>
   </div>
 
-  <div class="col-xs-12 col-md-2 group-header" ng-show="currentGroup == groupName">
-    <div class="col-xs-4 col-md-12" ng-show="$parent.calculatedStats[groupName].length > 0">
-      <h4>calculated stats</h4>
-      <div dnsim-stats stats="$parent.calculatedStats[groupName]"></div>
-    </div>
-    <div class="col-xs-8 col-md-12">
-      <h4>combined&nbsp;stats</h4>
-      <div class="row">
-        <div class="col-xs-6 col-md-12" dnsim-stats stats="$parent.combinedStats[groupName]"></div>
+  <div class="col-xs-12 col-sm-2 group-header" ng-show="currentGroup == groupName">
+    <div class="row">
+      <div class="col-xs-6 col-sm-12" ng-show="$parent.calculatedStats[groupName].length > 0">
+        <h4>calculated&nbsp;stats</h4>
+        <div dnsim-stats stats="$parent.calculatedStats[groupName]"></div>
       </div>
-    </div>
-    <div class="col-xs-6 col-md-12" ng-show="$parent.setStats[groupName].length > 0">
-      <h4>set stats</h4>
-      <div dnsim-stats stats="$parent.setStats[groupName]"></div>
-    </div>
-    <div class="col-xs-6 col-md-12" ng-show="$parent.nakedStats[groupName].length > 0">
-      <h4>naked stats</h4>
-      <div dnsim-stats stats="$parent.nakedStats[groupName]"></div>
+      
+      <div class="col-xs-6 col-sm-12" ng-show="$parent.setStats[groupName].length > 0">
+        <h4>set stats</h4>
+        <div dnsim-stats stats="$parent.setStats[groupName]"></div>
+      </div>
+      
+      <div class="col-xs-6 col-sm-12">
+        <h4>item&nbsp;stats</h4>
+        <div dnsim-stats stats="$parent.combinedStats[groupName]"></div>
+      </div>
+      
+      <div class="col-xs-6 col-sm-12" ng-show="items.heroStats != null && items.heroStats.length > 0">
+        <h4>hero stats</h4>
+        <div dnsim-stats stats="items.heroStats"></div>
+      </div>
+      <div class="col-xs-6 col-sm-12" ng-show="$parent.nakedStats[groupName].length > 0">
+        <h4>naked stats</h4>
+        <div dnsim-stats stats="$parent.nakedStats[groupName]"></div>
+      </div>
     </div>
   </div>
   
-  <div class="col-xs-12 col-md-10" ng-show="currentGroup == groupName">
+  <div class="col-xs-12 col-sm-10" ng-show="currentGroup == groupName">
     <br />
     <div class="row item-type-grouping" ng-repeat="(typeName,typeItems) in $parent.savedItemsByType[groupName] track by $index">
       <table class="table">

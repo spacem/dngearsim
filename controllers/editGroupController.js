@@ -1,17 +1,33 @@
-angular.module('editGroupController', ['ui.bootstrap','translationService', 'dntServices', 'saveService'])
+angular.module('editGroupController', ['ui.bootstrap','translationService', 'dntServices', 'saveService','valueServices'])
 .controller('EditGroupCtrl',
 
-['group', 'groupName', 'groupSummary','$uibModalInstance','$timeout','saveHelper','dntData','jobs',
-function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dntData,jobs) {
+['group', 'groupName', 'groupSummary','$uibModalInstance','$timeout','saveHelper','dntData','jobs','hCodeValues',
+function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dntData,jobs,hCodeValues) {
   
   this.group = group;
   this.groupName = groupName;
   this.groupSummary = groupSummary;
   this.savedItems = saveHelper.getSavedItems();
+  this.heroStats = [];
+  this.elements = hCodeValues.elements;
+  this.damageTypes = hCodeValues.damageTypes;
   
   this.job = {id: -1, name: ''};
+  if(this.group.damageType) {
+    this.damageType = this.group.damageType;
+  }
+  else {
+    this.damageType = hCodeValues.damageTypes[0];
+  }
+    
+  if(this.group.element) {
+    this.element = this.group.element;
+  }
+  else {
+    this.element = hCodeValues.elements[0];
+  }
+
   this.jobs = [this.job];
-  
   if(this.group.enemyLevel) {
     this.enemyLevel = this.group.enemyLevel;
   }
@@ -24,6 +40,13 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
   }
   else {
     this.playerLevel = 90;
+  }
+  
+  if(this.group.heroLevel && this.group.heroLevel > 0) {
+    this.heroLevel = this.group.heroLevel;
+  }
+  else {
+    this.heroLevel = 1;
   }
   
   this.init = function(vm) {
@@ -41,6 +64,7 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
         }
         newJobs.splice(0, 0, vm.jobs[0]);
         vm.jobs = newJobs;
+        vm.setHeroStats();
       });
     }
   }
@@ -61,6 +85,8 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
   var jobBaseStatColsToLoad = {
     Strength:true,Agility:true,Intelligence:true,Stamina:true,AggroperPvE:true,BaseMP:true
   };
+  var heroLevels = 'heroleveltable.dnt';
+  var heroLevelPotentials = 'potentialtable_herolevel.dnt';
   
   function reportProgress(msg) {
     console.log('progress: ' + msg);
@@ -84,6 +110,8 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
   dntData.init(jobConversions, jobConversionColsToLoad, reportProgress, function() { vm.init(vm) });
   dntData.init(statCaps, statCapColsToLoad, reportProgress, function() { vm.init(vm) });
   dntData.init(jobBaseStats, jobBaseStatColsToLoad, reportProgress, function() { vm.init(vm) });
+  dntData.init(heroLevels, null, reportProgress, function() { vm.init(vm) });
+  dntData.init(heroLevelPotentials, null, reportProgress, function() { vm.init(vm) });
   
   this.getStatCap = function(colName, useLevel) {
     if(!this.isLoading() && useLevel > 0) {
@@ -126,6 +154,7 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
     var playerStatCaps = {};
     var conversions = {};
     var baseStats = {};
+    var heroStats = [];
     
     if(!this.isLoading()) {
      
@@ -153,6 +182,8 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
           baseStats = dntData.getRow(jobBaseStats, index[0]);
         }
       }
+      
+      heroStats = this.getHeroStats();
     }
     
     saveHelper.renameSavedGroup(
@@ -160,10 +191,39 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
       this.groupName,
       this.enemyLevel,
       this.playerLevel,
+      this.heroLevel,
       this.job,
-      enemyStatCaps, playerStatCaps, conversions, baseStats);
+      this.damageType,
+      this.element,
+      enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats);
     
     $uibModalInstance.close('ok');
+  }
+  
+  this.setHeroStats = function() {
+    this.heroStats = this.getHeroStats();
+    console.log('got ' + this.heroStats.length + ' hero stats');
+  }
+  
+  this.getHeroStats = function() {
+    var heroStats = [];
+    if(!this.isLoading() && this.heroLevel > 0) {
+      var index = dntData.findFast(heroLevels, 'id', this.heroLevel);
+      if(index.length == 1) {
+        var h = dntData.getRow(heroLevels, index[0]);
+        if(h != null) {
+          var pIndex = dntData.findFast(heroLevelPotentials, 'PotentialID', h.HeroLevelAbilityID);
+          if(pIndex.length == 1) {
+            var p = dntData.getRow(heroLevelPotentials, pIndex[0]);
+            if(p != null) {
+              heroStats = hCodeValues.getStats(p);
+            }
+          }
+        }
+      }
+    }
+    
+    return heroStats;
   }
   
   $timeout(function() {

@@ -127,6 +127,9 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
         $scope.setStats[groupName] = statHelper.getSetStats(group);
         var allStats = hCodeValues.mergeStats($scope.nakedStats[groupName], $scope.combinedStats[groupName]);
         allStats = hCodeValues.mergeStats(allStats, $scope.setStats[groupName]);
+        if(group.heroStats != null && group.heroStats.length > 0) {
+          allStats = hCodeValues.mergeStats(allStats, group.heroStats);
+        }
         
         $scope.calculatedStats[groupName] = statHelper.getCalculatedStats(group, allStats);
       });

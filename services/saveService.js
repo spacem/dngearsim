@@ -119,8 +119,8 @@ m.factory('saveHelper', [function() {
     },
     
     renameSavedGroup: function(
-      oldGroupName, newGroupName, enemyLevel, playerLevel, job, 
-      enemyStatCaps, playerStatCaps, conversions, baseStats) {
+      oldGroupName, newGroupName, enemyLevel, playerLevel, heroLevel, job, damageType, element,
+      enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats) {
         
       var savedItems = this.getSavedItems();
       
@@ -136,11 +136,15 @@ m.factory('saveHelper', [function() {
       
       savedItems[newGroupName].enemyLevel = enemyLevel;
       savedItems[newGroupName].playerLevel = playerLevel;
+      savedItems[newGroupName].heroLevel = heroLevel;
       savedItems[newGroupName].job = job;
+      savedItems[newGroupName].damageType = damageType;
+      savedItems[newGroupName].element = element;
       savedItems[newGroupName].enemyStatCaps = enemyStatCaps;
       savedItems[newGroupName].playerStatCaps = playerStatCaps;
       savedItems[newGroupName].conversions = conversions;
       savedItems[newGroupName].baseStats = baseStats;
+      savedItems[newGroupName].heroStats = heroStats;
       
       var stringifiedData = JSON.stringify(savedItems);
       localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
