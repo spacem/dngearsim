@@ -296,7 +296,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
       
       tech: { 
         mainDnt: 'itemtable_skilllevelup.dnt', 
-        potentialDnt: 'potentialtable.dnt', 
+        potentialDnt: 'potentialtable.dnt',
+        sparkDnt: 'potentialtable_potentialjewel.dnt',
         type: 'techs', 
         minLevel: 24 },
       
