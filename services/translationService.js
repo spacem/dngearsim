@@ -1,5 +1,5 @@
 angular.module('translationService', ['ngRoute']).
-factory('translations', ['$routeParams',function($routeParams) {
+factory('translations', ['$routeParams', '$rootScope', function($routeParams, $rootScope) {
 
   var dnTranslations = new DnTranslations();
   var tFile = 'uistring.lzjson';
@@ -47,6 +47,7 @@ factory('translations', ['$routeParams',function($routeParams) {
             }
           }
           
+          $rootScope.$broadcast('TRANSLATION_LOAD_EVENT');
           dnTranslations.loadDefaultFile(
             fileName, 
             function(msg) {
@@ -56,6 +57,7 @@ factory('translations', ['$routeParams',function($routeParams) {
               t.loaded = true;
               angular.forEach(completeCallback, function(value, key) { value(); });
               completeCallback = [];
+              $rootScope.$broadcast('TRANSLATION_LOAD_EVENT');
             },
             function(msg) {
               angular.forEach(progressCallback, function(value, key) { value(msg); });

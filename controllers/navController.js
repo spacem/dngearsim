@@ -25,6 +25,7 @@ angular.module('navController', ['ngRoute','translationService'])
       {path: 'item-search/plates', name:'plates'},
       {path: 'item-search/talisman', name:'talisman'},
       {path: 'item-search/cash', name:'cash'},
+      {path: 'item-search/skills', name:'skills'},
       {path: 'item-search/custom', name:'custom'},
       ];
       

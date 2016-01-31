@@ -20,6 +20,9 @@ m.factory('exportLinkHelper', ['$http', function($http) {
           if(item.sparkId > 0) {
             itemString += ':H' + item.sparkId.toString(36);
           }
+          if(item.typeName == 'skills') {
+            itemString += ':J' + item.baseJobName;
+          }
           
           itemStrings.push(itemString);
         }

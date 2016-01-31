@@ -217,6 +217,3 @@ word-break: normal;
   color: #555;
   padding: 0px;
 }
-body.modal-open {
-    overflow: hidden;
-}

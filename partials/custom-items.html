@@ -1,5 +1,4 @@
 <p>
-  Unfortunatly there will always be stats that come from things I havent implemented.
   Using this screen you can create your own "items" that can then be saved into a saved group.
   After you create the item click it to customise the stats.
 </p>
@@ -21,17 +20,15 @@
 <table class="table">
 <tr ng-repeat="result in customItems.getResults() track by $index">
   <td>
-    <div class="row">
-    <div class="col-xs-9">
+    <div>
       <dnsim-item-link item="result" on-close="customItems.itemLinkClosed()" />
     </div>
-    <div class="col-xs-3 text-right">
-      <button class="btn btn-link" ng-click="customItems.saveItem(result);">add to saved</button>
-      | <button class="btn btn-link" ng-click="customItems.removeItem(result);">remove</button>
-    </div>
-    <div class="col-xs-12">
+    <div>
       <span dnsim-stats stats="result.stats" separator="'|'" />
     </div>
+    <div>
+      <button class="btn btn-default" ng-click="customItems.saveItem(result);">add to saved</button>
+      <button class="btn btn-default" ng-click="customItems.removeItem(result);">remove</button>
     </div>
   </td>
 </tr>

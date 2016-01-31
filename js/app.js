@@ -26,6 +26,7 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   
   'itemSearchController',
   'customItemController',
+  'skillSearchController',
   'aboutController',
   
   'directives',
@@ -57,6 +58,10 @@ dnGearSimApp.config(['$routeProvider',
       when('/item-search/custom', {
         templateUrl: 'partials/custom-items.html',
         controller: 'CustomItemCtrl as customItems'
+      }).
+      when('/item-search/skills', {
+        templateUrl: 'partials/skill-search.html',
+        controller: 'SkillSearchCtrl as skillSearch'
       }).
       when('/item-search/:itemType', {
         templateUrl: 'partials/item-search.html',

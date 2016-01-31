@@ -1,9 +1,17 @@
 <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</button>
   <h3>
     {{item.name}}
     <small> <br class="visible-xs" />
+    <span ng-show="item.rank && item.rank.id > 0">
     {{item.rank.name}}
+    </span>
+    <span ng-show="jobName">
+    {{jobName.toLowerCase()}}
+    </span>
+    <span ng-show="item.levelLimit">
     level {{item.levelLimit}}
+    </span>
     </small>
   </h3>
   <small>{{item.typeName}}: {{item.itemTypeName}} / {{item.id}} / {{item.pid}}
@@ -14,7 +22,7 @@
   </small>
 </div>
 <div class="modal-body">
-  <div class="row" ng-hide="item.typeName == 'custom'">
+  <div class="row" ng-hide="item.typeName == 'custom' ||  item.typeName == 'skills' ||  item.typeName == 'talisman'">
     <div class="col-xs-8 col-sm-6">
       <div class="row">
         <div class="col-xs-12">
@@ -39,17 +47,22 @@
     <div class="col-xs-5 col-sm-3 col-md-2">
       <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == null" ng-click="setTalisman(0)">+0%</button>
       <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == 25" ng-click="setTalisman(25)">+25%</button>
-      <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == 50" ng-click="setTalisman(50)">+50%</button>
+      <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == 75" ng-click="setTalisman(75)">+75%</button>
       <button class="btn btn-block btn-default" ng-disabled="item.enchantmentNum == 100" ng-click="setTalisman(100)">+100%</button>
     </div>
+    <div class="col-xs-7">
+      <span dnsim-stats stats="item.stats" separator="'|'">
+      </span>
+    </div>
     <div class="col-xs-7" ng-show="item.enchantmentNum > 0">
-      <label>Extra:</label>
-      <div dnsim-stats stats="item.enchantmentStats" >
-      </div>
       <br />
-      <label>Total:</label>
-      <div dnsim-stats stats="item.fullStats" >
-      </div>
+      <label>extra:</label><br />
+      <span dnsim-stats stats="item.enchantmentStats" separator="'|'">
+      </span>
+      <br /><br />
+      <label>total:</label><br />
+      <span dnsim-stats stats="item.fullStats"  separator="'|'">
+      </span>
     </div>
   </div>
   <div class="row" ng-show="item.typeName == 'custom'">
@@ -72,6 +85,33 @@
         {{$parent.getStatDisplayValue(stat)}}
         {{$parent.getStatName(stat)}}
         <button class="btn btn-link" ng-click="$parent.removeStat(stat)">remove</button>
+    </div>
+  </div>
+  <div class="row" ng-show="item.typeName == 'skills'">
+    <div class="col-xs-3">
+      <input type="radio" ng-model="item.pve" value="pve" ng-change="initSkills()" id="pveRadio"><label for="pveRadio">&nbsp;pve</label>
+      <br />
+      <input type="radio" ng-model="item.pve" value="pvp" ng-change="initSkills()" id="pvpRadio"><label for="pvpRadio">&nbsp;pvp</label>
+    </div>
+    <div class="col-xs-9">
+      
+      Skill Level: {{item.enchantmentNum}}
+      <br /><br />
+    
+      <button class="btn btn-default" ng-click="prevEnchantment()" ng-disabled="item.enchantmentNum <= 1">- reduce</button>
+      <button class="btn btn-default" ng-click="nextEnchantment()" ng-disabled="isMaxSkillLevel()">+ increase</button>
+    
+    </div>
+    <div class="col-xs-12">
+      <br />
+      <span dnsim-stats stats="item.stats" separator="'|'">
+    </div>
+    
+    <div class="col-xs-12">
+      <button class="btn btn-default" ng-click="showFullSkillDetail = true;">show full details</button>
+    </div>
+    <div class="col-xs-12" ng-show="showFullSkillDetail" ng-repeat="(key,value) in item.d track by $index">
+      {{key}} : {{value}}
     </div>
   </div>
   <div class="row" ng-hide="enchantments != null">

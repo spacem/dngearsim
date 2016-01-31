@@ -378,11 +378,11 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         setDnt: 'setitemtable_cash.dnt',
         type: 'cash',
         minLevel: 0 },
-      event: {
-        mainDnt: 'itemtable_event.dnt', 
-        setDnt: 'setitemtable_cash.dnt',
-        type: 'cash',
-        minLevel: 0 },
+      // event: {
+        // mainDnt: 'itemtable_event.dnt', 
+        // setDnt: 'setitemtable_cash.dnt',
+        // type: 'cash',
+        // minLevel: 0 },
     };
     
     var allItems = [];

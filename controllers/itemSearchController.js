@@ -189,8 +189,7 @@ function(
   };
   
   function reportProgress(msg) {
-      // $scope.progress += '|' + msg;
-      console.log('progress: ' + msg);
+    console.log('progress: ' + msg);
   }
   
   function jobInit() {

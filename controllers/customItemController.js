@@ -7,31 +7,7 @@ function($uibModal,$timeout,saveHelper) {
   document.body.className = 'search-back';
   
   this.defaultItems = [
-    {id: 0, typeName:'custom', name: 'Unified HP Boost', stats: [{id: 75, max:0.05}]},
-    {id: 0, typeName:'custom', name: 'Lv4 Health Bolster', stats: [{id: 75, max:0.24}]},
-    {id: 0, typeName:'custom', name: 'Wand Mastery', stats: [{id: 3000, max:0.18}]},
-    {id: 0, typeName:'custom', name: 'Blessing of Strikes', stats: [{id: 3000, max:0.27}]},
-    {id: 0, typeName:'custom', name: 'Blessing of Light', stats: [{id: 18, max:0.2}]},
-    {id: 0, typeName:'custom', name: 'Fury of the Owl', stats: [{id: 1012, max:0.2}]},
-    {id: 0, typeName:'custom', name: 'Crossbow Mastery', stats: [{id: 3000, max:0.117}]},
-    {id: 0, typeName:'custom', name: 'Spiritual Focus', stats: [{id: 51, max:0.27}, {id: 52, max:0.27}]},
-    {id: 0, typeName:'custom', name: 'Warden Class Mastery', stats: [{id: 3000, max:0.1}]},
-    {id: 0, typeName:'custom', name: 'Saint Class Mastery II', stats: [{id: 3000, max:0.05}]},
-    {id: 0, typeName:'custom', name: 'Ward of spirits', stats: [{id: 3000, max:0.32}]},
-    {id: 0, typeName:'custom', name: 'LGrade L/F/I Spark', stats: [
-      {id: 54, max:0.0431},
-      {id: 55, max:0.0431},
-      {id: 56, max:0.0431},
-      {id: 57, max:0.0431},
-      
-      {id: 50, max:0.0225},
-      {id: 51, max:0.0225},
-      {id: 52, max:0.035},
-      
-      {id: 16, max:0.08},
-      {id: 17, max:0.08},
-      {id: 18, max:0.08}
-      ]},
+    {id: 0, typeName:'custom', name: 'wise plate fix', stats: [{id: 52, max:-0.001}]},
     ];
   
   this.maxDisplay = 10;

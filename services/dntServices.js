@@ -89,7 +89,7 @@ function() {
   }
 }]);
 
-m.factory('dntData', [function() {
+m.factory('dntData', ['$rootScope',function($rootScope) {
   
   function createLoader(dntLocation, file, colsToLoad) {
 
@@ -123,6 +123,8 @@ m.factory('dntData', [function() {
             if(this.dntLocation != null && 
               this.dntLocation.url != null &&
               this.dntLocation.url.length > 0) {
+                
+              $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
 
               this.reader.loadDntFromServerFile(
                 this.dntLocation.url + '/' + file,
@@ -135,6 +137,7 @@ m.factory('dntData', [function() {
                     value();
                   });
                   t.completeCallbacks = [];
+                  $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
                 },
                 function(msg) { t.progressCallback(msg) }  );
             }
@@ -265,6 +268,19 @@ m.factory('dntData', [function() {
         t.reset(key);
       });
     },
+    anyLoading : function() {
+      var t = this;
+      var found = false;
+      angular.forEach(this.loaders, function(value, key) {
+        if(!value.loaded && value.startedLoading) {
+          found = true;
+          console.log(key + ' is still loading');
+          return;
+        }
+      });
+      
+      return found;
+    },
     getNumRows : function(fileName) {
       return this.loaders[fileName].reader.numRows;
     },
@@ -298,7 +314,7 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
   
   var fileName ='jobtable.dnt';
   var colsToLoad = {
-        JobName: true,JobNumber: true,BaseClass: true,ParentJob: true
+    JobName: true,JobNumber: true,BaseClass: true,ParentJob: true, EnglishName: true
   };
   
   return {
@@ -318,7 +334,7 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
         complete();
         });
     },
-      
+
     reset : function() {
       this.allJobs = null;
       dntData.reset(fileName);
@@ -337,8 +353,24 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
       return jobs;
     },
     
+    getBaseJobs : function () {
+      var retVal=[];
+      var baseJobs = {};
+
+      var self = this;
+      angular.forEach(this.getFinalJobs(), function(job, key) {
+        baseJobs[self.getBaseJobName(job)] = job;
+      });
+
+      angular.forEach(baseJobs, function(job, jobName) {
+        retVal.push(jobName);
+      });
+
+      return retVal;
+    },
+    
     getAllJobs : function () {
-      if(this.allJobs == null) {
+      if(this.allJobs == null && this.isLoaded()) {
         var jobs = [];
         var data = dntData.getData(fileName);
         var numRows = data.length;
@@ -378,6 +410,35 @@ m.factory('jobs', ['dntData', 'translations', function(dntData, translations) {
       for(var r2=0;r2<numRows;++r2) {
         return this.isClassJob2(parentJobData[r2], c);
       }
+    },
+    
+    getBaseJobName : function(job) {
+      if(this.isLoaded()) {
+        var alljobs = this.getAllJobs();
+        if(alljobs != null) {
+          var numRows = alljobs.length;
+          for(var r=0;r<numRows;++r) {
+            if(alljobs[r].id == (job.d.BaseClass+1) && alljobs[r].d.EnglishName) {
+              return alljobs[r].d.EnglishName;
+            }
+          }
+        }
+      }
+      
+      return null;
+    },
+    
+    findJobById : function(id) {
+      var allJobs = this.getAllJobs();
+      var foundJob = null;
+      angular.forEach(allJobs, function(job, index) {
+        if(job.id == id) {
+          foundJob = job;
+          return;
+        }
+      });
+      
+      return foundJob;
     }
   }
   

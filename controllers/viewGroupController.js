@@ -1,7 +1,7 @@
 angular.module('viewGroupController', ['saveService','valueServices','itemService','exportLinkServices','groupServices'])
 .controller('ViewGroupCtrl', 
-  ['$scope','hCodeValues','$location','$routeParams','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','groupHelper',
-  function($scope,hCodeValues,$location,$routeParams,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,groupHelper) {
+  ['$scope','hCodeValues','$location','$routeParams','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','groupHelper','jobs',
+  function($scope,hCodeValues,$location,$routeParams,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,groupHelper,jobs) {
     
     document.body.className = 'saved-back';
     
@@ -35,6 +35,10 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
             }
             else if(itemBit.charAt(0) == 'H') {
               item.sparkId = parseInt(itemBit.substr(1), 36);
+            }
+            else if(itemBit.charAt(0) == 'J') {
+              item.baseJobName = itemBit.substr(1);
+              item.pve = 'pve';
             }
             else if(itemBit.charAt(0) == '_') {
               item.itemTypeName = itemBit.substr(1);
@@ -71,6 +75,7 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
       });
       
       translations.init(progress,function() { tryInit(group, $scope.savedItems[group]) });
+      jobs.init(progress,function() { tryInit(group, $scope.savedItems[group]) });
     }
     
     $scope.createShortUrl = function(groupName) {
@@ -86,7 +91,7 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
         }
       });
       
-      if(allLoaded && $scope.isLoading && translations.isLoaded()) {
+      if(allLoaded && $scope.isLoading && translations.isLoaded() && jobs.isLoaded()) {
         var newItems = groupHelper.reloadGroup(groupName, group);
         dntReset();
         

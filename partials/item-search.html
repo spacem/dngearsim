@@ -36,19 +36,11 @@
      ng-options="job.name for job in jobs track by job.id">
     </select>
   </div>
-  
-  <div class="col-xs-12">
-    
-  </div>
 </div>
-<div class="row">&nbsp;</div>
-<div class="row" ng-show="isLoading()">
-  <div class="col-xs-12 loading">
-  loading...
-  </div>
-</div>
+<div class="row"><div class="col-xs-12">&nbsp;</div></div>
+<dnsim-loading>
 <div class="row">
-<table class="table" ng-hide="isLoading()">
+<table class="table">
 <tr ng-repeat="result in getResults() track by $index">
   <td>
     <div class="row">
@@ -66,9 +58,10 @@
 </tr>
 </table>
 </div>
-<div class="row" ng-show="currentResults >= maxDisplay && !isLoading()">
+<div class="row" ng-show="currentResults >= maxDisplay">
   <div class="col-xs-1"></div>
   <div class="col-xs-11">
     <button class="btn btn-link" ng-click="maxDisplay = currentResults + 10;">Show More</button>
   </div>
 </div>
+</dnsim-loading>

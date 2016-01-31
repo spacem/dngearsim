@@ -106,6 +106,7 @@ m.factory('saveHelper', [function() {
           addType('plates');
           addType('talisman');
           addType('cash');
+          addType('skills');
           addType('custom');
           
           angular.forEach(group.items, function(item, index) {

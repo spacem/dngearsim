@@ -1,6 +1,7 @@
 var m = angular.module('groupServices', ['saveService','valueServices','itemService','exportLinkServices','groupServices']);
 
-m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues','itemColumnsToLoad', function(items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad) {
+m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues','itemColumnsToLoad','jobs','statHelper','translations',
+function(items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,jobs,statHelper,translations) {
   
   return {
     reloadGroup: function(groupName, group) {
@@ -12,6 +13,29 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
         }
         else if(item.typeName == 'custom') {
           newItems.push(item);
+        }
+        else if(item.itemTypeName == 'skills') {
+          
+          var skillDnt = 'skilltable_character' + item.baseJobName + '.dnt';
+          var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.dnt';
+          
+          var skillData = dntData.find(skillDnt, 'id', item.id)[0];
+          var skillLevelDatas = dntData.getData(skillLevelDnt);
+          
+          var newItem = {
+            id: item.id,
+            d: skillData,
+            itemTypeName: item.itemTypeName,
+            typeName: item.itemTypeName,
+            needJobClass: skillData.NeedJob,
+            baseJobName: item.baseJobName,
+            rank: hCodeValues.rankNames[0],
+            enchantmentNum: item.enchantmentNum,
+            name: translations.translate(skillData.NameID),
+          };
+          
+          newItem.stats = statHelper.getSkillStats(newItem, skillLevelDatas);
+          newItems.push(newItem);
         }
         else if(item.itemTypeName in items) {
           var itemType = items[item.itemTypeName];
@@ -53,7 +77,10 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
             if(item.enchantmentNum > 0) {
               newItem.enchantmentNum = item.enchantmentNum;
               
-              if(newItem.typeName == 'talisman') {
+              if(newItem.typeName == 'skills') {
+                
+              }
+              else if(newItem.typeName == 'talisman') {
                 var extraStats = [];
                 angular.forEach(newItem.stats, function(stat, index) {
                   extraStats.push({id: stat.id, max: stat.max * (newItem.enchantmentNum/100)});
@@ -95,7 +122,9 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
 
       var dntFiles = {};
       angular.forEach(group.items, function(item, key) {
-        if(item != null && item.itemTypeName in items) {
+        if(item == null) {
+        }
+        else if(item.itemTypeName in items) {
           var itemType = items[item.itemTypeName];
   
           dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
@@ -114,6 +143,12 @@ m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues
           if(item.sparkId > 0 && 'sparkDnt' in itemType) {
             dntFiles[itemType.sparkDnt] = itemColumnsToLoad.sparkDnt;
           }
+        }
+        else if(item.itemTypeName == 'skills') {
+            var skillDnt = 'skilltable_character' + item.baseJobName + '.dnt';
+            var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + item.pve + '.dnt';
+            dntFiles[skillLevelDnt] = null;
+            dntFiles[skillDnt] = null;
         }
       });
       

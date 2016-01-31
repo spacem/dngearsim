@@ -1,8 +1,8 @@
 angular.module('equipmentController', ['ui.bootstrap','translationService', 'dntServices'])
 .controller('EquipmentCtrl',
 
-['$scope','$routeParams','$timeout','$uibModalInstance','item','dntData','hCodeValues','items','itemColumnsToLoad',
-function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues,items,itemColumnsToLoad) {
+['$scope','$timeout','$uibModalInstance','item','dntData','hCodeValues','items','itemColumnsToLoad','jobs','statHelper',
+function($scope,$timeout,$uibModalInstance,item,dntData,hCodeValues,items,itemColumnsToLoad,jobs,statHelper) {
   
   console.log('got: ' + $scope.name);
   
@@ -17,10 +17,12 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   $scope.item.setId = null;
   $scope.stat = {id:-1, name:''};
   $scope.newStatVal = 0;
+  $scope.jobName = null;
   
   $scope.setEnchantment = function() {
       
     $scope.item.enchantmentStats = [];
+    $scope.getSkillStats();
     setFullStats();
       
     if($scope.enchantments.length > 0) {
@@ -66,10 +68,15 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
   }
   
   $scope.nextEnchantment = function() {
-    if($scope.item.enchantmentNum < $scope.enchantments.length) {
+    if($scope.item.enchantmentNum < $scope.enchantments.length ||
+      ($scope.skillData && $scope.item.enchantmentNum < $scope.skillData.length)) {
       $scope.item.enchantmentNum++;
       $scope.setEnchantment();
     }
+  }
+  
+  $scope.isMaxSkillLevel = function() {
+    return $scope.skillData && $scope.item.enchantmentNum >= $scope.skillData.length-1;
   }
   
   $scope.prevEnchantment = function() {
@@ -80,6 +87,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
       $scope.item.enchantmentNum = 0;
       $scope.enchantment = null;
     }
+
     $scope.setEnchantment();
   }
   
@@ -150,6 +158,56 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
     $scope.sparks = [];
   }
   
+  if(item.needJobClass > 0) {
+    if(!jobs.isLoaded()) {
+      jobs.init(this.progress, $timeout(getJobName));
+    }
+    else {
+      getJobName();
+    }
+  }
+  
+  $scope.initSkills = function() {
+    var dntFile = 'skillleveltable_character' + item.baseJobName + item.pve + '.dnt';
+    dntData.init(dntFile, null, reportProgress, function() { $timeout(function() {
+      $scope.skillData = dntData.find(dntFile, 'SkillIndex', item.id);
+      $scope.getSkillStats();
+    })});
+  }
+  
+  if($scope.item.typeName == 'skills') {
+    if(!item.pve || item.pve != 'pvp') {
+      $scope.item.pve = 'pve';
+    }
+    
+    $scope.initSkills();
+  }
+  
+  $scope.getSkillStats = function() {
+    
+    if(!$scope.skillData || $scope.skillData.length == 0) {
+      return;
+    }
+    
+    if(!$scope.item.enchantmentNum) {
+      $scope.item.enchantmentNum = 1;
+    }
+    
+    $scope.item.stats = statHelper.getSkillStats($scope.item, $scope.skillData);
+  }
+  
+  function getJobName() {
+    console.log('getting job name')
+    var retVal = '';
+    var allJobs = jobs.getAllJobs();
+    angular.forEach(allJobs, function(job, index) {
+      if(job.id == $scope.item.needJobClass) {
+        $scope.jobName = job.name;
+        return;
+      }
+    });
+  }
+  
   $scope.setTalisman = function(amount) {
     if(amount == 0) {
       $scope.item.enchantmentNum = null;
@@ -160,7 +218,7 @@ function($scope,$routeParams,$timeout,$uibModalInstance,item,dntData,hCodeValues
       $scope.item.enchantmentNum = amount;
       
       var extraStats = [];
-      angular.forEach(item.stats, function(stat, index) {
+      angular.forEach($scope.item.stats, function(stat, index) {
         extraStats.push({id: stat.id, max: stat.max * (amount/100)});
       });
       

@@ -5,7 +5,7 @@ m.factory('hCodeValues', [function() {
     return Math.round(stat.max*10)/10;
   }
   function toNoDec(stat) {
-    return Math.round(stat.max);
+    return Math.floor(stat.max);
   }
   function inThousands(stat) {
     var val = Number(stat.max);
@@ -26,7 +26,7 @@ m.factory('hCodeValues', [function() {
     }
   }
   function toPercent(stat) {
-    return (Math.round(stat.max*10000)/100) + '%';
+    return (Math.floor(stat.max*100000)/1000) + '%';
   }
   
   return {
@@ -58,6 +58,12 @@ m.factory('hCodeValues', [function() {
       25 : {id: 25, name: 'hp', display: inThousands, type: 'def', pc: 75 },
       26 : {id: 26, name: 'mp', display: inThousands, pc: 76 },
       29 : {id: 29, name: 'fd', display: toNoDec, type: 'dps' },
+      
+      // these are both min and max
+      // shows with the same name but these are used really just for set bonus I think
+      32 : {id: 32, name: 'pdmg', display: toNoDec, type: 'dps', pc: 54 },
+      33 : {id: 33, name: 'mdmg', display: toNoDec, type: 'dps', pc: 54 },
+      
       50 : {id: 50, name: 'str%', display: toPercent },
       51 : {id: 51, name: 'agi%', display: toPercent },
       52 : {id: 52, name: 'int%', display: toPercent },
@@ -79,6 +85,12 @@ m.factory('hCodeValues', [function() {
       76 : {id: 76, name: 'mp%', display: toPercent },
       77 : {id: 77, name: 'mp recover%', display: toPercent },
       81 : {id: 81, name: 'safe move%', display: toPercent },
+
+      // these are both min and max
+      // shows with the same name but these are used really just for set bonus I think
+      101 : {id: 101, name: 'pdmg%', display: toPercent },
+      102 : {id: 102, name: 'mdmg%', display: toPercent },
+
       103: {id: 103, name: 'crit dmg', display: toNoDec, type: 'dps', pc: 104 },
       104: {id: 104, name: 'crit dmg%', display: toPercent },
       107: {id: 107, name: 'mp?', display: toNoDec, hide: true },
@@ -100,6 +112,12 @@ m.factory('hCodeValues', [function() {
       
       3000: {id: 3000, name: 'atk pwr', display: toPercent },
       3008: {id: 2010, name: 'eqhp', display: inThousands, summaryDisplay: true },
+      
+      8001: {id: 8001, name: 'whiteDMG', display: toOneDec },
+      8002: {id: 8002, name: 'greenDMG', display: toOneDec },
+      8003: {id: 8003, name: 'blueDMG', display: toOneDec },
+      
+      // items over 10000 are unknown skill effects
     },
   
     rankNames : {
@@ -135,6 +153,32 @@ m.factory('hCodeValues', [function() {
       1 : { id: 1, name: 'physical' },
       2 : { id: 2, name: 'magical' },
       3 : { id: 3, name: 'both combined' },
+    },
+    
+    skillEffectMapping : {
+      2 : { id: 2, name: 'phyisical attack power' },
+      13 : { id: 13, name: 'mp', mapTo: 26 },
+      25 : { id: 25, name: 'action speed' },
+      29 : { id: 29, name: 'magic attack power', mapTo: 3000 },
+      32 : { id: 34, name: 'fire %', mapTo: 16 },
+      33 : { id: 35, name: 'ice %', mapTo: 17 },
+      34 : { id: 34, name: 'light %', mapTo: 18 },
+      35 : { id: 35, name: 'dark %', mapTo: 19 },
+      36 : { id: 38, name: 'fire def', mapTo: 20 },
+      37 : { id: 38, name: 'ice def', mapTo: 21 },
+      38 : { id: 38, name: 'light def', mapTo: 22 },
+      39 : { id: 38, name: 'dark def', mapTo: 23 },
+      58 : { id: 58, name: 'hp%', mapTo: 75 },
+      59 : { id: 59, name: 'mp%', mapTo: 76 },
+      65 : { id: 65, name: 'range' },
+      76 : { id: 76, name: 'movement speed', mapTo: 74 },
+      87 : { id: 87, name: 'str?', mapTo: 50 },
+      88 : { id: 88, name: 'agi?', mapTo: 51 },
+      89 : { id: 89, name: 'int?', mapTo: 52 },
+      90 : { id: 90, name: 'vit?', mapTo: 53 },
+      134 : { id: 134, name: 'physicial defense%' },
+      185 : { id: 185, name: 'wots attack power', mapTo: 3000 },
+      251 : { id: 251, name: 'critical chance%', mapTo: 1012 },
     },
   
     getStats : function(data) {
@@ -214,23 +258,28 @@ m.factory('hCodeValues', [function() {
     mergeStats : function(stats1, stats2) {
       var statMap = {};
       
-      
-      angular.forEach(stats1, function(value, key) {
+      var self = this;
+      function add(value) {
+        
+        var amount = Number(value.max);
+        if(self.stats[value.id] && 'pc' in self.stats[value.id]) {
+          amount = Math.floor(amount);
+        }
+        
         if(value.id in statMap) {
-          statMap[value.id] += Number(value.max);
+          statMap[value.id] += amount;
         }
         else {
-          statMap[value.id] = Number(value.max);
+          statMap[value.id] = amount;
         }
+      }
+      
+      angular.forEach(stats1, function(value, key) {
+        add(value);
       });
       
       angular.forEach(stats2, function(value, key) {
-        if(value.id in statMap) {
-          statMap[value.id] += Number(value.max);
-        }
-        else {
-          statMap[value.id] = Number(value.max);
-        }
+        add(value);
       });
       
       var newStats = [];
@@ -283,10 +332,12 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       
       angular.forEach(group.items, function(value, key) {
         if(value != null) {
-          stats = hCodeValues.mergeStats(stats, value.stats);
           
-          if(value.enchantmentStats != null) {
-            stats = hCodeValues.mergeStats(stats, value.enchantmentStats);
+          if(value.fullStats != null) {
+            stats = hCodeValues.mergeStats(stats, value.fullStats);
+          }
+          else {
+            stats = hCodeValues.mergeStats(stats, value.stats);
           }
         }
       });
@@ -306,20 +357,27 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
         statLookup[stat.id] = stat;
       });
       
-      function applyPc(stat) {
+      function getPc(stat) {
         var statDef = hCodeValues.stats[stat.id];
         if(statLookup[statDef.pc]) {
-          stat.max = stat.max*(1+Number(statLookup[statDef.pc].max));
+          return Number(statLookup[statDef.pc].max);
         }
+        else {
+          return 0;
+        }
+      }
+      
+      function applyPc(stat) {
+        stat.max = Math.floor(stat.max*(1+getPc(stat)));
       }
       
       function dupeStat(id) {
         var stat = statLookup[id];
         if(stat) {
-          return {id: id, max: Number(stat.max)};
+          return {id: id, max: Number(stat.max), pc: stat.pc};
         }
         else {
-          return {id: id, max: 0};
+          return {id: id, max: 0, pc: 0};
         }
       }
       
@@ -372,40 +430,119 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       addStat(mdefpc);
       
       // attack power - like fd but for bufs
+      // this shows as blue damage
       // i think there are magic and phis variants of this but doesnt matter
       var aPwr = dupeStat(3000);
       addStat(aPwr);
-
-      // physical damage
-      if(!group.damageType || group.damageType.id != 2) {
-        var minPdmg = dupeStat(4);
-        minPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
-        minPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
-        applyPc(minPdmg);
-        minPdmg.max = minPdmg.max * (1+aPwr.max);
-        addStat(minPdmg);
-  
-        var maxPdmg = dupeStat(5);
-        maxPdmg.max += (str.max*Number(group.conversions.StrengthAttack));
-        maxPdmg.max += (agi.max*Number(group.conversions.AgilityAttack));
-        applyPc(maxPdmg);
-        maxPdmg.max = maxPdmg.max * (1+aPwr.max);
-        addStat(maxPdmg);
-      }
       
-      // magic damage
-      if(!group.damageType || group.damageType.id != 1) {
-        var minMdmg = dupeStat(6);
-        minMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
-        applyPc(minMdmg);
-        minMdmg.max = minMdmg.max * (1+aPwr.max);
-        addStat(minMdmg);
+      // I added this new calculation method
+      // but I believe the calculation I did is the same
+      var useOldCalc = true;
+      
+      // method used for 'new' calc
+      function calcDamage(eqDamage, mod, whiteDamage, save) {
+        var greenDamage = (whiteDamage * mod) + (eqDamage * mod) + eqDamage;
+        var blueDamage = (aPwr.max * (greenDamage + whiteDamage));
         
-        var maxMdmg = dupeStat(7);
-        maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
-        applyPc(maxMdmg);
-        maxMdmg.max = maxMdmg.max * (1+aPwr.max);
-        addStat(maxMdmg);
+        if(save) {
+          var whiteStat = dupeStat(8001);
+          whiteStat.max = whiteDamage;
+          addStat(whiteStat);
+          
+          var greenStat = dupeStat(8003);
+          greenStat.max = greenDamage;
+          addStat(greenStat);
+          
+          var blueStat = dupeStat(8002);
+          blueStat.max = blueDamage;
+          addStat(blueStat);
+        }
+        
+        return whiteDamage + greenDamage + blueDamage;
+      }
+
+      if(useOldCalc) {
+        // physical damage
+        if(!group.damageType || group.damageType.id != 2) {
+          var extraPdmg = dupeStat(32);
+          var extraPdmgMod= dupeStat(101); 
+          
+          var minPdmg = dupeStat(4);
+          minPdmg.max += extraPdmg.max;
+          minPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
+          minPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
+          
+          minPdmg.max = Math.floor(minPdmg.max*(1+(getPc(minPdmg) + extraPdmgMod.max)));
+          minPdmg.max = Math.floor(minPdmg.max * (1+aPwr.max));
+          addStat(minPdmg);
+    
+          var maxPdmg = dupeStat(5);
+          maxPdmg.max += extraPdmg.max;
+          maxPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
+          maxPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
+          
+          maxPdmg.max = Math.floor(maxPdmg.max*(1+(getPc(maxPdmg) + extraPdmgMod.max)));
+          maxPdmg.max = Math.floor(maxPdmg.max * (1+aPwr.max));
+          addStat(maxPdmg);
+        }
+        
+        // magic damage
+        if(!group.damageType || group.damageType.id != 1) {
+          var extraMdmg = dupeStat(33);
+          var extraMdmgMod = dupeStat(102);
+          
+          var minMdmg = dupeStat(6);
+          minMdmg.max += extraMdmg.max;
+          minMdmg.max += Math.floor(int.max*Number(group.conversions.IntelligenceAttack));
+
+          minMdmg.max = Math.floor(minMdmg.max*(1+(getPc(minMdmg) + extraMdmgMod.max)));
+          minMdmg.max = minMdmg.max * (1+aPwr.max);
+          addStat(minMdmg);
+          
+          var maxMdmg = dupeStat(7);
+          maxMdmg.max += extraMdmg.max;
+          maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
+          
+          maxMdmg.max = Math.floor(maxMdmg.max*(1+(getPc(maxMdmg) + extraMdmgMod.max)));
+          maxMdmg.max = maxMdmg.max * (1+aPwr.max);
+          addStat(maxMdmg);
+        }
+      }
+      else {
+  
+        // physical damage
+        if(!group.damageType || group.damageType.id != 2) {
+          var extraPdmg = dupeStat(32);
+          var extraPdmgMod= dupeStat(101); 
+          
+          var whiteDamage = 0;
+          whiteDamage += Math.floor(str.max*Number(group.conversions.StrengthAttack));
+          whiteDamage += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
+  
+          var minPdmg = dupeStat(4);
+          minPdmg.max = calcDamage(minPdmg.max+extraPdmg.max, getPc(minPdmg)+extraPdmgMod.max, whiteDamage, false);
+          addStat(minPdmg);
+          
+          var maxPdmg = dupeStat(5);
+          maxPdmg.max = calcDamage(maxPdmg.max+extraPdmg.max, getPc(maxPdmg).max+extraPdmgMod.max, whiteDamage, false);
+          addStat(maxPdmg);
+        }
+        
+        // magic damage
+        if(!group.damageType || group.damageType.id != 1) {
+          var extraMdmg = dupeStat(33);
+          var extraMdmgMod= dupeStat(102);
+          
+          var whiteDamage = Math.floor(int.max*Number(group.conversions.IntelligenceAttack));
+          
+          var minMdmg = dupeStat(6);
+          minMdmg.max = calcDamage(minMdmg.max+extraMdmg.max, getPc(minMdmg)+extraMdmgMod.max, whiteDamage, false);
+          addStat(minMdmg);
+          
+          var maxMdmg = dupeStat(7);
+          maxMdmg.max = calcDamage(maxMdmg.max+extraMdmg.max, getPc(maxMdmg)+extraMdmgMod.max, whiteDamage, true);
+          addStat(maxMdmg);
+        }
       }
       
       // crit chance %
@@ -493,6 +630,51 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       else {
         return [];
       }
+    },
+    
+    getSkillStats : function (item, skillData) {
+
+      var skillLevelVals = null;
+      angular.forEach(skillData, function(value, index) {
+        if(value.SkillIndex == item.id && value.SkillLevel == item.enchantmentNum) {
+          skillLevelVals = value;
+          return;
+        }
+      });
+      
+      if(!skillLevelVals) {
+        return null;
+      }
+      
+      var index = 1;
+      var effects = [];
+      var stillCols = true;
+      
+      while(stillCols) {
+        var colName = 'EffectClass' + index;
+        var valColName = 'EffectClassValue' + index;
+        if(item.d && colName in item.d && valColName in skillLevelVals) {
+          if(item.d[colName] > 0) {
+            
+            // for now add 10k
+            var effectId = item.d[colName];
+            var statId = 10000 + effectId;
+            var map = hCodeValues.skillEffectMapping[effectId];
+            if(map && map.mapTo) {
+              statId = map.mapTo;
+            }
+            
+            effects.push({ id: statId, effect: effectId, max: skillLevelVals[valColName] });
+          }
+        }
+        else {
+          stillCols = false;
+        }
+        
+        index++;
+      }
+      
+      return effects;
     }
   }
 }]);
