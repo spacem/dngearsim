@@ -9,15 +9,15 @@ angular.module('savedItemController', ['saveService','valueServices','itemServic
     $scope.setStats = {};
     $scope.calculatedStats = {};
     $scope.nakedStats = {};
-    $scope.hiddenTypes = saveHelper.getHiddenTypes($scope.hiddenTypes);;
+    $scope.hiddenTypes = saveHelper.getHiddenTypes($scope.hiddenTypes);
+    $scope.currentGroup = '';
+    $scope.isLoading = false;
+    $scope.savedItems = null;
+    $scope.savedItemsByType = null;
     
     if('groupName' in $routeParams) {
       $scope.currentGroup = $routeParams.groupName;
     }
-    else {
-      $scope.currentGroup = '';
-    }
-    $scope.isLoading = false;
     
     $scope.setCurrentGroup = function(group) {
       $scope.currentGroup = '';

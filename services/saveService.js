@@ -102,7 +102,8 @@ m.factory('saveHelper', [function() {
           addType('armour');
           addType('accessories');
           addType('techs');
-          addType('gems');
+          addType('offensive gems');
+          addType('increasing gems');
           addType('plates');
           addType('talisman');
           addType('cash');

@@ -26,7 +26,7 @@ function(
   $scope.minLevel = 1;
   $scope.maxLevel = 99;
   $scope.maxDisplay = 10;
-  $scope.currentResults = 0;
+  $scope.totalNumResults = 0;
   $scope.grades = hCodeValues.rankNames;
   $scope.simpleSearch = $routeParams.itemType == 'titles';
   $scope.stat = {id:-1, name:''};
@@ -82,6 +82,18 @@ function(
     $scope.itemType = 'equipment';
     $scope.extraFilterFunc = function(d) {
       return d.typeId == 1 && d.typeName == 'accessories';
+    }
+  }
+  else if($routeParams.itemType == 'offensive gems') {
+    $scope.itemType = 'gems';
+    $scope.extraFilterFunc = function(d) {
+      return d.typeName == 'offensive gems';
+    }
+  }
+  else if($routeParams.itemType == 'increasing gems') {
+    $scope.itemType = 'gems';
+    $scope.extraFilterFunc = function(d) {
+      return d.typeName == 'increasing gems';
     }
   }
   else {
@@ -319,21 +331,29 @@ function(
         }
       }
       
-      $scope.currentResults = Math.min(curDisplay, $scope.maxDisplay);
-      
       if($scope.stat.id >= 0) {
+        
+        var currentResults = Math.min(curDisplay, $scope.maxDisplay);
+        
         statVals = statVals.sort(function(value1, value2) {
           return value2.s - value1.s;
         });
         
         var statResults = [];
-        for(var i=0;i<$scope.currentResults;++i) {
+        for(var i=0;i<currentResults;++i) {
           statResults.push(newResults[statVals[i].i]);
         }
         newResults = statResults;
       }
       
+      $scope.totalNumResults = newResults.length;
+      
       return newResults;
   };
+  
+  $scope.showMoreResults = function(extra) {
+    $scope.maxDisplay = $scope.totalNumResults + extra;
+    $scope.totalNumResults = 0;
+  }
   
 }]);

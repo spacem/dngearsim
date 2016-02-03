@@ -58,10 +58,11 @@
 </tr>
 </table>
 </div>
-<div class="row" ng-show="currentResults >= maxDisplay">
+<div class="row" ng-show="totalNumResults >= maxDisplay">
   <div class="col-xs-1"></div>
   <div class="col-xs-11">
-    <button class="btn btn-link" ng-click="maxDisplay = currentResults + 10;">Show More</button>
+    <button class="btn btn-link" ng-click="showMoreResults(20)">show more</button> | 
+    <button class="btn btn-link" ng-click="showMoreResults(200)">show lots more</button>
   </div>
 </div>
 </dnsim-loading>

@@ -140,13 +140,17 @@ function(items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,jobs,st
             dntFiles[itemType.setDnt] = itemColumnsToLoad.setDnt;
           }
           
+          if('gemDnt' in itemType) {
+            dntFiles[itemType.gemDnt] = itemColumnsToLoad.gemDnt;
+          }
+          
           if(item.sparkId > 0 && 'sparkDnt' in itemType) {
             dntFiles[itemType.sparkDnt] = itemColumnsToLoad.sparkDnt;
           }
         }
         else if(item.itemTypeName == 'skills') {
             var skillDnt = 'skilltable_character' + item.baseJobName + '.dnt';
-            var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + item.pve + '.dnt';
+            var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.dnt';
             dntFiles[skillLevelDnt] = null;
             dntFiles[skillDnt] = null;
         }

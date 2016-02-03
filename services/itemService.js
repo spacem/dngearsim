@@ -1,25 +1,27 @@
 var m = angular.module('itemService', ['translationService','ngRoute','valueServices','dntServices']);
 
 m.factory('initItem',
-['translations','hCodeValues','items',
-function(translations,hCodeValues,items) {
+['translations','hCodeValues','items','dntData',
+function(translations,hCodeValues,items,dntData) {
 
   function getTypeName(d, itemTypeName) {
-    if(itemTypeName in items && items[itemTypeName].type == 'cash') {
+    var itemTypeDef = items[itemTypeName];
+    
+    if(itemTypeName in items && itemTypeDef.type == 'cash') {
       return 'cash';
     }
-    else if(itemTypeName in items && items[itemTypeName].type == 'techs') {
+    else if(itemTypeName in items && itemTypeDef.type == 'techs') {
       return 'techs';
     }
-    else if(itemTypeName in items && items[itemTypeName].type == 'titles') {
+    else if(itemTypeName in items && itemTypeDef.type == 'titles') {
       return 'titles';
     }
-    else if(d.Type == 0 && items[itemTypeName].type == 'equipment') {
+    else if(d.Type == 0 && itemTypeDef.type == 'equipment') {
       return 'weapons';
     }
     else if(
       d.Type == 1 &&
-      items[itemTypeName].type == 'equipment' &&
+      itemTypeDef.type == 'equipment' &&
       'NameIDParam' in d &&
       d.NameIDParam.indexOf('},{2227}') <= 0 &&
       d.NameIDParam.indexOf('},{2228}') <= 0 &&
@@ -27,9 +29,26 @@ function(translations,hCodeValues,items) {
         
       return 'armour';
     }
-    else if(d.Type == 1 && items[itemTypeName].type == 'equipment') {
+    else if(d.Type == 1 && itemTypeDef.type == 'equipment') {
       return 'accessories';
     }
+    else if(d.Type == 139 && 'gemDnt' in itemTypeDef) {
+
+      var gemTypes = dntData.find(itemTypeDef.gemDnt, 'id', d.id);
+      if(gemTypes.length > 0) {
+        
+        if(gemTypes[0].Type == 1) {
+          return 'offensive gems';
+        }
+        else if(gemTypes[0].Type == 2) {
+          return 'increasing gems';
+        }
+        else {
+          return 'other gems';
+        }
+      }
+    }
+
     var typeName = hCodeValues.typeNames[d.Type];
     if(typeName == null) {
       return d.Type;
@@ -141,6 +160,9 @@ m.factory('itemColumnsToLoad',[function() {
       State1: true,State1Value: true,State2: true,State2Value: true,State3: true,State3Value: true,State4: true,State4Value: true,State5: true,State5Value: true,State6: true,State6Value: true,State7: true,State7Value: true,State8: true,State8Value: true,State9: true,State9Value: true,State10: true,State10Value: true
     },
     potentialDnt : null,
+    gemDnt: {
+      Type: true
+    },
     setDnt : null,
     sparkDnt: null
   }
@@ -248,7 +270,12 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
     };
     
     function doComplete(complete) {
-      if(translations.isLoaded() && dntData.isLoaded(itemType.mainDnt) && (!('potentialDnt' in itemType) || dntData.isLoaded(itemType.potentialDnt))) {
+      if(translations.isLoaded() && 
+      dntData.isLoaded(itemType.mainDnt) && 
+      (!('potentialDnt' in itemType) || dntData.isLoaded(itemType.potentialDnt)) &&
+      (!('gemDnt' in itemType) || dntData.isLoaded(itemType.gemDnt))
+      ) {
+        
         loadItems(itemType);
         dntData.reset(itemType.mainDnt);
         if('potentialDnt' in itemType) {
@@ -271,7 +298,10 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         translations.init(progress, function() { doComplete(complete) });
         dntData.init(itemType.mainDnt, itemColumnsToLoad.mainDnt, progress, function() { doComplete(complete) });
         if('potentialDnt' in itemType) {
-          dntData.init(itemType.potentialDnt, null, progress, function() { doComplete(complete) });
+          dntData.init(itemType.potentialDnt, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(complete) });
+        }
+        if('gemDnt' in itemType) {
+          dntData.init(itemType.gemDnt, itemColumnsToLoad.gemDnt, progress, function() { doComplete(complete) });
         }
 
         doComplete(complete);
@@ -311,6 +341,7 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         mainDnt: 'itemtable_dragonjewel.dnt', 
         potentialDnt: 'potentialtable_dragonjewel.dnt',
         enchantDnt: 'enchanttable_dragonjewel.dnt', 
+        gemDnt: 'dragonjeweltable.dnt',
         type: 'gems',
         minLevel: 24 },
       
