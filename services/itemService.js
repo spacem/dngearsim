@@ -249,6 +249,7 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
     for(var r=0;r<numRows;++r) {
       var dType = dntData.getValue(itemType.mainDnt, r, 'Type');
       var dLevelLimit = dntData.getValue(itemType.mainDnt, r, 'LevelLimit');
+      var dRank = dntData.getValue(itemType.mainDnt, r, 'Rank');
       
       // skip certain types like pouches, res scrolls, etc
       if(dType != 8 &&
@@ -263,7 +264,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         dType != 20 &&
         dType != 46 &&
         dType != 9 &&
-        dLevelLimit >= itemType.minLevel) {
+        dLevelLimit >= itemType.minLevel &&
+        dRank >= itemType.minRank) {
 
         var dState1_GenProb = dntData.getValue(itemType.mainDnt, r, 'State1_GenProb');
         var dStateValue1 = dntData.getValue(itemType.mainDnt, r, 'StateValue1');
@@ -369,13 +371,15 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         potentialDnt: 'potentialtable.optimised.lzjson',
         sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
         type: 'techs', 
-        minLevel: 24 },
+        minLevel: 24,
+        minRank: 0 },
       
       tman: { 
         mainDnt: 'itemtable_talisman.optimised.lzjson', 
         type: 'talisman', 
         potentialDnt: 'potentialtable_talismanitem.optimised.lzjson',
-        minLevel: 24 },
+        minLevel: 24,
+        minRank: 0 },
       
       gem: { 
         mainDnt: 'itemtable_dragonjewel.optimised.lzjson', 
@@ -383,13 +387,15 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         enchantDnt: 'enchanttable_dragonjewel.optimised.lzjson', 
         gemDnt: 'dragonjeweltable.optimised.lzjson',
         type: 'gems',
-        minLevel: 24 },
+        minLevel: 24,
+        minRank: 3},
       
       plate: { 
         mainDnt : 'itemtable_glyph.optimised.lzjson', 
         potentialDnt: 'potentialtable_glyph.optimised.lzjson',
         type: 'plates',
-        minLevel: 16 },
+        minLevel: 16,
+        minRank: 2 },
 
       items: {
         mainDnt: 'itemtable.optimised.lzjson', 
@@ -399,8 +405,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         potentialDnt: 'potentialtable.optimised.lzjson',
         setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
-        minLevel: 80 },
-        
+        minLevel: 80,
+        minRank: 3 },
       eq: {
         mainDnt: 'itemtable_equipment.optimised.lzjson', 
         partsDnt: 'partstable_equipment.optimised.lzjson', 
@@ -410,7 +416,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
         setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
-        minLevel: 24 },
+        minLevel: 24,
+        minRank: 3 },
       rbeq: { 
         mainDnt: 'itemtable_reboot.optimised.lzjson', 
         partsDnt: 'partstable_reboot.optimised.lzjson', 
@@ -419,7 +426,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         potentialDnt: 'potentialtable_reboot.optimised.lzjson',
         setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
-        minLevel: 24 },
+        minLevel: 24,
+        minRank: 3 },
       pvpeq: { 
         mainDnt: 'itemtable_pvp.optimised.lzjson',
         partsDnt: 'partstable_pvp.optimised.lzjson', 
@@ -427,33 +435,39 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         enchantDnt: 'enchanttable.optimised.lzjson', 
         setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
-        minLevel: 24 },
+        minLevel: 24,
+        minRank: 3 },
+
       c2015: { 
         mainDnt: 'itemtable_common2015.optimised.lzjson', 
         partsDnt: 'partstable_common2015.optimised.lzjson', 
         weaponDnt: 'weapontable_common2015.optimised.lzjson', 
         setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
-        minLevel: 0 },
+        minLevel: 0,
+        minRank: 0 },
       c2014: { 
         mainDnt: 'itemtable_common2014.optimised.lzjson', 
         partsDnt: 'partstable_common2014.optimised.lzjson', 
         weaponDnt: 'weapontable_common2014.optimised.lzjson', 
         setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
-        minLevel: 0 },
+        minLevel: 0,
+        minRank: 0 },
       cash: { 
         mainDnt: 'itemtable_cash.optimised.lzjson', 
         partsDnt: 'partstable_cash.optimised.lzjson', 
         weaponDnt: 'weapontable_cash.optimised.lzjson', 
         setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
-        minLevel: 0 },
+        minLevel: 0,
+        minRank: 0 },
       event: {
         mainDnt: 'itemtable_event.lzjson', 
         setDnt: 'setitemtable_cash.lzjson',
         type: 'cash',
-        minLevel: 0 },
+        minLevel: 0,
+        minRank: 0 },
     };
     
     var allItems = [];
