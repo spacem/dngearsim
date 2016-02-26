@@ -244,6 +244,8 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
 
   function loadItems(itemType) {
     
+    var start = new Date().getTime();
+    
     itemType.items = [];
     var numRows = dntData.getNumRows(itemType.mainDnt);
     for(var r=0;r<numRows;++r) {
@@ -297,6 +299,10 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         }
       }
     }
+            
+    var end = new Date().getTime();
+    var time = end - start;
+    console.log('item init time: ' + time/1000 + 's for ' + itemType.name);
   }
   
   function addMethods(itemType) {
