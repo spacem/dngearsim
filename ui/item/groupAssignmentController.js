@@ -148,7 +148,7 @@ function(hCodeValues,statHelper,saveHelper) {
   
   function calcStatPercent(newVal, origVal) {
     if(newVal && origVal) {
-      console.log('orig: ' + origVal + ',new: ' + newVal);
+      // console.log('orig: ' + origVal + ',new: ' + newVal);
       return Math.round(10000 * (1 - (origVal / newVal))) / 100;
     }
     else {
@@ -290,7 +290,7 @@ function(hCodeValues,statHelper,saveHelper) {
     var newItemList = [];
     angular.forEach(vm.savedItems[vm.groupName].items, function(gItem, index) {
       if(gItem.replaceItem) {
-        console.log('found replace item');
+        // console.log('found replace item');
         newItemList.push(vm.item);
       }
       else {

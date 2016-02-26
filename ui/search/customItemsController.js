@@ -76,7 +76,7 @@ function($window,$uibModal,$timeout,saveHelper,$location) {
   }
   
   this.saveItem = function(item) {
-    console.log('opening item for save ' + item.name);
+    // console.log('opening item for save ' + item.name);
     var modalInstance = $uibModal.open({
       animation: false,
       backdrop : false,

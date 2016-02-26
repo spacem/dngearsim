@@ -76,6 +76,6 @@ function($scope,$location,$routeParams,$timeout,$uibModalInstance,item,group,dnt
   
   function reportProgress(msg) {
       // $scope.progress += '|' + msg;
-      console.log('progress: ' + msg);
+      // console.log('progress: ' + msg);
   }
 }]);

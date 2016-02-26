@@ -52,7 +52,7 @@ function(translations,hCodeValues,items,dntData) {
     }
     
     if(typeName == 'gems' || hCodeValues.typeNames[d.Type] == 'gems') {
-      console.log('should have got new type name ' + d.Tyoe + ' ' + itemTypeDef.gemDnt);
+      // console.log('should have got new type name ' + d.Tyoe + ' ' + itemTypeDef.gemDnt);
     }
 
     var typeName = hCodeValues.typeNames[d.Type];

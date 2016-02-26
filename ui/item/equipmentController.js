@@ -109,6 +109,6 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   function reportProgress(msg) {
     // $scope.progress += '|' + msg;
-    console.log('progress: ' + msg);
+    // console.log('progress: ' + msg);
   }
 }]);

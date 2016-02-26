@@ -130,7 +130,7 @@ function(
   };
   
   $scope.saveItem = function(item) {
-    console.log('opening item for save ' + item.name);
+    // console.log('opening item for save ' + item.name);
     var modalInstance = $uibModal.open({
       animation: false,
       backdrop : false,
@@ -155,7 +155,7 @@ function(
   };
   
   function init() {
-    console.log('translations loaded');
+    // console.log('translations loaded');
     if(jobs.isLoaded()) {
       jobInit();
     }
@@ -172,7 +172,7 @@ function(
   
   $scope.isLoading = function() {
     if(!jobs.isLoaded()) {
-      console.log('jobs not loaded');
+      // console.log('jobs not loaded');
       if(!jobs.hasStartedLoading()) {
         init();
       }
@@ -180,7 +180,7 @@ function(
     }
     
     if(!translations.isLoaded()) {
-      console.log('transations not loaded');
+      // console.log('transations not loaded');
       if(!translations.startedLoading) {
         translations.init(reportProgress, function() { $timeout(translationsInit); } );
       }
@@ -190,7 +190,7 @@ function(
 
     for(var i=0;i<itemFactories.length;++i) {
       if(!itemFactories[i].isLoaded()) {
-        console.log(itemFactories[i].name + ' not loaded');
+        // console.log(itemFactories[i].name + ' not loaded');
         
         if(!itemFactories[i].loading) {
           init();
@@ -203,14 +203,14 @@ function(
   };
   
   function reportProgress(msg) {
-    console.log('progress: ' + msg);
+    // console.log('progress: ' + msg);
   }
   
   function jobInit() {
-    console.log('called the job init func');
+    // console.log('called the job init func');
     if(translations.isLoaded() && jobs.isLoaded()) {
-      console.log('trying to init jobs');
-      console.log('job dropdown should be set');
+      // console.log('trying to init jobs');
+      // console.log('job dropdown should be set');
       var newJobs = jobs.getFinalJobs();
 
       newJobs.splice(0, 0, $scope.jobs[0]);

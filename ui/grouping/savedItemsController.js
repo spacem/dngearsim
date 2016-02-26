@@ -183,7 +183,7 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
       }
 
       $scope.modalOpened = true;
-      console.log('opening item for save ' + item.name);
+      // console.log('opening item for save ' + item.name);
       var modalInstance = $uibModal.open({
         animation: false,
         backdrop : false,
@@ -203,7 +203,7 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
 
       modalInstance.result.then(
         function (group, newGroupName, groupSummary) {
-          console.log('new group name: ' + newGroupName)
+          // console.log('new group name: ' + newGroupName)
             $timeout(function() {
               $scope.init();
             });
@@ -253,7 +253,7 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
         });
         $scope.modalOpened = false;
       }, function () {
-        console.log('cancel?')
+        // console.log('cancel?')
         $timeout(function() {
           $scope.init();
         });
@@ -276,7 +276,7 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
     }
 
     $scope.closeItemLink = function (group) {
-      console.log('closed link for ' + group)
+      // console.log('closed link for ' + group)
       saveHelper.updatedSavedItems(group, $scope.savedItems[group].items);
       $timeout(function() {
           $scope.init();

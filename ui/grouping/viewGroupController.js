@@ -87,7 +87,7 @@ angular.module('viewGroupController', ['saveService','valueServices','itemServic
     $scope.copyGroup = function(group) {
       saveHelper.importGroup(group, $scope.savedItems[group].items);
       $location.path('/builds');
-      console.log('should have changed');
+      // console.log('should have changed');
     }
     
     $scope.init();

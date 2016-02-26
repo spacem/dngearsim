@@ -36,7 +36,7 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
   
   this.isLoading = function() {
     if(!jobs.isLoaded()) {
-      console.log('jobs not loaded');
+      // console.log('jobs not loaded');
       if(!jobs.hasStartedLoading()) {
         init();
       }
@@ -44,7 +44,7 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
     }
     
     if(!translations.isLoaded()) {
-      console.log('transations not loaded');
+      // console.log('transations not loaded');
       if(!translations.startedLoading) {
         translations.init(reportProgress, function() { $timeout(translationsInit); } );
       }
@@ -64,7 +64,7 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
   };
   
   function getDntName(baseClassName) {
-    console.log('got base class :' + baseClassName);
+    // console.log('got base class :' + baseClassName);
     if(baseClassName != null) {
       return 'skilltable_character' + baseClassName.toLowerCase() + '.dnt';
     }
@@ -74,7 +74,7 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
   }
 
   function getSkills() {
-    console.log('getting skills for ' + vm.job.name);
+    // console.log('getting skills for ' + vm.job.name);
     if(vm.loadedJobId == vm.job.id) {
       return vm.skills;
     }
@@ -89,14 +89,14 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
         angular.forEach(jobs.getBaseJobs(), function(jobName, index) {
           baseJobNames.push(jobName);
         });
-        console.log('got ' + baseJobNames);
+        // console.log('got ' + baseJobNames);
       }
 
       angular.forEach(baseJobNames, function(baseName, index) {
         var dntName = getDntName(baseName);
         if(dntName) {
           if(!dntData.isLoaded(dntName)) {
-            console.log('loading skills for ' + baseName);
+            // console.log('loading skills for ' + baseName);
             dntData.init(dntName, null, reportProgress, function() { $timeout(function() {setupSkills(baseJobNames, vm.job);} ) });
           }
           else {
@@ -108,7 +108,7 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
   }
   
   this.saveItem = function(item) {
-    console.log('opening item for save ' + item.name);
+    // console.log('opening item for save ' + item.name);
     var modalInstance = $uibModal.open({
       animation: false,
       backdrop : false,
@@ -235,7 +235,7 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
   }
   
   function reportProgress(msg) {
-    console.log('progress: ' + msg);
+    // console.log('progress: ' + msg);
   }
   
   function jobInit() {
@@ -261,7 +261,7 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
   }
   
   function init() {
-    console.log('skill init');
+    // console.log('skill init');
     if(jobs.isLoaded()) {
       $timeout(jobInit);
     }

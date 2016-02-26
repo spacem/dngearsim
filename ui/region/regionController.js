@@ -6,7 +6,9 @@ angular.module('regionController', ['ngRoute','translationService','regionServic
 
     region.init();
     translations.init(
-      function(msg) { console.log(msg) }, 
+      function(msg) { 
+        // console.log(msg);
+      }, 
       function() {
         $timeout();
       });
@@ -15,7 +17,7 @@ angular.module('regionController', ['ngRoute','translationService','regionServic
     $scope.tlocation = region.tlocation;
      
     $scope.getHostedFiles = function() {
-      console.log('getting hosted files');
+      // console.log('getting hosted files');
       return region.hostedFiles;
     }
     

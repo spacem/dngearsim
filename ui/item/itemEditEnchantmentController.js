@@ -106,7 +106,7 @@ function($timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$ro
   }
 
   function reportProgress(msg) {
-    console.log('progress: ' + msg);
+    // console.log('progress: ' + msg);
   }
 }])
 .directive('dngearsimItemEditEnchantment', function() {

@@ -143,7 +143,7 @@ m.factory('dntData', ['$rootScope',function($rootScope) {
                 function(msg) { t.progressCallback(msg) }  );
             }
             else {
-              console.log("dnt location not set!");
+              // console.log("dnt location not set!");
             }
           }
         }

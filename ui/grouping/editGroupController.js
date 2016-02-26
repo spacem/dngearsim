@@ -51,10 +51,10 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
   }
   
   this.init = function(vm) {
-    console.log('checking load status');
+    // console.log('checking load status');
     if(!this.isLoading()) {
       $timeout( function() {
-        console.log('all loaded - doing init');
+        // console.log('all loaded - doing init');
         var newJobs = jobs.getFinalJobs();
         if('job' in vm.group) {
           angular.forEach(newJobs, function(value, key) {
@@ -78,12 +78,12 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
   var heroLevelPotentials = 'potentialtable_herolevel.dnt';
   
   function reportProgress(msg) {
-    console.log('progress: ' + msg);
+    // console.log('progress: ' + msg);
   }
   
   this.isLoading = function() {
     if(!jobs.isLoaded()) {
-      console.log('jobs not loaded');
+      // console.log('jobs not loaded');
       if(!jobs.hasStartedLoading()) {
         init(this);
       }
@@ -191,7 +191,7 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
   
   this.setHeroStats = function() {
     this.heroStats = this.getHeroStats();
-    console.log('got ' + this.heroStats.length + ' hero stats');
+    // console.log('got ' + this.heroStats.length + ' hero stats');
   }
   
   this.getHeroStats = function() {

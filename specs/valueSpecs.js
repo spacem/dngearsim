@@ -85,7 +85,7 @@ describe('valueServices', function () {
       }
     });
       
-    console.log(JSON.stringify(mergedStats));
+    // console.log(JSON.stringify(mergedStats));
     
     expect(stat1Found).toBe(true, 'stat one found');
     expect(stat2Found).toBe(true, 'stat two found');

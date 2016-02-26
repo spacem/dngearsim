@@ -65,7 +65,7 @@ function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHel
   }
   
   function reportProgress(msg) {
-    console.log('progress: ' + msg);
+    // console.log('progress: ' + msg);
   }
 
 }])

@@ -3,7 +3,7 @@ var m = angular.module('jobService', ['translationService','ngRoute','valueServi
 
 m.factory('jobs', ['dntData', 'translations', 'itemColumnsToLoad', function(dntData, translations, itemColumnsToLoad) {
   
-  var fileName ='jobtable.dnt';
+  var fileName ='jobtable.lzjson';
   var colsToLoad = itemColumnsToLoad.jobsDnt;
   
   return {

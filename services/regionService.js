@@ -42,7 +42,7 @@ m.factory('region', ['translations','dntReset','dntData','$route',function(trans
     tlocation : tlocation,
     
     setCustomUrl: function(url) {
-      console.log('setting custom location');
+      // console.log('setting custom location');
       this.alternativeFiles.url = url;
 
       var newFiles = [];

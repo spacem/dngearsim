@@ -54,23 +54,23 @@ m.factory('saveHelper', [function() {
       if(groupName in items) {
         if(updatedItems.length == 0) {
           delete items[groupName];
-          console.log('no items to update');
+          // console.log('no items to update');
         }
         else {
           items[groupName].items = updatedItems;
           items[groupName].lastUpdate = (new Date()).getTime();
           localStorage.setItem('lastSavedGroup', groupName);
-          console.log('set group');
+          // console.log('set group');
         }
       }
       else {
         items[groupName] = {items : updatedItems, lastUpdate: (new Date()).getTime()};
         localStorage.setItem('lastSavedGroup', groupName);
-          console.log('created group');
+          // console.log('created group');
       }
       
       var stringifiedData = JSON.stringify(items);
-      console.log('saving: ' + stringifiedData);
+      // console.log('saving: ' + stringifiedData);
       localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
     },
     
@@ -115,7 +115,7 @@ m.factory('saveHelper', [function() {
           
           angular.forEach(group.items, function(item, index) {
             if(item != null && !(item.typeName in savedItemsByType[groupName])) {
-              console.log('we dont know ' + item.typeName + ' anymore')
+              // console.log('we dont know ' + item.typeName + ' anymore')
               savedItemsByType[groupName].typeError = true;
             }
           });
@@ -131,7 +131,7 @@ m.factory('saveHelper', [function() {
       var savedItems = this.getSavedItems();
       
       if(newGroupName in savedItems || oldGroupName == newGroupName) {
-        console.log('not changing name');
+        // console.log('not changing name');
         newGroupName = oldGroupName;
       }
       else if(oldGroupName in savedItems) {
@@ -182,7 +182,7 @@ m.factory('saveHelper', [function() {
     
     saveCustomItems: function(items) {
       var stringifiedData = JSON.stringify(items);
-      console.log('saving: ' + stringifiedData);
+      // console.log('saving: ' + stringifiedData);
       localStorage.setItem('customItems', LZString.compressToUTF16(stringifiedData));
     },
     
@@ -200,7 +200,7 @@ m.factory('saveHelper', [function() {
     
     saveHiddenTypes: function(items) {
       var stringifiedData = JSON.stringify(items);
-      console.log('saving: ' + stringifiedData);
+      // console.log('saving: ' + stringifiedData);
       localStorage.setItem('hiddenTypes', LZString.compressToUTF16(stringifiedData));
     }
   };

@@ -136,17 +136,17 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
     	      sessionStorage.setItem(path, data.id);
         	}).
         	error(function(data,status,headers,config){
-        		console.log(data);
-        		console.log(status);
-        		console.log(headers);
-        		console.log(config);
+        		// console.log(data);
+        		// console.log(status);
+        		// console.log(headers);
+        		// console.log(config);
         	});
     },
     
     reloadItem: function(item) {
 
       if(item == null) {
-        console.log('cannot reload null item');
+        // console.log('cannot reload null item');
         return;
       }
       
@@ -187,7 +187,7 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
         var itemType = items[item.itemSource];
         var ds = dntData.find(itemType.mainDnt, 'id', item.id);
         if(ds.length == 0) {
-          console.log('item ' + item.id + ' not found?');
+          // console.log('item ' + item.id + ' not found?');
         }
         else {
           var d = ds[0];
@@ -263,7 +263,7 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
         }
       }
       else {
-        console.log('what is this item source? ' + JSON.stringify(item));
+        // console.log('what is this item source? ' + JSON.stringify(item));
         return {name: 'unknown item source'};
       }
       
@@ -322,7 +322,7 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
         else if(item.typeName == 'custom') {
         }
         else {
-          console.log('cannot reload item ' + JSON.stringify(item));
+          // console.log('cannot reload item ' + JSON.stringify(item));
         }
       }
       
