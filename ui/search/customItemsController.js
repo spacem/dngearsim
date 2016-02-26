@@ -10,7 +10,7 @@ function($window,$uibModal,$timeout,saveHelper,$location) {
   
   this.defaultItems = [
     {id: 0, typeName:'custom', name: 'wise plate fix', stats: [{id: 52, max:-0.001}]},
-    {id: 0, typeName:'custom', name: 'hp unified', stats: [{id: 75, max:0.1}]},
+    {id: 0, typeName:'custom', name: 'hp unified', stats: [{id: 75, max:0.05}]},
     ];
   
   this.maxDisplay = 10;
