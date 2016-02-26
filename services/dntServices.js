@@ -131,7 +131,7 @@ m.factory('dntData', ['$rootScope',function($rootScope) {
                 this.dntLocation.url + '/' + file,
                 function(msg) { if(t.progressCallback != null) t.progressCallback(msg) }, 
                 function(result, fileName) {
-                  console.info('dnt loading complete : ' + file);
+                  // console.info('dnt loading complete : ' + file);
                   t.loaded = true;
                   
                   angular.forEach(t.completeCallbacks, function(value, key) {
