@@ -1,5 +1,6 @@
 var m = angular.module('valueServices', []);
 m.factory('hCodeValues', [function() {
+  'use strict';
   
   function toOneDec(stat) {
     return Math.round(stat.max*10)/10;
@@ -107,15 +108,15 @@ m.factory('hCodeValues', [function() {
       1029: {id: 1029, name: 'fd calc', display: toPercent },
       1103: {id: 1103, name: 'crit dmg', display: toPercent },
       
-      2008: {id: 2008, name: 'eqhp', display: inThousands },
+      2008: {id: 2008, name: 'pdef eqhp', display: inThousands },
       2009: {id: 2009, name: 'mdef eqhp', display: inThousands },
       
       3000: {id: 3000, name: 'atk pwr', display: toPercent },
-      3008: {id: 2010, name: 'eqhp', display: inThousands, summaryDisplay: true },
+      3008: {id: 3008, name: 'avg eqhp', display: inThousands, summaryDisplay: true },
       
-      8001: {id: 8001, name: 'whiteDMG', display: toOneDec },
-      8002: {id: 8002, name: 'greenDMG', display: toOneDec },
-      8003: {id: 8003, name: 'blueDMG', display: toOneDec },
+      // 8001: {id: 8001, name: 'whiteDMG', display: toOneDec },
+      // 8002: {id: 8002, name: 'greenDMG', display: toOneDec },
+      // 8003: {id: 8003, name: 'blueDMG', display: toOneDec },
       
       // items over 10000 are unknown skill effects
     },
@@ -252,7 +253,7 @@ m.factory('hCodeValues', [function() {
     },
     
     setupStat : function(stat, id) {
-      stat.id = id;
+      stat.id = Number(id);
     },
     
     mergeStats : function(stats1, stats2) {
@@ -297,14 +298,15 @@ m.factory('hCodeValues', [function() {
 
 
 m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
+  'use strict';
 
   return {
     
-    getSetStats: function(group) {
+    getSetStats: function(groupItems) {
       var stats = [];
       var sets = {};
       
-      angular.forEach(group.items, function(value, key) {
+      angular.forEach(groupItems, function(value, key) {
         if(value != null && value.setStats != null) {
           if(value.setId in sets) {
             sets[value.setId].numItems++;
@@ -327,10 +329,10 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       return stats;
     },
     
-    getCombinedStats: function(group) {
+    getCombinedStats: function(groupItems) {
       var stats = [];
       
-      angular.forEach(group.items, function(value, key) {
+      angular.forEach(groupItems, function(value, key) {
         if(value != null) {
           
           if(value.fullStats != null) {
@@ -417,7 +419,8 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       addStat(def);
       
       var defpc = dupeStat(1008);
-      defpc.max = def.max/Number(group.enemyStatCaps.Cdefense);
+      // defpc.max = Math.max(0.85, Number(def.max)/Number(group.enemyStatCaps.Cdefense));
+      defpc.max = Math.min(0.85,def.max/Number(group.enemyStatCaps.Cdefense));
       addStat(defpc);
       
       var mdef = dupeStat(9);
@@ -426,7 +429,8 @@ m.factory('statHelper', ['hCodeValues',function(hCodeValues) {
       addStat(mdef);
       
       var mdefpc = dupeStat(1009);
-      mdefpc.max = mdef.max/Number(group.enemyStatCaps.Cdefense);
+      // mdefpc.max = Math.max(0.85, Number(mdef.max)/Number(group.enemyStatCaps.Cdefense));
+      mdefpc.max = Math.min(0.85,mdef.max/Number(group.enemyStatCaps.Cdefense));
       addStat(mdefpc);
       
       // attack power - like fd but for bufs

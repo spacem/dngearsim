@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-xs-2" ng-hide="simpleSearch"></div>
+  <div class="col-xs-10 form-group" ng-hide="simpleSearch">
+    <span class="form-group" ng-repeat="(id,value) in grades track by $index">
+    <label class="checkbox-inline">
+      <input type="checkbox" ng-model="value.checked" value="{{id}}"> {{value.name}} 
+    </label>
+    </span>
+  </div>
+  
+  <div class="col-xs-4 col-md-2" ng-hide="simpleSearch">
+     <label>min&nbsp;lvl:
+     </label>
+     <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="minLevel" dnsim-select-all-on-click />
+  </div>
+  <div class="col-xs-4 col-md-2" ng-hide="simpleSearch">
+     <label>max&nbsp;lvl:
+     </label>
+     <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="maxLevel" dnsim-select-all-on-click />
+  </div>
+  <div class="col-xs-4 col-md-2">
+    <label>stat:</label>
+    <select class="form-control" ng-model="stat" class="form-control"
+     ng-options="stat.name for stat in stats track by stat.id">
+    </select>
+  </div>
+  
+  <div class="col-xs-8 col-md-4">
+     <label>name:</label>
+     <input type="text" class="form-control" ng-model="nameSearch" dnsim-select-all-on-click />
+  </div>
+  <div class="col-xs-4 col-md-2" ng-hide="simpleSearch">
+    <label>class: 
+    </label>
+    <select ng-model="job" class="form-control"
+     ng-options="job.name for job in jobs track by job.id">
+    </select>
+  </div>
+</div>
+<div class="row"><div class="col-xs-12">&nbsp;</div></div>
+<dnsim-loading>
+<div class="row">
+<table class="table">
+<tr ng-repeat="result in getResults() track by $index">
+  <td>
+    <div class="row">
+    <div class="col-xs-12">
+      <dnsim-item-link item="result" />
+    </div>
+    <div class="col-xs-12">
+      <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
+    </div>
+    </div>
+  </td>
+</tr>
+</table>
+</div>
+<div class="row" ng-show="totalNumResults >= maxDisplay">
+  <div class="col-xs-1"></div>
+  <div class="col-xs-11">
+    <button class="btn btn-link" ng-click="showMoreResults(20)">show more</button> | 
+    <button class="btn btn-link" ng-click="showMoreResults(200)">show lots more</button>
+  </div>
+</div>
+</dnsim-loading>

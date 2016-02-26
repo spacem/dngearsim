@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button ng-click="createGroup()" class="btn btn-link btn-block group-header-btn">
+      <h3 class="text-left">create a new build<br />
+      <small>builds allow you to group items together to see their combined stats</small>
+      </h3>
+    </button>
+  </div>
+</div>
+<dnsim-loading>
+  <div id="saved-group" class="row" ng-show="anyItems" ng-repeat="(groupName, items) in savedItems track by $index" ng-hide="isLoading">
+    <div class="col-xs-12 group-header" ng-show="currentGroup != groupName">
+      <button class="btn btn-link btn-block group-header-btn" ng-click="$parent.setCurrentGroup(groupName)">
+        <h3 class="text-left">{{groupName}}
+        <small>
+          <span ng-show="items.playerLevel > 0">lv{{items.playerLevel}}</span>
+          <span ng-show="items.job && items.job.id > 0">{{items.job.name}}</span></br>
+          {{$parent.getSaveDate(groupName)}} {{$parent.getSaveTime(groupName)}}<br />
+          {{$parent.getGroupSummary(groupName)}}<br />
+          <span dnsim-stats stats="$parent.calculatedStats[groupName]" separator="'|'" filter="'summaryDisplay'" />
+        </small></h3>
+      </button>
+    </div>
+    <div class="col-xs-12 group-header" ng-show="currentGroup == groupName">
+      <div class="row">
+        <div class="col-xs-12 col-md-6 col-lg-7" ng-click="$parent.setCurrentGroup('')">
+          <button class="btn btn-link btn-block group-header-btn">
+            <h3 class="text-left">
+              {{groupName}}
+            <small>
+              <span ng-show="items.playerLevel > 0">lv{{items.playerLevel}}&nbsp;</span>
+              <span ng-show="items.job && items.job.id > 0">{{items.job.name}}</span><br />
+              {{$parent.getSaveDate(groupName)}} {{$parent.getSaveTime(groupName)}}
+            </small>
+            </h3>
+          </button>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-5">
+          </span><br class="xs-hidden" />
+  
+          <button class="btn btn-default" ng-click="$parent.copyGroup(groupName)">copy</button>
+          <button class="btn btn-default" ng-click="$parent.editGroup(items, groupName)">edit</button>
+          <button class="btn btn-default" ng-click="$parent.reloadGroup(groupName)">reload</button> 
+          <!-- <button class="btn btn-default" ng-click="$parent.deleteGroup(groupName)">delete</button> -->
+          <span>&nbsp;</span>
+          <button style="margin-top:12px" class="btn btn-link" ng-click="$parent.createShortUrl(groupName)" ng-hide="items.shortUrl != null">create permalink</button>
+          <a style="margin-top:12px" class="btn btn-link" href="{{items.shortUrl}}" ng-show="items.shortUrl != null">{{items.shortUrl}}</a>
+        </div>
+        <div class="col-xs-6" ng-show="$parent.calculatedStats[groupName].length == 0">
+        </div>
+        <div class="col-xs-10 col-md-12 bg-danger" ng-show="$parent.calculatedStats[groupName].length == 0 || $parent.nakedStats[groupName].length == 0">
+          use edit to set level and class
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xs-12 col-md-2 group-header" ng-show="currentGroup == groupName">
+      <div class="row">
+        <div class="col-xs-6 col-md-12" ng-show="$parent.calculatedStats[groupName].length > 0">
+          <h4>calculated&nbsp;stats</h4>
+          <div dnsim-stats stats="$parent.calculatedStats[groupName]"></div>
+        </div>
+        
+        <div class="col-xs-6 col-md-12" ng-show="$parent.setStats[groupName].length > 0">
+          <h4>set stats</h4>
+          <div dnsim-stats stats="$parent.setStats[groupName]"></div>
+        </div>
+        
+        <div class="col-xs-6 col-md-12">
+          <h4>item&nbsp;stats</h4>
+          <div dnsim-stats stats="$parent.combinedStats[groupName]"></div>
+        </div>
+        
+        <div class="col-xs-6 col-md-12" ng-show="items.heroStats != null && items.heroStats.length > 0">
+          <h4>hero stats</h4>
+          <div dnsim-stats stats="items.heroStats"></div>
+        </div>
+        <div class="col-xs-6 col-md-12" ng-show="$parent.nakedStats[groupName].length > 0">
+          <h4>naked stats</h4>
+          <div dnsim-stats stats="$parent.nakedStats[groupName]"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xs-12 col-md-10" ng-show="currentGroup == groupName">
+      <br />
+      <div class="row item-type-grouping" ng-repeat="(typeName,typeItems) in $parent.savedItemsByType[groupName] track by $index">
+        <table class="table">
+          <tr>
+            <th>
+              <button ng-show="$parent.$parent.isTypeHidden(typeName)" ng-click="$parent.$parent.changeTypeVisiblity(typeName)">[ + ]</button>
+              <button ng-show="!$parent.$parent.isTypeHidden(typeName)" ng-click="$parent.$parent.changeTypeVisiblity(typeName)">[ - ]</button>
+              {{typeName}}
+              <span  ng-show="$parent.$parent.isTypeHidden(typeName)">
+                ({{typeItems.length}} saved)
+              </span>
+              <span style="float: right"><a href="#/item-search/{{typeName}}">search</a></span>
+            </th>
+          </tr>
+          <tr ng-repeat="result in typeItems | orderBy:'name' | orderBy:'-levelLimit' track by $index" ng-show="!$parent.$parent.isTypeHidden(typeName)">
+            <td>
+              <div>
+                <dnsim-item-link item="result" on-close="$parent.closeItemLink(groupName)" />
+              </div>
+              <div>
+                <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
+              </div>
+              <div>
+                  <button class="btn btn-default" ng-click="$parent.$parent.removeItem(groupName, result);">remove</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</dnsim-loading>

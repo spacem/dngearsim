@@ -1,0 +1,74 @@
+<dnsim-loading>
+<div class="row">
+  <div class="col-xs-12">
+    <br />
+    <a href="#/item-search/{{item.typeName}}">&lt; other {{item.typeName}}</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    <h3>
+      <dnsim-item-link item="item" /><br />
+      <small> <br />
+      <span ng-show="item.rank && item.rank.id > 0" class="{{item.rank.name}}-grade">
+      {{item.rank.name}}
+      </span>
+      <span ng-show="jobName">
+      {{jobName.toLowerCase()}}
+      </span>
+      <span ng-show="item.levelLimit">
+      level {{item.levelLimit}}
+      </span>
+      </small>
+    </h3>
+    <small class="hidden-xs">
+      {{item.typeName}}: {{item.itemSource}} / {{item.id}} / {{item.pid}}
+      <span ng-show="item.potentialRatio != null">
+        <br />
+        potential&nbsp;ratio:&nbsp;{{item.potentialRatio}}
+      </span>
+    </small>
+    <div class="row">
+      <dngearsim-item-edit-potential item="item" on-change="handleChange()">
+      </dngearsim-item-edit-potential>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-8">
+    <div class="row" ng-hide="item.typeName == 'custom' ||  item.typeName == 'skills' ||  item.typeName == 'talisman'">
+      <div class="col-xs-12">
+        <br /><label>stats</label><br />
+        <span dnsim-stats stats="item.stats" separator="'|'">
+        </span>
+      </div>
+      <div class="col-xs-12" ng-show="item.setStats != null && item.setStats.length > 0">
+        <br /><label>set stats</label><br />
+        <span dnsim-stats stats="item.setStats" separator="'|'">
+      </div>
+    </div>
+    <div class="row">
+      <dngearsim-item-edit-enchantment item="item" on-change="handleChange()">
+      </dngearsim-item-edit-enchantment>
+    </div>
+    <div class="row" ng-show="item.typeName == 'talisman'">
+      <dngearsim-item-edit-talisman item="item" on-change="handleChange()">
+      </dngearsim-item-edit-talisman>
+    </div>
+    <div class="row" ng-show="item.typeName == 'custom'">
+      <dngearsim-item-edit-custom item="item" on-change="handleChange()">
+      </dngearsim-item-edit-custom>
+    </div>
+    <div class="row" ng-show="item.typeName == 'skills'">
+      <dngearsim-item-edit-skill item="item" on-change="handleChange()">
+      </dngearsim-item-edit-skill>
+    </div>
+    <div class="row">
+      <dngearsim-item-edit-spark item="item" on-change="handleChange()">
+      </dngearsim-item-edit-spark>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <dngearsim-group-assignment item="item">
+    </dngearsim-group-assignment>
+</div>
+</dnsim-loading>

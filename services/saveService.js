@@ -1,37 +1,38 @@
 var m = angular.module('saveService', ['ngRoute']);
 m.factory('saveHelper', [function() {
+  'use strict';
   return {
-    saveItem: function(group, item) {
-      var items = this.getSavedItems();
-      if(group in items && Array.isArray(items[group].items)) {
+    saveItem: function(groupName, item) {
+      var groups = this.getSavedItems();
+      if(groupName in groups && Array.isArray(groups[groupName].items)) {
         
-        items[group].items.push(item);
-        items[group].lastUpdate = (new Date()).getTime();
-        this.updatedSavedItems(group, items[group].items);
+        groups[groupName].items.push(item);
+        groups[groupName].lastUpdate = (new Date()).getTime();
+        this.updatedSavedItems(groupName, groups[groupName].items);
       }
       else {
-        this.updatedSavedItems(group, [item]);
+        this.updatedSavedItems(groupName, [item]);
       }
       
-      localStorage.setItem('lastSavedGroup', group);
+      localStorage.setItem('lastSavedGroup', groupName);
     },
-    importGroup: function(group, updatedItems) {
+    importGroup: function(groupName, updatedItems) {
       var items = this.getSavedItems();
       
       var groupNameIndex = 0;
-      if(group.lastIndexOf(')') == group.length-1) {
-        var startIndex = group.lastIndexOf('(');
+      if(groupName.lastIndexOf(')') == groupName.length-1) {
+        var startIndex = groupName.lastIndexOf('(');
         if(startIndex > 0) {
-          var foundIndex = Number(group.substr(startIndex+1, group.length-startIndex-2));
+          var foundIndex = Number(groupName.substr(startIndex+1, groupName.length-startIndex-2));
           if(foundIndex > 0) {
             groupNameIndex = foundIndex + 1;
-            group = group.substr(0, startIndex - 1);
+            groupName = groupName.substr(0, startIndex - 1);
           }
         }
       }
       
       for(;;) {
-        var groupName = group;
+        var groupName = groupName;
         if(groupNameIndex > 0) {
           groupName = groupName + ' (' + groupNameIndex + ')';
         }
@@ -44,25 +45,27 @@ m.factory('saveHelper', [function() {
           break;
         }
       }
+      
+      return groupName;
     },
     
-    updatedSavedItems: function(group, updatedItems) {
+    updatedSavedItems: function(groupName, updatedItems) {
       var items = this.getSavedItems();
-      if(group in items) {
+      if(groupName in items) {
         if(updatedItems.length == 0) {
-          delete items[group];
+          delete items[groupName];
           console.log('no items to update');
         }
         else {
-          items[group].items = updatedItems;
-          items[group].lastUpdate = (new Date()).getTime();
-          localStorage.setItem('lastSavedGroup', group);
+          items[groupName].items = updatedItems;
+          items[groupName].lastUpdate = (new Date()).getTime();
+          localStorage.setItem('lastSavedGroup', groupName);
           console.log('set group');
         }
       }
       else {
-        items[group] = {items : updatedItems, lastUpdate: (new Date()).getTime()};
-        localStorage.setItem('lastSavedGroup', group);
+        items[groupName] = {items : updatedItems, lastUpdate: (new Date()).getTime()};
+        localStorage.setItem('lastSavedGroup', groupName);
           console.log('created group');
       }
       
@@ -112,6 +115,7 @@ m.factory('saveHelper', [function() {
           
           angular.forEach(group.items, function(item, index) {
             if(item != null && !(item.typeName in savedItemsByType[groupName])) {
+              console.log('we dont know ' + item.typeName + ' anymore')
               savedItemsByType[groupName].typeError = true;
             }
           });

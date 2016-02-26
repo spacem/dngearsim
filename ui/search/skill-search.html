@@ -1,0 +1,48 @@
+<p>
+   Please note this section is still under development.
+</p>
+<p>
+ Skills will not have their stats loaded until you click on them and set the skill level.
+ Many skill effects will have numbers instead of stats.
+ Skill effects may not apply correctly to your stats for example skills that debuf may debuf you instead of your enemy ie. might decrease your defence instead of increasing your attack.
+</p>
+
+<div class="row">
+  
+  <div class="col-xs-8 col-md-10">
+     <label>name:</label>
+     <input type="text" class="form-control" ng-model="skillSearch.nameSearch" dnsim-select-all-on-click />
+  </div>
+  <div class="col-xs-4 col-md-2" ng-hide="simpleSearch">
+    <label>class: 
+    </label>
+    <select ng-model="skillSearch.job" class="form-control"
+     ng-options="job.name for job in skillSearch.jobs track by job.id" ng-change="skillSearch.skills = null;">
+    </select>
+  </div>
+</div>
+<div class="row"><div class="col-xs-12">&nbsp;</div></div>
+<dnsim-loading>
+<div class="row">
+<table class="table">
+<tr ng-repeat="result in skillSearch.getResults() track by $index">
+  <td>
+    <div class="row">
+    <div class="col-xs-12">
+      <dnsim-item-link item="result" />
+    </div>
+    <div class="col-xs-12">
+      <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
+    </div>
+    </div>
+  </td>
+</tr>
+</table>
+</div>
+<div class="row" ng-show="skillSearch.currentResults >= skillSearch.maxDisplay">
+  <div class="col-xs-1"></div>
+  <div class="col-xs-11">
+    <button class="btn btn-link" ng-click="skillSearch.maxDisplay = skillSearch.currentResults + 10;">Show More</button>
+  </div>
+</div>
+</dnsim-loading>

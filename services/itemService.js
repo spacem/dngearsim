@@ -1,19 +1,21 @@
 var m = angular.module('itemService', ['translationService','ngRoute','valueServices','dntServices']);
 
+'use strict';
+
 m.factory('initItem',
 ['translations','hCodeValues','items','dntData',
 function(translations,hCodeValues,items,dntData) {
 
-  function getTypeName(d, itemTypeName) {
-    var itemTypeDef = items[itemTypeName];
+  function getTypeName(d, itemSource) {
+    var itemTypeDef = items[itemSource];
     
-    if(itemTypeName in items && itemTypeDef.type == 'cash') {
+    if(itemSource in items && itemTypeDef.type == 'cash') {
       return 'cash';
     }
-    else if(itemTypeName in items && itemTypeDef.type == 'techs') {
+    else if(itemSource in items && itemTypeDef.type == 'techs') {
       return 'techs';
     }
-    else if(itemTypeName in items && itemTypeDef.type == 'titles') {
+    else if(itemSource in items && itemTypeDef.type == 'titles') {
       return 'titles';
     }
     else if(d.Type == 0 && itemTypeDef.type == 'equipment') {
@@ -48,6 +50,10 @@ function(translations,hCodeValues,items,dntData) {
         }
       }
     }
+    
+    if(typeName == 'gems' || hCodeValues.typeNames[d.Type] == 'gems') {
+      console.log('should have got new type name ' + d.Tyoe + ' ' + itemTypeDef.gemDnt);
+    }
 
     var typeName = hCodeValues.typeNames[d.Type];
     if(typeName == null) {
@@ -60,7 +66,7 @@ function(translations,hCodeValues,items,dntData) {
   
   function getPotentialRatio(p, totalRatio) {
     
-    if(p != null && p.PotentialRatio > 0) {
+    if(p != null && p.PotentialRatio > 0 && totalRatio != 0) {
       var ratio = Math.round(p.PotentialRatio/totalRatio*100*100)/100;
       if(ratio != 100) {
         return ratio + '%';
@@ -72,7 +78,7 @@ function(translations,hCodeValues,items,dntData) {
   
   return function(item) {
     
-    if('data' in item) {
+    if(item.data) {
       var d = item.data;
       var p = item.potential;
   
@@ -118,7 +124,7 @@ function(translations,hCodeValues,items,dntData) {
       }
       
       if(item.typeName == null) {
-        item.typeName = getTypeName(d, item.itemTypeName);
+        item.typeName = getTypeName(d, item.itemSource);
       }
       
       if(item.enchantmentId == null ) {
@@ -129,8 +135,8 @@ function(translations,hCodeValues,items,dntData) {
         item.pid = p.id;
       }
       
-      delete item.data;
-      delete item.potential;
+      item.data = null;
+      item.potential = null;
     }
   }
 }]);
@@ -159,12 +165,46 @@ m.factory('itemColumnsToLoad',[function() {
       EnchantID: true,EnchantLevel: true,EnchantRatio: true,BreakRatio: true,MinDown: true,MaxDown: true,NeedCoin: true,
       State1: true,State1Value: true,State2: true,State2Value: true,State3: true,State3Value: true,State4: true,State4Value: true,State5: true,State5Value: true,State6: true,State6Value: true,State7: true,State7Value: true,State8: true,State8Value: true,State9: true,State9Value: true,State10: true,State10Value: true
     },
-    potentialDnt : null,
+    potentialDnt : {
+      PotentialID: true, PotentialNo: true,PotentialRatio: true,
+      State1: true,State1Value: true,
+      State2: true,State2Value: true,
+      State3: true,State3Value: true,
+      State4: true,State4Value: true,
+      State5: true,State5Value: true,
+      State6: true,State6Value: true,
+      State7: true,State7Value: true,
+      State8: true,State8Value: true,
+      State9: true,State9Value: true,
+      State10: true,State10Value: true,
+      State11: true,State11Value: true,
+      State12: true,State12Value: true,
+      State13: true,State13Value: true,
+      State14: true,State14Value: true,
+      State15: true,State15Value: true,
+      State16: true,State16Value: true
+    },
     gemDnt: {
       Type: true
     },
     setDnt : null,
-    sparkDnt: null
+    sparkDnt: null,
+    jobsDnt: {
+      JobName: true,JobNumber: true,BaseClass: true,ParentJob: true, EnglishName: true
+    },
+    jobBaseStatColsToLoad: {
+      Strength:true,Agility:true,Intelligence:true,Stamina:true,AggroperPvE:true,BaseMP:true
+    },
+    statCapColsToLoad: {
+      Cbase: true,
+      Cdefense: true,
+      Ccritical: true,
+      Cfinaldamage: true,
+      CcriticalDamage: true,
+    },
+    jobConversionColsToLoad: {
+      HP: true,StrengthAttack: true,AgilityAttack: true,IntelligenceAttack: true,PhysicalDefense: true,MagicDefense: true,Critical: true,CriticalResistance: true,Stiff: true,StiffResistance: true,Stun: true,StunResistance: true,MoveSpeed: true,MoveSpeedRevision: true,DownDelay: true,ElementAttack: true,ElementDefense: true,ElementDefenseMin: true,ElementDefenseMax: true,StrengthIntelligenceToCriticalDamage: true
+    }
   }
 }]);
 
@@ -172,7 +212,7 @@ m.factory('createItem',
 ['translations','dntData','hCodeValues','itemColumnsToLoad',
 function(translations,dntData,hCodeValues,itemColumnsToLoad) {
   
-  return function(itemTypeName, d, p, totalRatio) {
+  return function(itemSource, d, p, totalRatio) {
     
     // data and potential are used to initialise name and stats
     // this is only done when needed
@@ -184,7 +224,7 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad) {
       id: d.id,
       name : null,
       stats : null,
-      itemTypeName : itemTypeName,
+      itemSource : itemSource,
       levelLimit : d.LevelLimit,
       needJobClass : d.NeedJobClass,
       id : null,
@@ -319,94 +359,94 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
     }
   }
   
-  var itemTypes = {
+  var itemSources = {
     
-      title : { mainDnt : 'appellationtable.dnt', type : 'titles', minLevel: 0 },
+      title : { mainDnt : 'appellationtable.optimised.lzjson', type : 'titles', minLevel: 0 },
       // wspr: { mainDnt: 'itemtable_source.dnt', type: 'wellspring', minLevel: 24 },
       
       tech: { 
-        mainDnt: 'itemtable_skilllevelup.dnt', 
-        potentialDnt: 'potentialtable.dnt',
-        sparkDnt: 'potentialtable_potentialjewel.dnt',
+        mainDnt: 'itemtable_skilllevelup.optimised.lzjson', 
+        potentialDnt: 'potentialtable.optimised.lzjson',
+        sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
         type: 'techs', 
         minLevel: 24 },
       
       tman: { 
-        mainDnt: 'itemtable_talisman.dnt', 
+        mainDnt: 'itemtable_talisman.optimised.lzjson', 
         type: 'talisman', 
-        potentialDnt: 'potentialtable_talismanitem.dnt',
+        potentialDnt: 'potentialtable_talismanitem.optimised.lzjson',
         minLevel: 24 },
       
       gem: { 
-        mainDnt: 'itemtable_dragonjewel.dnt', 
-        potentialDnt: 'potentialtable_dragonjewel.dnt',
-        enchantDnt: 'enchanttable_dragonjewel.dnt', 
-        gemDnt: 'dragonjeweltable.dnt',
+        mainDnt: 'itemtable_dragonjewel.optimised.lzjson', 
+        potentialDnt: 'potentialtable_dragonjewel.optimised.lzjson',
+        enchantDnt: 'enchanttable_dragonjewel.optimised.lzjson', 
+        gemDnt: 'dragonjeweltable.optimised.lzjson',
         type: 'gems',
         minLevel: 24 },
       
       plate: { 
-        mainDnt : 'itemtable_glyph.dnt', 
-        potentialDnt: 'potentialtable_glyph.dnt',
+        mainDnt : 'itemtable_glyph.optimised.lzjson', 
+        potentialDnt: 'potentialtable_glyph.optimised.lzjson',
         type: 'plates',
         minLevel: 16 },
 
       items: {
-        mainDnt: 'itemtable.dnt', 
-        partsDnt: 'partstable.dnt', 
-        weaponDnt: 'weapontable.dnt', 
-        enchantDnt: 'enchanttable.dnt', 
-        potentialDnt: 'potentialtable.dnt',
-        setDnt: 'setitemtable.dnt',
+        mainDnt: 'itemtable.optimised.lzjson', 
+        partsDnt: 'partstable.optimised.lzjson', 
+        weaponDnt: 'weapontable.optimised.lzjson', 
+        enchantDnt: 'enchanttable.optimised.lzjson', 
+        potentialDnt: 'potentialtable.optimised.lzjson',
+        setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
         minLevel: 80 },
         
       eq: {
-        mainDnt: 'itemtable_equipment.dnt', 
-        partsDnt: 'partstable_equipment.dnt', 
-        weaponDnt: 'weapontable_equipment.dnt', 
-        enchantDnt: 'enchanttable.dnt', 
-        potentialDnt: 'potentialtable.dnt',
-        sparkDnt: 'potentialtable_potentialjewel.dnt',
-        setDnt: 'setitemtable.dnt',
+        mainDnt: 'itemtable_equipment.optimised.lzjson', 
+        partsDnt: 'partstable_equipment.optimised.lzjson', 
+        weaponDnt: 'weapontable_equipment.optimised.lzjson', 
+        enchantDnt: 'enchanttable.optimised.lzjson', 
+        potentialDnt: 'potentialtable.optimised.lzjson',
+        sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
+        setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
         minLevel: 24 },
       rbeq: { 
-        mainDnt: 'itemtable_reboot.dnt', 
-        partsDnt: 'partstable_reboot.dnt', 
-        weaponDnt: 'weapontable_reboot.dnt', 
-        enchantDnt: 'enchanttable_reboot.dnt', 
-        potentialDnt: 'potentialtable_reboot.dnt',
-        setDnt: 'setitemtable.dnt',
+        mainDnt: 'itemtable_reboot.optimised.lzjson', 
+        partsDnt: 'partstable_reboot.optimised.lzjson', 
+        weaponDnt: 'weapontable_reboot.optimised.lzjson', 
+        enchantDnt: 'enchanttable_reboot.optimised.lzjson', 
+        potentialDnt: 'potentialtable_reboot.optimised.lzjson',
+        setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
         minLevel: 24 },
       pvpeq: { 
-        mainDnt: 'itemtable_pvp.dnt',
-        partsDnt: 'partstable_pvp.dnt', 
-        weaponDnt: 'weapontable_pvp.dnt', 
-        enchantDnt: 'enchanttable.dnt', 
-        setDnt: 'setitemtable.dnt',
+        mainDnt: 'itemtable_pvp.optimised.lzjson',
+        partsDnt: 'partstable_pvp.optimised.lzjson', 
+        weaponDnt: 'weapontable_pvp.optimised.lzjson', 
+        enchantDnt: 'enchanttable.optimised.lzjson', 
+        setDnt: 'setitemtable.optimised.lzjson',
         type: 'equipment',
         minLevel: 24 },
       c2015: { 
-        mainDnt: 'itemtable_common2015.dnt', 
-        partsDnt: 'partstable_common2015.dnt', 
-        weaponDnt: 'weapontable_common2015.dnt', 
-        setDnt: 'setitemtable_cash.dnt',
+        mainDnt: 'itemtable_common2015.optimised.lzjson', 
+        partsDnt: 'partstable_common2015.optimised.lzjson', 
+        weaponDnt: 'weapontable_common2015.optimised.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
         minLevel: 0 },
       c2014: { 
-        mainDnt: 'itemtable_common2014.dnt', 
-        partsDnt: 'partstable_common2014.dnt', 
-        weaponDnt: 'weapontable_common2014.dnt', 
-        setDnt: 'setitemtable_cash.dnt',
+        mainDnt: 'itemtable_common2014.optimised.lzjson', 
+        partsDnt: 'partstable_common2014.optimised.lzjson', 
+        weaponDnt: 'weapontable_common2014.optimised.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
         minLevel: 0 },
       cash: { 
-        mainDnt: 'itemtable_cash.dnt', 
-        partsDnt: 'partstable_cash.dnt', 
-        weaponDnt: 'weapontable_cash.dnt', 
-        setDnt: 'setitemtable_cash.dnt',
+        mainDnt: 'itemtable_cash.optimised.lzjson', 
+        partsDnt: 'partstable_cash.optimised.lzjson', 
+        weaponDnt: 'weapontable_cash.optimised.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
         minLevel: 0 },
       // event: {
@@ -418,14 +458,14 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
     
     var allItems = [];
     
-    angular.forEach(itemTypes, function(value, key) {
+    angular.forEach(itemSources, function(value, key) {
       value.name = key;
       addMethods(value);
       allItems.push(value);
     });
 
-    itemTypes.all = allItems;
+    itemSources.all = allItems;
     
-  return itemTypes;
+  return itemSources;
   
 }]);

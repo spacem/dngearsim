@@ -1,0 +1,21 @@
+</div>
+<div class="col-xs-12">
+  <form class="form-inline">
+    <div class="form-group">
+      <input type="number" dnsim-string-to-number class="form-control" ng-model="editCtrl.newStatVal" step="any" />
+      <select class="form-control" ng-model="editCtrl.stat" class="form-control" ng-options="stat.name for stat in editCtrl.getStats() track by stat.id">
+      </select>
+      {{editCtrl.getNewStatDisplayValue()}} {{editCtrl.getNewStatName()}}<br />
+      <button class="btn btn-default" ng-click="editCtrl.addStat()"> add new stat</button>
+      <br /><br />
+    </div>
+  </form>
+</div>
+<div class="col-xs-12" ng-show="editCtrl.item.stats.length > 0">
+  <label>stats</label>
+</div>
+<div class="col-xs-12" ng-repeat="stat in editCtrl.item.stats track by $index">
+    {{editCtrl.getStatDisplayValue(stat)}}
+    {{editCtrl.getStatName(stat)}}
+    <button class="btn btn-link" ng-click="editCtrl.removeStat(stat)">remove</button>
+</div>

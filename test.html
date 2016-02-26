@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="A tool to view items from the game Dragon Nest.">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   
-  <title>DN Gear Sim</title>
+  <title>DN Gear Sim Tests</title>
   
   <script>
     'use strict';
   </script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine-html.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/boot.min.js"></script>
   
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
@@ -21,12 +24,10 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
   <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   
-  <script src="ui/widgets/dnsimItemLink.js"></script>
-  <script src="ui/widgets/dnsimLoading.js"></script>
-  <script src="ui/widgets/dnsimSelectAllOnClick.js"></script>
-  <script src="ui/widgets/dnsimStats.js"></script>
-  <script src="ui/widgets/dnsimStringToNumber.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/filters.js"></script>
   
+  <script src="ui/widgets/directives.js"></script>
   <script src="ui/filters/filters.js"></script>
   
   <script src="ui/about/aboutController.js"></script>
@@ -48,17 +49,15 @@
   <script src="ui/grouping/useOptionsController.js"></script>
   
   <script src="ui/item/equipmentController.js"></script>
-  <script src="ui/item/itemEditPotentialController.js"></script>
   <script src="ui/item/itemEditSkillController.js"></script>
   <script src="ui/item/itemEditTalismanController.js"></script>
   <script src="ui/item/itemEditCustomController.js"></script>
   <script src="ui/item/itemEditSparkController.js"></script>
   <script src="ui/item/itemEditEnchantmentController.js"></script>
   <script src="ui/item/groupAssignmentController.js"></script>
-
+  
   <script src="services/translationService.js"></script>
   <script src="services/dntServices.js"></script>
-  <script src="services/jobService.js"></script>
   <script src="services/valueServices.js"></script>
   <script src="services/itemService.js"></script>
   <script src="services/saveService.js"></script>
@@ -66,67 +65,24 @@
   <script src="services/exportLinkServices.js"></script>
   <script src="services/groupServices.js"></script>
   
-  <script src="ui/app.js"></script>
+  <script src="js/app.js"></script>
   
   <script src="../dntviewer/simplerreader.js"></script>
   <script src="../dntviewer/dntreader.js"></script>
   <script src="../dntviewer/dntranslations.js"></script>
+  
+  <script src="specs/valueSpecs.js"></script>
+  <script src="specs/groupAssignmentControllerSpec.js"></script>
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.css" />
   
   <link rel="stylesheet" href="dngearsim.css"></link>
   
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
-<body ng-app="dnGearSimApp">
-
-<div id="head" class="container-fluid chunkyness">
-  <div class="row">
-    <div class="xs-col-12">
-      <div class="container">
-        <div class="row">
-          <div class="xs-col-12">
-            <h3 class="header-title">
-              &nbsp;<a href="/dngearsim">dngearsim</a> <small class="hidden-xs">Dragon Nest Gear Simulator</small>
-              <dngearsim-region ng-controller="RegionCtrl">
-              </dngearsim-region>
-            </h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="head-break" class="container-fluid">
-  <div class="row">
-    &nbsp;
-  </div>
-</div>
-
-<div id="nav" ng-controller="NavCtrl" dngearsim-nav class="container">
-</div>
-<div id="footer-break" class="container-fluid">
-  <div class="row">
-    &nbsp;<br />&nbsp;
-  </div>
-</div>
-<footer>
-  <div class="hidden-xs container-fluid chunkyness navbar-fixed-bottom">
-  <div class="container text-right">
-    <a href="https://github.com/spacem/dngearsim">https://github.com/spacem/dngearsim</a>
-  </div>
-  </div>
-</footer>
+<body>
+  
 </body>
 </html>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-72901872-1', 'auto');
-  ga('send', 'pageview');
-
-</script>

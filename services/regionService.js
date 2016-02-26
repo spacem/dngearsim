@@ -1,13 +1,13 @@
 var m = angular.module('regionService', []);
 m.factory('region', ['translations','dntReset','dntData','$route',function(translations,dntReset,dntData,$route) {
-  
+  'use strict';
   var alternativeFiles = {region: 'ALT', name: 'Alternative user specified files', url : ''};
-  
   var hostedFiles =[
       {region: 'NA', name: 'English files from Nexon North America', url : 'https://dnna.firebaseapp.com'},
+      // {region: 'KDN', name: 'Korean files from HappyOZ', url : 'https://kdnfiles.firebaseapp.com'},
       {region: 'CDN', name: 'Chinese files from Shanda', url : 'https://dnfiles.firebaseapp.com/cdn'},
       {region: 'SEA', name: 'South East Asia - English files from Cherry Credits', url : 'https://dnfiles.firebaseapp.com/sea'},
-      alternativeFiles,
+      {region: 'EU', name: 'Europe - English files from Shanda', url : 'https://dnfiles.firebaseapp.com/eu'},
     ];
   
   var dntLocationRegion = localStorage.getItem('lastDNTRegion');
@@ -16,7 +16,6 @@ m.factory('region', ['translations','dntReset','dntData','$route',function(trans
     angular.forEach(hostedFiles, function(hostedFile, index) {
       if(hostedFile.region == dntLocationRegion) {
         dntLocation = hostedFile;
-        return;
       }
     });
   }
@@ -43,7 +42,19 @@ m.factory('region', ['translations','dntReset','dntData','$route',function(trans
     tlocation : tlocation,
     
     setCustomUrl: function(url) {
+      console.log('setting custom location');
       this.alternativeFiles.url = url;
+
+      var newFiles = [];
+      angular.forEach(hostedFiles, function(hostedFile, index) {
+        if(hostedFile.region != alternativeFiles.region) {
+          newFiles.push(hostedFile);
+        }
+      });
+  
+      newFiles.push(alternativeFiles);
+      hostedFiles = newFiles;
+      this.hostedFiles = newFiles;
     },
     
     setLocation: function(location) {
@@ -71,7 +82,7 @@ m.factory('region', ['translations','dntReset','dntData','$route',function(trans
         });
         
         this.tlocation = location;
-        localStorage.removeItem('UIStrings');
+        sessionStorage.removeItem('UIStrings');
         localStorage.removeItem('UIStrings_file');
         dntReset();
         translations.reset();

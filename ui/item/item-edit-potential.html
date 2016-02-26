@@ -1,0 +1,4 @@
+<div class="col-xs-12" ng-show="editCtrl.getPotentials() != null && editCtrl.getPotentials().length > 1">
+  <button class="btn btn-default" ng-disabled="editCtrl.isFirstPotential()" ng-dblclick="editCtrl.prevPotential()" ng-click="editCtrl.prevPotential()">prev</button>
+  <button class="btn btn-default" ng-disabled="editCtrl.isLastPotential()" ng-dblclick="editCtrl.nextPotential()" ng-click="editCtrl.nextPotential()">next</button>
+</div>

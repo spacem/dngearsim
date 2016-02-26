@@ -1,0 +1,38 @@
+<p>
+  Using this screen you can create your own "items" that can then be saved into a saved group.
+  I also include a couple of pre-defined custom items.
+</p>
+
+<div class="row" ng-hide="isLoading()">
+  <div class="col-xs-12">
+     <label>name:</label>
+     <input type="text" class="form-control" ng-model="customItems.nameSearch" dnsim-select-all-on-click />
+  </div>
+  <div class="col-xs-12">
+    <button class="btn btn-default" ng-click="customItems.createCustomItem()">create new item "{{customItems.getNewStatName()}}"</button>
+  </div>
+  <div class="col-xs-12">
+    
+  </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+<table class="table">
+<tr ng-repeat="result in customItems.getResults() track by $index">
+  <td>
+    <div>
+      <dnsim-item-link item="result" on-close="customItems.itemLinkClosed()" />
+    </div>
+    <div>
+      <span dnsim-stats stats="result.stats" separator="'|'" />
+    </div>
+  </td>
+</tr>
+</table>
+</div>
+<div class="row" ng-show="customItems.currentResults >= customItems.maxDisplay">
+  <div class="col-xs-1"></div>
+  <div class="col-xs-11">
+    <button class="btn btn-link" ng-click="customItems.maxDisplay = customItems.currentResults + 10;">Show More</button>
+  </div>
+</div>

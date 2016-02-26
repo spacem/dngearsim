@@ -1,0 +1,20 @@
+<div class="col-xs-5 col-sm-3 col-md-2">
+  <button class="btn btn-block btn-default" ng-disabled="editCtrl.item.enchantmentNum == null" ng-click="editCtrl.setTalisman(0)">+0%</button>
+  <button class="btn btn-block btn-default" ng-disabled="editCtrl.item.enchantmentNum == 25" ng-click="editCtrl.setTalisman(25)">+25%</button>
+  <button class="btn btn-block btn-default" ng-disabled="editCtrl.item.enchantmentNum == 75" ng-click="editCtrl.setTalisman(75)">+75%</button>
+  <button class="btn btn-block btn-default" ng-disabled="editCtrl.item.enchantmentNum == 100" ng-click="editCtrl.setTalisman(100)">+100%</button>
+</div>
+<div class="col-xs-7">
+  <span dnsim-stats stats="editCtrl.item.stats" separator="'|'">
+  </span>
+</div>
+<div class="col-xs-7" ng-show="editCtrl.item.enchantmentNum > 0">
+  <br />
+  <label>extra:</label><br />
+  <span dnsim-stats stats="editCtrl.item.enchantmentStats" separator="'|'">
+  </span>
+  <br /><br />
+  <label>total:</label><br />
+  <span dnsim-stats stats="editCtrl.item.fullStats"  separator="'|'">
+  </span>
+</div>

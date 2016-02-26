@@ -1,5 +1,6 @@
 angular.module('translationService', ['ngRoute']).
 factory('translations', ['$routeParams', '$rootScope', function($routeParams, $rootScope) {
+  'use strict';
 
   var dnTranslations = new DnTranslations();
   var tFile = 'uistring.lzjson';
@@ -42,7 +43,7 @@ factory('translations', ['$routeParams', '$rootScope', function($routeParams, $r
             fileName = this.location + '/' + tFile;
             
             if(fileName != localStorage.getItem("UIStrings_file")) {
-              localStorage.removeItem('UIStrings');
+              sessionStorage.removeItem('UIStrings');
               localStorage.removeItem('UIStrings_file');
             }
           }
@@ -72,7 +73,7 @@ factory('translations', ['$routeParams', '$rootScope', function($routeParams, $r
         var fileName = this.location + '/' + tFile;
         
         if(fileName != localStorage.getItem("UIStrings_file")) {
-          localStorage.removeItem('UIStrings');
+          sessionStorage.removeItem('UIStrings');
           localStorage.removeItem('UIStrings_file');
         }
 

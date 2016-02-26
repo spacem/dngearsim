@@ -1,0 +1,32 @@
+<div class="col-xs-3">
+  <input type="radio" ng-model="editCtrl.item.pve" value="pve" ng-change="editCtrl.initSkills()" id="pveRadio"><label for="pveRadio">&nbsp;pve</label>
+  <br />
+  <input type="radio" ng-model="editCtrl.item.pve" value="pvp" ng-change="editCtrl.initSkills()" id="pvpRadio"><label for="pvpRadio">&nbsp;pvp</label>
+</div>
+
+<div class="col-xs-9">
+  Skill Level: {{editCtrl.item.enchantmentNum}}
+  <br /><br />
+
+  <button class="btn btn-default" ng-dblclick="editCtrl.prevEnchantment()" ng-click="editCtrl.prevEnchantment()" ng-disabled="editCtrl.item.enchantmentNum <= 1">- reduce</button>
+  <button class="btn btn-default" ng-dblclick="editCtrl.nextEnchantment()" ng-click="editCtrl.nextEnchantment()" ng-disabled="editCtrl.isMaxSkillLevel()">+ increase</button>
+</div>
+
+<div class="col-xs-12" ng-show="editCtrl.item.stats.length > 0">
+  <label>stats</label>
+</div>
+
+<div class="col-xs-12">
+  <br />
+  <span dnsim-stats stats="editCtrl.item.stats" separator="'|'">
+</div>
+
+<!--
+<div class="col-xs-12">
+  <button class="btn btn-default" ng-click="editCtrl.showFullSkillDetail = true;">show full details</button>
+</div>
+-->
+
+<div class="col-xs-12" ng-show="editCtrl.showFullSkillDetail" ng-repeat="(key,value) in editCtrl.item.d track by $index">
+  {{key}} : {{value}}
+</div>

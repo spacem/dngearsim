@@ -1,0 +1,99 @@
+<div class="col-xs-12">
+  <br />
+</div>
+<div class="col-xs-12 item-type-grouping">
+  <br />
+  <button class="btn btn-default" ng-show="editCtrl.groupNames.length > 1" ng-dblclick="editCtrl.prevGroup()" ng-click="editCtrl.prevGroup()">&lt; prev build</button>
+  <button class="btn btn-default" ng-show="editCtrl.groupNames.length > 1" ng-dblclick="editCtrl.nextGroup()" ng-click="editCtrl.nextGroup()">next build &gt;</button>
+  
+  
+  <div class="row" ng-show="editCtrl.groupName">
+    <div class="col-xs-12 col-md-3">
+      <h4><a href="#/saved/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a><br /> <small> <span dnsim-stats stats="editCtrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" /> </small> </h4>
+    </div>
+    <div class="col-xs-3 col-md-1 text-right">
+      <button class="btn btn-default" ng-dblclick="editCtrl.addToGroup()" ng-click="editCtrl.addToGroup()">add</button>
+    </div>
+    <div class="col-xs-9 col-md-8">
+      
+      <span ng-show="editCtrl.getAddMDmgAffectAmount() != 0">
+        <b ng-show="editCtrl.getAddMDmgAffectAmount() > 0">increase</b>
+        <b ng-show="editCtrl.getAddMDmgAffectAmount() < 0">decreases</b>
+        avg mdmg by {{editCtrl.getAddMDmgAffectAmount()}}%
+        <br />
+      </span>
+      
+      <span ng-show="editCtrl.getAddPDmgAffectAmount() != 0">
+        <b ng-show="editCtrl.getAddPDmgAffectAmount() > 0">increase</b>
+        <b ng-show="editCtrl.getAddPDmgAffectAmount() < 0">decreases</b>
+        avg pdmg by {{editCtrl.getAddPDmgAffectAmount()}}%
+        <br />
+      </span>
+      
+      <span ng-show="editCtrl.getAddAvgDmgAffectAmount() != 0">
+        <b ng-show="editCtrl.getAddAvgDmgAffectAmount() > 0">increase</b>
+        <b ng-show="editCtrl.getAddAvgDmgAffectAmount() < 0">decreases</b>
+        avg pdmg by {{editCtrl.getAddAvgDmgAffectAmount()}}%
+        <br />
+      </span>
+      
+      <span ng-show="editCtrl.getAddHPAffectAmount() != 0">
+        <b ng-show="editCtrl.getAddHPAffectAmount() > 0">increase</b>
+        <b ng-show="editCtrl.getAddHPAffectAmount() < 0">decreases</b>
+        eqhp by {{editCtrl.getAddHPAffectAmount()}}%
+        <br />
+      </span>
+
+    </div>
+    <div class="col-xs-12 bg-danger" ng-show="editCtrl.getGroupCalcStats().length == 0">
+        this group needs to be set up before stats can be shown
+    </div>
+  </div>
+  <div class="row" ng-repeat="groupItem in editCtrl.getGroupItems() track by $index">
+    <div class="col-xs-12 item-type-grouping">
+    </div>
+    <div class="col-xs-12 col-md-3">
+      <br />
+      <dnsim-item-link item="groupItem"></dnsim-item-link>
+      <br />
+      <span dnsim-stats stats="groupItem.fullStats" alt-stats="groupItem.stats" separator="'|'" /> <br />
+    </div>
+    <div class="col-xs-3 col-md-1 text-right">
+      <br />
+      <button class="btn btn-default" ng-dblclick="editCtrl.replace(groupItem)" ng-click="editCtrl.replace(groupItem)">replace</button>
+      <br /><br />
+    </div>
+    <div class="col-xs-9 col-md-8">
+      
+      <br />
+      <span ng-show="editCtrl.getReplaceMDmgAffectAmount($index, groupItem) != 0">
+        <b ng-show="editCtrl.getReplaceMDmgAffectAmount($index, groupItem) > 0">increase</b>
+        <b ng-show="editCtrl.getReplaceMDmgAffectAmount($index, groupItem) < 0">decreases</b>
+        avg mdmg by {{editCtrl.getReplaceMDmgAffectAmount($index, groupItem)}}%
+        <br />
+      </span>
+      
+      <span ng-show="editCtrl.getReplacePDmgAffectAmount($index, groupItem) != 0">
+        <b ng-show="editCtrl.getReplacePDmgAffectAmount($index, groupItem) > 0">increase</b>
+        <b ng-show="editCtrl.getReplacePDmgAffectAmount($index, groupItem) < 0">decreases</b>
+        avg pdmg by {{editCtrl.getReplacePDmgAffectAmount($index, groupItem)}}%
+        <br />
+      </span>
+      
+      <span ng-show="editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem) != 0">
+        <b ng-show="editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem) > 0">increase</b>
+        <b ng-show="editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem) < 0">decreases</b>
+        avg pdmg by {{editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem, $index)}}%
+        <br />
+      </span>
+      
+      <span ng-show="editCtrl.getReplaceHPAffectAmount($index, groupItem) != 0">
+        <b ng-show="editCtrl.getReplaceHPAffectAmount($index, groupItem) > 0">increase</b>
+        <b ng-show="editCtrl.getReplaceHPAffectAmount($index, groupItem) < 0">decreases</b>
+        eqhp by {{editCtrl.getReplaceHPAffectAmount($index, groupItem)}}%
+        <br />
+      </span>
+      
+    </div>
+  </div>
+</div>

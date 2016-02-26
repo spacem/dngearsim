@@ -24,6 +24,7 @@ body {
 .chunkyness {
   background-color: #070506;
   opacity: 0.8;
+  filter: alpha(opacity=95);
   filter: alpha(opacity=80);
   border-color: #8d8578;
   border-style: solid;
@@ -38,9 +39,7 @@ body {
   border-width: 5px;
   border-radius: 10px;
 }
-.normal-grade {
-  color: #8d8578;
-}
+.normal-grade,
 .-grade {
   color: #8d8578;
 }
@@ -129,6 +128,7 @@ word-break: normal;
 .toggle-box {
   display: inline;
   float: right;
+  /* background-color: #C91E5A; */
   background-color: #070506;
   border-color: #8d8578;
   border-style: solid;
@@ -201,12 +201,7 @@ word-break: normal;
   -moz-border-left-colors: none;
   border-image: none;
 }
-.group-header button.btn-link:hover {
-  text-decoration: none;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #DDD #DDD #DDD #DDD;
-}
+.group-header button.btn-link:hover,
 .group-header a.btn-link:hover {
   text-decoration: none;
   border-width: 1px;

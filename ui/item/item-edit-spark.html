@@ -1,0 +1,16 @@
+<div class="col-xs-12" ng-show="editCtrl.item.sparkTypeId > 0 && editCtrl.getSparks() != null">
+  <br />
+  <label>hidden ability:</label>
+</div>
+<div class="col-xs-12" ng-show="editCtrl.getSparks() != null && editCtrl.getSparks().length > 0 && !editCtrl.item.sparkId">
+  <button class="btn btn-default" ng-click="editCtrl.nextSpark()" ng-disabled="editCtrl.isMaxEnchantLevel()">add hidden ability</button>
+</div>
+<div class="col-xs-12" ng-show="editCtrl.item.sparkStats != null">
+  <span dnsim-stats stats="editCtrl.item.sparkStats" separator="'|'">
+  </span>
+</div>
+<div class="col-xs-12" ng-show="editCtrl.getSparks() != null && editCtrl.getSparks().length > 0 && editCtrl.item.sparkId != null">
+  <button class="btn btn-default" ng-click="editCtrl.removeSpark()">remove</button>
+  <button class="btn btn-default" ng-disabled="editCtrl.isFirstSpark()" ng-dblclick="editCtrl.prevSpark()" ng-click="editCtrl.prevSpark()">prev</button>
+  <button class="btn btn-default" ng-disabled="editCtrl.isMoreSparks()" ng-dblclick="editCtrl.nextSpark()" ng-click="editCtrl.nextSpark()">next</button>
+</div>
