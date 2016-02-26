@@ -449,11 +449,11 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
         setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
         minLevel: 0 },
-      // event: {
-        // mainDnt: 'itemtable_event.dnt', 
-        // setDnt: 'setitemtable_cash.dnt',
-        // type: 'cash',
-        // minLevel: 0 },
+      event: {
+        mainDnt: 'itemtable_event.lzjson', 
+        setDnt: 'setitemtable_cash.lzjson',
+        type: 'cash',
+        minLevel: 0 },
     };
     
     var allItems = [];
