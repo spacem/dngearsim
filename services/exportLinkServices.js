@@ -52,7 +52,7 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
         }
         
         if(item.name) {
-          itemString += ':.' + item.name.replace(' ', '-');
+          itemString += ':.' + item.name.replace(/ /g, '-');
         }
 
         return itemString;
