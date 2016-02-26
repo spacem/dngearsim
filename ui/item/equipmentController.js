@@ -70,7 +70,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   function setInit(item, itemType) {
     
     var usePartDnt = '';
-    if(item.typeName != 'weapons') {
+    if(item.typeName != 'weapons' && item.typeId != 0) {
       usePartDnt = 'partsDnt';
     }
     else {
