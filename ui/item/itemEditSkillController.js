@@ -1,4 +1,4 @@
-angular.module('itemEditSkillController', ['ui.bootstrap','translationService', 'dntServices'])
+angular.module('itemEditSkillController', ['translationService', 'dntServices'])
 .controller('itemEditSkillCtrl',
 
 ['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',

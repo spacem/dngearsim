@@ -1,4 +1,4 @@
-angular.module('itemEditCustomController', ['ui.bootstrap','translationService', 'dntServices'])
+angular.module('itemEditCustomController', ['translationService', 'dntServices'])
 .controller('itemEditCustomCtrl',
 
 ['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',

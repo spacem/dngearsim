@@ -11,7 +11,7 @@
   <div id="saved-group" class="row" ng-show="anyItems" ng-repeat="(groupName, items) in savedItems track by $index" ng-hide="isLoading">
     <div class="col-xs-12 group-header" ng-show="currentGroup != groupName">
       <button class="btn btn-link btn-block group-header-btn" ng-click="$parent.setCurrentGroup(groupName)">
-        <h3 class="text-left">{{groupName}}
+        <h3 id="/builds/{{groupName}}" class="text-left">{{groupName}}
         <small>
           <span ng-show="items.playerLevel > 0">lv{{items.playerLevel}}</span>
           <span ng-show="items.job && items.job.id > 0">{{items.job.name}}</span></br>
@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-xs-12 col-md-6 col-lg-7" ng-click="$parent.setCurrentGroup('')">
           <button class="btn btn-link btn-block group-header-btn">
-            <h3 class="text-left">
+            <h3 id="/builds/{{groupName}}" class="text-left">
               {{groupName}}
             <small>
               <span ng-show="items.playerLevel > 0">lv{{items.playerLevel}}&nbsp;</span>
@@ -39,9 +39,9 @@
           </span><br class="xs-hidden" />
   
           <button class="btn btn-default" ng-click="$parent.copyGroup(groupName)">copy</button>
-          <button class="btn btn-default" ng-click="$parent.editGroup(items, groupName)">edit</button>
+          <button class="btn btn-default" ng-click="$parent.editGroup(groupName)">edit</button>
           <button class="btn btn-default" ng-click="$parent.reloadGroup(groupName)">reload</button> 
-          <!-- <button class="btn btn-default" ng-click="$parent.deleteGroup(groupName)">delete</button> -->
+          <button class="btn btn-default" ng-click="$parent.deleteGroup(groupName)">delete</button>
           <span>&nbsp;</span>
           <button style="margin-top:12px" class="btn btn-link" ng-click="$parent.createShortUrl(groupName)" ng-hide="items.shortUrl != null">create permalink</button>
           <a style="margin-top:12px" class="btn btn-link" href="{{items.shortUrl}}" ng-show="items.shortUrl != null">{{items.shortUrl}}</a>

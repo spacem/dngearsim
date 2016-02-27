@@ -1,8 +1,8 @@
-angular.module('itemEditSparkController', ['ui.bootstrap','translationService', 'dntServices'])
+angular.module('itemEditSparkController', ['translationService', 'dntServices'])
 .controller('itemEditSparkCtrl',
 
-['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',
-function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$routeParams,translations,$location,saveHelper) {
+['dntData','hCodeValues','items',
+function(dntData,hCodeValues,items) {
   'use strict';
   
   if('itemSource' in this.item) {

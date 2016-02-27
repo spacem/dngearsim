@@ -9,8 +9,8 @@ var dnGearSimApp = angular.module('dnGearSimApp', [
   
   'savedItemsController',
   'viewGroupController',
-  'useOptionsController',
-  'editGroupController',
+  'editBuildController',
+  'deleteBuildController',
   
   'equipmentController',
   'itemEditPotentialController',
@@ -78,16 +78,31 @@ dnGearSimApp.config(['$routeProvider',
         redirectTo: '/builds/:groupName'
       }).
       when('/builds', {
-        templateUrl: 'ui/grouping/saved-items.html?bust=' + Math.random().toString(36).slice(2),
+        templateUrl: 'ui/builds/saved-items.html?bust=' + Math.random().toString(36).slice(2),
         controller: 'SavedCtrl'
       }).
       when('/builds/:groupName', {
-        templateUrl: 'ui/grouping/saved-items.html?bust=' + Math.random().toString(36).slice(2),
+        templateUrl: 'ui/builds/saved-items.html?bust=' + Math.random().toString(36).slice(2),
         controller: 'SavedCtrl'
       }).
       when('/view-group', {
-        templateUrl: 'ui/grouping/view-group.html?bust=' + Math.random().toString(36).slice(2),
+        templateUrl: 'ui/builds/view-group.html?bust=' + Math.random().toString(36).slice(2),
         controller: 'ViewGroupCtrl'
+      }).
+      when('/edit-build/:groupName', {
+        templateUrl: 'ui/builds/edit-build.html?bust=' + Math.random().toString(36).slice(2),
+        controller: 'EditBuildCtrl as editGroup',
+        reloadOnSearch: false,
+      }).
+      when('/new-build', {
+        templateUrl: 'ui/builds/edit-build.html?bust=' + Math.random().toString(36).slice(2),
+        controller: 'EditBuildCtrl as editGroup',
+        reloadOnSearch: false,
+      }).
+      when('/delete-build/:name', {
+        templateUrl: 'ui/builds/delete-build.html?bust=' + Math.random().toString(36).slice(2),
+        controller: 'DeleteBuildCtrl as deleteBuild',
+        reloadOnSearch: false,
       }).
       
       when('/item-search', {
@@ -108,7 +123,8 @@ dnGearSimApp.config(['$routeProvider',
       
       when('/item/:itemString', {
         templateUrl: 'ui/item/equipment.html?bust=' + Math.random().toString(36).slice(2),
-        controller: 'EquipmentCtrl'
+        controller: 'EquipmentCtrl',
+        reloadOnSearch: false,
       }).
       otherwise({
         redirectTo: '/builds'

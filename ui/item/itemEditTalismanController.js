@@ -1,4 +1,4 @@
-angular.module('itemEditTalismanController', ['ui.bootstrap','translationService', 'dntServices'])
+angular.module('itemEditTalismanController', ['translationService', 'dntServices'])
 .controller('itemEditTalismanCtrl',
 
 ['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',

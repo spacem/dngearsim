@@ -1,7 +1,10 @@
 angular.module('savedItemsController', ['saveService','valueServices','itemService','exportLinkServices','groupServices'])
 .controller('SavedCtrl', 
-  ['$scope','$window','$routeParams','$location','$uibModal','hCodeValues','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','statHelper','groupHelper',
-  function($scope,$window,$routeParams,$location,$uibModal,hCodeValues,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,statHelper,groupHelper) {
+  [ '$scope','$window','$routeParams','$location','$anchorScroll',
+    'hCodeValues','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','statHelper','groupHelper',
+  function(
+    $scope,$window,$routeParams,$location,$anchorScroll,
+    hCodeValues,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,statHelper,groupHelper) {
     'use strict';
     
     document.body.className = 'saved-back';
@@ -21,25 +24,32 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
       $scope.currentGroup = $routeParams.groupName;
     }
     
-    if($scope.currentGroup) {
-      $window.document.title = 'DN Gear Sim | ' + $scope.currentGroup;
-    }
-    else {
-      $window.document.title = 'DN Gear Sim | BUILDS';
-    }
-    
     $scope.setCurrentGroup = function(groupName) {
       localStorage.setItem('currentGroup', groupName);
-      $scope.currentGroup = '';
-      var delay = 200;
-      if(groupName == '') {
-        delay = 0;
+      var lastGroup = $scope.currentGroup;
+      if(groupName == '' || !groupName) {
+        $scope.currentGroup = '';
+        $location.url('/builds');
+        if(lastGroup) {
+          console.log('scroll to last ' + lastGroup);
+          $anchorScroll('/builds/' + lastGroup);
+        }
+        else {
+          console.log('scroll to builds');
+          $anchorScroll('/builds');
+        }
+        $window.document.title = 'DN Gear Sim | BUILDS';
       }
-      if(groupName in $scope.savedItems || groupName == '') {
-        $timeout(function() {
-          $scope.currentGroup = groupName;
-          $location.url('/saved/' + groupName);
-        }, 200);
+      else if(groupName in $scope.savedItems) {
+        $scope.currentGroup = groupName;
+        $location.url('/builds/' + groupName);
+        if(groupName) {
+          $timeout(function() {
+            console.log('scroll to ' + groupName);
+            $anchorScroll('/builds/' + groupName);
+          });
+          $window.document.title = 'DN Gear Sim | ' + $scope.currentGroup;
+        }
       }
     }
     
@@ -86,10 +96,20 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
       return summary;
     }
     
+    $scope.deleteGroup = function() {
+      $location.path('/delete-build/' + this.currentGroup);
+    }
+    
     $scope.init = function() {
 
       $scope.savedItems = saveHelper.getSavedItems();
-      $scope.savedItemsByType = saveHelper.getSavedItemsByType($scope.savedItems, $scope.groupName);
+      $scope.savedItemsByType = saveHelper.getSavedItemsByType($scope.savedItems);
+      if($scope.currentGroup) {
+        $scope.setCurrentGroup($scope.currentGroup);
+      }
+      else {
+        $scope.setCurrentGroup('');
+      }
       
       if(!$scope.isLoading) {
         if($scope.currentGroup in $scope.savedItemsByType) {
@@ -177,88 +197,12 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
     function progress() {
     }
     
-    $scope.addItem = function(groupName, item) {
-      if($scope.modalOpened) {
-        return;
-      }
-
-      $scope.modalOpened = true;
-      // console.log('opening item for save ' + item.name);
-      var modalInstance = $uibModal.open({
-        animation: false,
-        backdrop : false,
-        keyboard : true,
-        templateUrl: 'ui/grouping/use-options.html?bust=' + Math.random().toString(36).slice(2),
-        controller: 'UseOptionsCtrl',
-        size: 'lg',
-        resolve: {
-          item: function () {
-            return item;
-          },
-          group: function () {
-            return groupName;
-          }
-        }
-      });
-
-      modalInstance.result.then(
-        function (group, newGroupName, groupSummary) {
-          // console.log('new group name: ' + newGroupName)
-            $timeout(function() {
-              $scope.init();
-            });
-            $scope.modalOpened = false;
-        },
-        function () {
-          $scope.modalOpened = false;
-        }
-      );
+    $scope.editGroup = function(groupName) {
+      $location.path('/edit-build/' + groupName)
     }
     
-    $scope.editGroup = function(group, groupName) {
-      if($scope.modalOpened) {
-        return;
-      }
-
-      $scope.modalOpened = true;
-      var modalInstance = $uibModal.open({
-        animation: false,
-        backdrop : false,
-        keyboard : true,
-        templateUrl: 'ui/grouping/edit-group.html?bust=' + Math.random().toString(36).slice(2),
-        controller: 'EditGroupCtrl as editGroup',
-        size: 'lg',
-        resolve: {
-          group: function () {
-            return group;
-          },
-          groupName: function () {
-            return groupName;
-          },
-          groupSummary: function () {
-            return $scope.getGroupSummary(groupName);
-          }
-        }
-      });
-
-      modalInstance.result.then(function (group, newGroupName, groupSummary) {
-        $scope.init();
-        $timeout(function() {
-          
-          var lastGroupName = '';
-          angular.forEach($scope.savedItems, function(value, key) {
-            lastGroupName = key;
-          });
-          $scope.setCurrentGroup(lastGroupName);
-        });
-        $scope.modalOpened = false;
-      }, function () {
-        // console.log('cancel?')
-        $timeout(function() {
-          $scope.init();
-        });
-          $scope.modalOpened = false;
-      });
+    $scope.createGroup = function() {
+      $location.path('/new-build')
     }
     
     $scope.removeItem = function(group, item) {
@@ -281,11 +225,6 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
       $timeout(function() {
           $scope.init();
         });
-    }
-    
-    $scope.createGroup = function() {
-      var groupName = saveHelper.importGroup('Character Name', []);
-      $scope.editGroup({}, groupName);
     }
     
     $scope.init();

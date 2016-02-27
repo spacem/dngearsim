@@ -1,14 +1,25 @@
-angular.module('editGroupController', ['ui.bootstrap','translationService', 'dntServices', 'saveService','valueServices'])
-.controller('EditGroupCtrl',
+angular.module('editBuildController', ['translationService', 'dntServices', 'saveService','valueServices'])
+.controller('EditBuildCtrl',
 
-['group', 'groupName', 'groupSummary','$uibModalInstance','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad',
-function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad) {
+['$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad',
+function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad) {
   'use strict';
   
-  this.group = group;
-  this.groupName = groupName;
-  this.groupSummary = groupSummary;
+  var vm = this;
   this.savedItems = saveHelper.getSavedItems();
+  this.group = {};
+  this.newGroup = true;
+  if('groupName' in $routeParams) {
+      this.groupName = $routeParams.groupName;
+      if(this.groupName in this.savedItems) {
+        this.group = this.savedItems[this.groupName];
+        this.newGroup = false;
+      }
+  }
+  else {
+    this.groupName = '';
+  }
+  this.oldGroupName = this.groupName;
   this.heroStats = [];
   this.elements = hCodeValues.elements;
   this.damageTypes = hCodeValues.damageTypes;
@@ -70,12 +81,12 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
     }
   }
   
-  var jobConversions = 'rebootplayerweighttable.dnt';
-  var statCaps = 'playercommonleveltable.dnt';
-  var jobBaseStats = 'playerleveltable.dnt';
+  var jobConversions = 'rebootplayerweighttable.lzjson';
+  var statCaps = 'playercommonleveltable.lzjson';
+  var jobBaseStats = 'playerleveltable.lzjson';
 
-  var heroLevels = 'heroleveltable.dnt';
-  var heroLevelPotentials = 'potentialtable_herolevel.dnt';
+  var heroLevels = 'heroleveltable.lzjson';
+  var heroLevelPotentials = 'potentialtable_herolevel.lzjson';
   
   function reportProgress(msg) {
     // console.log('progress: ' + msg);
@@ -85,7 +96,7 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
     if(!jobs.isLoaded()) {
       // console.log('jobs not loaded');
       if(!jobs.hasStartedLoading()) {
-        init(this);
+        this.init(this);
       }
       return true;      
     }
@@ -94,7 +105,6 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
     return !retVal;
   }
   
-  var vm = this;
   jobs.init(reportProgress, function() { vm.init(vm) });
   dntData.init(jobConversions, itemColumnsToLoad.jobConversionColsToLoad, reportProgress, function() { vm.init(vm) });
   dntData.init(statCaps, itemColumnsToLoad.statCapColsToLoad, reportProgress, function() { vm.init(vm) });
@@ -129,13 +139,19 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
     }
     return 0;
   }
-
-  this.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
   
-  this.groupNameExists = function() {
-    return groupName != this.groupName && this.groupName in this.savedItems;
+  this.invalidGroupName = function() {
+    if(!this.groupName) {
+      return true;
+    }
+    
+    if(this.groupName in this.savedItems) {
+      if(this.newGroup || this.groupName != this.oldGroupName) {
+        return true;
+      }
+    }
+    
+    return false;
   }
   
   this.ok = function() {
@@ -175,8 +191,13 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
       heroStats = this.getHeroStats();
     }
     
+    if(this.newGroup) {
+      this.oldGroupName = this.groupName;
+      saveHelper.importGroup(this.groupName, []);
+    }
+    
     saveHelper.renameSavedGroup(
-      groupName, 
+      this.oldGroupName, 
       this.groupName,
       this.enemyLevel,
       this.playerLevel,
@@ -186,7 +207,7 @@ function(group, groupName, groupSummary,$uibModalInstance,$timeout,saveHelper,dn
       this.element,
       enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats);
     
-    $uibModalInstance.close('ok');
+    $location.path('/builds/' + this.groupName)
   }
   
   this.setHeroStats = function() {

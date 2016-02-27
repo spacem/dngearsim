@@ -1,8 +1,8 @@
-angular.module('customItemsController', ['ui.bootstrap','translationService', 'dntServices', 'saveService'])
+angular.module('customItemsController', ['translationService', 'dntServices', 'saveService'])
 .controller('CustomItemCtrl',
 
-['$window','$uibModal','$timeout','saveHelper','$location',
-function($window,$uibModal,$timeout,saveHelper,$location) {
+['$window','saveHelper','$location',
+function($window,saveHelper,$location) {
   'use strict';
   
   document.body.className = 'search-back';
@@ -74,31 +74,6 @@ function($window,$uibModal,$timeout,saveHelper,$location) {
     this.currentResults = Math.min(curDisplay, this.maxDisplay);
     return newResults;
   }
-  
-  this.saveItem = function(item) {
-    // console.log('opening item for save ' + item.name);
-    var modalInstance = $uibModal.open({
-      animation: false,
-      backdrop : false,
-      keyboard : true,
-      templateUrl: 'ui/grouping/use-options.html?bust=' + Math.random().toString(36).slice(2),
-      controller: 'UseOptionsCtrl',
-      size: 'lg',
-      resolve: {
-        item: function () {
-          return item;
-        },
-        group: function () {
-
-          var group = localStorage.getItem('lastSavedGroup');
-          if(group != null) {
-            return group;
-          }
-          return 'unnamed group';
-        }
-      }
-    });
-  };
   
   this.getNewStatName = function() {
     if(this.nameSearch == '' || this.nameSearch == null) {

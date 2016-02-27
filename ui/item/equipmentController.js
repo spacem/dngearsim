@@ -1,4 +1,4 @@
-angular.module('equipmentController', ['ui.bootstrap','translationService', 'dntServices'])
+angular.module('equipmentController', ['translationService', 'dntServices'])
 .controller('EquipmentCtrl',
 
 ['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location',

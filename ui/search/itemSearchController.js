@@ -1,6 +1,6 @@
 angular.module('itemSearchController', ['translationService', 'dntServices', 'saveService'])
 .controller('ItemSearchCtrl',
-['$scope','$window','$routeParams','$timeout','$uibModal',
+['$scope','$window','$routeParams','$timeout',
 'translations',
 'items',
 'jobs',
@@ -9,7 +9,7 @@ angular.module('itemSearchController', ['translationService', 'dntServices', 'sa
 'initItem',
 'region',
 function(
-  $scope,$window,$routeParams,$timeout,$uibModal,
+  $scope,$window,$routeParams,$timeout,
   translations,
   items,
   jobs,
@@ -127,31 +127,6 @@ function(
       }
     }
     localStorage.setItem('nameSearch', $scope.nameSearch);
-  };
-  
-  $scope.saveItem = function(item) {
-    // console.log('opening item for save ' + item.name);
-    var modalInstance = $uibModal.open({
-      animation: false,
-      backdrop : false,
-      keyboard : true,
-      templateUrl: 'ui/grouping/use-options.html?bust=' + Math.random().toString(36).slice(2),
-      controller: 'UseOptionsCtrl',
-      size: 'lg',
-      resolve: {
-        item: function () {
-          return item;
-        },
-        group: function () {
-
-          var group = localStorage.getItem('lastSavedGroup');
-          if(group != null) {
-            return group;
-          }
-          return 'unnamed group';
-        }
-      }
-    });
   };
   
   function init() {

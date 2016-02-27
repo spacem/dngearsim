@@ -1,4 +1,4 @@
-angular.module('itemEditEnchantmentController', ['ui.bootstrap','translationService', 'dntServices'])
+angular.module('itemEditEnchantmentController', ['translationService', 'dntServices'])
 .controller('itemEditEnchantmentCtrl',
 
 ['$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',

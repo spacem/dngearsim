@@ -1,0 +1,19 @@
+angular.module('deleteBuildController', ['translationService', 'dntServices', 'saveService','valueServices'])
+.controller('DeleteBuildCtrl',
+
+['$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad',
+function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad) {
+  'use strict';
+  
+  var vm = this;
+  this.newGroup = true;
+  if('name' in $routeParams) {
+      this.name = $routeParams.name;
+  }
+  
+  this.delete = function() {
+    saveHelper.updatedSavedItems(this.name, []);
+    $location.path('/builds/');
+  }
+    
+}]); 

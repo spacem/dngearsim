@@ -74,7 +74,7 @@ m.factory('saveHelper', [function() {
       localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
     },
     
-    getSavedItemsByType: function(savedItems, groupNameToUse) {
+    getSavedItemsByType: function(savedItems) {
       var savedItemsByType = {};
       if(savedItems != null) {
         angular.forEach(savedItems, function(group, groupName) {

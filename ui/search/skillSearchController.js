@@ -1,8 +1,8 @@
-angular.module('skillSearchController', ['ui.bootstrap','translationService', 'dntServices', 'saveService'])
+angular.module('skillSearchController', ['translationService', 'dntServices', 'saveService'])
 .controller('SkillSearchCtrl',
 
-['$uibModal','$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues',
-function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues) {
+['$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues',
+function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues) {
   'use strict';
   
   $window.document.title = 'DN Gear Sim | SKILLS';
@@ -106,31 +106,6 @@ function($uibModal,$window,$timeout,saveHelper, region, jobs, translations,dntDa
       });
     }
   }
-  
-  this.saveItem = function(item) {
-    // console.log('opening item for save ' + item.name);
-    var modalInstance = $uibModal.open({
-      animation: false,
-      backdrop : false,
-      keyboard : true,
-      templateUrl: 'ui/grouping/use-options.html?bust=' + Math.random().toString(36).slice(2),
-      controller: 'UseOptionsCtrl',
-      size: 'lg',
-      resolve: {
-        item: function () {
-          return item;
-        },
-        group: function () {
-
-          var group = localStorage.getItem('lastSavedGroup');
-          if(group != null) {
-            return group;
-          }
-          return 'unnamed group';
-        }
-      }
-    });
-  };
   
   function setupSkills(baseJobNames, job) {
     
