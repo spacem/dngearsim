@@ -369,7 +369,11 @@ function(translations,dntData,hCodeValues,itemColumnsToLoad,createItem) {
   
   var itemSources = {
     
-      title : { mainDnt : 'appellationtable.optimised.lzjson', type : 'titles', minLevel: 0 },
+      title : {
+        mainDnt: 'appellationtable.optimised.lzjson', 
+        type: 'titles', 
+        minLevel: 0, 
+        minRank: 0 },
       // wspr: { mainDnt: 'itemtable_source.dnt', type: 'wellspring', minLevel: 24 },
       
       tech: { 
