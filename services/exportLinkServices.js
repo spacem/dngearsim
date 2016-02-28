@@ -40,9 +40,9 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
           if(item.pid > 0) {
             itemString += ':P' + item.pid.toString(36);
           }
-          if(item.setId > 0) {
-            itemString += ':S' + item.setId.toString(36);
-          }
+          // if(item.setId > 0) {
+            // itemString += ':S' + item.setId.toString(36);
+          // }
           if(item.sparkId > 0) {
             itemString += ':H' + item.sparkId.toString(36);
           }
@@ -159,10 +159,10 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
         item.typeName = 'custom';
         return item;
       }
-      else if(item.itemSource == 'skills') {
+      else if(item.itemSource == 'skills' || item.typeName == 'skills') {
         
-        var skillDnt = 'skilltable_character' + item.baseJobName + '.dnt';
-        var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.dnt';
+        var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
+        var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.lzjson';
         
         var skillData = dntData.find(skillDnt, 'id', item.id)[0];
         var skillLevelDatas = dntData.getData(skillLevelDnt);
@@ -214,12 +214,28 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
           }
           
           var newItem = createItem(item.itemSource, d, p, totalRatio);
-          initItem(newItem);
-          
-          var sets = dntData.find(itemType.setDnt, 'id', item.setId);
-          if(sets.length > 0) {
-            newItem.setId = item.setId;
-            newItem.setStats = hCodeValues.getStats(sets[0]);
+          initItem(newItem); 
+
+          var usePartDnt = null;
+          if(newItem.typeName != 'weapons' && newItem.typeId != 0) {
+            usePartDnt = 'partsDnt';
+          }
+          else {
+            usePartDnt = 'weaponDnt';
+          }
+      
+          if(usePartDnt) {
+            if(dntData.isLoaded(itemType[usePartDnt]) && dntData.isLoaded(itemType.setDnt)) {
+              newItem.setStats = [];
+              var parts = dntData.find(itemType[usePartDnt], 'id', item.id);
+              if(parts.length > 0) {
+                newItem.setId = parts[0].SetItemID;
+                var sets = dntData.find(itemType.setDnt, 'id', parts[0].SetItemID);
+                if(sets.length > 0) {
+                  newItem.setStats = hCodeValues.getStats(sets[0]);
+                }
+              }
+            }
           }
 
           newItem.fullStats = newItem.stats;
@@ -313,9 +329,9 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
             dntFiles[itemType.sparkDnt] = itemColumnsToLoad.sparkDnt;
           }
         }
-        else if(item.itemSource == 'skills') {
-            var skillDnt = 'skilltable_character' + item.baseJobName + '.dnt';
-            var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.dnt';
+        else if(item.itemSource == 'skills' || item.typeName == 'skills') {
+            var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
+            var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.lzjson';
             dntFiles[skillLevelDnt] = null;
             dntFiles[skillDnt] = null;
         }

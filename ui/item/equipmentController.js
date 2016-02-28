@@ -75,9 +75,6 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
             $scope.item.pve = 'pve';
           }
         }
-        else if($scope.item.typeName) {
-          setInit($scope.item, $scope.itemType);
-        }
     
         if($scope.item.needJobClass > 0) {
           getJobName();
@@ -86,33 +83,6 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     }
   }
 
-  function setInit(item, itemType) {
-    
-    var usePartDnt = '';
-    if(item.typeName != 'weapons' && item.typeId != 0) {
-      usePartDnt = 'partsDnt';
-    }
-    else {
-      usePartDnt = 'weaponDnt';
-    }
-
-    if(dntData.isLoaded(itemType[usePartDnt]) && dntData.isLoaded(itemType.setDnt)) {
-
-      if(item.setStats == null || item.setStats.length == 0) {
-        
-        item.setStats = [];
-        
-        var parts = dntData.find(itemType[usePartDnt], 'id', item.id);
-        if(parts.length > 0) {
-          item.setId = parts[0].SetItemID;
-          var sets = dntData.find(itemType.setDnt, 'id', parts[0].SetItemID);
-          if(sets.length > 0) {
-            item.setStats = hCodeValues.getStats(sets[0]);
-          }
-        }
-      }
-    }
-  }
   
   function setFullStats() {
     $scope.item.fullStats = $scope.item.stats;

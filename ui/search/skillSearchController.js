@@ -66,7 +66,7 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
   function getDntName(baseClassName) {
     // console.log('got base class :' + baseClassName);
     if(baseClassName != null) {
-      return 'skilltable_character' + baseClassName.toLowerCase() + '.dnt';
+      return 'skilltable_character' + baseClassName.toLowerCase() + '.lzjson';
     }
     else {
       return null;

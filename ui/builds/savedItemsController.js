@@ -31,11 +31,11 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
         $scope.currentGroup = '';
         $location.url('/builds');
         if(lastGroup) {
-          console.log('scroll to last ' + lastGroup);
+          // console.log('scroll to last ' + lastGroup);
           $anchorScroll('/builds/' + lastGroup);
         }
         else {
-          console.log('scroll to builds');
+          // console.log('scroll to builds');
           $anchorScroll('/builds');
         }
         $window.document.title = 'DN Gear Sim | BUILDS';
@@ -45,7 +45,7 @@ angular.module('savedItemsController', ['saveService','valueServices','itemServi
         $location.url('/builds/' + groupName);
         if(groupName) {
           $timeout(function() {
-            console.log('scroll to ' + groupName);
+            // console.log('scroll to ' + groupName);
             $anchorScroll('/builds/' + groupName);
           });
           $window.document.title = 'DN Gear Sim | ' + $scope.currentGroup;

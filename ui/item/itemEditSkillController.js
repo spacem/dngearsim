@@ -16,7 +16,7 @@ function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHel
   var vm = this;
   
   this.initSkills = function() {
-    var dntFile = 'skillleveltable_character' + vm.item.baseJobName + vm.item.pve + '.dnt';
+    var dntFile = 'skillleveltable_character' + vm.item.baseJobName + vm.item.pve + '.lzjson';
     dntData.init(dntFile, null, reportProgress, function() { $timeout(function() {
       vm.skillData = dntData.find(dntFile, 'SkillIndex', vm.item.id);
       vm.getSkillStats();
