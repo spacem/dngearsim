@@ -34,7 +34,7 @@ m.factory('jobs', ['dntData', 'translations', 'itemColumnsToLoad', function(dntD
       var alljobs = this.getAllJobs();
       var numRows = alljobs.length;
       for(var r=0;r<numRows;++r) {
-        if(alljobs[r].d.JobNumber == 2) {
+        if(alljobs[r].d.JobNumber == 2 && alljobs[r].d.JobIcon > 0) {
           jobs.push(alljobs[r]);
         }
       }

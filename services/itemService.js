@@ -190,7 +190,7 @@ m.factory('itemColumnsToLoad',[function() {
     setDnt : null,
     sparkDnt: null,
     jobsDnt: {
-      JobName: true,JobNumber: true,BaseClass: true,ParentJob: true, EnglishName: true
+      JobName: true,JobNumber: true,BaseClass: true,ParentJob: true, EnglishName: true, JobIcon: true
     },
     jobBaseStatColsToLoad: {
       Strength:true,Agility:true,Intelligence:true,Stamina:true,AggroperPvE:true,BaseMP:true
