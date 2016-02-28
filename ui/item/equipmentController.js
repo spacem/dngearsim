@@ -83,8 +83,6 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
           getJobName();
         }
       }
-      
-      // console.log('running try init');
     }
   }
 

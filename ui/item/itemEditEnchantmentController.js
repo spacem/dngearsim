@@ -90,14 +90,12 @@ function($timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$ro
   }
   
   this.getEnchantments = function() {
-    if(vm.enchantments == null) {
+    if(!vm.enchantments && vm.item && vm.item.enchantmentId) {
       if(dntData.isLoaded(vm.itemType.enchantDnt)) {
-          // console.log('init enchantments');
-          
-          var eid = vm.item.enchantmentId;
-          vm.enchantments = dntData.find(vm.itemType.enchantDnt, 'EnchantID', eid);
-          vm.setEnchantment();
-        }
+        var eid = vm.item.enchantmentId;
+        vm.enchantments = dntData.find(vm.itemType.enchantDnt, 'EnchantID', eid);
+        vm.setEnchantment();
+      }
     }
     
     return vm.enchantments;
