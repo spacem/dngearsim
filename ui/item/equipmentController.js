@@ -37,12 +37,31 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     });
   }
   
-  angular.forEach(exportLinkHelper.getDntFiles($scope.item), function(columns, fileName) {
-    dntData.init(fileName, columns, reportProgress, function() { tryInit() });
-  });
-  
-  translations.init(reportProgress,function() { tryInit() });
-  jobs.init(reportProgress, function() { tryInit(); });
+  function init() {
+    var anyToLoad = false;
+    
+    angular.forEach(exportLinkHelper.getDntFiles($scope.item), function(columns, fileName) {
+      if(!dntData.isLoaded(fileName)) {
+        dntData.init(fileName, columns, reportProgress, function() { tryInit() });
+        anyToLoad = true;
+      }
+    });
+    
+    if(!translations.isLoaded()) {
+      translations.init(reportProgress,function() { tryInit() });
+      anyToLoad = true;
+    }
+    
+    if(!jobs.isLoaded()) {
+      jobs.init(reportProgress, function() { tryInit(); });
+      anyToLoad = true;
+    }
+    
+    if(!anyToLoad) {
+      tryInit();
+    }
+  }
+  init();
   
   function tryInit() {
     if(!dntData.anyLoading() && translations.isLoaded() && jobs.isLoaded()) {
@@ -64,6 +83,8 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
           getJobName();
         }
       }
+      
+      // console.log('running try init');
     }
   }
 

@@ -24,7 +24,6 @@ function($timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$ro
   }
   
   this.setEnchantment = function() {
-      
     vm.item.enchantmentStats = [];
       
     if(vm.enchantments && vm.enchantments.length > 0) {
@@ -51,7 +50,6 @@ function($timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$ro
       }
     }
   }
-  this.setEnchantment();
   
   this.isMaxEnchantLevel = function() {
 
@@ -92,14 +90,14 @@ function($timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$ro
   }
   
   this.getEnchantments = function() {
-
-    if(dntData.isLoaded(vm.itemType.enchantDnt)) {
-      if(vm.enchantments == null) {
-        
-        var eid = vm.item.enchantmentId;
-        vm.enchantments = dntData.find(vm.itemType.enchantDnt, 'EnchantID', eid);
-        vm.setEnchantment();
-      }
+    if(vm.enchantments == null) {
+      if(dntData.isLoaded(vm.itemType.enchantDnt)) {
+          // console.log('init enchantments');
+          
+          var eid = vm.item.enchantmentId;
+          vm.enchantments = dntData.find(vm.itemType.enchantDnt, 'EnchantID', eid);
+          vm.setEnchantment();
+        }
     }
     
     return vm.enchantments;
