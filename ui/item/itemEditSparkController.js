@@ -5,6 +5,7 @@ angular.module('itemEditSparkController', ['translationService', 'dntServices'])
 function(dntData,hCodeValues,items) {
   'use strict';
   
+  if(this.item == null) return;
   if('itemSource' in this.item) {
     this.itemType = items[this.item.itemSource];
   }
@@ -51,6 +52,7 @@ function(dntData,hCodeValues,items) {
   }
   
   this.getSparks = function() {
+    if(vm.item == null) return null;
     if(vm.sparks == null) {
       var sid = vm.item.sparkTypeId;
       if(sid) {

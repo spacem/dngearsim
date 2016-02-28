@@ -7,6 +7,7 @@ function(hCodeValues,statHelper,saveHelper) {
   
   var vm = this;
   
+  if(this.item == null) return;
   this.savedItems = saveHelper.getSavedItems();
   this.groupNames = Object.keys(this.savedItems);
   if(this.groupNames.length > 0) {
@@ -200,7 +201,7 @@ function(hCodeValues,statHelper,saveHelper) {
       }
     }
     
-    if(vm.groupItems == null && vm.groupName && vm.groupName in vm.savedItems && vm.item.typeName) {
+    if(vm.groupItems == null && vm.groupName && vm.groupName in vm.savedItems && vm.item && vm.item.typeName) {
       vm.groupItems = [];
       
       var items = [];

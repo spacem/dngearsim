@@ -66,6 +66,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   function tryInit() {
     if(!dntData.anyLoading() && translations.isLoaded() && jobs.isLoaded()) {
       $scope.item = exportLinkHelper.reloadItem($scope.item);
+      if($scope.item == null) {
+        return;
+      }
       
       $window.document.title = 'DN Gear Sim | ' + $scope.item.name;
       if($scope.item.itemSource != 'custom') {

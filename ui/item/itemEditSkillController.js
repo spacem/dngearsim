@@ -1,10 +1,11 @@
 angular.module('itemEditSkillController', ['translationService', 'dntServices'])
 .controller('itemEditSkillCtrl',
 
-['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',
-function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$routeParams,translations,$location,saveHelper) {
+['$timeout','dntData','statHelper',
+function($timeout,dntData,statHelper) {
   'use strict';
   
+  if(this.item == null) return;
   if(this.item.itemSource != 'skills') {
     return;
   }
@@ -24,6 +25,9 @@ function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHel
   }
   
   this.getSkillStats = function() {
+    if(!vm.item) {
+      return;
+    }
     
     if(!vm.skillData || vm.skillData.length == 0) {
       return;
@@ -45,7 +49,7 @@ function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHel
   }
   
   this.isMaxSkillLevel = function() {
-    return this.skillData && this.item.enchantmentNum >= this.skillData.length-1;
+    return this.skillData && this.item && this.item.enchantmentNum >= this.skillData.length-1;
   }
   
   this.prevEnchantment = function() {

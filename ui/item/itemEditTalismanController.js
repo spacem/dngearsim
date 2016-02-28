@@ -1,10 +1,10 @@
 angular.module('itemEditTalismanController', ['translationService', 'dntServices'])
 .controller('itemEditTalismanCtrl',
 
-['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',
-function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$routeParams,translations,$location,saveHelper) {
+[function() {
   'use strict';
   
+  if(this.item == null) return;
   if(this.item.itemSource != 'tman') {
     return;
   }
@@ -18,7 +18,7 @@ function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHel
       this.item.enchantmentNum = amount;
       
       var extraStats = [];
-      angular.forEach($scope.item.stats, function(stat, index) {
+      angular.forEach(this.item.stats, function(stat, index) {
         extraStats.push({id: stat.id, max: stat.max * (amount/100)});
       });
       

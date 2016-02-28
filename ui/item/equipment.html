@@ -1,11 +1,15 @@
 <dnsim-loading>
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12" ng-if="item != null">
     <br />
     <a href="#/item-search/{{item.typeName}}">&lt; other {{item.typeName}}</a>
   </div>
+  <div class="col-xs-12" ng-if="item == null">
+    <br />
+    cannot load item
+  </div>
 </div>
-<div class="row">
+<div class="row" ng-if="item != null">
   <div class="col-xs-12 col-md-4">
     <h3>
       <dnsim-item-link item="item" /><br />
@@ -67,7 +71,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-show="item != null">
     <dngearsim-group-assignment item="item">
     </dngearsim-group-assignment>
 </div>

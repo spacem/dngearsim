@@ -62,6 +62,8 @@ m.factory('region', ['translations','dntReset','dntData','$route',function(trans
         this.dntLocation = location;
         dntReset();
         localStorage.setItem('lastDNTRegion', location.region);
+        dntReset();
+        $route.reload();
       }
 
       if(this.tlocation == null) {

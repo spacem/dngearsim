@@ -1,10 +1,11 @@
 angular.module('itemEditCustomController', ['translationService', 'dntServices'])
 .controller('itemEditCustomCtrl',
 
-['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',
-function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$routeParams,translations,$location,saveHelper) {
+['hCodeValues',
+function(hCodeValues) {
   'use strict';
   
+  if(this.item == null) return;
   if(this.item.itemSource != 'custom') {
     return;
   }

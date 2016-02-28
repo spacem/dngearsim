@@ -1,12 +1,14 @@
 angular.module('itemEditPotentialController', ['translationService', 'dntServices'])
 .controller('itemEditPotentialCtrl',
 
-['$scope','$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',
-function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$routeParams,translations,$location,saveHelper) {
+['dntData','items',
+function(dntData,items) {
   'use strict';
   
   this.potentials = null;
   this.potential = null;
+  
+  if(this.item == null) return;
   
   if('itemSource' in this.item) {
     this.itemType = items[this.item.itemSource];
@@ -20,7 +22,7 @@ function($scope,$timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHel
   
   this.getPotentials = function() {
     if(!vm.potentials) {
-      if(vm.item.pid && 'potentialDnt' in vm.itemType) {
+      if(vm.item && vm.item.pid && 'potentialDnt' in vm.itemType) {
         var potentials = dntData.find(vm.itemType.potentialDnt, 'id', vm.item.pid);
         if(potentials.length == 1) {
           vm.potential = potentials[0];

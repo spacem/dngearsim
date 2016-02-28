@@ -1,10 +1,11 @@
 angular.module('itemEditEnchantmentController', ['translationService', 'dntServices'])
 .controller('itemEditEnchantmentCtrl',
 
-['$timeout','dntData','hCodeValues','items','jobs','statHelper','exportLinkHelper','$routeParams','translations','$location','saveHelper',
-function($timeout,dntData,hCodeValues,items,jobs,statHelper,exportLinkHelper,$routeParams,translations,$location,saveHelper) {
+['dntData','hCodeValues','items',
+function(dntData,hCodeValues,items) {
   'use strict';
   
+  if(this.item == null) return;
   if('itemSource' in this.item) {
     this.itemType = items[this.item.itemSource];
   }
