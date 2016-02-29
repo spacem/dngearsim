@@ -18,16 +18,31 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-mocks.js"></script>
-  <script src="//cdn.jsdelivr.net/zip.js/0.1/zip.js"></script>
-  <script src="//cdn.jsdelivr.net/zip.js/0.1/inflate.js"></script>
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.css" />
+  
+  <link rel="stylesheet" href="dngearsim.css"></link>
+</head>
+<body>
+  
+
+  
   <script src="//cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   
-  <script src="js/directives.js"></script>
-  <script src="js/filters.js"></script>
+  <script src="../dntviewer/simplerreader.js"></script>
+  <script src="../dntviewer/dntreader.js"></script>
+  <script src="../dntviewer/dntranslations.js"></script>
   
-  <script src="ui/widgets/directives.js"></script>
+  <script src="app.js"></script>
+  
+  <script src="ui/widgets/dnsimItemLink.js"></script>
+  <script src="ui/widgets/dnsimLoading.js"></script>
+  <script src="ui/widgets/dnsimSelectAllOnClick.js"></script>
+  <script src="ui/widgets/dnsimStats.js"></script>
+  <script src="ui/widgets/dnsimStringToNumber.js"></script>
+  
   <script src="ui/filters/filters.js"></script>
   
   <script src="ui/about/aboutController.js"></script>
@@ -39,6 +54,7 @@
   <script src="ui/builds/savedItemsController.js"></script>
   <script src="ui/builds/viewGroupController.js"></script>
   <script src="ui/builds/editBuildController.js"></script>
+  <script src="ui/builds/deleteBuildController.js"></script>
   
   <script src="ui/search/itemSearchController.js"></script>
   <script src="ui/search/customItemsController.js"></script>
@@ -47,6 +63,7 @@
   <script src="ui/region/regionController.js"></script>
   
   <script src="ui/item/equipmentController.js"></script>
+  <script src="ui/item/itemEditPotentialController.js"></script>
   <script src="ui/item/itemEditSkillController.js"></script>
   <script src="ui/item/itemEditTalismanController.js"></script>
   <script src="ui/item/itemEditCustomController.js"></script>
@@ -54,33 +71,39 @@
   <script src="ui/item/itemEditEnchantmentController.js"></script>
   <script src="ui/item/groupAssignmentController.js"></script>
   
-  <script src="services/translationService.js"></script>
-  <script src="services/dntServices.js"></script>
-  <script src="services/valueServices.js"></script>
-  <script src="services/itemService.js"></script>
-  <script src="services/saveService.js"></script>
-  <script src="services/regionService.js"></script>
+  <script src="services/columnsToLoadService.js"></script>
+  <script src="services/dntDataService.js"></script>
+  <script src="services/dntInitService.js"></script>
+  <script src="services/dntResetService.js"></script>
   <script src="services/exportLinkServices.js"></script>
   <script src="services/groupServices.js"></script>
+  <script src="services/initItemService.js"></script>
+  <script src="services/itemService.js"></script>
+  <script src="services/jobService.js"></script>
+  <script src="services/regionService.js"></script>
+  <script src="services/saveService.js"></script>
+  <script src="services/statService.js"></script>
+  <script src="services/translationService.js"></script>
+  <script src="services/valueServices.js"></script>
   
-  <script src="js/app.js"></script>
+  <script src="tests/spec-setup.js"></script>
   
-  <script src="../dntviewer/simplerreader.js"></script>
-  <script src="../dntviewer/dntreader.js"></script>
-  <script src="../dntviewer/dntranslations.js"></script>
+  <script src="tests/service-specs/columnsToLoadServiceSpec.js"></script>
+  <script src="tests/service-specs/dntDataServiceSpec.js"></script>
+  <script src="tests/service-specs/dntInitServiceSpec.js"></script>
+  <script src="tests/service-specs/dntResetServiceSpec.js"></script>
+  <script src="tests/service-specs/exportLinkServicesSpec.js"></script>
+  <script src="tests/service-specs/groupServicesSpec.js"></script>
+  <script src="tests/service-specs/initItemServiceSpec.js"></script>
+  <script src="tests/service-specs/itemServiceSpec.js"></script>
+  <script src="tests/service-specs/jobServiceSpec.js"></script>
+  <script src="tests/service-specs/regionServiceSpec.js"></script>
+  <script src="tests/service-specs/saveServiceSpec.js"></script>
+  <script src="tests/service-specs/statServiceSpec.js"></script>
+  <script src="tests/service-specs/translationServiceSpec.js"></script>
+  <script src="tests/service-specs/valueServicesSpec.js"></script>
   
-  <script src="specs/valueSpecs.js"></script>
-  <script src="specs/groupAssignmentControllerSpec.js"></script>
-
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.css" />
-  
-  <link rel="stylesheet" href="dngearsim.css"></link>
-  
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-<body>
+  <script src="tests/ui-specs/groupAssignmentControllerSpec.js"></script>
   
 </body>
 </html>

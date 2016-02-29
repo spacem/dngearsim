@@ -1,10 +1,5 @@
 describe('GroupAssignmentController', function() {
-  beforeEach(module('groupAssignmentController'));
-
-  beforeEach(function() {
-    module('valueServices');
-    module('saveService');
-  });
+  dnsimTestSetup();
   
   var hCodeValues;
   beforeEach(inject(function($injector) {

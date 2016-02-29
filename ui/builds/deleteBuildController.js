@@ -1,5 +1,4 @@
-angular.module('deleteBuildController', ['translationService', 'dntServices', 'saveService','valueServices'])
-.controller('DeleteBuildCtrl',
+angular.module('dnsim').controller('DeleteBuildCtrl',
 
 ['$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad',
 function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad) {

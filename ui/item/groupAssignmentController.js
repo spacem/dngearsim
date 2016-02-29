@@ -1,5 +1,4 @@
-angular.module('groupAssignmentController', [])
-.controller('groupAssignmentCtrl',
+angular.module('dnsim').controller('groupAssignmentCtrl',
 
 ['hCodeValues','statHelper','saveHelper',
 function(hCodeValues,statHelper,saveHelper) {
@@ -7,9 +6,11 @@ function(hCodeValues,statHelper,saveHelper) {
   
   var vm = this;
   
-  if(this.item == null) return;
   this.savedItems = saveHelper.getSavedItems();
   this.groupNames = Object.keys(this.savedItems);
+  if(!this.groupNames) {
+    this.groupNames = [];
+  }
   if(this.groupNames.length > 0) {
     this.groupName = localStorage.getItem('currentGroup');
   }

@@ -1,5 +1,4 @@
-angular.module('itemEditPotentialController', ['translationService', 'dntServices'])
-.controller('itemEditPotentialCtrl',
+angular.module('dnsim').controller('itemEditPotentialCtrl',
 
 ['dntData','items',
 function(dntData,items) {

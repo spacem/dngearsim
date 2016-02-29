@@ -1,5 +1,4 @@
-angular.module('itemEditTalismanController', ['translationService', 'dntServices'])
-.controller('itemEditTalismanCtrl',
+angular.module('dnsim').controller('itemEditTalismanCtrl',
 
 [function() {
   'use strict';

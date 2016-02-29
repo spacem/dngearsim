@@ -1,5 +1,4 @@
-angular.module('viewGroupController', ['saveService','valueServices','itemService','exportLinkServices','groupServices'])
-.controller('ViewGroupCtrl', 
+angular.module('dnsim').controller('ViewGroupCtrl', 
   ['$scope','$window','hCodeValues','$location','$routeParams','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','groupHelper','jobs',
   function($scope,$window,hCodeValues,$location,$routeParams,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,groupHelper,jobs) {
     'use strict';

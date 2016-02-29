@@ -1,6 +1,4 @@
-var m = angular.module('filters', []);
-
-m.filter('percentage', [function() {
+angular.module('dnsim').filter('percentage', [function() {
   'use strict';
 
   function filter(input) {

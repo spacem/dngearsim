@@ -1,4 +1,9 @@
-angular.module('dnsimSelectAllOnClick', []).directive('dnsimSelectAllOnClick', [function() {
+(function () {
+'use strict';
+
+angular.module('dnsim').directive('dnsimSelectAllOnClick', [dnsimSelectAllOnClick]);
+
+function dnsimSelectAllOnClick() {
   'use strict';
   return {
     restrict: 'A',
@@ -24,5 +29,6 @@ angular.module('dnsimSelectAllOnClick', []).directive('dnsimSelectAllOnClick', [
       });
     }
   };
-}]);
+}
 
+})();

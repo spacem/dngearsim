@@ -1,5 +1,4 @@
-angular.module('setupController', ['translationService', 'dntServices','ngRoute'])
-.controller('SetupCtrl', 
+angular.module('dnsim').controller('SetupCtrl', 
   ['$scope','$window','$route','$timeout','translations','dntInit','dntReset','region',
    function($scope, $window, $route, $timeout, translations, dntInit, dntReset, region) {
   'use strict';

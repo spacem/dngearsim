@@ -1,5 +1,4 @@
-angular.module('skillSearchController', ['translationService', 'dntServices', 'saveService'])
-.controller('SkillSearchCtrl',
+angular.module('dnsim').controller('SkillSearchCtrl',
 
 ['$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues',
 function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues) {

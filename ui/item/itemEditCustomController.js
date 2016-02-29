@@ -1,5 +1,4 @@
-angular.module('itemEditCustomController', ['translationService', 'dntServices'])
-.controller('itemEditCustomCtrl',
+angular.module('dnsim').controller('itemEditCustomCtrl',
 
 ['hCodeValues',
 function(hCodeValues) {

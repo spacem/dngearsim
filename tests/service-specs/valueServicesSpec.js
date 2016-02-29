@@ -1,33 +1,11 @@
-// tests for value service
-//
-describe('valueServices', function () {
-    
-  var hCodeValues;
-  beforeEach(function() {
-    module('valueServices');
-  });
+describe('hCodeValues', function () {
+  dnsimTestSetup();
   
+  var hCodeValues;
   beforeEach(inject(function($injector) {
     hCodeValues = $injector.get('hCodeValues');
   }));
   
-  beforeEach(function() {
-    jasmine.addMatchers({
-      
-      equalsStat: function( util, customEqualityTesters) {
-        return {
-          compare: function(actual, expected) {
-            return {
-              pass: actual !== null && expected !== null &&
-              expected.id === actual.id && expected.max === actual.max,
-              message: 'expected: ' + JSON.stringify(expected) + ' got: ' + JSON.stringify(actual)
-            };
-          }
-  
-        }
-      }
-    });
-  });
   
   // helper methods
   //

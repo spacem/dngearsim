@@ -1,5 +1,4 @@
-angular.module('testController', [])
-.controller('TestCtrl', 
+angular.module('dnsim').controller('TestCtrl', 
   [
   function() {
     'use strict';

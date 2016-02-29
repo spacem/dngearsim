@@ -1,5 +1,4 @@
-angular.module('regionController', ['ngRoute','translationService','regionService'])
-.controller('RegionCtrl', 
+angular.module('dnsim').controller('RegionCtrl', 
   ['$scope','$timeout','$route','$routeParams','$location','translations','region',
   function($scope,$timeout,$route,$routeParams,$location,translations,region) {
     'use strict';

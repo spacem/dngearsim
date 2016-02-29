@@ -1,4 +1,4 @@
-angular.module('aboutController', [])
+angular.module('dnsim')
 .controller('AboutCtrl', 
   ['$window',
   function($window) {

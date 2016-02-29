@@ -1,10 +1,9 @@
-angular.module('itemSearchController', ['translationService', 'dntServices', 'saveService'])
-.controller('ItemSearchCtrl',
+angular.module('dnsim').controller('ItemSearchCtrl',
 ['$scope','$window','$routeParams','$timeout',
 'translations',
 'items',
 'jobs',
-'getAllItems','hCodeValues',
+'hCodeValues',
 'saveHelper',
 'initItem',
 'region',
@@ -13,7 +12,7 @@ function(
   translations,
   items,
   jobs,
-  getAllItems,hCodeValues,
+  hCodeValues,
   saveHelper,
   initItem,
   region) {
@@ -331,6 +330,18 @@ function(
   $scope.showMoreResults = function(extra) {
     $scope.maxDisplay = $scope.totalNumResults + extra;
     $scope.totalNumResults = 0;
+  }
+  
+  function getAllItems(factories) {
+    
+    var allItems = [];
+    
+    angular.forEach(factories, function(value, key) {
+      if(value.isLoaded()) {
+        allItems = allItems.concat(value.getItems());
+      }
+      });
+    return allItems;
   }
   
 }]);

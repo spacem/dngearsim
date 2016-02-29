@@ -1,6 +1,8 @@
-var m = angular.module('saveService', ['ngRoute']);
-m.factory('saveHelper', [function() {
-  'use strict';
+(function () {
+'use strict';
+
+angular.module('dnsim').factory('saveHelper', [saveHelper]);
+function saveHelper() {
   return {
     saveItem: function(groupName, item) {
       var groups = this.getSavedItems();
@@ -204,4 +206,6 @@ m.factory('saveHelper', [function() {
       localStorage.setItem('hiddenTypes', LZString.compressToUTF16(stringifiedData));
     }
   };
-}]);
+}
+
+})();

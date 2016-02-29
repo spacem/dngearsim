@@ -1,4 +1,9 @@
-angular.module('dnsimLoading', []).directive('dnsimLoading', ['dntData','translations','$timeout', function(dntData, translations, $timeout) {
+(function () {
+'use strict';
+
+angular.module('dnsim').directive('dnsimLoading', ['dntData','translations','$timeout', dnsimLoading]);
+
+function dnsimLoading(dntData, translations, $timeout) {
   'use strict';
   return {
     restrict: 'E',
@@ -20,4 +25,6 @@ angular.module('dnsimLoading', []).directive('dnsimLoading', ['dntData','transla
       $scope.showLoadingScreen = dntData.anyLoading() || !translations.isLoaded();
     },
   };
-}]);
+}
+
+})();

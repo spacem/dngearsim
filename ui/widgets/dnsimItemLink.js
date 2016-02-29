@@ -1,5 +1,9 @@
-angular.module('dnsimItemLink', []).directive('dnsimItemLink', ['exportLinkHelper', function(exportLinkHelper) {
-  'use strict';
+(function () {
+'use strict';
+  
+angular.module('dnsim').directive('dnsimItemLink', ['exportLinkHelper', dnsimItemLink]);
+
+function dnsimItemLink(exportLinkHelper) {
   return {
     restrict: 'E',
     scope: {
@@ -17,4 +21,6 @@ angular.module('dnsimItemLink', []).directive('dnsimItemLink', ['exportLinkHelpe
       });
     },
   };
-}]);
+}
+
+})();

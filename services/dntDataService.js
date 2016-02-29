@@ -1,96 +1,9 @@
-var m = angular.module('dntServices', ['translationService','ngRoute','valueServices','itemService']);
+(function () {
 'use strict';
 
-m.factory('dntInit',
-['items','jobs','dntData','initItem',
-function(items,jobs,dntData,initItem) {
-  return function(progress) {
-    
-    progress('starting init');
-    
-    var allFactories = [jobs].concat(items.all);
-    
-    var dntFiles = {};
-    angular.forEach(items, function(item, key) {
-      if(key != 'all') {
-        angular.forEach(item, function(value, prop) {
-          if(prop.indexOf('Dnt') == prop.length-3) {
-            var newFactory = { 
-              init: function(progress, complete) {
-                dntData.init(value, null, progress, complete);
-              },
-              isLoaded: function() {
-                return dntData.isLoaded(value);
-              },
-              fileName: value,
-            };
-            
-            allFactories.push(newFactory);
-          }
-        });
-      }
-    });
-    
-    function initFactory(index) {
-    
-      if(index < allFactories.length) {
-        allFactories[index].init(progress, function() { 
-          if(allFactories[index].isLoaded()) {
-            if('fileName' in allFactories[index]) {
-              progress('dnt loaded: ' + allFactories[index].fileName);
-            }
-            else {
-              
-              var loadedItems = allFactories[index].getItems();
-              angular.forEach(loadedItems, function(value, key) {
-                initItem(value);
-              });
-              
-              progress('initialised ' + loadedItems.length + ' items from: ' + allFactories[index].mainDnt);
-            }
-            initFactory(index+1);
-          }
-        });
-      }
-      else {
-        progress('Full initialise complete');
-      }
-    }
-    
-    initFactory(0);
-  }
-}]);
-m.factory('dntReset',
-['items','jobs','dntData',
-function(items, jobs,dntData) {
-  return function() {
-    
-    var allFactories = [jobs].concat(items.all);
-    angular.forEach(allFactories, function(value, key) {
-      value.reset();
-      });
-      
-      dntData.resetAll();
-  }
-}]);
-m.factory('getAllItems',
-[
-function() {
-    
-  return function(factories) {
-    
-    var allItems = [];
-    
-    angular.forEach(factories, function(value, key) {
-      if(value.isLoaded()) {
-        allItems = allItems.concat(value.getItems());
-      }
-      });
-    return allItems;
-  }
-}]);
+angular.module('dnsim').factory('dntData', ['$rootScope',dntData]);
 
-m.factory('dntData', ['$rootScope',function($rootScope) {
+function dntData($rootScope) {
   
   function createLoader(dntLocation, file, colsToLoad) {
 
@@ -282,7 +195,12 @@ m.factory('dntData', ['$rootScope',function($rootScope) {
       return found;
     },
     getNumRows : function(fileName) {
-      return this.loaders[fileName].reader.numRows;
+      if(this.isLoaded(fileName)) {
+        return this.loaders[fileName].reader.numRows;
+      }
+      else {
+        return 0;
+      }
     },
     getRow : function(fileName, index) {
       if(this.isLoaded(fileName)) {
@@ -293,10 +211,20 @@ m.factory('dntData', ['$rootScope',function($rootScope) {
       }
     },
     lookupValue: function(fileName, data, columnName) {
-      return data[this.loaders[fileName].reader.columnNames[columnName]];
+      if(this.isLoaded(fileName)) {
+        return data[this.loaders[fileName].reader.columnNames[columnName]];
+      }
+      else {
+        return null;
+      }
     },
     convertData: function(fileName, data) {
-      return this.loaders[fileName].reader.convertData(data);
+      if(this.isLoaded(fileName)) {
+        return this.loaders[fileName].reader.convertData(data);
+      }
+      else {
+        return null;
+      }
     },
     getValue : function(fileName, index, columnName) {
       if(this.isLoaded(fileName)) {
@@ -307,4 +235,6 @@ m.factory('dntData', ['$rootScope',function($rootScope) {
       }
     }
   };
-}]);
+}
+
+})();

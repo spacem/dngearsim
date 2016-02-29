@@ -1,18 +1,15 @@
-angular.module('navController', ['ngRoute','translationService'])
-.controller('NavCtrl', 
+angular.module('dnsim').controller('NavCtrl', 
   ['$scope','$route','$location','translations','region','$rootScope','$timeout','$window','$routeParams',
   function($scope,$route,$location,translations,region,$rootScope,$timeout,$window,$routeParams) {
     'use strict';
 
-    var setupAction = { path: 'setup', name: 'setup' }
     var aboutAction = { path: 'about', name: 'about' }
     
     var noMenu = [];
-    var noLocationMenu = [aboutAction,setupAction];
+    var noLocationMenu = [aboutAction];
     var normalMenu = [
       {path: 'builds', name:'builds'},
       {path: 'item-search', name:'item search'},
-      setupAction, 
       aboutAction,
       ];
       

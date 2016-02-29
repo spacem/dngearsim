@@ -1,5 +1,4 @@
-angular.module('itemEditSparkController', ['translationService', 'dntServices'])
-.controller('itemEditSparkCtrl',
+angular.module('dnsim').controller('itemEditSparkCtrl',
 
 ['dntData','hCodeValues','items',
 function(dntData,hCodeValues,items) {

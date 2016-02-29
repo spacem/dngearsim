@@ -1,5 +1,4 @@
-angular.module('savedItemsController', ['saveService','valueServices','itemService','exportLinkServices','groupServices'])
-.controller('SavedCtrl', 
+angular.module('dnsim').controller('SavedCtrl', 
   [ '$scope','$window','$routeParams','$location','$anchorScroll',
     'hCodeValues','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','statHelper','groupHelper',
   function(

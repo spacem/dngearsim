@@ -1,7 +1,8 @@
-var m = angular.module('groupServices', ['saveService','valueServices','itemService','exportLinkServices','groupServices']);
+(function () {
+'use strict';
 
-m.factory('groupHelper', ['items','dntData','createItem','initItem','hCodeValues','itemColumnsToLoad','jobs','statHelper','translations','exportLinkHelper',
-function(items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,jobs,statHelper,translations,exportLinkHelper) {
+angular.module('dnsim').factory('groupHelper', ['exportLinkHelper',groupHelper]);
+function groupHelper(exportLinkHelper) {
   'use strict';
   
   return {
@@ -32,4 +33,6 @@ function(items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,jobs,st
       return allDntFiles;
     }
   }
-}]);
+}
+
+})();

@@ -1,5 +1,4 @@
-angular.module('itemEditEnchantmentController', ['translationService', 'dntServices'])
-.controller('itemEditEnchantmentCtrl',
+angular.module('dnsim').controller('itemEditEnchantmentCtrl',
 
 ['dntData','hCodeValues','items',
 function(dntData,hCodeValues,items) {

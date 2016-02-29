@@ -1,9 +1,9 @@
-var m = angular.module('exportLinkServices',
-['translationService','ngRoute','valueServices','itemService']);
+(function () {
+'use strict';
 
-m.factory('exportLinkHelper', 
-['$http','items','dntData','createItem','initItem','hCodeValues','itemColumnsToLoad','statHelper','translations',
-function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,statHelper,translations) {
+angular.module('dnsim').factory('exportLinkHelper', 
+['$http','items','dntData','initItem','hCodeValues','itemColumnsToLoad','statHelper','translations',exportLinkHelper]);
+function exportLinkHelper($http,items,dntData,initItem,hCodeValues,itemColumnsToLoad,statHelper,translations) {
   'use strict';
   
   return {
@@ -213,7 +213,7 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
             }
           }
           
-          var newItem = createItem(item.itemSource, d, p, totalRatio);
+          var newItem = itemType.createItem(d, p, totalRatio);
           initItem(newItem); 
 
           var usePartDnt = null;
@@ -345,4 +345,6 @@ function($http,items,dntData,createItem,initItem,hCodeValues,itemColumnsToLoad,s
       return dntFiles;
     }
   }
-}]);
+}
+
+})();

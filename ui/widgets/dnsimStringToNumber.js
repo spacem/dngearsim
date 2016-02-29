@@ -1,5 +1,9 @@
-angular.module('dnsimStringToNumber', []).directive('dnsimStringToNumber', function() {
-  'use strict';
+(function () {
+'use strict';
+
+angular.module('dnsim').directive('dnsimStringToNumber', dnsimStringToNumber);
+
+function dnsimStringToNumber() {
   return {
     require: 'ngModel',
     link: function(scope, element, attrs, ngModel) {
@@ -11,4 +15,6 @@ angular.module('dnsimStringToNumber', []).directive('dnsimStringToNumber', funct
       });
     }
   };
-});
+}
+
+})();

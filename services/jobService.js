@@ -1,7 +1,8 @@
-var m = angular.module('jobService', ['translationService','ngRoute','valueServices','itemService','dntServices']);
+(function () {
 'use strict';
 
-m.factory('jobs', ['dntData', 'translations', 'itemColumnsToLoad', function(dntData, translations, itemColumnsToLoad) {
+angular.module('dnsim').factory('jobs', ['dntData', 'translations', 'itemColumnsToLoad', jobs]);
+function jobs(dntData, translations, itemColumnsToLoad) {
   
   var fileName ='jobtable.lzjson';
   var colsToLoad = itemColumnsToLoad.jobsDnt;
@@ -130,5 +131,6 @@ m.factory('jobs', ['dntData', 'translations', 'itemColumnsToLoad', function(dntD
       return foundJob;
     }
   }
-  
-}]);
+}
+
+})();

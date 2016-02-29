@@ -1,6 +1,8 @@
-angular.module('translationService', ['ngRoute']).
-factory('translations', ['$routeParams', '$rootScope', function($routeParams, $rootScope) {
-  'use strict';
+(function () {
+'use strict';
+
+angular.module('dnsim').factory('translations', ['$routeParams', '$rootScope', translations]);
+function translations($routeParams, $rootScope) {
 
   var dnTranslations = new DnTranslations();
   var tFile = 'uistring.lzjson';
@@ -94,4 +96,6 @@ factory('translations', ['$routeParams', '$rootScope', function($routeParams, $r
       }
     }
   }
-}]);
+}
+
+})();

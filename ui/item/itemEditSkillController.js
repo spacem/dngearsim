@@ -1,5 +1,4 @@
-angular.module('itemEditSkillController', ['translationService', 'dntServices'])
-.controller('itemEditSkillCtrl',
+angular.module('dnsim').controller('itemEditSkillCtrl',
 
 ['$timeout','dntData','statHelper',
 function($timeout,dntData,statHelper) {

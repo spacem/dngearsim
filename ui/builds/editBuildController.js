@@ -1,5 +1,4 @@
-angular.module('editBuildController', ['translationService', 'dntServices', 'saveService','valueServices'])
-.controller('EditBuildCtrl',
+angular.module('dnsim').controller('EditBuildCtrl',
 
 ['$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad',
 function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad) {
@@ -238,7 +237,9 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
   
   $timeout(function() {
     var input = document.getElementById('groupNameInput');
-    input.focus();
-    input.setSelectionRange(0, 9999);
+    if(input) {
+      input.focus();
+      input.setSelectionRange(0, 9999);
+    }
   });
 }]); 

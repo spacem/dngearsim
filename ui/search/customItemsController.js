@@ -1,5 +1,4 @@
-angular.module('customItemsController', ['translationService', 'dntServices', 'saveService'])
-.controller('CustomItemCtrl',
+angular.module('dnsim').controller('CustomItemCtrl',
 
 ['$window','saveHelper','$location',
 function($window,saveHelper,$location) {

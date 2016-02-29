@@ -1,5 +1,9 @@
-angular.module('dnsimStats', []).directive('dnsimStats', ['hCodeValues',function(hCodeValues) {
-  'use strict';
+(function () {
+'use strict';
+
+angular.module('dnsim').directive('dnsimStats', ['hCodeValues',dnsimStats]);
+
+function dnsimStats(hCodeValues) {
   return {
     restrict: 'A',
     scope: {
@@ -110,4 +114,6 @@ angular.module('dnsimStats', []).directive('dnsimStats', ['hCodeValues',function
       });
     }
   }
-}]);
+}
+
+})();

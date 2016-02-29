@@ -1,13 +1,16 @@
-var m = angular.module('regionService', []);
-m.factory('region', ['translations','dntReset','dntData','$route',function(translations,dntReset,dntData,$route) {
-  'use strict';
+(function () {
+'use strict';
+
+angular.module('dnsim').factory('region', ['translations','dntReset','dntData','$route',region]);
+function region(translations,dntReset,dntData,$route) {
+  
   var alternativeFiles = {region: 'ALT', name: 'Alternative user specified files', url : ''};
   var hostedFiles =[
-      {region: 'NA', name: 'English files from Nexon North America', url : 'https://dnna.firebaseapp.com'},
-      // {region: 'KDN', name: 'Korean files from HappyOZ', url : 'https://kdnfiles.firebaseapp.com'},
-      {region: 'CDN', name: 'Chinese files from Shanda', url : 'https://dnfiles.firebaseapp.com/cdn'},
-      {region: 'SEA', name: 'South East Asia - English files from Cherry Credits', url : 'https://dnfiles.firebaseapp.com/sea'},
-      {region: 'EU', name: 'Europe - English files from Shanda', url : 'https://dnfiles.firebaseapp.com/eu'},
+      {region: 'na', name: 'english files from nexon north america', url : 'https://dnna.firebaseapp.com'},
+      {region: 'kdn', name: 'korean files from happyOZ', url : 'https://kdnfiles.firebaseapp.com'},
+      {region: 'cdn', name: 'chinese files from shanda', url : 'https://dnfiles.firebaseapp.com/cdn'},
+      {region: 'sea', name: 'south east asia - english files from cherry credits', url : 'https://dnfiles.firebaseapp.com/sea'},
+      {region: 'eu', name: 'europe - english files from Shanda', url : 'https://dnfiles.firebaseapp.com/eu'},
     ];
   
   var dntLocationRegion = localStorage.getItem('lastDNTRegion');
@@ -101,4 +104,6 @@ m.factory('region', ['translations','dntReset','dntData','$route',function(trans
       dntData.setLocation(this.dntLocation);
     }
   }
-}]);
+}
+
+})();
