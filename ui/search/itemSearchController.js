@@ -1,22 +1,31 @@
 angular.module('dnsim').controller('ItemSearchCtrl',
-['$scope','$window','$routeParams','$timeout',
+['$scope','$window','$routeParams','$timeout','$location',
 'translations',
 'items',
 'jobs',
 'hCodeValues',
-'saveHelper',
 'initItem',
 'region',
 function(
-  $scope,$window,$routeParams,$timeout,
+  $scope,$window,$routeParams,$timeout,$location,
   translations,
   items,
   jobs,
   hCodeValues,
-  saveHelper,
   initItem,
   region) {
   'use strict';
+  
+  $scope.itemType = $routeParams.itemType;
+  if(!$scope.itemType) {
+     $scope.itemType = localStorage.getItem('selectedItemCategory');
+     if(!$scope.itemType) {
+       $scope.itemType = 'titles';
+     }
+     
+     $location.path('/search/' + $scope.itemType);
+     return;
+  }
 
   document.body.className = 'search-back';
   $window.document.title = 'DN Gear Sim | ' + $routeParams.itemType.toUpperCase();
@@ -32,6 +41,7 @@ function(
   $scope.simpleSearch = $routeParams.itemType == 'titles';
   $scope.stat = {id:-1, name:''};
   $scope.stats = [$scope.stat];
+  
   angular.forEach(hCodeValues.stats, function(stat, statId) {
     if(stat.type) {
       $scope.stats.push(stat);
@@ -64,8 +74,6 @@ function(
   else {
     translations.init(reportProgress, function() { $timeout(init); } );
   }
-  
-  $scope.itemType = $routeParams.itemType;
   
   if($routeParams.itemType == 'weapons') {
     $scope.itemType = 'equipment';

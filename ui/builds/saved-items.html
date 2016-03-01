@@ -9,52 +9,110 @@
     </div>
   </div>
   <div id="saved-group" class="row" ng-show="anyItems" ng-repeat="(groupName, items) in savedItems track by $index" ng-hide="isLoading">
-    <div class="col-xs-12 group-header" ng-show="currentGroup != groupName">
-      <button class="btn btn-link btn-block group-header-btn" ng-click="$parent.setCurrentGroup(groupName)">
-        <h3 id="/builds/{{groupName}}" class="text-left">{{groupName}}
-        <small>
-          <span ng-show="items.playerLevel > 0">lv{{items.playerLevel}}</span>
-          <span ng-show="items.job && items.job.id > 0">{{items.job.name}}</span></br>
-          {{$parent.getSaveDate(groupName)}} {{$parent.getSaveTime(groupName)}}<br />
-          {{$parent.getGroupSummary(groupName)}}<br />
-          <span dnsim-stats stats="$parent.calculatedStats[groupName]" separator="'|'" filter="'summaryDisplay'" />
-        </small></h3>
-      </button>
-    </div>
-    <div class="col-xs-12 group-header" ng-show="currentGroup == groupName">
+
+    <div class="col-xs-12 group-header" id="/builds/{{groupName}}">
       <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-7" ng-click="$parent.setCurrentGroup('')">
+        <div class="col-xs-12 col-md-6 col-lg-7" ng-click="$parent.toggleGroup(groupName)">
           <button class="btn btn-link btn-block group-header-btn">
-            <h3 id="/builds/{{groupName}}" class="text-left">
+            <h3 class="text-left">
               {{groupName}}
             <small>
               <span ng-show="items.playerLevel > 0">lv{{items.playerLevel}}&nbsp;</span>
               <span ng-show="items.job && items.job.id > 0">{{items.job.name}}</span><br />
-              {{$parent.getSaveDate(groupName)}} {{$parent.getSaveTime(groupName)}}
+              {{$parent.getSaveDate(groupName)}} {{$parent.getSaveTime(groupName)}}<br />
+              <span ng-if="currentGroup != groupName">{{$parent.getGroupSummary(groupName)}}<br /></span>
+              <span ng-if="currentGroup != groupName" dnsim-stats stats="$parent.calculatedStats[groupName]" separator="'|'" filter="'summaryDisplay'" />
             </small>
             </h3>
           </button>
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-5">
-          </span><br class="xs-hidden" />
+        <div class="col-xs-12 col-md-6 col-lg-5" ng-if="currentGroup == groupName">
+          <br class="xs-hidden" />
   
-          <button class="btn btn-default" ng-click="$parent.copyGroup(groupName)">copy</button>
-          <button class="btn btn-default" ng-click="$parent.editGroup(groupName)">edit</button>
-          <button class="btn btn-default" ng-click="$parent.reloadGroup(groupName)">reload</button> 
-          <button class="btn btn-default" ng-click="$parent.deleteGroup(groupName)">delete</button>
+          <button class="btn btn-default" ng-click="$parent.copyGroup(groupName)">
+            copy
+          </button>
+          <button class="btn btn-default" ng-click="$parent.editGroup(groupName)">
+            edit
+          </button>
+          <button class="btn btn-default" ng-click="$parent.reloadGroup(groupName)">
+            reload
+          </button> 
+          <button class="btn btn-default" ng-click="$parent.deleteGroup(groupName)">
+            delete
+          </button>
           <span>&nbsp;</span>
           <button style="margin-top:12px" class="btn btn-link" ng-click="$parent.createShortUrl(groupName)" ng-hide="items.shortUrl != null">create permalink</button>
           <a style="margin-top:12px" class="btn btn-link" href="{{items.shortUrl}}" ng-show="items.shortUrl != null">{{items.shortUrl}}</a>
         </div>
-        <div class="col-xs-6" ng-show="$parent.calculatedStats[groupName].length == 0">
+        <div class="col-xs-6" ng-show="$parent.calculatedStats[groupName].length == 0" ng-if="currentGroup == groupName">
         </div>
-        <div class="col-xs-10 col-md-12 bg-danger" ng-show="$parent.calculatedStats[groupName].length == 0 || $parent.nakedStats[groupName].length == 0">
-          use edit to set level and class
+        <div class="col-xs-10 col-md-12 alert alert-danger" role="alert" ng-if="currentGroup == groupName && ($parent.calculatedStats[groupName].length == 0 || $parent.nakedStats[groupName].length == 0)">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
+          you must <button class="btn btn-link" ng-click="$parent.editGroup(groupName)">edit</button> the build and set both level and class
         </div>
       </div>
     </div>
-  
-    <div class="col-xs-12 col-md-2 group-header" ng-show="currentGroup == groupName">
+    
+    <div class="col-xs-12">&nbsp;</div>
+    
+    <div class="col-xs-12 col-md-10" ng-if="currentGroup == groupName">
+      <br />
+      <div class="row">
+        <div class="col-xs-4 col-md-2">
+          <div class="row">
+            <div class="col-xs-12 group-header" ng-repeat="(typeName,typeItems) in $parent.savedItemsByType[groupName] track by $index">
+              <button ng-class="{'btn btn-block selected-link': typeName == $parent.$parent.selectedType, 'btn btn-block btn-link': typeName != $parent.$parent.selectedType}" ng-click="$parent.$parent.setSelectedType(typeName)">
+                <p class="text-left">
+                  <!-- <img height="20" width="20" style="display:inline;" src="images/{{typeName}}.png" /> -->
+                  {{typeName}}
+                  </p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-8 col-md-10">
+          <div class="row">
+            <table class="table">
+              <tr ng-repeat="result in $parent.savedItemsByType[groupName][$parent.selectedType] | orderBy:'name' | orderBy:'-levelLimit' track by $index">
+                <td>
+                  <div>
+                    <dnsim-item-link item="result" />
+                  </div>
+                  <div>
+                    <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
+                  </div>
+                  <div>
+                      <button class="btn btn-default" ng-click="$parent.$parent.removeItem(groupName, result);">
+                        remove
+                      </button>
+                  </div>
+                </td>
+              </tr>
+              
+              <tr ng-if="$parent.savedItemsByType[groupName][$parent.selectedType].length == 0">
+                <th>
+                  no {{$parent.selectedType}} selected
+                </th>
+              </tr>
+              
+              <tr>
+              <th>
+                <span>
+                  <a href="#/search/{{$parent.selectedType}}">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    search {{$parent.selectedType}}
+                  </a>
+              </th>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-xs-12 col-md-2 group-header" ng-if="currentGroup == groupName">
       <div class="row">
         <div class="col-xs-6 col-md-12" ng-show="$parent.calculatedStats[groupName].length > 0">
           <h4>calculated&nbsp;stats</h4>
@@ -82,36 +140,5 @@
       </div>
     </div>
     
-    <div class="col-xs-12 col-md-10" ng-show="currentGroup == groupName">
-      <br />
-      <div class="row item-type-grouping" ng-repeat="(typeName,typeItems) in $parent.savedItemsByType[groupName] track by $index">
-        <table class="table">
-          <tr>
-            <th>
-              <button ng-show="$parent.$parent.isTypeHidden(typeName)" ng-click="$parent.$parent.changeTypeVisiblity(typeName)">[ + ]</button>
-              <button ng-show="!$parent.$parent.isTypeHidden(typeName)" ng-click="$parent.$parent.changeTypeVisiblity(typeName)">[ - ]</button>
-              {{typeName}}
-              <span  ng-show="$parent.$parent.isTypeHidden(typeName)">
-                ({{typeItems.length}} saved)
-              </span>
-              <span style="float: right"><a href="#/item-search/{{typeName}}">search</a></span>
-            </th>
-          </tr>
-          <tr ng-repeat="result in typeItems | orderBy:'name' | orderBy:'-levelLimit' track by $index" ng-show="!$parent.$parent.isTypeHidden(typeName)">
-            <td>
-              <div>
-                <dnsim-item-link item="result" on-close="$parent.closeItemLink(groupName)" />
-              </div>
-              <div>
-                <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
-              </div>
-              <div>
-                  <button class="btn btn-default" ng-click="$parent.$parent.removeItem(groupName, result);">remove</button>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
   </div>
 </dnsim-loading>

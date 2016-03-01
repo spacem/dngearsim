@@ -3,6 +3,7 @@ angular.module('dnsim').controller('EquipmentCtrl',
 function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location) {
   'use strict';
   
+  $window.scrollTo(0, 0);
   $scope.jobName = null;
   $scope.item = exportLinkHelper.decodeItem($routeParams.itemString);
   if('itemSource' in $scope.item) {

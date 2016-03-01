@@ -8,9 +8,9 @@ function dntReset(items, jobs,dntData) {
     var allFactories = [jobs].concat(items.all);
     angular.forEach(allFactories, function(value, key) {
       value.reset();
-      });
+    });
       
-      dntData.resetAll();
+    dntData.resetAll();
   }
 }
 

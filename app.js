@@ -61,17 +61,25 @@ function config($routeProvider) {
     }).
     
     when('/item-search', {
-      redirectTo: '/item-search/titles'
+      redirectTo: '/search'
     }).
-    when('/item-search/custom', {
+    when('/item-search/:itemType', {
+      redirectTo: '/search/:itemType'
+    }).
+    
+    when('/search', {
+      templateUrl: 'ui/search/item-search.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'ItemSearchCtrl'
+    }).
+    when('/search/custom', {
       templateUrl: 'ui/search/custom-items.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'CustomItemCtrl as customItems'
     }).
-    when('/item-search/skills', {
+    when('/search/skills', {
       templateUrl: 'ui/search/skill-search.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'SkillSearchCtrl as skillSearch'
     }).
-    when('/item-search/:itemType', {
+    when('/search/:itemType', {
       templateUrl: 'ui/search/item-search.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'ItemSearchCtrl'
     }).

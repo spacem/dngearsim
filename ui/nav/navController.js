@@ -1,37 +1,23 @@
 angular.module('dnsim').controller('NavCtrl', 
-  ['$scope','$route','$location','translations','region','$rootScope','$timeout','$window','$routeParams',
-  function($scope,$route,$location,translations,region,$rootScope,$timeout,$window,$routeParams) {
+  ['$scope','$location','translations','region','itemCategory',
+  function($scope,$location,translations,region,itemCategory) {
     'use strict';
 
-    var aboutAction = { path: 'about', name: 'about' }
+    var aboutAction = { path: 'about', name: 'about', icon: 'question-sign' }
     
     var noMenu = [];
     var noLocationMenu = [aboutAction];
     var normalMenu = [
-      {path: 'builds', name:'builds'},
-      {path: 'item-search', name:'item search'},
+      {path: 'builds', name:'builds', icon: 'wrench'},
+      {path: 'search', name:'item search', icon: 'search'},
       aboutAction,
       ];
       
-    $scope.searchMenu = [
-      {path: 'item-search/titles', name:'titles'},
-      {path: 'item-search/weapons', name:'weapons'},
-      {path: 'item-search/armour', name:'armour'},
-      {path: 'item-search/accessories', name:'accessories'},
-      {path: 'item-search/techs', name:'techs'},
-      {path: 'item-search/offensive gems', name:'offensive gems'},
-      {path: 'item-search/increasing gems', name:'increasing gems'},
-      {path: 'item-search/plates', name:'plates'},
-      {path: 'item-search/talisman', name:'talisman'},
-      {path: 'item-search/cash', name:'cash'},
-      {path: 'item-search/skills', name:'skills'},
-      {path: 'item-search/custom', name:'custom'},
-      ];
-      
+    $scope.categories = itemCategory.categories;
     region.init();
   
     $scope.isSearch = function() {
-      return $location.path().indexOf('/item-search') == 0;
+      return $location.path().indexOf('/search') == 0;
     }
 
     $scope.isLoading = function() {
@@ -45,6 +31,26 @@ angular.module('dnsim').controller('NavCtrl',
     $scope.noRegion = function() {
       return region.dntLocation == null;
     }
+    
+    $scope.setCategory = function(action) {
+      localStorage.setItem('selectedItemCategory', action.name);
+      $location.path('/' + action.path);
+    }
+    
+    $scope.fireAction = function(action) {
+      if(action.name == 'search') {
+        var cat = localStorage.getItem('selectedItemCategory', action.name);
+        if(cat) {
+          $location.path('/' + action.path + '/' + cat);
+        }
+        else {
+          $location.path('/' + action.path);
+        }
+      }
+      else {
+          $location.path('/' + action.path);
+      }
+    }
       
     $scope.getActions = function() {
       var menu = null;
@@ -55,7 +61,7 @@ angular.module('dnsim').controller('NavCtrl',
         menu = noLocationMenu; 
       }
       else if($location.path() == '/view-group' || region.dntLocation == null) {
-        menu = noMenu;
+        menu = normalMenu;
       }
       else {
         menu = normalMenu;
@@ -74,7 +80,7 @@ angular.module('dnsim').controller('NavCtrl',
       });
     
       $scope.itemType = '';
-      angular.forEach($scope.searchMenu, function(value, key) {
+      angular.forEach($scope.categories, function(value, key) {
         if($location.path() == '/' + value.path) {
           value.extraCss = 'active';
           $scope.itemType = value.name;

@@ -88,20 +88,21 @@ function items(translations,dntData,hCodeValues,itemColumnsToLoad) {
       return {
         data : d,
         potential : p,
-        totalRatio: totalRatio,
         id: d.id,
+        pid: null,
+        totalRatio: totalRatio,
         name : null,
         stats : null,
         itemSource : this.name,
         levelLimit : d.LevelLimit,
         needJobClass : d.NeedJobClass,
-        id : null,
         typeId : d.Type,
         potentialRatio : null,
         typeName : null,
         rank : hCodeValues.rankNames[d.Rank],
         enchantmentId : null,
         sparkTypeId: null,
+        sparkId: null,
       };
     };
     

@@ -117,7 +117,10 @@ StrIntToCritDmg: {{ editGroup.getJobConversion('StrengthIntelligenceToCriticalDa
 <div class="row">
   <div class="col-xs-12">
     <br />
-    <button class="btn btn-default" ng-click="editGroup.ok()" ng-disabled="editGroup.invalidGroupName()">save</button>
+    <button class="btn btn-default" ng-click="editGroup.ok()" ng-disabled="editGroup.invalidGroupName()">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+      save
+    </button>
   </div>
 </div>
 </dnsim-loading>

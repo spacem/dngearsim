@@ -12,8 +12,11 @@ angular.module('dnsim').controller('SavedCtrl',
     $scope.setStats = {};
     $scope.calculatedStats = {};
     $scope.nakedStats = {};
-    $scope.hiddenTypes = saveHelper.getHiddenTypes($scope.hiddenTypes);
     $scope.currentGroup = localStorage.getItem('currentGroup');
+    $scope.selectedType = localStorage.getItem('selectedItemCategory');
+    if(!$scope.selectedType) {
+      $scope.selectedType = 'titles';
+    }
     
     $scope.isLoading = false;
     $scope.savedItems = null;
@@ -21,6 +24,20 @@ angular.module('dnsim').controller('SavedCtrl',
     
     if('groupName' in $routeParams) {
       $scope.currentGroup = $routeParams.groupName;
+    }
+    
+    $scope.setSelectedType = function(value) {
+      $scope.selectedType = value;
+      localStorage.setItem('selectedItemCategory', value);
+    }
+    
+    $scope.toggleGroup = function(groupName) {
+      if(groupName == $scope.currentGroup) {
+        $scope.setCurrentGroup('');
+      }
+      else {
+        $scope.setCurrentGroup(groupName);
+      }
     }
     
     $scope.setCurrentGroup = function(groupName) {
@@ -149,8 +166,9 @@ angular.module('dnsim').controller('SavedCtrl',
     }
     
     $scope.copyGroup = function(group) {
-      saveHelper.importGroup(group, $scope.savedItems[group].items);
+      var newGroupName = saveHelper.importGroup(group, $scope.savedItems[group].items);
       $scope.init();
+      $scope.setCurrentGroup(newGroupName);
     }
     
     $scope.reloadGroup = function(groupName) {
