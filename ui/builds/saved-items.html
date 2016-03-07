@@ -21,7 +21,7 @@
               <span ng-show="items.job && items.job.id > 0">{{items.job.name}}</span><br />
               {{$parent.getSaveDate(groupName)}} {{$parent.getSaveTime(groupName)}}<br />
               <span ng-if="currentGroup != groupName">{{$parent.getGroupSummary(groupName)}}<br /></span>
-              <span ng-if="currentGroup != groupName" dnsim-stats stats="$parent.calculatedStats[groupName]" separator="'|'" filter="'summaryDisplay'" />
+              <span dnsim-stats stats="$parent.calculatedStats[groupName]" separator="'|'" filter="'summaryDisplay'" />
             </small>
             </h3>
           </button>
@@ -120,22 +120,26 @@
         </div>
         
         <div class="col-xs-6 col-md-12" ng-show="$parent.setStats[groupName].length > 0">
-          <h4>set stats</h4>
-          <div dnsim-stats stats="$parent.setStats[groupName]"></div>
+          <h4>set&nbsp;stats</h4>
+          <button class="btn btn-link" ng-show="!$parent.showSetStats" ng-click="$parent.showSetStats = true">show&nbsp;set&nbsp;stats</button>
+          <div ng-if="$parent.showSetStats" dnsim-stats stats="$parent.setStats[groupName]"></div>
         </div>
         
         <div class="col-xs-6 col-md-12">
           <h4>item&nbsp;stats</h4>
-          <div dnsim-stats stats="$parent.combinedStats[groupName]"></div>
+          <button class="btn btn-link" ng-show="!$parent.showItemStats" ng-click="$parent.showItemStats = true">show&nbsp;item&nbsp;stats</button>
+          <div ng-if="$parent.showItemStats" dnsim-stats stats="$parent.combinedStats[groupName]"></div>
         </div>
         
         <div class="col-xs-6 col-md-12" ng-show="items.heroStats != null && items.heroStats.length > 0">
-          <h4>hero stats</h4>
-          <div dnsim-stats stats="items.heroStats"></div>
+          <h4>hero&nbsp;stats</h4>
+          <button class="btn btn-link" ng-show="!$parent.showHeroStats" ng-click="$parent.showHeroStats = true">show&nbsp;hero&nbsp;stats</button>
+          <div ng-if="$parent.showHeroStats" dnsim-stats stats="items.heroStats"></div>
         </div>
         <div class="col-xs-6 col-md-12" ng-show="$parent.nakedStats[groupName].length > 0">
-          <h4>naked stats</h4>
-          <div dnsim-stats stats="$parent.nakedStats[groupName]"></div>
+          <h4>naked&nbsp;stats</h4>
+          <button class="btn btn-link" ng-show="!$parent.showNakedStats" ng-click="$parent.showNakedStats = true">show&nbsp;naked&nbsp;stats</button>
+          <div  ng-if="$parent.showNakedStats" dnsim-stats stats="$parent.nakedStats[groupName]"></div>
         </div>
       </div>
     </div>

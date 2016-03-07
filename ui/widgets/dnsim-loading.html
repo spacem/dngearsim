@@ -1,7 +1,7 @@
-<div class="row" ng-show="showLoadingScreen">
+<div class="row" ng-if="showLoadingScreen">
   <div class="col-xs-12 loading">
     loading...
   </div>
 </div>
 
-<ng-transclude ng-show="!showLoadingScreen" />
+<ng-transclude ng-if="!showLoadingScreen" />

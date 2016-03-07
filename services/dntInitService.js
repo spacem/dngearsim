@@ -1,13 +1,13 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('dntInit', ['items','jobs','dntData','initItem',dntInit]);
-function dntInit(items,jobs,dntData,initItem) {
+angular.module('dnsim').factory('dntInit', ['items','jobs','dntData','itemFactory',dntInit]);
+function dntInit(items,jobs,dntData,itemFactory) {
   return function(progress) {
     
     progress('starting init');
     
-    var allFactories = [jobs].concat(items.all);
+    var allFactories = [jobs];
     
     var dntFiles = {};
     angular.forEach(items, function(item, key) {
@@ -37,15 +37,6 @@ function dntInit(items,jobs,dntData,initItem) {
           if(allFactories[index].isLoaded()) {
             if('fileName' in allFactories[index]) {
               progress('dnt loaded: ' + allFactories[index].fileName);
-            }
-            else {
-              
-              var loadedItems = allFactories[index].getItems();
-              angular.forEach(loadedItems, function(value, key) {
-                initItem(value);
-              });
-              
-              progress('initialised ' + loadedItems.length + ' items from: ' + allFactories[index].mainDnt);
             }
             initFactory(index+1);
           }

@@ -288,6 +288,7 @@ function statHelper(hCodeValues) {
         if(group.element && group.element.id > 0) {
           var elementStat = statLookup[hCodeValues.elements[group.element.id].dmgStat];
           if(elementStat) {
+            addStat(elementStat);
             avgDmg = avgDmg * (1+Number(elementStat.max));
           }
         }

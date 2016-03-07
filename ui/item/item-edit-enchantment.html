@@ -1,11 +1,11 @@
-<div class="col-xs-12" ng-hide="editCtrl.enchantment == null">
+<div class="col-xs-12" ng-if="editCtrl.enchantment != null">
   <br /><label>+{{editCtrl.item.enchantmentNum}} enchantment stats:</label><br />
   <span dnsim-stats stats="editCtrl.item.enchantmentStats" separator="'|'">
   </span>
   <br />
 </div>
 
-<div class="col-xs-12 col-md-4" ng-show="editCtrl.getEnchantments() && editCtrl.getEnchantments().length > 0">
+<div class="col-xs-12 col-md-4" ng-if="editCtrl.getEnchantments() && editCtrl.getEnchantments().length > 0">
   <div class="form-group">
     <button class="btn btn-default" ng-dblclick="editCtrl.prevEnchantment()" ng-click="editCtrl.prevEnchantment()" ng-disabled="editCtrl.item.enchantmentNum < 1">- reduce</button>
     <button class="btn btn-default" ng-dblclick="editCtrl.nextEnchantment()" ng-click="editCtrl.nextEnchantment()" ng-disabled="editCtrl.isMaxEnchantLevel()">+ enhance</button>

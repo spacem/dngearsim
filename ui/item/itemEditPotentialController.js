@@ -1,11 +1,13 @@
 angular.module('dnsim').controller('itemEditPotentialCtrl',
 
-['dntData','items',
-function(dntData,items) {
+['dntData','items','hCodeValues',
+function(dntData,items,hCodeValues) {
   'use strict';
   
   this.potentials = null;
   this.potential = null;
+  this.changingPotentials = false;
+  this.potentialStats = {};
   
   if(this.item == null) return;
   
@@ -26,6 +28,7 @@ function(dntData,items) {
         if(potentials.length == 1) {
           vm.potential = potentials[0];
           vm.potentials = dntData.find(vm.itemType.potentialDnt, 'PotentialID', vm.potential.PotentialID);
+          vm.potentialStats = getPotentialStats(vm.potentials);
         }
       }
     }
@@ -39,6 +42,7 @@ function(dntData,items) {
         vm.potential = vm.potentials[i+1];
         vm.item.pid = vm.potential.id;
         vm.onChange();
+        this.changingPotentials = true;
         return;
       }
     }
@@ -49,6 +53,19 @@ function(dntData,items) {
       if(vm.potential.id == vm.potentials[i].id) {
         vm.potential = vm.potentials[i-1];
         vm.item.pid = vm.potential.id;
+        vm.onChange();
+        this.changingPotentials = true;
+        return;
+      }
+    }
+  }
+    
+  this.changePotential = function(pid) {
+    for(var i=0;i<vm.potentials.length;++i) {
+      if(pid == vm.potentials[i].id) {
+        vm.potential = vm.potentials[i];
+        vm.item.pid = vm.potential.id;
+        vm.changingPotentials = false;
         vm.onChange();
         return;
       }
@@ -63,6 +80,32 @@ function(dntData,items) {
   this.isLastPotential = function() {
     this.getPotentials();
     return !vm.potentials || vm.potentials.length <= 1 || !vm.potential || vm.potential.id == vm.potentials[vm.potentials.length-1].id;
+  }
+  
+  function getPotentialStats() {
+    var pStats = {};
+    var emptyStatId = null;
+    
+    if(vm.potentials != null) {
+      angular.forEach(vm.potentials, function(p, index) {
+        var stats = [];
+        angular.forEach(hCodeValues.getStats(p), function(stat, sIndex) {
+          if(!hCodeValues.stats[stat.id].hide) {
+            stats.push(stat);
+          }
+        });
+        
+        if(stats.length > 0) {
+          pStats[p.id] = stats;
+        }
+        else if(!emptyStatId) {
+          pStats[p.id] = [];
+          emptyStatId = p.id;
+        }
+      });
+    }
+    
+    return pStats;
   }
   
   function reportProgress(msg) {

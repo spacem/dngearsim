@@ -1,34 +1,34 @@
 angular.module('dnsim').controller('ItemSearchCtrl',
 ['$scope','$window','$routeParams','$timeout','$location',
 'translations',
-'items',
+'itemCategory',
 'jobs',
 'hCodeValues',
-'initItem',
+'itemFactory',
 'region',
 function(
   $scope,$window,$routeParams,$timeout,$location,
   translations,
-  items,
+  itemCategory,
   jobs,
   hCodeValues,
-  initItem,
+  itemFactory,
   region) {
   'use strict';
   
-  $scope.itemType = $routeParams.itemType;
-  if(!$scope.itemType) {
-     $scope.itemType = localStorage.getItem('selectedItemCategory');
-     if(!$scope.itemType) {
-       $scope.itemType = 'titles';
+  $scope.itemCategory = itemCategory.byPath('search/' + $routeParams.itemType);
+  if(!$scope.itemCategory) {
+     var itemType = localStorage.getItem('selectedItemCategory');
+     if(!itemType) {
+       itemType = 'titles';
      }
      
-     $location.path('/search/' + $scope.itemType);
+     $location.path('/search/' + itemType);
      return;
   }
 
   document.body.className = 'search-back';
-  $window.document.title = 'DN Gear Sim | ' + $routeParams.itemType.toUpperCase();
+  $window.document.title = 'DN Gear Sim | ' + $scope.itemCategory.name.toUpperCase();
   
   $scope.job = {id: -1, name: ''};
   $scope.jobs = [$scope.job];
@@ -38,7 +38,6 @@ function(
   $scope.maxDisplay = 10;
   $scope.totalNumResults = 0;
   $scope.grades = hCodeValues.rankNames;
-  $scope.simpleSearch = $routeParams.itemType == 'titles';
   $scope.stat = {id:-1, name:''};
   $scope.stats = [$scope.stat];
   
@@ -74,65 +73,23 @@ function(
   else {
     translations.init(reportProgress, function() { $timeout(init); } );
   }
-  
-  if($routeParams.itemType == 'weapons') {
-    $scope.itemType = 'equipment';
-    $scope.extraFilterFunc = function(d) {
-      return d.typeId == 0;
-    };
-  }
-  else if($routeParams.itemType == 'armour') {
-    $scope.itemType = 'equipment';
-    $scope.extraFilterFunc = function(d) {
-      return d.typeId == 1 && d.typeName == 'armour';
-    }
-  }
-  else if($routeParams.itemType == 'accessories') {
-    $scope.itemType = 'equipment';
-    $scope.extraFilterFunc = function(d) {
-      return d.typeId == 1 && d.typeName == 'accessories';
-    }
-  }
-  else if($routeParams.itemType == 'offensive gems') {
-    $scope.itemType = 'gems';
-    $scope.extraFilterFunc = function(d) {
-      return d.typeName == 'offensive gems';
-    }
-  }
-  else if($routeParams.itemType == 'increasing gems') {
-    $scope.itemType = 'gems';
-    $scope.extraFilterFunc = function(d) {
-      return d.typeName == 'increasing gems';
-    }
-  }
-  else {
-    $scope.itemType = $routeParams.itemType;
-    $scope.extraFilterFunc = function(d) { return true; }
-  }
-
-  var allItemFactories = items.all;
-
-  var itemFactories = [];
-  if($scope.itemType != null) {
-    for(var f=0;f<allItemFactories.length;++f) {
-      if(allItemFactories[f].type == $scope.itemType) {
-        itemFactories.push(allItemFactories[f]);
-      }
-    }
-  }
 
   $scope.save = function() {
-    if(!$scope.simpleSearch) {
+    if(!$scope.itemCategory.hideLevel) {
       localStorage.setItem('minLevel', $scope.minLevel);
       localStorage.setItem('maxLevel', $scope.maxLevel);
-      
+    }
+    
+    if(!$scope.itemCategory.hideJob) {
       if($scope.job != null) {
         localStorage.setItem('jobNumber', $scope.job.id);
       }
-      if($scope.stat != null) {
-        localStorage.setItem('searchStat', $scope.stat.id);
-      }
     }
+  
+    if($scope.stat != null) {
+      localStorage.setItem('searchStat', $scope.stat.id);
+    }
+
     localStorage.setItem('nameSearch', $scope.nameSearch);
   };
   
@@ -145,44 +102,8 @@ function(
       jobs.init(reportProgress, function() { $timeout(jobInit); } );
     }
 
-    angular.forEach(itemFactories, function(value, key) {
-      if(!value.loading) {
-        value.init(reportProgress, function() { $timeout(); } );
-      }
-    });
+    itemCategory.init($scope.itemCategory.name, $timeout);
   }
-  
-  $scope.isLoading = function() {
-    if(!jobs.isLoaded()) {
-      // console.log('jobs not loaded');
-      if(!jobs.hasStartedLoading()) {
-        init();
-      }
-      return true;      
-    }
-    
-    if(!translations.isLoaded()) {
-      // console.log('transations not loaded');
-      if(!translations.startedLoading) {
-        translations.init(reportProgress, function() { $timeout(translationsInit); } );
-      }
-
-      return true;
-    }
-
-    for(var i=0;i<itemFactories.length;++i) {
-      if(!itemFactories[i].isLoaded()) {
-        // console.log(itemFactories[i].name + ' not loaded');
-        
-        if(!itemFactories[i].loading) {
-          init();
-        }
-        return true;
-      }
-    }
-    
-    return false;
-  };
   
   function reportProgress(msg) {
     // console.log('progress: ' + msg);
@@ -212,144 +133,133 @@ function(
   }
   
   $scope.getResults = function() {
-      if($scope.isLoading()) {
-        return [];
-      }
-      var allItems = getAllItems(itemFactories);
-      if(allItems == null) {
-        return [];
-      }
-      
-      allItems = allItems.sort(function(item1, item2) {
-          return (item2.levelLimit - item1.levelLimit);
-        });
-      
-      $scope.save();
-            
-      var pcStatId = -1;
-      if('pc' in $scope.stat) {
-        pcStatId = $scope.stat.pc;
-      }
+    var allItems = itemCategory.getItems($scope.itemCategory.name);
+    if(allItems == null) {
+      return null;
+    }
     
-      var statVals = [];
-      var newResults = [];
-      var numEquip = allItems.length;
-      var curDisplay = 0;
-      for(var i=0;i<numEquip && (curDisplay<$scope.maxDisplay || $scope.stat.id >= 0);++i) {
-        var e = allItems[i];
-        if(e != null) {
+    allItems = allItems.sort(function(item1, item2) {
+        return (item2.levelLimit - item1.levelLimit);
+      });
+    
+    $scope.save();
           
-          if(!$scope.simpleSearch) {
-            if(e.levelLimit < $scope.minLevel || e.levelLimit > $scope.maxLevel) {
-              continue;
-            }
-            
-            if(e.rank != null && !$scope.grades[e.rank.id].checked) {
-              continue;
-            }
-            
-            if($scope.job != null && $scope.job.id > 0) {
-              if(!$scope.job.isClassJob(e.needJobClass)) {
-                continue;
-              }
-            }
-          }
-          
-          initItem(e);
+    var pcStatId = -1;
+    if('pc' in $scope.stat) {
+      pcStatId = $scope.stat.pc;
+    }
+  
+    var statVals = [];
+    var newResults = [];
+    var numEquip = allItems.length;
+    var curDisplay = 0;
+    for(var i=0;i<numEquip && (curDisplay<$scope.maxDisplay || $scope.stat.id >= 0);++i) {
+      var e = allItems[i];
+      if(e != null) {
         
-          if(!$scope.extraFilterFunc(e)) {
+        if(!$scope.itemCategory.hideLevel) {
+          if(e.levelLimit < $scope.minLevel || e.levelLimit > $scope.maxLevel) {
             continue;
           }
+        }
           
-          if($scope.nameSearch != '') {
-            var nameSearches = $scope.nameSearch.split(' ');
-            if(nameSearches.length == 0) {
-              nameSearches = [$scope.nameSearch];
-            }
-            var allMatch = true;
-            for(var ns=0;ns<nameSearches.length;++ns) {
-              if(e.name.toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
-                allMatch = false;
-                break;
-              }
-            }
-            
-            if(!allMatch) {
+        if(!$scope.itemCategory.hideRank) {
+          if(e.rank != null && !$scope.grades[e.rank.id].checked) {
+            continue;
+          }
+        }
+          
+        if(!$scope.itemCategory.hideJob) {
+          if($scope.job != null && $scope.job.id > 0) {
+            if(!$scope.job.isClassJob(e.needJobClass)) {
               continue;
             }
           }
-          
-          if($scope.stat.id >= 0) {
-            var statFound = false;
-            
-            var statVal = {};
-            angular.forEach(e.stats, function(stat, index) {
-              if(stat.id == $scope.stat.id) {
-                statFound = true;
-                statVal.i = curDisplay;
-                statVal.s = Number(stat.max);
-              }
-              else if(stat.id == pcStatId) {
-                statFound = true;
-                statVal.i = curDisplay;
-                statVal.pc = Number(stat.max);
-              }
-            });
-            
-            if(!statFound) {
-              continue;
-            }
-            else {
-              if(statVal.s && statVal.pc) {
-                statVal.s = statVal.s * (1.0 + statVal.pc);
-              }
-              else if(statVal.pc) {
-                statVal.s = statVal.pc;
-              }
-              statVals.push(statVal);
+        }
+        
+        itemFactory.initItem(e);
+      
+        if(e.typeName != $scope.itemCategory.name) {
+          continue;
+        }
+        
+        if($scope.nameSearch != '') {
+          var nameSearches = $scope.nameSearch.split(' ');
+          if(nameSearches.length == 0) {
+            nameSearches = [$scope.nameSearch];
+          }
+          var allMatch = true;
+          for(var ns=0;ns<nameSearches.length;++ns) {
+            if(e.name.toUpperCase().indexOf(nameSearches[ns].toUpperCase()) == -1) {
+              allMatch = false;
+              break;
             }
           }
           
-          newResults.push(e);
-          curDisplay++;
+          if(!allMatch) {
+            continue;
+          }
         }
-      }
-      
-      if($scope.stat.id >= 0) {
         
-        var currentResults = Math.min(curDisplay, $scope.maxDisplay);
-        
-        statVals = statVals.sort(function(value1, value2) {
-          return value2.s - value1.s;
-        });
-        
-        var statResults = [];
-        for(var i=0;i<currentResults;++i) {
-          statResults.push(newResults[statVals[i].i]);
+        if($scope.stat.id >= 0) {
+          var statFound = false;
+          
+          var statVal = {};
+          angular.forEach(e.stats, function(stat, index) {
+            if(stat.id == $scope.stat.id) {
+              statFound = true;
+              statVal.i = curDisplay;
+              statVal.s = Number(stat.max);
+            }
+            else if(stat.id == pcStatId) {
+              statFound = true;
+              statVal.i = curDisplay;
+              statVal.pc = Number(stat.max);
+            }
+          });
+          
+          if(!statFound) {
+            continue;
+          }
+          else {
+            if(statVal.s && statVal.pc) {
+              statVal.s = statVal.s * (1.0 + statVal.pc);
+            }
+            else if(statVal.pc) {
+              statVal.s = statVal.pc;
+            }
+            statVals.push(statVal);
+          }
         }
-        newResults = statResults;
+        
+        newResults.push(e);
+        curDisplay++;
       }
+    }
+    
+    if($scope.stat.id >= 0) {
       
-      $scope.totalNumResults = newResults.length;
+      var currentResults = Math.min(curDisplay, $scope.maxDisplay);
       
-      return newResults;
+      statVals = statVals.sort(function(value1, value2) {
+        return value2.s - value1.s;
+      });
+      
+      var statResults = [];
+      for(var i=0;i<currentResults;++i) {
+        statResults.push(newResults[statVals[i].i]);
+      }
+      newResults = statResults;
+    }
+    
+    $scope.totalNumResults = newResults.length;
+    
+    return newResults;
   };
   
   $scope.showMoreResults = function(extra) {
     $scope.maxDisplay = $scope.totalNumResults + extra;
     $scope.totalNumResults = 0;
-  }
-  
-  function getAllItems(factories) {
-    
-    var allItems = [];
-    
-    angular.forEach(factories, function(value, key) {
-      if(value.isLoaded()) {
-        allItems = allItems.concat(value.getItems());
-      }
-      });
-    return allItems;
   }
   
 }]);

@@ -117,19 +117,6 @@ function jobs(dntData, translations, itemColumnsToLoad) {
       
       return null;
     },
-    
-    findJobById : function(id) {
-      var allJobs = this.getAllJobs();
-      var foundJob = null;
-      angular.forEach(allJobs, function(job, index) {
-        if(job.id == id) {
-          foundJob = job;
-          return;
-        }
-      });
-      
-      return foundJob;
-    }
   }
 }
 

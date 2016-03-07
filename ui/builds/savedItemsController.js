@@ -21,6 +21,10 @@ angular.module('dnsim').controller('SavedCtrl',
     $scope.isLoading = false;
     $scope.savedItems = null;
     $scope.savedItemsByType = null;
+    $scope.showSetStats = false;
+    $scope.showItemStats = false;
+    $scope.showHeroStats = false;
+    $scope.showNakedStats = false;
     
     if('groupName' in $routeParams) {
       $scope.currentGroup = $routeParams.groupName;

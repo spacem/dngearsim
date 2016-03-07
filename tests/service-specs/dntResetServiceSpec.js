@@ -12,7 +12,7 @@ describe('dntReset', function () {
   var dntReset;
   beforeEach(function() {
     module(function($provide) {
-      $provide.value('items', {all: [fakeItem1, fakeItem2]});
+      $provide.value('items', { fakeItem1: fakeItem1, fakeItem2:fakeItem2});
       $provide.value('jobs', fakeJob);
       $provide.value('dntData', dntData);
     });

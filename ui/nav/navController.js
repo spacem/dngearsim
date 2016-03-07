@@ -13,7 +13,6 @@ angular.module('dnsim').controller('NavCtrl',
       aboutAction,
       ];
       
-    $scope.categories = itemCategory.categories;
     region.init();
   
     $scope.isSearch = function() {
@@ -30,11 +29,6 @@ angular.module('dnsim').controller('NavCtrl',
     
     $scope.noRegion = function() {
       return region.dntLocation == null;
-    }
-    
-    $scope.setCategory = function(action) {
-      localStorage.setItem('selectedItemCategory', action.name);
-      $location.path('/' + action.path);
     }
     
     $scope.fireAction = function(action) {
@@ -76,17 +70,6 @@ angular.module('dnsim').controller('NavCtrl',
         }
         else if(value.path.length > 1 && $location.path().indexOf('/' + value.path) == 0) {
           value.extraCss = 'active';
-        }
-      });
-    
-      $scope.itemType = '';
-      angular.forEach($scope.categories, function(value, key) {
-        if($location.path() == '/' + value.path) {
-          value.extraCss = 'active';
-          $scope.itemType = value.name;
-        }
-        else {
-          value.extraCss = 'search-default';
         }
       });
       

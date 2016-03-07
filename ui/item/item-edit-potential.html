@@ -1,4 +1,15 @@
-<div class="col-xs-12" ng-show="editCtrl.getPotentials() != null && editCtrl.getPotentials().length > 1">
+<div class="col-xs-12" ng-if="editCtrl.getPotentials() != null && editCtrl.getPotentials().length > 1">
+  <button class="btn btn-default" ng-click="editCtrl.changingPotentials = true" ng-show="!editCtrl.changingPotentials">change potential</button>
+  <!--
   <button class="btn btn-default" ng-disabled="editCtrl.isFirstPotential()" ng-dblclick="editCtrl.prevPotential()" ng-click="editCtrl.prevPotential()">prev</button>
   <button class="btn btn-default" ng-disabled="editCtrl.isLastPotential()" ng-dblclick="editCtrl.nextPotential()" ng-click="editCtrl.nextPotential()">next</button>
+  -->
+  <div ng-show="editCtrl.changingPotentials" class="btn-group-vertical">
+    <button  ng-class="{'btn': true, 'btn-default': true, 'disabled': editCtrl.potential.id == pid}" ng-click="editCtrl.changePotential(pid)" ng-repeat="(pid, stats) in editCtrl.potentialStats track by $index">
+      <span>
+        <span ng-if="stats.length == 0">clean</span>
+        <span dnsim-stats stats="stats" separator="'|'"></span>
+      </span>
+    </button>
+  </div>
 </div>

@@ -2,8 +2,8 @@
 'use strict';
 
 angular.module('dnsim').factory('exportLinkHelper', 
-['$http','items','dntData','initItem','hCodeValues','itemColumnsToLoad','statHelper','translations',exportLinkHelper]);
-function exportLinkHelper($http,items,dntData,initItem,hCodeValues,itemColumnsToLoad,statHelper,translations) {
+['$http','items','dntData','itemFactory','hCodeValues','itemColumnsToLoad','statHelper','translations',exportLinkHelper]);
+function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations) {
   'use strict';
   
   return {
@@ -213,8 +213,8 @@ function exportLinkHelper($http,items,dntData,initItem,hCodeValues,itemColumnsTo
             }
           }
           
-          var newItem = itemType.createItem(d, p, totalRatio);
-          initItem(newItem); 
+          var newItem = itemFactory.createItem(itemType.name, d, p, totalRatio);
+          itemFactory.initItem(newItem); 
 
           var usePartDnt = null;
           if(newItem.typeName != 'weapons' && newItem.typeId != 0) {

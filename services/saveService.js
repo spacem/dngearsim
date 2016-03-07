@@ -1,8 +1,8 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('saveHelper', [saveHelper]);
-function saveHelper() {
+angular.module('dnsim').factory('saveHelper', ['itemCategory',saveHelper]);
+function saveHelper(itemCategory) {
   return {
     saveItem: function(groupName, item) {
       var groups = this.getSavedItems();
@@ -18,9 +18,14 @@ function saveHelper() {
       
       localStorage.setItem('lastSavedGroup', groupName);
     },
+    
     importGroup: function(groupName, updatedItems) {
       var items = this.getSavedItems();
-      
+      groupName = this.getUniqueGroupName(groupName, items);
+      this.updatedSavedItems(groupName, updatedItems);
+    },
+    
+    getUniqueGroupName: function(groupName, existingGroups) {
       var groupNameIndex = 0;
       if(groupName.lastIndexOf(')') == groupName.length-1) {
         var startIndex = groupName.lastIndexOf('(');
@@ -33,17 +38,17 @@ function saveHelper() {
         }
       }
       
+      var originalName = groupName;
       for(;;) {
-        var groupName = groupName;
+        var groupName = originalName;
         if(groupNameIndex > 0) {
-          groupName = groupName + ' (' + groupNameIndex + ')';
+          groupName = originalName + ' (' + groupNameIndex + ')';
         }
         
-        if(groupName in items) {
+        if(groupName in existingGroups) {
           groupNameIndex++;
         }
         else {
-          this.updatedSavedItems(groupName, updatedItems);
           break;
         }
       }
@@ -102,18 +107,9 @@ function saveHelper() {
           }
           
           savedItemsByType[groupName] = {};
-          addType('titles');
-          addType('weapons');
-          addType('armour');
-          addType('accessories');
-          addType('techs');
-          addType('offensive gems');
-          addType('increasing gems');
-          addType('plates');
-          addType('talisman');
-          addType('cash');
-          addType('skills');
-          addType('custom');
+          angular.forEach(itemCategory.categories, function(category, index) {
+            addType(category.name);
+          });
           
           angular.forEach(group.items, function(item, index) {
             if(item != null && !(item.typeName in savedItemsByType[groupName])) {
