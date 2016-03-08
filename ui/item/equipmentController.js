@@ -32,11 +32,11 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       dntData.isLoaded($scope.itemType.mainDnt)) {
 
       var itemData = dntData.find($scope.itemType.mainDnt, 'id', $scope.item.id);
-      if(itemData && itemData.length > 0 && itemData[0].DescriptionID > 0) {
-        if(translations.translate(itemData[0].AbleWStorage) == 1) {
+      if(itemData && itemData.length > 0 && 'AbleWStorage' in itemData[0] && 'IsCash' in itemData[0] && itemData[0].IsCash == 0) {
+        if(itemData[0].AbleWStorage == 1) {
           return 'can put in server storage';
         }
-        else {
+        else if(itemData[0].AbleWStorage == 0) {
           return 'not transferable';
         }
       }
