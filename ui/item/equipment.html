@@ -8,16 +8,19 @@
 <div class="row" ng-if="item != null">
   <div class="col-xs-12 col-md-4">
     <h3>
-      <dnsim-item-link item="item" /><br />
-      <small> <br />
+      <dnsim-item-link item="item"></dnsim-item-link><br />
+      <small>  
+      {{getDescription()}}
+      {{getServerStorage()}}
+      <br />
       <span ng-show="item.rank && item.rank.id > 0" class="{{item.rank.name}}-grade">
       {{item.rank.name}}
       </span>
       <span ng-show="jobName">
       {{jobName.toLowerCase()}}
       </span>
-      <span ng-show="item.levelLimit">
-      level {{item.levelLimit}}
+      <span ng-show="item.levelLimit > 1">
+      requires level {{item.levelLimit}}
       </span>
       </small>
     </h3>

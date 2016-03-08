@@ -13,6 +13,37 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   $scope.item.setStats = null;
   $scope.item.setId = null;
   
+  $scope.getDescription = function() {
+    if($scope.itemType &&
+      $scope.itemType.name == 'title' &&
+      translations.isLoaded() &&
+      dntData.isLoaded($scope.itemType.mainDnt)) {
+
+      var itemData = dntData.find($scope.itemType.mainDnt, 'id', $scope.item.id);
+      if(itemData && itemData.length > 0 && itemData[0].DescriptionID > 0) {
+        return translations.translate(itemData[0].DescriptionID);
+      }
+    }
+    return '';
+  }
+  
+  $scope.getServerStorage = function() {
+    if($scope.itemType &&
+      dntData.isLoaded($scope.itemType.mainDnt)) {
+
+      var itemData = dntData.find($scope.itemType.mainDnt, 'id', $scope.item.id);
+      if(itemData && itemData.length > 0 && itemData[0].DescriptionID > 0) {
+        if(translations.translate(itemData[0].AbleWStorage) == 1) {
+          return 'can put in server storage';
+        }
+        else {
+          return 'not transferable';
+        }
+      }
+    }
+    return '';
+  }
+  
   $scope.handleChange = function() {
     setFullStats();
     
