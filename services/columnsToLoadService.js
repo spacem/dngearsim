@@ -18,7 +18,7 @@ function itemColumnsToLoad() {
       State9: true, StateValue9: true, State9_Max: true,
       State10: true,StateValue10: true,State10_Max: true,
       EnchantID: true,
-      dragonjeweltype: true, AbleWStorage: true, ExchangeType:true, IconImageIndex: true
+      dragonjeweltype: true, AbleWStorage: true, ExchangeType:true, IconImageIndex: true, IsCash: true
     },
     partsDnt: {
       SetItemID: true

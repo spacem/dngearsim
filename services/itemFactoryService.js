@@ -29,6 +29,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       levelLimit : d.LevelLimit,
       needJobClass : d.NeedJobClass,
       typeId : d.Type,
+      exchangeType: d.ExchangeType,
       potentialRatio : null,
       typeName : null,
       rank : hCodeValues.rankNames[d.Rank],

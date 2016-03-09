@@ -95,11 +95,29 @@ function saveHelper(itemCategory) {
             }
           });
           
-          // add them in a sensible order
-          // some browsers wont work with this
           function addType(typeName) {
             if(typeName in types) {
-              savedItemsByType[groupName][typeName] = types[typeName];
+              var sorted = types[typeName].sort(function(item1, item2) {
+                if('rank' in item1 && 'exchangeType' in item1 && 'levelLimit' in item1 &&
+                  'rank' in item2 && 'exchangeType' in item2 && 'levelLimit' in item2) {
+
+                  if(item2.exchangeType == item1.exchangeType) {
+                    if(item2.levelLimit == item1.levelLimit) {
+                      return (item2.rank.id - item1.rank.id);
+                    }
+                    else {
+                      return (item2.levelLimit.id - item1.levelLimit.id);
+                    }
+                  }
+                  else {
+                    return (item2.exchangeType - item1.exchangeType);
+                  }
+                }
+                else {
+                  return item1.name.localeCompare(item2.name);
+                }
+              });
+              savedItemsByType[groupName][typeName] = sorted;
             }
             else {
               savedItemsByType[groupName][typeName] = [];

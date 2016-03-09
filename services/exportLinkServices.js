@@ -299,6 +299,8 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         
         if(item.itemSource in items) {
           var itemType = items[item.itemSource];
+          
+          dntFiles['exchange.lzjson'] = null;
   
           dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
           if('potentialDnt' in itemType) {

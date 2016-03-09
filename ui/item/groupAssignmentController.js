@@ -207,7 +207,12 @@ function(hCodeValues,statHelper,saveHelper) {
       
       var items = [];
       angular.forEach(vm.savedItems[vm.groupName].items, function(item, index) {
-        if(item.typeName == vm.item.typeName) {
+        if(item.exchangeType && item.itemSource != 'gem') {
+          if(item.exchangeType == vm.item.exchangeType) {
+            items.push(item);
+          }
+        }
+        else if(item.typeName == vm.item.typeName) {
           items.push(item);
         }
       });

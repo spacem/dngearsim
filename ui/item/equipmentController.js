@@ -27,6 +27,22 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     return '';
   }
   
+  $scope.getExchangeType = function() {
+    var exchangeDnt = 'exchange.lzjson';
+    if($scope.itemType &&
+      translations.isLoaded() &&
+      dntData.isLoaded(exchangeDnt) &&
+      $scope.item.exchangeType > 0) {
+
+      var exchange = dntData.find(exchangeDnt, 'ExchangeType', $scope.item.exchangeType);
+      if(exchange && exchange.length > 0 && exchange[0].NameID > 0) {
+        return translations.translate(exchange[0].NameID).toLowerCase();
+      }
+    }
+    return '';
+  }
+  
+  
   $scope.getServerStorage = function() {
     if($scope.itemType &&
       dntData.isLoaded($scope.itemType.mainDnt)) {
