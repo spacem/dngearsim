@@ -274,6 +274,22 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               newItem.fullStats = hCodeValues.mergeStats(newItem.fullStats, newItem.sparkStats);
             }
           }
+          else if(d.dragonjeweltype) {
+            newItem.offensiveGemSlots = 0;
+            newItem.increasingGemSlots = 0;
+            var itemData = dntData.find('dragonjewelslottable.lzjson', 'DragonJewelID', d.dragonjeweltype);
+            if(itemData && itemData.length > 0) {
+              if(itemData[0].DragonJewelSlot1 == 1) newItem.offensiveGemSlots++;
+              if(itemData[0].DragonJewelSlot2 == 1) newItem.offensiveGemSlots++;
+              if(itemData[0].DragonJewelSlot3 == 1) newItem.offensiveGemSlots++;
+              if(itemData[0].DragonJewelSlot4 == 1) newItem.offensiveGemSlots++;
+              
+              if(itemData[0].DragonJewelSlot1 == 2) newItem.increasingGemSlots++;
+              if(itemData[0].DragonJewelSlot2 == 2) newItem.increasingGemSlots++;
+              if(itemData[0].DragonJewelSlot3 == 2) newItem.increasingGemSlots++;
+              if(itemData[0].DragonJewelSlot4 == 2) newItem.increasingGemSlots++;
+            }
+          }
           
           return newItem;
         }
@@ -301,6 +317,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           var itemType = items[item.itemSource];
           
           dntFiles['exchange.lzjson'] = null;
+          dntFiles['dragonjewelslottable.lzjson'] = null;
   
           dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
           if('potentialDnt' in itemType) {

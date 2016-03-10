@@ -11,10 +11,10 @@
     <div class="col-xs-12 col-md-3">
       <h4><a href="#/saved/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a><br /> <small> <span dnsim-stats stats="editCtrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" /> </small> </h4>
     </div>
-    <div class="col-xs-3 col-md-1 text-right">
+    <div class="col-xs-3 col-md-1 text-right" ng-if="!editCtrl.hasMaxExchangable()">
       <button class="btn btn-default" ng-dblclick="editCtrl.addToGroup()" ng-click="editCtrl.addToGroup()">add</button>
     </div>
-    <div class="col-xs-9 col-md-8">
+    <div class="col-xs-9 col-md-8" ng-if="!editCtrl.hasMaxExchangable()">
       
       <span ng-show="editCtrl.getAddMDmgAffectAmount() != 0">
         <b ng-show="editCtrl.getAddMDmgAffectAmount() > 0">increase</b>

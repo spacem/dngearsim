@@ -5,6 +5,34 @@ describe('saveHelper', function () {
   beforeEach(inject(function($injector) {
     saveHelper = $injector.get('saveHelper');
   }));
+  
+  describe('getSavedItemsByType', function () {
+    it('gives equipment in order', function() {
+      var saved = { charName: { items: [
+        {
+          id: 1,
+          itemSource: 'eq',
+          exchangeType: 2,
+          rank: { id: 1 },
+          levelLimit: 2,
+          typeName: 'armour',
+        },
+        {
+          id: 2,
+          itemSource: 'eq',
+          exchangeType: 1,
+          rank: { id: 2 },
+          levelLimit: 2,
+          typeName: 'armour',
+        }
+        ]}};
+
+      var byType = saveHelper.getSavedItemsByType(saved);
+      expect(byType.charName.armour.length).toBe(2);
+      expect(byType.charName.armour[0].id).toBe(2);
+      expect(byType.charName.armour[1].id).toBe(1);
+    });
+  });
 
   describe('getUniqueGroupName', function () {
     

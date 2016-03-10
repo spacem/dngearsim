@@ -106,11 +106,11 @@ function saveHelper(itemCategory) {
                       return (item2.rank.id - item1.rank.id);
                     }
                     else {
-                      return (item2.levelLimit.id - item1.levelLimit.id);
+                      return item2.levelLimit.id - item1.levelLimit.id;
                     }
                   }
                   else {
-                    return (item2.exchangeType - item1.exchangeType);
+                    return item1.exchangeType - item2.exchangeType;
                   }
                 }
                 else {

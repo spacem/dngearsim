@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('groupAssignmentCtrl',
 
-['hCodeValues','statHelper','saveHelper',
-function(hCodeValues,statHelper,saveHelper) {
+['hCodeValues','statHelper','saveHelper','itemCategory',
+function(hCodeValues,statHelper,saveHelper,itemCategory) {
   'use strict';
   
   var vm = this;
@@ -207,7 +207,7 @@ function(hCodeValues,statHelper,saveHelper) {
       
       var items = [];
       angular.forEach(vm.savedItems[vm.groupName].items, function(item, index) {
-        if(item.exchangeType && item.itemSource != 'gem') {
+        if(item.exchangeType && item.itemSource != 'gem' && item.itemSource != 'plate') {
           if(item.exchangeType == vm.item.exchangeType) {
             items.push(item);
           }
@@ -237,6 +237,31 @@ function(hCodeValues,statHelper,saveHelper) {
       });
     }
     return vm.groupItems;
+  }
+  
+  this.hasMaxExchangable = function() {
+    var cat = itemCategory.byName(this.item.typeName);
+    var items = this.getGroupItems();
+    
+    if(cat && cat.maxCat) {
+      if(items.length >= cat.maxCat) {
+        console.log('maxcat reached');
+        return true;
+      }
+    }
+    
+    if(cat && cat.maxExchange) {
+      if(items.length >= cat.maxExchange) {
+        for(var i=0;i<items.length;++i) {
+          if(!items[i].exchangeType) {
+            return false;
+          }
+        }
+        console.log('maxexchange reached ' + items.length + '>=' + cat.maxExchange + ' for ' + cat.name);
+        return true;
+      }
+    }
+    return false;
   }
   
   this.nextGroup = function() {

@@ -75,7 +75,14 @@
         <div class="col-xs-8 col-md-10">
           <div class="row">
             <table class="table">
-              <tr ng-repeat="result in $parent.savedItemsByType[groupName][$parent.selectedType] | orderBy:'name' | orderBy:'-levelLimit' track by $index">
+              
+              <tr>
+                <th>
+                  {{$parent.getItemCount()}}
+                </th>
+              </tr>
+              
+              <tr ng-repeat="result in $parent.savedItemsByType[groupName][$parent.selectedType] track by $index">
                 <td>
                   <div>
                     <dnsim-item-link item="result" />

@@ -1,9 +1,9 @@
 angular.module('dnsim').controller('SavedCtrl', 
   [ '$scope','$window','$routeParams','$location','$anchorScroll',
-    'hCodeValues','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','statHelper','groupHelper',
+    'hCodeValues','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','statHelper','groupHelper','itemCategory',
   function(
     $scope,$window,$routeParams,$location,$anchorScroll,
-    hCodeValues,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,statHelper,groupHelper) {
+    hCodeValues,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,statHelper,groupHelper,itemCategory) {
     'use strict';
     
     document.body.className = 'saved-back';
@@ -238,6 +238,70 @@ angular.module('dnsim').controller('SavedCtrl',
       saveHelper.updatedSavedItems(group, newItemList);
       
       $scope.init();
+    }
+    
+    $scope.getItemCount = function() {
+      var itemCountText = '';
+      var allItems = $scope.savedItems[$scope.currentGroup].items;
+      
+      if($scope.selectedType == 'offensive gems') {
+        var numOffensiveSlots = 0;
+        var numOffensiveGems = 0;
+        angular.forEach(allItems, function(item, index) {
+          if(item.typeName == $scope.selectedType) {
+            numOffensiveGems++;
+          }
+          else if(item.offensiveGemSlots) {
+            numOffensiveSlots += item.offensiveGemSlots;
+          }
+        });
+        
+        itemCountText = numOffensiveGems + ' / ' + numOffensiveSlots;
+      }
+      else if($scope.selectedType == 'increasing gems') {
+        
+        var totalIncreasingGems = 0;
+        var numIncreasingSlots = 0;
+        var numIncreasingGems = {};
+        angular.forEach(allItems, function(item, index) {
+          if(item.typeName == $scope.selectedType) {
+            if(!(item.sparkTypeId in numIncreasingGems)) {
+              numIncreasingGems[item.sparkTypeId] = 0;
+            }
+            numIncreasingGems[item.sparkTypeId]++;
+            totalIncreasingGems++;
+          }
+          else if(item.increasingGemSlots) {
+            numIncreasingSlots += item.increasingGemSlots;
+          }
+        });
+        
+        itemCountText = ''
+        angular.forEach(numIncreasingGems, function(number, gemType) {
+          if(itemCountText.length > 0) {
+            itemCountText += '+';
+          }
+          itemCountText += number;
+        });
+        
+        itemCountText = totalIncreasingGems + ' (' + itemCountText + ') / ' + numIncreasingSlots;
+      }
+      else {
+        var numItems = 0;
+        angular.forEach(allItems, function(item, index) {
+          if(item.typeName == $scope.selectedType) {
+            numItems++;
+          }
+        });
+        
+        itemCountText = numItems;
+        var cat = itemCategory.byName($scope.selectedType);
+        if('numItemText' in cat) {
+          itemCountText += ' / ' + cat.numItemText;
+        }
+      }
+      
+      return itemCountText + ' ' + $scope.selectedType;
     }
 
     $scope.closeItemLink = function (group) {
