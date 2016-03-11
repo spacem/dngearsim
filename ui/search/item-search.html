@@ -57,10 +57,10 @@
 <tr ng-repeat="result in getResults() track by $index">
   <td>
     <div class="row">
-    <div class="col-xs-12">
+    <div>
       <dnsim-item-link item="result" />
     </div>
-    <div class="col-xs-12">
+    <div>
       <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
     </div>
     </div>

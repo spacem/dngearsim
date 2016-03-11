@@ -159,6 +159,10 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         item.id = d.id;
       }
       
+      if(item.iconIndex == null) {
+        item.icon = d.IconImageIndex;
+      }
+      
       if(item.typeName == null) {
         item.typeName = getTypeName(d, item.itemSource);
       }
