@@ -97,25 +97,27 @@ function saveHelper(itemCategory) {
           
           function addType(typeName) {
             if(typeName in types) {
+              
               var sorted = types[typeName].sort(function(item1, item2) {
-                if('rank' in item1 && 'exchangeType' in item1 && 'levelLimit' in item1 &&
-                  'rank' in item2 && 'exchangeType' in item2 && 'levelLimit' in item2) {
-
-                  if(item2.exchangeType == item1.exchangeType) {
-                    if(item2.levelLimit == item1.levelLimit) {
-                      return (item2.rank.id - item1.rank.id);
-                    }
-                    else {
-                      return item2.levelLimit.id - item1.levelLimit.id;
-                    }
-                  }
-                  else {
-                    return item1.exchangeType - item2.exchangeType;
+                if(typeName == 'talisman') {
+                  
+                  var enh1 = item1.enchantmentNum;
+                  if(!enh1) enh1 = 0;
+                  var enh2 = item2.enchantmentNum;
+                  if(!enh2) enh1 = 0;
+                  
+                  if(enh1 != enh2) {
+                    return enh2 - enh1;
                   }
                 }
-                else {
-                  return item1.name.localeCompare(item2.name);
+                else if(item1.itemSource == 'gem' || item1.itemSource == 'plate') {
+                  return item2.levelLimit - item1.levelLimit;
                 }
+                else if('exchangeType' in item1 && 'exchangeType' in item2) {
+                  return item1.exchangeType - item2.exchangeType;
+                }
+                
+                return item1.name.localeCompare(item2.name);
               });
               savedItemsByType[groupName][typeName] = sorted;
             }

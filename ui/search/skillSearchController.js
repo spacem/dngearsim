@@ -145,7 +145,7 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
             newItem.needJobClass = skills[s].NeedJob;
             newItem.rank = hCodeValues.rankNames[0];
             newItem.baseJobName = baseName.toLowerCase();
-            
+
             vm.skills.push(newItem);
           }
         }

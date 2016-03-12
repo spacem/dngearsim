@@ -115,7 +115,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     console.log('item init time: ' + time/1000 + 's for ' + itemType.name);
   }
   
-
   function initItem(item) {
     
     if(item.data) {
@@ -161,10 +160,9 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       
       if(item.iconIndex == null) {
         item.icon = d.IconImageIndex;
-      }
-      
-      if(item.typeName == null) {
-        item.typeName = getTypeName(d, item.itemSource);
+        if(!item.icon && item.itemSource == 'title') {
+          item.icon = 12417;
+        }
       }
       
       if(item.enchantmentId == null ) {
@@ -181,70 +179,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       
       item.data = null;
       item.potential = null;
-    }
-  }
-
-  function getTypeName(d, itemSource) {
-    var itemTypeDef = items[itemSource];
-    
-    if(itemSource in items && itemTypeDef.type == 'cash') {
-      return 'cash';
-    }
-    else if(itemSource in items && itemTypeDef.type == 'techs') {
-      return 'techs';
-    }
-    else if(d.Rank == 4 && itemTypeDef.type == 'plates') {
-      return 'expedition plates';
-    }
-    else if(itemTypeDef.type == 'plates') {
-      return 'enhancement plates';
-    }
-    else if(itemSource in items && itemTypeDef.type == 'titles') {
-      return 'titles';
-    }
-    else if(d.Type == 0 && itemTypeDef.type == 'equipment') {
-      return 'weapons';
-    }
-    else if(
-      d.Type == 1 &&
-      itemTypeDef.type == 'equipment' &&
-      'NameIDParam' in d &&
-      d.NameIDParam.indexOf('},{2227}') <= 0 &&
-      d.NameIDParam.indexOf('},{2228}') <= 0 &&
-      d.NameIDParam.indexOf('},{2229}') <= 0) {
-        
-      return 'armour';
-    }
-    else if(d.Type == 1 && itemTypeDef.type == 'equipment') {
-      return 'accessories';
-    }
-    else if(d.Type == 139 && 'gemDnt' in itemTypeDef) {
-
-      var gemTypes = dntData.find(itemTypeDef.gemDnt, 'id', d.id);
-      if(gemTypes.length > 0) {
-        
-        if(gemTypes[0].Type == 1) {
-          return 'offensive gems';
-        }
-        else if(gemTypes[0].Type == 2) {
-          return 'increasing gems';
-        }
-        else {
-          return 'other gems';
-        }
-      }
-    }
-    
-    if(typeName == 'gems' || hCodeValues.typeNames[d.Type] == 'gems') {
-      // console.log('should have got new type name ' + d.Tyoe + ' ' + itemTypeDef.gemDnt);
-    }
-
-    var typeName = hCodeValues.typeNames[d.Type];
-    if(typeName == null) {
-      return d.Type;
-    }
-    else {
-      return typeName;
     }
   }
   

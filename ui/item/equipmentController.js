@@ -28,14 +28,18 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   $scope.getExchangeType = function() {
+    console.log('getting exchange');
     var exchangeDnt = 'exchange.lzjson';
-    if($scope.itemType &&
-      translations.isLoaded() &&
+    if(translations.isLoaded() &&
       dntData.isLoaded(exchangeDnt) &&
       $scope.item.exchangeType > 0) {
+        
+      console.log('finding exchange ' + $scope.item.exchangeType);
 
       var exchange = dntData.find(exchangeDnt, 'ExchangeType', $scope.item.exchangeType);
+      console.log('got ' + exchange.length);
       if(exchange && exchange.length > 0 && exchange[0].NameID > 0) {
+        console.log('exchange name: ' + exchange[0].NameID);
         return translations.translate(exchange[0].NameID).toLowerCase();
       }
     }

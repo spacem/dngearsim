@@ -245,7 +245,6 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     
     if(cat && cat.maxCat) {
       if(items.length >= cat.maxCat) {
-        console.log('maxcat reached');
         return true;
       }
     }

@@ -178,7 +178,6 @@ function(
         }
         
         itemFactory.initItem(e);
-      
         if(e.typeName != $scope.itemCategory.name) {
           continue;
         }
