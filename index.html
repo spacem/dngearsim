@@ -20,7 +20,8 @@
   
   <link rel="stylesheet" href="dngearsim.css"></link>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
   
 </head>
 <body ng-app="dnsim">
@@ -42,7 +43,7 @@
     </div>
   </div>
 </div>
-<div id="head-break" class="container-fluid">
+<div id="head-break" class="container-fluid hidden-xs">
   <div class="row">
     &nbsp;
   </div>
@@ -87,7 +88,13 @@
 <script src="ui/nav/navController.js"></script>
 <script src="ui/nav/setupController.js"></script>
 
-<script src="ui/builds/savedItemsController.js"></script>
+<script src="ui/builds/buildActionsController.js"></script>
+<script src="ui/builds/buildController.js"></script>
+<script src="ui/builds/buildItemController.js"></script>
+<script src="ui/builds/buildListController.js"></script>
+<script src="ui/builds/buildStatsController.js"></script>
+<script src="ui/builds/buildSummaryController.js"></script>
+
 <script src="ui/builds/viewGroupController.js"></script>
 <script src="ui/builds/editBuildController.js"></script>
 <script src="ui/builds/deleteBuildController.js"></script>

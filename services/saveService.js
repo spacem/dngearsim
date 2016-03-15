@@ -23,6 +23,7 @@ function saveHelper(itemCategory) {
       var items = this.getSavedItems();
       groupName = this.getUniqueGroupName(groupName, items);
       this.updatedSavedItems(groupName, updatedItems);
+      return groupName;
     },
     
     getUniqueGroupName: function(groupName, existingGroups) {
@@ -79,67 +80,6 @@ function saveHelper(itemCategory) {
       var stringifiedData = JSON.stringify(items);
       // console.log('saving: ' + stringifiedData);
       localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
-    },
-    
-    getSavedItemsByType: function(savedItems) {
-      var savedItemsByType = {};
-      if(savedItems != null) {
-        angular.forEach(savedItems, function(group, groupName) {
-          var types = {};
-          angular.forEach(group.items, function(item, index) {
-            if(item != null) {
-              if(!(item.typeName in types)) {
-                types[item.typeName] = [];
-              }
-              types[item.typeName].push(item);
-            }
-          });
-          
-          function addType(typeName) {
-            if(typeName in types) {
-              
-              var sorted = types[typeName].sort(function(item1, item2) {
-                if(typeName == 'talisman') {
-                  
-                  var enh1 = item1.enchantmentNum;
-                  if(!enh1) enh1 = 0;
-                  var enh2 = item2.enchantmentNum;
-                  if(!enh2) enh1 = 0;
-                  
-                  if(enh1 != enh2) {
-                    return enh2 - enh1;
-                  }
-                }
-                else if(item1.itemSource == 'gem' || item1.itemSource == 'plate') {
-                  return item2.levelLimit - item1.levelLimit;
-                }
-                else if('exchangeType' in item1 && 'exchangeType' in item2) {
-                  return item1.exchangeType - item2.exchangeType;
-                }
-                
-                return item1.name.localeCompare(item2.name);
-              });
-              savedItemsByType[groupName][typeName] = sorted;
-            }
-            else {
-              savedItemsByType[groupName][typeName] = [];
-            }
-          }
-          
-          savedItemsByType[groupName] = {};
-          angular.forEach(itemCategory.categories, function(category, index) {
-            addType(category.name);
-          });
-          
-          angular.forEach(group.items, function(item, index) {
-            if(item != null && !(item.typeName in savedItemsByType[groupName])) {
-              // console.log('we dont know ' + item.typeName + ' anymore')
-              savedItemsByType[groupName].typeError = true;
-            }
-          });
-        });
-      }
-      return savedItemsByType;
     },
     
     renameSavedGroup: function(

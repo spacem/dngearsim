@@ -183,7 +183,8 @@ word-break: normal;
   border-top-width: 5px;
 }
 .header-title {
-  margin-top: 5px;
+  margin-top: 2px;
+  margin-bottom: 0px;
 }
 .search-active {
   color: #555;

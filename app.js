@@ -2,7 +2,7 @@
 'use strict';
 
 angular
-.module('dnsim', ['ngRoute'])
+.module('dnsim', ['ngRoute','ngAnimate'])
 .config(['$routeProvider',config]);
 
 function config($routeProvider) {
@@ -33,12 +33,12 @@ function config($routeProvider) {
       redirectTo: '/builds/:groupName'
     }).
     when('/builds', {
-      templateUrl: 'ui/builds/saved-items.html?bust=' + Math.random().toString(36).slice(2),
-      controller: 'SavedCtrl'
+      templateUrl: 'ui/builds/build-list.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'BuildListCtrl as buildList'
     }).
     when('/builds/:groupName', {
-      templateUrl: 'ui/builds/saved-items.html?bust=' + Math.random().toString(36).slice(2),
-      controller: 'SavedCtrl'
+      templateUrl: 'ui/builds/build-list.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'BuildListCtrl as buildList'
     }).
     when('/view-group', {
       templateUrl: 'ui/builds/view-group.html?bust=' + Math.random().toString(36).slice(2),

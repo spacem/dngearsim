@@ -1,0 +1,73 @@
+<div class="col-xs-12 group-header" id="/builds/{{buildName}}">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-lg-7" ng-click="buildCtrl.toggleGroup()">
+      <button class="btn btn-link btn-block group-header-btn">
+        <h3 class="text-left">
+          {{buildCtrl.buildName}}
+        <small>
+          <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span>
+          <span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}</span><br />
+          {{buildCtrl.getSaveDate()}} {{buildCtrl.getSaveTime()}}<span class="hidden-xs"> | </span><br class="visible-xs" />
+          <span dnsim-stats stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'" />
+        </small>
+        </h3>
+      </button>
+    </div>
+    <div class="col-xs-12 col-md-6 col-lg-5">
+      <br class="hidden-xs hidden-sm" /><br class="hidden-xs hidden-sm" />
+      <dngearsim-build-actions build-name="buildName" build="build">
+      </dngearsim-build-actions>
+    </div>
+    <div class="col-xs-6" ng-show="buildCtrl.stats.calculatedStats.length == 0">
+    </div>
+    <div class="col-xs-10 col-md-12 alert alert-danger" role="alert" ng-if="buildCtrl.stats.calculatedStats.length == 0 || buildCtrl.stats.nakedStats.length == 0">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
+      you must edit the build and set both level and class
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-10">
+  <br />
+  <div class="row">
+    <div class="col-xs-4 col-md-2">
+      <div class="row">
+        <div class="col-xs-12 group-header" ng-repeat="(catName,catItems) in buildCtrl.itemsByCategory track by $index">
+          <button ng-class="{'btn btn-block selected-link': catName == buildCtrl.category.name, 'btn btn-block btn-link': catName != buildCtrl.category.name}" ng-click="buildCtrl.setSelectedCategory(catName)">
+            <p class="text-left">
+              <!-- <img height="20" width="20" style="display:inline;" src="images/{{catName}}.png" /> -->
+              {{catName}}
+              </p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-8 col-md-10">
+      <div class="row">
+        <table class="table">
+          
+          <tr><th>{{buildCtrl.getItemCount()}}</th></tr>
+          
+          <tr ng-repeat="result in buildCtrl.itemsByCategory[buildCtrl.category.name] track by $index">
+            <td><dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result"></dngearsim-build-item></td>
+          </tr>
+          
+          <tr><th>
+              <a href="#/{{buildCtrl.category.path}}">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                search {{buildCtrl.category.name}}
+              </a>
+          </th></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-md-2 group-header">
+  <div class="row">
+   <dngearsim-build-stats stats="buildCtrl.stats">
+   </dngearsim-build-stats>
+  </div>
+</div>

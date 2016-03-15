@@ -1,0 +1,15 @@
+<button class="btn btn-default" ng-click="buildActions.copyGroup()">
+copy
+</button>
+<button class="btn btn-default" ng-click="buildActions.editGroup()">
+edit
+</button>
+<button class="btn btn-default" ng-click="buildActions.reloadGroup()">
+reload
+</button> 
+<button class="btn btn-default" ng-click="buildActions.deleteGroup()">
+delete
+</button>
+<span>&nbsp;</span>
+<button style="margin-top:12px" class="btn btn-link" ng-click="buildActions.createShortUrl()" ng-hide="buildActions.build.shortUrl != null">create permalink</button>
+<a style="margin-top:12px" class="btn btn-link" href="{{buildActions.build.shortUrl}}" ng-show="buildActions.build.shortUrl != null">{{buildActions.build.shortUrl}}</a>

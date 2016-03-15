@@ -111,12 +111,14 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
     createGroupLink: function(groupName, group) {
       var itemStrings = [];
       var self = this;
-      angular.forEach(group.items, function(item, key) {
-        var itemString = self.encodeItem(item);  
-        if(itemString != null && itemString.length > 0) {
-          itemStrings.push(itemString);
-        }
-      });
+      if(group != null) {
+        angular.forEach(group.items, function(item, key) {
+          var itemString = self.encodeItem(item);  
+          if(itemString != null && itemString.length > 0) {
+            itemStrings.push(itemString);
+          }
+        });
+      }
   
       var retVal = '#/view-group?';
       

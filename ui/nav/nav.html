@@ -7,16 +7,13 @@
     </li>
   </ul>
 </div>
-<div class="row" ng-show="isLoading()">
-  <div class="col-xs-12 loading">
+<div class="row">
+  <div class="col-xs-12 loading" ng-if="isLoading()">
     loading...
   </div>
-</div>
-<div class="row" ng-show="noRegion()">
-  No region selected
-</div>
-
-<div class="row" ng-hide="isLoading() || noRegion()">
-  <div class="col-xs-12" id="app" ng-view>
+  <div class="col-xs-12" ng-if="noRegion()">
+    No region selected
+  </div>
+  <div class="col-xs-12" id="app" ng-view ng-if="!isLoading() && !noRegion()">
   </div>
 </div>

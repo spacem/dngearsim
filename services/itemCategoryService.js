@@ -127,8 +127,11 @@ function itemCategory(itemFactory,items,dntData) {
         
         return false;
       }
-      else {
+      else if(item.itemSource in items) {
         return items[item.itemSource].type == cat.sourceType;
+      }
+      else {
+        return false;
       }
     },
     
@@ -151,7 +154,62 @@ function itemCategory(itemFactory,items,dntData) {
           item.typeName = cat.name;
         }
       });
-    }
+    },
+    
+    getItemsByCategory: function(items) {
+      var itemMap = {};
+      if(items != null) {
+        var types = {};
+        angular.forEach(items, function(item, index) {
+          if(item != null) {
+            if(!(item.typeName in types)) {
+              types[item.typeName] = [];
+            }
+            types[item.typeName].push(item);
+          }
+        });
+        
+        angular.forEach(this.categories, function(category, index) {
+
+          if(category.name in types) {
+            
+            var sorted = types[category.name].sort(function(item1, item2) {
+              if(category.name == 'talisman') {
+                
+                var enh1 = item1.enchantmentNum;
+                if(!enh1) enh1 = 0;
+                var enh2 = item2.enchantmentNum;
+                if(!enh2) enh1 = 0;
+                
+                if(enh1 != enh2) {
+                  return enh2 - enh1;
+                }
+              }
+              else if(item1.itemSource == 'gem' || item1.itemSource == 'plate') {
+                return item2.levelLimit - item1.levelLimit;
+              }
+              else if('exchangeType' in item1 && 'exchangeType' in item2) {
+                return item1.exchangeType - item2.exchangeType;
+              }
+              
+              return item1.name.localeCompare(item2.name);
+            });
+            itemMap[category.name] = sorted;
+          }
+          else {
+            itemMap[category.name] = [];
+          }
+        });
+        
+        angular.forEach(items, function(item, index) {
+          if(item != null && !(item.typeName in itemMap)) {
+            console.log('we dont know ' + item.typeName + ' anymore')
+            itemMap.typeError = true;
+          }
+        });
+      }
+      return itemMap;
+    },
   }
 }
 

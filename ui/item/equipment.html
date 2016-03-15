@@ -21,15 +21,16 @@
       </span>
       {{getExchangeType()}}
       <span ng-show="item.levelLimit > 1">
-      requires level {{item.levelLimit}}
+      req lvl{{item.levelLimit}}
       </span>
-      <span ng-show="item.offensiveGemSlots > 0">
+      <span ng-if="item.offensiveGemSlots > 0 || item.increasingGemSlots > 0">
         <br />
-        {{item.offensiveGemSlots}}x offensive gem slots
-      </span>
-      <span ng-show="item.increasingGemSlots > 0">
-        <br />
-        {{item.increasingGemSlots}}x increasing gem slots
+        gem slots:
+        <span ng-if="item.offensiveGemSlots > 0">
+          {{item.offensiveGemSlots}}x offensive
+          <span ng-if="item.increasingGemSlots > 0"> | </span>
+        </span>
+        <span ng-if="item.increasingGemSlots > 0">{{item.increasingGemSlots}}x increasing</span>
       </span>
       </small>
     </h3>
@@ -40,26 +41,26 @@
         potential&nbsp;ratio:&nbsp;{{item.potentialRatio}}
       </span>
     </small>
-    <div class="row">
-      <dngearsim-item-edit-potential item="item" on-change="handleChange()">
-      </dngearsim-item-edit-potential>
-    </div>
+    <dngearsim-item-edit-potential item="item" on-change="handleChange()">
+    </dngearsim-item-edit-potential>
   </div>
   <div class="col-xs-12 col-md-8">
-    <div class="row" ng-hide="item.typeName == 'custom' ||  item.typeName == 'skills' ||  item.typeName == 'talisman'">
+    <div class="row" ng-if="item.typeName != 'custom' &&  item.typeName != 'skills' &&  item.typeName != 'talisman'">
       <div class="col-xs-12">
-        <br /><label>stats</label><br />
+        <br class="hidden-xs" />
+        <label>stats</label><br />
         <span dnsim-stats stats="item.stats" separator="'|'">
         </span>
       </div>
+      
       <div class="col-xs-12" ng-if="item.setStats != null && item.setStats.length > 0">
         <br /><label>set stats</label><br />
         <span dnsim-stats stats="item.setStats" separator="'|'">
       </div>
-    </div>
-    <div class="row">
+      
       <dngearsim-item-edit-enchantment item="item" on-change="handleChange()">
       </dngearsim-item-edit-enchantment>
+      
     </div>
     <div class="row" ng-if="item.typeName == 'talisman'">
       <dngearsim-item-edit-talisman item="item" on-change="handleChange()">

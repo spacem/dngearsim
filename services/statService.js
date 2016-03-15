@@ -384,6 +384,22 @@ function statHelper(hCodeValues) {
       }
       
       return effects;
+    },
+
+    getBuildStats: function(build) {
+      var stats = {};
+      stats.nakedStats = this.getNakedStats(build);
+      stats.combinedStats = this.getCombinedStats(build.items);
+      stats.setStats = this.getSetStats(build.items);
+      stats.allStats = hCodeValues.mergeStats(stats.nakedStats, stats.combinedStats);
+      stats.allStats = hCodeValues.mergeStats(stats.allStats, stats.setStats);
+      if(build.heroStats != null && build.heroStats.length > 0) {
+        stats.heroStats = build.heroStats;
+        stats.allStats = hCodeValues.mergeStats(stats.allStats, build.heroStats);
+      }
+      
+      stats.calculatedStats = this.getCalculatedStats(build, stats.allStats);
+      return stats;
     }
   }
 }
