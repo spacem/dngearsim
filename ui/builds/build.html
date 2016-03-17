@@ -32,11 +32,10 @@
   <div class="row">
     <div class="col-xs-4 col-md-2">
       <div class="row">
-        <div class="col-xs-12 group-header" ng-repeat="(catName,catItems) in buildCtrl.itemsByCategory track by $index">
-          <button ng-class="{'btn btn-block selected-link': catName == buildCtrl.category.name, 'btn btn-block btn-link': catName != buildCtrl.category.name}" ng-click="buildCtrl.setSelectedCategory(catName)">
+        <div class="col-xs-12 group-header" ng-repeat="cat in buildCtrl.getCategories() track by $index">
+          <button ng-class="{'btn btn-block selected-link': cat.name == buildCtrl.category.name, 'btn btn-block btn-link': cat.name != buildCtrl.category.name}" ng-click="buildCtrl.setSelectedCategory(cat.name)">
             <p class="text-left">
-              <!-- <img height="20" width="20" style="display:inline;" src="images/{{catName}}.png" /> -->
-              {{catName}}
+              {{cat.name}}
               </p>
           </button>
         </div>
@@ -49,7 +48,7 @@
           
           <tr><th>{{buildCtrl.getItemCount()}}</th></tr>
           
-          <tr ng-repeat="result in buildCtrl.itemsByCategory[buildCtrl.category.name] track by $index">
+          <tr ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
             <td><dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result"></dngearsim-build-item></td>
           </tr>
           

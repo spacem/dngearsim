@@ -7,13 +7,20 @@ function($location,hCodeValues,statHelper,itemCategory) {
   var vm = this;
   
   this.stats = statHelper.getBuildStats(this.build);
-  this.itemsByCategory = itemCategory.getItemsByCategory(this.build.items);
   
   var selectedCategory = localStorage.getItem('selectedItemCategory');
   this.category = itemCategory.byName(selectedCategory);
   if(!this.category) {
     selectedCategory = 'titles';
     this.category = itemCategory.byName('titles');
+  }
+  
+  this.getCategoryItems = function() {
+    return itemCategory.getItemsByCategory(this.build.items)[vm.category.name];
+  }
+  
+  this.getCategories = function() {
+    return itemCategory.categories;
   }
     
   this.setSelectedCategory = function(value) {

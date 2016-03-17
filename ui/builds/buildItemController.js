@@ -6,8 +6,8 @@ function($timeout,statHelper,saveHelper) {
   
   var vm = this;
     
-  this.removeItem = function(group, item) {
-    item.removeItem = true;
+  this.removeItem = function() {
+    vm.item.removeItem = true;
     var newItemList = [];
     angular.forEach(vm.build.items, function(gItem, index) {
       if(!gItem.removeItem) {
@@ -15,7 +15,7 @@ function($timeout,statHelper,saveHelper) {
       }
     });
     
-    saveHelper.updatedSavedItems(group, newItemList);
+    saveHelper.updatedSavedItems(vm.buildName, newItemList);
     $timeout(function() {
       vm.build.items = newItemList;
     });
