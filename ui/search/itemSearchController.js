@@ -18,12 +18,15 @@ function(
   
   $scope.itemCategory = itemCategory.byPath('search/' + $routeParams.itemType);
   if(!$scope.itemCategory) {
-     var itemType = localStorage.getItem('selectedItemCategory');
-     if(!itemType) {
-       itemType = 'titles';
+     var catName = localStorage.getItem('selectedItemCategory');
+     if(!catName) {
+       catName = 'titles';
      }
      
-     $location.path('/search/' + itemType);
+     var cat = itemCategory.byName(catName);
+     if(cat) {
+       $location.path(cat.path);
+     }
      return;
   }
 
