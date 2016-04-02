@@ -49,71 +49,62 @@
     </select>
   </div>
 </div>
-<!--
-<div class="row" ng-hide="editGroup.isLoading() || editGroup.showLoadedData">
+
+<div class="row" ng-hide="editGroup.isLoading()">
   <div class="col-xs-12">
     <br />
-    <button class="btn btn-default" ng-click="editGroup.showLoadedData = true">show loaded data</button>
+    <label>stat caps</label>
+    <p>
+cbase:&nbsp;{{editGroup.getStatCap('Cbase', editGroup.enemyLevel) }} |
+fd:&nbsp;{{editGroup.getStatCap('Cfinaldamage', editGroup.enemyLevel) }} |
+def:&nbsp;{{editGroup.getStatCap('Cdefense', editGroup.playerLevel) }} |
+crit:&nbsp;{{editGroup.getStatCap('Ccritical', editGroup.enemyLevel) }} |
+crit dmg:&nbsp;{{editGroup.getStatCap('CcriticalDamage', editGroup.enemyLevel) }}
+    </p>
+    <br />
+    <label>hero level stats</label>
+    <p>
+      <span dnsim-stats separator="'|'" stats="editGroup.heroStats" />
+    </p>
+    <br />
+    <label>naked stats</label>
+    <p>
+str:&nbsp;{{editGroup.getJobBaseStat('Strength')}} |
+agi:&nbsp;{{editGroup.getJobBaseStat('Agility')}} |
+int:&nbsp;{{editGroup.getJobBaseStat('Intelligence')}} |
+vit:&nbsp;{{editGroup.getJobBaseStat('Stamina')}} |
+mp:&nbsp;{{editGroup.getJobBaseStat('BaseMP')}} |
+aggro:&nbsp;{{editGroup.getJobBaseStat('AggroperPvE')}}
+    </p>
+    <br />
+    <label>stat affects</label>
+    <p>
+vit&nbsp;to&nbsp;hp:&nbsp;{{editGroup.getJobConversion('HP')}} |
+str&nbsp;to&nbsp;pdmg:&nbsp;{{editGroup.getJobConversion('StrengthAttack') | number:2}} |
+agi&nbsp;to&nbsp;pdmg:&nbsp;{{editGroup.getJobConversion('AgilityAttack') | number:2}} |
+int&nbsp;to&nbsp;mdmg:&nbsp;{{editGroup.getJobConversion('IntelligenceAttack') | number:2}} |
+vit&nbsp;to&nbsp;pdef:&nbsp;{{editGroup.getJobConversion('PhysicalDefense') | number:2}} |
+int&nbsp;to&nbsp;mdef:&nbsp;{{editGroup.getJobConversion('MagicDefense') | number:2}} |
+agi&nbsp;to&nbsp;crit:&nbsp;{{editGroup.getJobConversion('Critical')}} |
+str&nbsp;int&nbsp;to&nbsp;cdmg:&nbsp;{{editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
+<!--
+agi&nbsp;to&nbsp;crit&nbsp;resist:&nbsp;{{editGroup.getJobConversion('CriticalResistance') | number:2}} |
+Stiff:&nbsp;{{editGroup.getJobConversion('Stiff') | number:2}} |
+StiffResist:&nbsp;{{editGroup.getJobConversion('StiffResistance') | number:2}} |
+Stun:&nbsp;{{editGroup.getJobConversion('Stun') | number:2}} |
+StunResist:&nbsp;{{editGroup.getJobConversion('StunResistance') | number:2}} |
+MoveSpeed:&nbsp;{{editGroup.getJobConversion('MoveSpeed')}} |
+MoveSpeedRevision:&nbsp;{{editGroup.getJobConversion('MoveSpeedRevision')}} |
+DownDelay:&nbsp;{{editGroup.getJobConversion('DownDelay')}} |
+ElementAttack:&nbsp;{{editGroup.getJobConversion('ElementAttack')}} |
+ElementDefense:&nbsp;{{editGroup.getJobConversion('ElementDefense')}} |
+ElementDefMin:&nbsp;{{editGroup.getJobConversion('ElementDefenseMin')}} |
+ElementDefMax:&nbsp;{{editGroup.getJobConversion('ElementDefenseMax')}} |
+-->
+    </p>
   </div>
 </div>
-<div class="row" ng-hide="editGroup.isLoading() || !editGroup.showLoadedData">
-  <div class="col-xs-4 col-md-2">
-    <pre>
-base: {{ editGroup.getStatCap('Cbase', editGroup.enemyLevel) }}
-fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.enemyLevel) }}
-def: {{ editGroup.getStatCap('Cdefense', editGroup.enemyLevel) }}
-crit: {{ editGroup.getStatCap('Ccritical', editGroup.enemyLevel) }}
-crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.enemyLevel) }}
-    </pre>
-  </div>
-  <div class="col-xs-4 col-md-2">
-    <pre>
-base: {{ editGroup.getStatCap('Cbase', editGroup.playerLevel) }}
-fd: {{ editGroup.getStatCap('Cfinaldamage', editGroup.playerLevel) }}
-def: {{ editGroup.getStatCap('Cdefense', editGroup.playerLevel) }}
-crit: {{ editGroup.getStatCap('Ccritical', editGroup.playerLevel) }}
-crit dmg: {{ editGroup.getStatCap('CcriticalDamage', editGroup.playerLevel) }}
-    </pre>
-  </div>
-  <div class="col-xs-4 col-md-2">
-    <pre dnsim-stats stats="editGroup.heroStats" />
-  </div>
-  <div class="col-xs-12 col-md-3">
-    <pre>
-Strength: {{ editGroup.getJobBaseStat('Strength')}}
-Agility: {{ editGroup.getJobBaseStat('Agility')}}
-Intelligence: {{ editGroup.getJobBaseStat('Intelligence')}}
-Stamina: {{ editGroup.getJobBaseStat('Stamina')}}
-BaseMP: {{ editGroup.getJobBaseStat('BaseMP')}}
-AggroperPvE: {{ editGroup.getJobBaseStat('AggroperPvE')}}
-    </pre>
-  </div>
-  <div class="col-xs-12 col-md-3">
-    <pre>
-HP: {{ editGroup.getJobConversion('HP')}}
-StrAttack: {{ editGroup.getJobConversion('StrengthAttack')}}
-AgiAttack: {{ editGroup.getJobConversion('AgilityAttack')}}
-IntAttack: {{ editGroup.getJobConversion('IntelligenceAttack')}}
-PhysicalDef: {{ editGroup.getJobConversion('PhysicalDefense')}}
-MagicDef: {{ editGroup.getJobConversion('MagicDefense')}}
-Critical: {{ editGroup.getJobConversion('Critical')}}
-CriticalResist: {{ editGroup.getJobConversion('CriticalResistance')}}
-Stiff: {{ editGroup.getJobConversion('Stiff')}}
-StiffResist: {{ editGroup.getJobConversion('StiffResistance')}}
-Stun: {{ editGroup.getJobConversion('Stun')}}
-StunResist: {{ editGroup.getJobConversion('StunResistance')}}
-MoveSpeed: {{ editGroup.getJobConversion('MoveSpeed')}}
-MoveSpeedRevision: {{ editGroup.getJobConversion('MoveSpeedRevision')}}
-DownDelay: {{ editGroup.getJobConversion('DownDelay')}}
-ElementAttack: {{ editGroup.getJobConversion('ElementAttack')}}
-ElementDefense: {{ editGroup.getJobConversion('ElementDefense')}}
-ElementDefMin: {{ editGroup.getJobConversion('ElementDefenseMin')}}
-ElementDefMax: {{ editGroup.getJobConversion('ElementDefenseMax')}}
-StrIntToCritDmg: {{ editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
-    </pre>
-  </div>
-</div>
- -->
+ 
 <div class="row">
   <div class="col-xs-12">
     <br />
