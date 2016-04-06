@@ -1,0 +1,35 @@
+<dnsim-loading>
+<button class="btn btn-link" ng-if="!quickAdd.hasStarted() && quickAdd.hasOptions()" ng-click="quickAdd.start()">
+<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+quick add
+</button>
+<div class="row" ng-if="quickAdd.hasStarted()">
+  <div class="col-xs-12">
+    <button class="btn btn-link" ng-click="quickAdd.back()" ng-disabled="quickAdd.stepNumber == 0">< back</button>
+    |
+    <button class="btn btn-link" ng-click="quickAdd.cancel()">cancel</button>
+  </div>
+  <div class="col-xs-12">
+    quick add:
+    <span ng-repeat="data in quickAdd.datas">
+      {{data.value.name}}
+    </span>
+  </div>
+  <div class="col-xs-12">
+    <span ng-if="quickAdd.options.length == 0">
+      no matching items found...
+    </span>
+      
+    </span>
+    <button class="btn btn-default btn-block" ng-click="quickAdd.selectOption(option)" ng-repeat="option in quickAdd.options track by $index">
+      <span ng-if="option.name">
+        {{option.name}}
+      </span>
+      <span ng-if="option.stats != null">
+        <br />
+        <span dnsim-stats stats="option.stats" separator="'|'"></span>
+      </span>
+    </button>
+  </div>
+</div>
+</dnsim-loading>

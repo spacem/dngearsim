@@ -32,6 +32,12 @@ angular.module('dnsim').controller('BuildListCtrl',
       $location.path('/new-build');
     }
     
+    this.handleChange = function() {
+      console.log('handling build change');
+      this.savedItems = saveHelper.getSavedItems();
+      $timeout();
+    }
+    
     $timeout(function() {
       $anchorScroll('/builds/' + vm.currentGroup);
     });

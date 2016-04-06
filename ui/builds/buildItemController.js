@@ -16,9 +16,7 @@ function($timeout,statHelper,saveHelper) {
     });
     
     saveHelper.updatedSavedItems(vm.buildName, newItemList);
-    $timeout(function() {
-      vm.build.items = newItemList;
-    });
+    vm.onChange();
   }
   
 }])
@@ -29,6 +27,7 @@ function($timeout,statHelper,saveHelper) {
       item: '=item',
       buildName: '=buildName',
       build: '=build',
+      onChange: '&onChange'
     },
     controller: 'buildItemCtrl',
     controllerAs: 'buildItem',

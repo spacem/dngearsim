@@ -15,7 +15,7 @@
     </div>
     <div class="col-xs-12 col-md-6 col-lg-5">
       <br class="hidden-xs hidden-sm" /><br class="hidden-xs hidden-sm" />
-      <dngearsim-build-actions build-name="buildName" build="build">
+      <dngearsim-build-actions build-name="buildName" build="build" on-change="buildCtrl.handleChange()">
       </dngearsim-build-actions>
     </div>
     <div class="col-xs-6" ng-show="buildCtrl.stats.calculatedStats.length == 0">
@@ -48,8 +48,12 @@
           
           <tr><th>{{buildCtrl.getItemCount()}}</th></tr>
           
+          <tr ng-if="buildCtrl.allowMoreItems()"><th>
+            <dngearsim-quick-add build="buildCtrl.build" build-name="buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" />
+          </th></tr>
+          
           <tr ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
-            <td><dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result"></dngearsim-build-item></td>
+            <td><dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item></td>
           </tr>
           
           <tr><th>
@@ -58,6 +62,7 @@
                 search {{buildCtrl.category.name}}
               </a>
           </th></tr>
+          
         </table>
       </div>
     </div>

@@ -52,7 +52,6 @@
 
 <div class="row" ng-hide="editGroup.isLoading()">
   <div class="col-xs-12">
-    <br />
     <label>stat caps</label>
     <p>
 cbase:&nbsp;{{editGroup.getStatCap('Cbase', editGroup.enemyLevel) }} |
@@ -61,12 +60,10 @@ def:&nbsp;{{editGroup.getStatCap('Cdefense', editGroup.playerLevel) }} |
 crit:&nbsp;{{editGroup.getStatCap('Ccritical', editGroup.enemyLevel) }} |
 crit dmg:&nbsp;{{editGroup.getStatCap('CcriticalDamage', editGroup.enemyLevel) }}
     </p>
-    <br />
     <label>hero level stats</label>
     <p>
       <span dnsim-stats separator="'|'" stats="editGroup.heroStats" />
     </p>
-    <br />
     <label>naked stats</label>
     <p>
 str:&nbsp;{{editGroup.getJobBaseStat('Strength')}} |
@@ -76,7 +73,6 @@ vit:&nbsp;{{editGroup.getJobBaseStat('Stamina')}} |
 mp:&nbsp;{{editGroup.getJobBaseStat('BaseMP')}} |
 aggro:&nbsp;{{editGroup.getJobBaseStat('AggroperPvE')}}
     </p>
-    <br />
     <label>stat affects</label>
     <p>
 vit&nbsp;to&nbsp;hp:&nbsp;{{editGroup.getJobConversion('HP')}} |

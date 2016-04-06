@@ -80,26 +80,29 @@ function jobs(dntData, translations, itemColumnsToLoad) {
           id : d.id,
           name : translations.translate(d.JobName),
           isClassJob : function(c) {
-            return t.isClassJob2(d, c);
+            return t.isClassJob(d, c);
           }
         };
     },
     
-    isClassJob2 : function (d, c) {
+    isClassJob : function (d, c) {
+      if(c == 0) return true;
       if(d.id == c) {
         return true;
       }
       
       var parentJob = d.ParentJob;
       
+      if(!parentJob) return false;
       if(parentJob == c) return true;
-      if(c == 0) return true;
 
       var parentJobData = dntData.find(fileName, 'id', parentJob);
       var numRows = parentJobData.length;
       for(var r2=0;r2<numRows;++r2) {
-        return this.isClassJob2(parentJobData[r2], c);
+        return this.isClassJob(parentJobData[r2], c);
       }
+      
+      return false;
     },
     
     getBaseJobName : function(job) {

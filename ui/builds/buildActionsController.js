@@ -27,7 +27,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
     });
     
     translations.init(progress, tryInit);
-    $timeout();
+    vm.onChange();
   }
 
   function tryInit() {
@@ -67,7 +67,8 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
     scope: true,
     bindToController: {
       buildName: '=buildName',
-      build: '=build'
+      build: '=build',
+      onChange: '&onChange'
     },
     controller: 'buildActionsCtrl',
     controllerAs: 'buildActions',

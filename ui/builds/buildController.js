@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('buildCtrl',
 
-['$location','hCodeValues','statHelper','itemCategory',
-function($location,hCodeValues,statHelper,itemCategory) {
+['$timeout','$location','hCodeValues','statHelper','itemCategory',
+function($timeout,$location,hCodeValues,statHelper,itemCategory) {
   'use strict';
   
   var vm = this;
@@ -45,6 +45,10 @@ function($location,hCodeValues,statHelper,itemCategory) {
       var lastUpdate = new Date(vm.build.lastUpdate);
       return lastUpdate.toLocaleTimeString();
     }
+  }
+  
+  this.allowMoreItems = function() {
+    return this.getCategoryItems().length < vm.category.maxCat;
   }
   
   this.getItemCount = function() {
@@ -111,13 +115,21 @@ function($location,hCodeValues,statHelper,itemCategory) {
     return itemCountText + ' ' + vm.category.name;
   }
   
+  this.handleChange = function() {
+    vm.onChange();
+    $timeout(function() {
+      vm.stats = statHelper.getBuildStats(vm.build);
+    });
+  }
+  
 }])
 .directive('dngearsimBuild', function() {
   return {
     scope: true,
     bindToController: {
       buildName: '=buildName',
-      build: '=build'
+      build: '=build',
+      onChange: '&onChange'
     },
     controller: 'buildCtrl',
     controllerAs: 'buildCtrl',
