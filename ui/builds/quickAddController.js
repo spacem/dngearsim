@@ -5,29 +5,29 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
   'use strict';
   
   var vm = this;
-  this.startedForCat = '';
-  this.stepNumber = 0;
-  this.datas = [];
-  this.options = [];
+  vm.startedForCat = '';
+  vm.stepNumber = 0;
+  vm.datas = [];
+  vm.options = [];
   
   dntData.init('exchange.lzjson', null, function() {}, $timeout);
   
   this.setOptions = function() {
-    if(this.hasStarted()) {
-      this.options = quickAdd.getOptions(this.category, this.build, this.datas);
-      if(this.options.length == 1) {
-        this.selectOption(this.options[0]);
+    if(vm.hasStarted()) {
+      vm.options = quickAdd.getOptions(vm.category, vm.build, vm.datas);
+      if(vm.options.length == 1) {
+        vm.selectOption(vm.options[0]);
       }
     }
   }
   
   this.selectOption = function(value) {
-    var data = quickAdd.createData(value, this.category, this.stepNumber)
-    this.datas.push(data);
-    this.stepNumber++;
-    if(!quickAdd.isValidStepNumber(this.category, this.stepNumber)) {
+    var data = quickAdd.createData(value, vm.category, vm.stepNumber)
+    vm.datas.push(data);
+    vm.stepNumber++;
+    if(!quickAdd.isValidStepNumber(vm.category, vm.stepNumber)) {
       
-      var newItem = quickAdd.getItem(this.datas);
+      var newItem = quickAdd.getItem(vm.datas);
       var dntFiles = exportLinkHelper.getDntFiles(newItem);
       angular.forEach(dntFiles, function(columns, fileName) {
         dntData.init(fileName, columns, function() {}, function() { vm.tryToAddItem(dntFiles, newItem) });
@@ -35,7 +35,7 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
       vm.tryToAddItem(dntFiles, newItem);
     }
     else {
-      this.setOptions();
+      vm.setOptions();
       console.log('setup next step');
     }
   }
@@ -62,40 +62,41 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
   }
   
   this.reset = function() {
-    this.stepNumber = 0;
-    this.datas = [];
-    this.setOptions();
+    vm.stepNumber = 0;
+    vm.datas = [];
+    $timeout(function() {
+      vm.setOptions();
+    });
   }
   
   this.hasStarted = function() {
-    return this.startedForCat == this.category.name;
+    return vm.startedForCat == vm.category.name;
   }
   
   this.start = function() {
-    this.startedForCat = this.category.name;
-    this.reset();
+    vm.startedForCat = vm.category.name;
     
-    jobs.init(function() {},function() {});
-    itemCategory.init(this.category.name, function() {});
+    jobs.init(function() {}, vm.reset);
+    itemCategory.init(vm.category.name, vm.reset);
   }
   
   this.hasOptions = function() {
-    return quickAdd.getOptions(this.category, this.build, []).length > 0;
+    return quickAdd.hasOptions(vm.category, vm.build, []);
   }
   
   this.cancel = function() {
-    this.startedForCat = '';
-    this.reset();
+    vm.startedForCat = '';
+    vm.reset();
   }
   
   this.back = function() {
-    if(this.stepNumber == 0) {
-      this.cancel();
+    if(vm.stepNumber == 0) {
+      vm.cancel();
     }
     else {
-      this.stepNumber--;
-      this.datas.pop();
-      this.setOptions();
+      vm.stepNumber--;
+      vm.datas.pop();
+      vm.setOptions();
     }
   }
   

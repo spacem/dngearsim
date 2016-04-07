@@ -150,12 +150,8 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         item.stats = stats;
       }
       
-      if(item.levelLimit == null) {
-        item.levelLimit = d.LevelLimit;
-      }
-      
-      if(item.id == null) {
-        item.id = d.id;
+      if(!item.skillId) {
+        item.skillId = d.SkillID;
       }
       
       if(item.iconIndex == null) {

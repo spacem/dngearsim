@@ -15,7 +15,7 @@ function items(translations,dntData,itemColumnsToLoad) {
       // wspr: { mainDnt: 'itemtable_source.dnt', type: 'wellspring', minLevel: 24 },
       
       tech: { 
-        mainDnt: 'itemtable_skilllevelup.optimised.lzjson', 
+        mainDnt: 'itemtable_skilllevelup.lzjson', 
         potentialDnt: 'potentialtable.optimised.lzjson',
         sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
         type: 'techs', 
@@ -24,7 +24,7 @@ function items(translations,dntData,itemColumnsToLoad) {
         maxLevel: 80},
       
       rbTech: { 
-        mainDnt: 'itemtable_skilllevelup.optimised.lzjson', 
+        mainDnt: 'itemtable_skilllevelup.lzjson', 
         potentialDnt: 'potentialtable_reboot.optimised.lzjson',
         type: 'techs', 
         minLevel: 90,

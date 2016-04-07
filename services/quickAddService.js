@@ -59,6 +59,47 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return item.levelLimit == id;
         }
       },
+      cashRankStep: {
+        name: 'rank',
+        getOptions: function(category, build, datas) {
+          
+          return [
+          { id: 4, name: 'unique' },
+          { id: 3, name: 'epic' },
+          { id: 2, name: 'rare' },
+          { id: 1, name: 'normal' },
+          ];
+        },
+        matchesItem: function(id, item) {
+          return item.rank.id == id;
+        }
+      },
+      techRankStep: {
+        name: 'rank',
+        getOptions: function(category, build, datas) {
+          
+          return [
+          { id: 4, name: 'unique' },
+          { id: 3, name: 'epic' },
+          ];
+        },
+        matchesItem: function(id, item) {
+          return item.rank.id == id;
+        }
+      },
+      talismanRankStep: {
+        name: 'rank',
+        getOptions: function(category, build, datas) {
+          
+          return [
+          { id: 2, name: 'rare' },
+          { id: 1, name: 'normal' },
+          ];
+        },
+        matchesItem: function(id, item) {
+          return item.rank.id == id;
+        }
+      },
       otherRankStep: {
         name: 'rank',
         getOptions: function(category, build, datas) {
@@ -102,6 +143,31 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           item.enchantmentNum = id;
         }
       },
+      titleStep: {
+        name: 'select',
+        getOptions: function(category, build, datas) {
+          var allTitles = findData(category, build, datas, 9999);
+          var usefulTitles = [];
+          for(var i=0;i<allTitles.length;++i) {
+            switch(allTitles[i].id) {
+              case 1975: // Manticore Expert
+              case 1973: // Returned
+              case 1008: // Dark Knight
+              // case 339: // Cow Wrangler
+              case 230: // Miraculous
+              case 279: // Provoking
+              // case 1280: // Dragon Tamer
+                usefulTitles.push(allTitles[i]);
+            }
+          }
+          
+          return usefulTitles;
+        },
+        hasOptions: function(category, build, datas) {
+          return true;
+        },
+        isItemStep: true,
+      },
       enhanceStep: {
         name: 'enhance',
         getOptions: function(category, build, datas) {
@@ -134,6 +200,24 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         },
         isItemStep: true,
       },
+      techSkillStep: {
+        name: 'skill',
+        getOptions: function(category, build, datas) {
+          var items = findData(category, build, datas, 1);
+          
+          // eventually show all the skills
+          // but for now
+          if(items.length > 0) {
+            return [{id: items[0].skillId, name: items[0].skillId}];
+          }
+          else {
+            return [];
+          }
+        },
+        matchesItem: function(id, item) {
+          return item.skillId == id;
+        }
+      },
       itemNameStep: {
         name: 'item',
         getOptions: function(category, build, datas) {
@@ -160,16 +244,18 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       }
     },
     categorySteps: {
+      titles: ['titleStep'],
       weapons: ['exchangeStep','levelStep','equipRankStep','itemStep','enhanceStep'],
       armour: ['exchangeStep','levelStep','equipRankStep','itemStep','enhanceStep'],
       accessories: ['exchangeStep','levelStep','equipRankStep','itemNameStep','itemStep'],
-      "offensive gems": ['levelStep','equipRankStep','itemNameStep','itemStep'],
-      "increasing gems": ['levelStep','equipRankStep','itemNameStep','itemStep'],
-      "enhancement plates": ['levelStep','otherRankStep','itemNameStep','itemStep'],
-      "expedition plates": ['levelStep','itemNameStep','itemStep'],
-      talisman: ['levelStep','otherRankStep','itemNameStep','itemStep','enhanceTalismanStep'],
+      'offensive gems': ['levelStep','equipRankStep','itemNameStep','itemStep'],
+      '"increasing gems': ['levelStep','equipRankStep','itemNameStep','itemStep'],
+      'enhancement plates': ['levelStep','otherRankStep','itemNameStep','itemStep'],
+      'expedition plates': ['levelStep','itemNameStep','itemStep'],
+      talisman: ['levelStep','talismanRankStep','itemNameStep','itemStep','enhanceTalismanStep'],
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
-      cash: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
+      cash: ['exchangeStep','cashRankStep','itemNameStep','itemStep'],
+      techs: ['exchangeStep','levelStep','techRankStep','techSkillStep','itemStep'],
     },
     getOptions: function(category, build, datas) {
       if(category.name in this.categorySteps) {
@@ -178,6 +264,20 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       }
       else {
         return [];
+      }
+    },
+    hasOptions: function(category, build, datas) {
+      if(category.name in this.categorySteps) {
+        var stepName = this.getStepName(category, datas.length);
+        if(this.stepDefs[stepName].hasOptions) {
+          return this.stepDefs[stepName].hasOptions(category, build, datas);
+        }
+        else {
+          return this.stepDefs[stepName].getOptions(category, build, datas).length > 0;
+        }
+      }
+      else {
+        return false;
       }
     },
     isValidStepNumber: function(category, stepNumber) {
@@ -217,10 +317,14 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
     }
   }
   
-  function findData(category, build, datas) {
+  function findData(category, build, datas, maxItems) {
+    if(!maxItems) {
+      maxItems = 200;
+    }
+    
     var allItems = itemCategory.getItems(category.name);
     var retVal = [];
-    console.log('looking at ' + allItems.length + ' items');
+    // console.log('looking at ' + allItems.length + ' items');
     var numItems = allItems.length;
     
     for(var i=0;i<numItems;++i) {
@@ -243,13 +347,17 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         itemFactory.initItem(item);
         retVal.push(item);
       }
+      
+      if(retVal.length >= maxItems) {
+        break;
+      }
     }
     
     retVal = retVal.sort(function(item1, item2) {
       return item1.name.localeCompare(item2.name);
     });
     
-    console.log('found ' + retVal.length + ' items');
+    // console.log('found ' + retVal.length + ' items');
     return retVal;
   }
 }

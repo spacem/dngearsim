@@ -12,13 +12,6 @@ describe('initItem', function () {
     });
   });
   
-  it('doesnt error if item alread initialised', function() {
-    var item = { id: 123 };
-    itemFactory.initItem(item);
-    
-    expect(item.id).toBe(123);
-  });
-  
   it('populates null with basic info from data', function() {
     var d = {
       id: 123,
@@ -27,9 +20,10 @@ describe('initItem', function () {
       EnchantID: 66,
       LevelLimit: 90,
     };
-    var item = { data: d, itemSource: 'eq' };
+    var item = itemFactory.createItem('eq', d, null, 11);
     itemFactory.initItem(item);
     
+    expect(item.totalRatio).toBe(11);
     expect(item.id).toBe(123);
     expect(item.name).toBe('test44');
     expect(item.sparkTypeId).toBe(55);
