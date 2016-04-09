@@ -16,7 +16,7 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'search/increasing-gems', name:'increasing gems', sourceType: 'gems', hideJob: true, maxCat: 14, maxExchange: 14, limitExchange: [54]},
       {path: 'search/enhancement-plates', name:'enhancement plates', sourceType: 'plates', hideJob: true, numItemText: '8+3', maxCat: 11, maxExchange: 15, limitExchange: [33]},
       {path: 'search/expedition-plates', name:'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, numItemText: '4', maxCat: 4, maxExchange: 15, limitExchange: [33]},
-      {path: 'search/talisman', name:'talisman', sourceType: 'talisman', hideJob: true, numItemText: '8+4', maxExchange: 1, maxCat: 12, maxExchange: 12, limitExchange: [52]},
+      {path: 'search/talisman', name:'talisman', sourceType: 'talisman', hideJob: true, numItemText: '8+4', maxCat: 12, maxExchange: 12, limitExchange: [52]},
       {path: 'search/costume', name:'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, limitExchange: [16,17,18,19,20,21,22]},
       {path: 'search/cash', name:'cash', sourceType: 'cash', numItemText: '8', maxCat: 8, maxExchange: 2, limitExchange: [23,24,25,26,27,28,29]},
       {path: 'search/skills', name:'skills'},
