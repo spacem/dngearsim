@@ -23,6 +23,16 @@ function config($routeProvider) {
       controller: 'TestCtrl'
     }).
     
+    when('/boxes/', {
+      templateUrl: 'ui/secrets/boxes.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'BoxesCtrl as boxes'
+    }).
+    
+    when('/boxes/:box', {
+      templateUrl: 'ui/secrets/boxes.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'BoxesCtrl as boxes'
+    }).
+    
     when('/', {
       redirectTo: '/builds'
     }).
