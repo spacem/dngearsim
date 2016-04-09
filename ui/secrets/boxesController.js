@@ -11,7 +11,8 @@ angular.module('dnsim')
     document.body.className = 'default-back';
     $window.document.title = 'Boxes';
     
-    $http.get(region.dntLocation + '/boxes.json').then(function(res) {
+    console.log(region.dntLocation.url)
+    $http.get(region.dntLocation.url + '/boxes.json').then(function(res) {
       vm.boxes = res.data;
     });
     
