@@ -64,6 +64,9 @@ function translations($routeParams, $rootScope) {
             },
             function(msg) {
               angular.forEach(progressCallback, function(value, key) { value(msg); });
+              $rootScope.$broadcast('TRANSLATION_LOAD_ERROR');
+              t.startedLoading = false;
+              t.loaded = false;
             }
           );
         }

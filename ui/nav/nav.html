@@ -8,12 +8,9 @@
   </ul>
 </div>
 <div class="row">
-  <div class="col-xs-12 loading" ng-if="isLoading()">
-    loading...
-  </div>
   <div class="col-xs-12" ng-if="noRegion()">
     No region selected
   </div>
-  <div class="col-xs-12" id="app" ng-view ng-if="!isLoading() && !noRegion()">
+  <div class="col-xs-12" id="app" ng-view ng-if="!noRegion()">
   </div>
 </div>

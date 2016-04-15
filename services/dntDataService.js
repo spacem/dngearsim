@@ -53,7 +53,11 @@ function dntData($rootScope) {
                   t.completeCallbacks = [];
                   $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
                 },
-                function(msg) { t.progressCallback(msg) }  );
+                function(msg) {
+                  $rootScope.$broadcast('DNTDATA_LOAD_ERROR');
+                  t.startedLoading = false;
+                  t.loaded = false;
+                }  );
             }
             else {
               // console.log("dnt location not set!");
@@ -184,11 +188,10 @@ function dntData($rootScope) {
     },
     anyLoading : function() {
       var t = this;
-      var found = false;
+      var found = 0;
       angular.forEach(this.loaders, function(value, key) {
         if(!value.loaded && value.startedLoading) {
-          found = true;
-          return;
+          found++;
         }
       });
       
