@@ -12,13 +12,10 @@ angular.module('dnsim')
     $window.document.title = 'Boxes';
     
     console.log(region.dntLocation.url)
-    //$http.get(region.dntLocation.url + '/boxes.json').then(function(res) {
-      //vm.boxes = res.data;
-    //});
-    $http.get('https://discord-bot-spacemh.c9users.io/firebase_na/public/charm-boxes.json').then(function(res) {
+    $http.get(region.dntLocation.url + '/charm-boxes.json').then(function(res) {
       vm.boxes = res.data;
     });
-    
+
     this.getRankName = function(rank) {
       return hCodeValues.rankNames[rank].name;
     }
