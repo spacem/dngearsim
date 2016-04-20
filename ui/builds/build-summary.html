@@ -3,9 +3,8 @@
     <h3 class="text-left">
       {{buildCtrl.buildName}}
     <small>
-      <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span>
-      <span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}</span><br />
-      {{buildCtrl.getSaveDate()}} {{buildCtrl.getSaveTime()}}<span class="hidden-xs"> | </span><br class="visible-xs" />
+      <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span><span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}&nbsp;</span><span ng-show="buildCtrl.build.enemyLevel > 0">vs&nbsp;lv{{buildCtrl.build.enemyLevel}}&nbsp;</span>
+      <br />
       <span dnsim-stats stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'"></span><br />
       {{buildCtrl.getBuildSummary()}}
     </small>
