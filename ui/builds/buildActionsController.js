@@ -16,6 +16,22 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
   
   this.copyGroup = function() {
     var newGroupName = saveHelper.importGroup(vm.buildName, vm.build.items);
+    
+    saveHelper.renameSavedGroup(
+      newGroupName, 
+      newGroupName,
+      vm.build.enemyLevel,
+      vm.build.playerLevel,
+      vm.build.heroLevel,
+      vm.build.job,
+      vm.build.damageType,
+      vm.build.element,
+      vm.build.enemyStatCaps, 
+      vm.build.playerStatCaps, 
+      vm.build.conversions, 
+      vm.build.baseStats, 
+      vm.build.heroStats);
+    
     $location.path('/builds/' + newGroupName);
   }
   

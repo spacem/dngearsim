@@ -43,7 +43,7 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
     this.enemyLevel = this.group.enemyLevel;
   }
   else {
-    this.enemyLevel = 80;
+    this.enemyLevel = 90;
   }
   
   if(this.group.playerLevel) {
