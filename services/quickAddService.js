@@ -319,7 +319,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
   
   function findData(category, build, datas, maxItems) {
     if(!maxItems) {
-      maxItems = 200;
+      maxItems = 9999;
     }
     
     var allItems = itemCategory.getItems(category.name);
