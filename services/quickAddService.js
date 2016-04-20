@@ -241,6 +241,36 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return item.name == id;
         },
         isItemStep: true,
+      },
+      distinctItemNameStep: {
+        name: 'item',
+        getOptions: function(category, build, datas) {
+          var items = findData(category, build, datas);
+          var itemNames = {};
+          var itemNamesList = [];
+          
+          for(var i=0;i<build.items.length;++i) {
+            var item = build.items[i];
+            itemNames[item.name] = true;
+          }
+          
+          for(var i=0;i<items.length;++i) {
+            var name = items[i].name;
+            if(!(name in itemNames)) {
+              itemNames[name] = true;
+              itemNamesList.push({
+                id: name,
+                name: name,
+              });
+            }
+          }
+          
+          return itemNamesList;
+        },
+        matchesItem: function(id, item) {
+          return item.name == id;
+        },
+        isItemStep: true,
       }
     },
     categorySteps: {
@@ -250,9 +280,9 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       accessories: ['exchangeStep','levelStep','equipRankStep','itemNameStep','itemStep'],
       'offensive gems': ['levelStep','equipRankStep','itemNameStep','itemStep'],
       '"increasing gems': ['levelStep','equipRankStep','itemNameStep','itemStep'],
-      'enhancement plates': ['levelStep','otherRankStep','itemNameStep','itemStep'],
-      'expedition plates': ['levelStep','itemNameStep','itemStep'],
-      talisman: ['levelStep','talismanRankStep','itemNameStep','itemStep','enhanceTalismanStep'],
+      'enhancement plates': ['levelStep','otherRankStep','distinctItemNameStep','itemStep'],
+      'expedition plates': ['levelStep','distinctItemNameStep','itemStep'],
+      talisman: ['levelStep','talismanRankStep','distinctItemNameStep','itemStep','enhanceTalismanStep'],
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
       cash: ['exchangeStep','cashRankStep','itemNameStep','itemStep'],
       techs: ['exchangeStep','levelStep','techRankStep','techSkillStep','itemStep'],
