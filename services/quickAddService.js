@@ -40,6 +40,47 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return item.exchangeType == id;
         }
       },
+      accExchangeStep: {
+        name: 'type',
+        getOptions: function(category, build, datas) {
+          
+          var exchanges = [];
+          
+          for(var e=0;e<category.limitExchange.length;++e) {
+            var exId = category.limitExchange[e];
+            
+            var numExchange = 0;
+            for(var i=0;i<build.items.length;++i) {
+              if(build.items[i].exchangeType == exId) {
+                numExchange++;
+              }
+            }
+            
+            if(exId == 10 || exId == 25) {
+              if(numExchange >= 2) {
+                continue;
+              }
+            }
+            else {
+              if(numExchange >= 1) {
+                continue;
+              }
+            }
+            
+            var exchange = dntData.find('exchange.lzjson','ExchangeType',exId);
+            if(exchange && exchange.length > 0 && exchange[0].NameID > 0) {
+              var exName = translations.translate(exchange[0].NameID).toLowerCase();
+              
+              exchanges.push({id: exId, name: exName.toLowerCase()});
+            }
+          }
+          
+          return exchanges;
+        },
+        matchesItem: function(id, item) {
+          return item.exchangeType == id;
+        }
+      },
       levelStep: {
         name: 'level',
         getOptions: function(category, build, datas) {
@@ -277,14 +318,14 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       titles: ['titleStep'],
       weapons: ['exchangeStep','levelStep','equipRankStep','itemStep','enhanceStep'],
       armour: ['exchangeStep','levelStep','equipRankStep','itemStep','enhanceStep'],
-      accessories: ['exchangeStep','levelStep','equipRankStep','itemNameStep','itemStep'],
+      accessories: ['accExchangeStep','levelStep','equipRankStep','itemNameStep','itemStep'],
       'offensive gems': ['levelStep','equipRankStep','itemNameStep','itemStep'],
-      '"increasing gems': ['levelStep','equipRankStep','itemNameStep','itemStep'],
+      'increasing gems': ['levelStep','equipRankStep','itemNameStep','itemStep'],
       'enhancement plates': ['levelStep','otherRankStep','distinctItemNameStep','itemStep'],
       'expedition plates': ['levelStep','distinctItemNameStep','itemStep'],
       talisman: ['levelStep','talismanRankStep','distinctItemNameStep','itemStep','enhanceTalismanStep'],
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
-      cash: ['exchangeStep','cashRankStep','itemNameStep','itemStep'],
+      cash: ['accExchangeStep','cashRankStep','itemNameStep','itemStep'],
       techs: ['exchangeStep','levelStep','techRankStep','techSkillStep','itemStep'],
     },
     getOptions: function(category, build, datas) {
