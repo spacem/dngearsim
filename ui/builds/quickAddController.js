@@ -94,8 +94,13 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
       vm.cancel();
     }
     else {
-      vm.stepNumber--;
-      vm.datas.pop();
+      do {
+        vm.stepNumber--;
+        vm.datas.pop();
+        
+        var testOptions = quickAdd.getOptions(vm.category, vm.build, vm.datas);
+      } while(testOptions.length <= 1 && vm.stepNumber > 0);
+      
       vm.setOptions();
     }
   }
