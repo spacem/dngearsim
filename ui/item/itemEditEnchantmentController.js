@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemEditEnchantmentCtrl',
 
-['dntData','hCodeValues','items',
-function(dntData,hCodeValues,items) {
+['dntData','hCodeValues','items','$timeout','translations',
+function(dntData,hCodeValues,items,$timeout,translations) {
   'use strict';
   
   if(this.item == null) return;
@@ -25,7 +25,7 @@ function(dntData,hCodeValues,items) {
   
   this.setEnchantment = function() {
     vm.item.enchantmentStats = [];
-      
+
     if(vm.enchantments && vm.enchantments.length > 0) {
 
       if(typeof vm.item.enchantmentNum != 'number') {
@@ -99,6 +99,57 @@ function(dntData,hCodeValues,items) {
     }
     
     return vm.enchantments;
+  }
+  
+  var fileName = 'all-items.lzjson';
+  
+  this.showMaterials = function() {
+    dntData.init(fileName, null, function() {}, function() {
+      $timeout(function() {
+        
+        vm.materials = [];
+        for(var i=1;i<=5;++i) {
+          var itemId = vm.enchantmentAfter['NeedItemID' + i];
+          var itemCount = vm.enchantmentAfter['NeedItemCount' + i];
+          if(itemId > 0 && itemCount > 0) {
+            
+            var items = dntData.find(fileName, 'id', itemId);
+            if(items.length == 0) {
+              vm.materials.push({num: itemCount, name: 'unknown (' + itemId + ')'});
+            }
+            else {
+              var item = items[0];
+              var name = null;
+              if(item.NameID) {
+                name = translations.translate(item.NameID);
+                if(name.indexOf('{' == 0) && item.NameIDParam) {
+                  name = translations.translate(item.NameIDParam);
+                }
+              }
+
+              if(!name) {
+                name = 'M' + itemId;
+              }
+              
+              if(item) {
+                var material = {
+                  num: itemCount,
+                  icon: item.IconImageIndex,
+                  rank: item.Rank,
+                  levelLimit: item.LevelLimit,
+                  name: name
+                };
+                vm.materials.push(material);
+              }
+            }
+          }
+        }
+      });
+    });
+  }
+  
+  if(dntData.isLoaded(fileName)) {
+    this.showMaterials();
   }
 
   function reportProgress(msg) {

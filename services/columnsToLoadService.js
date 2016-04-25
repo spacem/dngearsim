@@ -26,6 +26,7 @@ function itemColumnsToLoad() {
     },
     enchantDnt: {
       EnchantID: true,EnchantLevel: true,EnchantRatio: true,BreakRatio: true,MinDown: true,MaxDown: true,NeedCoin: true,
+      NeedItemID1: true,NeedItemCount1: true,NeedItemID2: true,NeedItemCount2: true,NeedItemID3: true,NeedItemCount3: true,NeedItemID4: true,NeedItemCount4: true,NeedItemID5: true,NeedItemCount5: true,ProtectItemCount: true,
       State1: true,State1Value: true,State2: true,State2Value: true,State3: true,State3Value: true,State4: true,State4Value: true,State5: true,State5Value: true,State6: true,State6Value: true,State7: true,State7Value: true,State8: true,State8Value: true,State9: true,State9Value: true,State10: true,State10Value: true
     },
     potentialDnt : {
