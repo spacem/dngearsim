@@ -123,7 +123,8 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           { id: 4, name: 'unique' },
           { id: 3, name: 'epic' },
           { id: 2, name: 'rare' },
-          { id: 1, name: 'normal' },
+          { id: 1, name: 'magic' },
+          { id: 0, name: 'normal' },
           ];
         },
         matchesItem: function(id, item) {
@@ -150,7 +151,8 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return [
           { id: 2, name: 'rare' },
           { id: 999, name: 'quality' },
-          { id: 1, name: 'normal' },
+          { id: 1, name: 'magic' },
+          { id: 0, name: 'normal' },
           ];
         },
         matchesItem: function(id, item) {
