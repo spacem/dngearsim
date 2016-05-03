@@ -33,7 +33,7 @@
       <span ng-show="editCtrl.getAddAvgDmgAffectAmount() != 0">
         <b ng-show="editCtrl.getAddAvgDmgAffectAmount() > 0">increase</b>
         <b ng-show="editCtrl.getAddAvgDmgAffectAmount() < 0">decreases</b>
-        avg pdmg by {{editCtrl.getAddAvgDmgAffectAmount()}}%
+        avg dmg by {{editCtrl.getAddAvgDmgAffectAmount()}}%
         <br />
       </span>
       
@@ -83,7 +83,7 @@
       <span ng-show="editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem) != 0">
         <b ng-show="editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem) > 0">increase</b>
         <b ng-show="editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem) < 0">decreases</b>
-        avg pdmg by {{editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem, $index)}}%
+        avg dmg by {{editCtrl.getReplaceAvgDmgAffectAmount($index, groupItem, $index)}}%
         <br />
       </span>
       

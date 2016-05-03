@@ -8,7 +8,10 @@ angular.module('dnsim').controller('BuildListCtrl',
     this.savedItems = saveHelper.getSavedItems();
     this.currentGroup = localStorage.getItem('currentGroup');
     if('groupName' in $routeParams) {
-      this.currentGroup = $routeParams.groupName;
+      if($routeParams.groupName != this.currentGroup) {
+        this.currentGroup = $routeParams.groupName;
+        localStorage.setItem('currentGroup', this.currentGroup);
+      }
     }
     else if(this.currentGroup && this.currentGroup in this.savedItems) {
       $location.path('/builds/' + this.currentGroup);
