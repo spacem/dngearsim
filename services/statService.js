@@ -73,8 +73,20 @@ function statHelper(hCodeValues) {
         }
       }
       
+      function getSkillPc(stat) {
+        var statDef = hCodeValues.stats[stat.id];
+        if(statLookup[statDef.skPc]) {
+          return Number(statLookup[statDef.skPc].max);
+        }
+        else {
+          return 0;
+        }
+      }
+      
       function applyPc(stat) {
-        stat.max = Math.floor(stat.max*(1+getPc(stat)));
+        stat.max = Math.floor(
+          stat.max * (1+getPc(stat)) * (1+getSkillPc(stat))
+          );
       }
       
       function dupeStat(id) {

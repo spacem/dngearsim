@@ -1,8 +1,8 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('quickAdd', ['dntData', 'translations', 'itemColumnsToLoad', 'itemCategory','itemFactory','jobs', quickAdd]);
-function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFactory,jobs) {
+angular.module('dnsim').factory('quickAdd', ['dntData', 'translations', 'itemColumnsToLoad', 'itemCategory','itemFactory','jobs','hCodeValues', quickAdd]);
+function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFactory,jobs,hCodeValues) {
 
   return {
     stepDefs: {
@@ -340,8 +340,17 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return item.name == id;
         },
         isItemStep: true,
-      }
+      },
+      customStep: {
+        name: 'misc',
+        getOptions: function(category, build, datas) {
+          return hCodeValues.customItems;
+        },
+        isItemStep: true,
+      },
     },
+    // end of step defs
+    
     categorySteps: {
       titles: ['titleStep'],
       weapons: ['exchangeStep','sixtyLevelStep','equipRankStep','itemStep','enhanceStep'],
@@ -355,6 +364,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
       cash: ['accExchangeStep','cashRankStep','itemNameStep','itemStep'],
       techs: ['exchangeStep','allLevelStep','techRankStep','techSkillStep','itemStep'],
+      custom: ['customStep'],
     },
     getOptions: function(category, build, datas) {
       if(category.name in this.categorySteps) {

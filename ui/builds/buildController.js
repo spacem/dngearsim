@@ -48,7 +48,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
   }
   
   this.allowMoreItems = function() {
-    return this.getCategoryItems().length < vm.category.maxCat;
+    return !vm.category.maxCat || this.getCategoryItems().length < vm.category.maxCat;
   }
   
   this.getItemCount = function() {

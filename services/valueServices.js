@@ -34,10 +34,10 @@ function hCodeValues() {
   
   return {
     stats : {
-      0  : {id: 0, name: 'str', display: toNoDec, type: 'dps', pc: 50 },
-      1  : {id: 1, name: 'agi', display: toNoDec, type: 'dps', pc: 51 },
-      2  : {id: 2, name: 'int', display: toNoDec, type: 'dps', pc: 52 },
-      3  : {id: 3, name: 'vit', display: toNoDec, type: 'def', pc: 53 },
+      0  : {id: 0, name: 'str', display: toNoDec, type: 'dps', pc: 50, skPc: 4050 },
+      1  : {id: 1, name: 'agi', display: toNoDec, type: 'dps', pc: 51, skPc: 4051 },
+      2  : {id: 2, name: 'int', display: toNoDec, type: 'dps', pc: 52, skPc: 4052 },
+      3  : {id: 3, name: 'vit', display: toNoDec, type: 'def', pc: 53, skPc: 4053 },
       4  : {id: 4, name: 'pdmg', display: toNoDec, combineWith: 5, type: 'dps', pc: 54 },
       5  : {id: 5, name: 'maxPdmg', display: toNoDec, hide: true, pc: 55 },
       6  : {id: 6, name: 'mdmg', display: toNoDec, combineWith: 7, type: 'dps', pc: 56 },
@@ -58,8 +58,8 @@ function hCodeValues() {
       21 : {id: 21, name: 'ice def', display: toPercent, type: 'def' },
       22 : {id: 22, name: 'light def', display: toPercent, type: 'def' },
       23 : {id: 23, name: 'dark def', display: toPercent, type: 'def' },
-      25 : {id: 25, name: 'hp', display: inThousands, type: 'def', pc: 75 },
-      26 : {id: 26, name: 'mp', display: inThousands, pc: 76 },
+      25 : {id: 25, name: 'hp', display: inThousands, type: 'def', pc: 75, skPc: 4075 },
+      26 : {id: 26, name: 'mp', display: inThousands, pc: 76, skPc: 4076 },
       29 : {id: 29, name: 'fd', display: toNoDec, type: 'dps' },
       
       // these are both min and max
@@ -116,6 +116,14 @@ function hCodeValues() {
       3000: {id: 3000, name: 'atk pwr', display: toPercent },
       3008: {id: 3008, name: 'avg eqhp', display: inThousands, summaryDisplay: true },
       
+      4050: {id: 4050, name: 'skStr%', display: toPercent },
+      4051: {id: 4051, name: 'skAgi%', display: toPercent },
+      4052: {id: 4052, name: 'skInt%', display: toPercent },
+      4053: {id: 4053, name: 'skVit%', display: toPercent },
+      4075: {id: 4075, name: 'skHp%', display: toPercent },
+      4076: {id: 4076, name: 'skMp%', display: toPercent },
+      
+      
       // 8001: {id: 8001, name: 'whiteDMG', display: toOneDec },
       // 8002: {id: 8002, name: 'greenDMG', display: toOneDec },
       // 8003: {id: 8003, name: 'blueDMG', display: toOneDec },
@@ -171,18 +179,24 @@ function hCodeValues() {
       37 : { id: 38, name: 'ice def', mapTo: 21 },
       38 : { id: 38, name: 'light def', mapTo: 22 },
       39 : { id: 38, name: 'dark def', mapTo: 23 },
-      58 : { id: 58, name: 'hp%', mapTo: 75 },
-      59 : { id: 59, name: 'mp%', mapTo: 76 },
+      58 : { id: 58, name: 'hp%', mapTo: 4075 },
+      59 : { id: 59, name: 'mp%', mapTo: 4076 },
       65 : { id: 65, name: 'range' },
       76 : { id: 76, name: 'movement speed', mapTo: 74 },
-      87 : { id: 87, name: 'str?', mapTo: 50 },
-      88 : { id: 88, name: 'agi?', mapTo: 51 },
-      89 : { id: 89, name: 'int?', mapTo: 52 },
-      90 : { id: 90, name: 'vit?', mapTo: 53 },
+      87 : { id: 87, name: 'str%', mapTo: 4050 },
+      88 : { id: 88, name: 'agi%', mapTo: 4051 },
+      89 : { id: 89, name: 'int%', mapTo: 4052 },
+      90 : { id: 90, name: 'vit%', mapTo: 4053 },
       134 : { id: 134, name: 'physicial defense%' },
       185 : { id: 185, name: 'wots attack power', mapTo: 3000 },
       251 : { id: 251, name: 'critical chance%', mapTo: 1012 },
     },
+    
+    customItems: 
+    [
+    {id: 0, typeName:'custom', name: 'wise plate fix', stats: [{id: 52, max:-0.001}]},
+    {id: 0, typeName:'custom', name: 'hp unified', stats: [{id: 4075, max:0.05}]},
+    ],
   
     getStats : function(data) {
       var currentState = 1;
