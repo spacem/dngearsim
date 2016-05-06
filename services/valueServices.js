@@ -123,6 +123,10 @@ function hCodeValues() {
       4075: {id: 4075, name: 'skHp%', display: toPercent },
       4076: {id: 4076, name: 'skMp%', display: toPercent },
       
+      // special cases for skills
+      10164: {id: 10164, name: 'intToPdmg', display: toPercent },
+      10165: {id: 10165, name: 'strToMdmg', display: toPercent },
+      
       
       // 8001: {id: 8001, name: 'whiteDMG', display: toOneDec },
       // 8002: {id: 8002, name: 'greenDMG', display: toOneDec },
@@ -190,6 +194,8 @@ function hCodeValues() {
       134 : { id: 134, name: 'physicial defense%' },
       185 : { id: 185, name: 'wots attack power', mapTo: 3000 },
       251 : { id: 251, name: 'critical chance%', mapTo: 1012 },
+      10164 : { id: 10164, name: 'intToPdmg', mapTo: 10164 },
+      10165 : { id: 10165, name: 'strToMdmg', mapTo: 10165 },
     },
     
     customItems: 

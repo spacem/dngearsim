@@ -153,116 +153,63 @@ function statHelper(hCodeValues) {
       // this shows as blue damage
       // i think there are magic and phis variants of this but doesnt matter
       var aPwr = dupeStat(3000);
-      
-      // I added this new calculation method
-      // but I believe the calculation I did is the same
-      var useOldCalc = true;
-      
-      // method used for 'new' calc
-      function calcDamage(eqDamage, mod, whiteDamage, save) {
-        var greenDamage = (whiteDamage * mod) + (eqDamage * mod) + eqDamage;
-        var blueDamage = (aPwr.max * (greenDamage + whiteDamage));
-        
-        if(save) {
-          var whiteStat = dupeStat(8001);
-          whiteStat.max = whiteDamage;
-          addStat(whiteStat);
-          
-          var greenStat = dupeStat(8003);
-          greenStat.max = greenDamage;
-          addStat(greenStat);
-          
-          var blueStat = dupeStat(8002);
-          blueStat.max = blueDamage;
-          addStat(blueStat);
-        }
-        
-        return whiteDamage + greenDamage + blueDamage;
-      }
 
-      if(useOldCalc) {
-        // physical damage
-        if(!group.damageType || group.damageType.id != 2) {
-          var extraPdmg = dupeStat(32);
-          var extraPdmgMod= dupeStat(101); 
-          
-          var minPdmg = dupeStat(4);
-          minPdmg.max += extraPdmg.max;
-          minPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
-          minPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
-          
-          minPdmg.max = Math.floor(minPdmg.max*(1+(getPc(minPdmg) + extraPdmgMod.max)));
-          minPdmg.max = Math.floor(minPdmg.max * (1+aPwr.max));
-          addStat(minPdmg);
-    
-          var maxPdmg = dupeStat(5);
-          maxPdmg.max += extraPdmg.max;
-          maxPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
-          maxPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
-          
-          maxPdmg.max = Math.floor(maxPdmg.max*(1+(getPc(maxPdmg) + extraPdmgMod.max)));
-          maxPdmg.max = Math.floor(maxPdmg.max * (1+aPwr.max));
-          addStat(maxPdmg);
-        }
+      // physical damage
+      if(!group.damageType || group.damageType.id != 2) {
+        var extraPdmg = dupeStat(32);
+        var extraPdmgMod= dupeStat(101);
         
-        // magic damage
-        if(!group.damageType || group.damageType.id != 1) {
-          var extraMdmg = dupeStat(33);
-          var extraMdmgMod = dupeStat(102);
-          
-          var minMdmg = dupeStat(6);
-          minMdmg.max += extraMdmg.max;
-          minMdmg.max += Math.floor(int.max*Number(group.conversions.IntelligenceAttack));
+        // special stats for zeal
+        var intToPdmg = dupeStat(10164);
+        
+        var minPdmg = dupeStat(4);
+        minPdmg.max += extraPdmg.max;
+        minPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
+        minPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
+        
+        minPdmg.max = Math.floor(minPdmg.max*(1+(getPc(minPdmg) + extraPdmgMod.max)));
+        minPdmg.max = Math.floor(minPdmg.max * (1+aPwr.max));
+        minPdmg.max += Math.floor(intToPdmg.max * int.max);
+        addStat(minPdmg);
+  
+        var maxPdmg = dupeStat(5);
+        maxPdmg.max += extraPdmg.max;
+        maxPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
+        maxPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
+        
+        maxPdmg.max = Math.floor(maxPdmg.max*(1+(getPc(maxPdmg) + extraPdmgMod.max)));
+        maxPdmg.max = Math.floor(maxPdmg.max * (1+aPwr.max));
+        maxPdmg.max += Math.floor(intToPdmg.max * int.max);
+        addStat(maxPdmg);
+      }
+      
+      // magic damage
+      if(!group.damageType || group.damageType.id != 1) {
+        var extraMdmg = dupeStat(33);
+        var extraMdmgMod = dupeStat(102);
+        
+        // special stats for zeal
+        var strToMdmg = dupeStat(10165);
+        
+        var minMdmg = dupeStat(6);
+        minMdmg.max += extraMdmg.max;
+        minMdmg.max += Math.floor(int.max*Number(group.conversions.IntelligenceAttack));
 
-          minMdmg.max = Math.floor(minMdmg.max*(1+(getPc(minMdmg) + extraMdmgMod.max)));
-          minMdmg.max = minMdmg.max * (1+aPwr.max);
-          addStat(minMdmg);
-          
-          var maxMdmg = dupeStat(7);
-          maxMdmg.max += extraMdmg.max;
-          maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
-          
-          maxMdmg.max = Math.floor(maxMdmg.max*(1+(getPc(maxMdmg) + extraMdmgMod.max)));
-          maxMdmg.max = maxMdmg.max * (1+aPwr.max);
-          addStat(maxMdmg);
-        }
-      }
-      else {
-  
-        // physical damage
-        if(!group.damageType || group.damageType.id != 2) {
-          var extraPdmg = dupeStat(32);
-          var extraPdmgMod= dupeStat(101); 
-          
-          var whiteDamage = 0;
-          whiteDamage += Math.floor(str.max*Number(group.conversions.StrengthAttack));
-          whiteDamage += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
-  
-          var minPdmg = dupeStat(4);
-          minPdmg.max = calcDamage(minPdmg.max+extraPdmg.max, getPc(minPdmg)+extraPdmgMod.max, whiteDamage, false);
-          addStat(minPdmg);
-          
-          var maxPdmg = dupeStat(5);
-          maxPdmg.max = calcDamage(maxPdmg.max+extraPdmg.max, getPc(maxPdmg).max+extraPdmgMod.max, whiteDamage, false);
-          addStat(maxPdmg);
-        }
+        minMdmg.max = Math.floor(minMdmg.max*(1+(getPc(minMdmg) + extraMdmgMod.max)));
+        minMdmg.max = minMdmg.max * (1+aPwr.max);
+        minMdmg.max += Math.floor(strToMdmg.max * str.max);
+        addStat(minMdmg);
         
-        // magic damage
-        if(!group.damageType || group.damageType.id != 1) {
-          var extraMdmg = dupeStat(33);
-          var extraMdmgMod= dupeStat(102);
-          
-          var whiteDamage = Math.floor(int.max*Number(group.conversions.IntelligenceAttack));
-          
-          var minMdmg = dupeStat(6);
-          minMdmg.max = calcDamage(minMdmg.max+extraMdmg.max, getPc(minMdmg)+extraMdmgMod.max, whiteDamage, false);
-          addStat(minMdmg);
-          
-          var maxMdmg = dupeStat(7);
-          maxMdmg.max = calcDamage(maxMdmg.max+extraMdmg.max, getPc(maxMdmg)+extraMdmgMod.max, whiteDamage, true);
-          addStat(maxMdmg);
-        }
+        var maxMdmg = dupeStat(7);
+        maxMdmg.max += extraMdmg.max;
+        maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
+        
+        maxMdmg.max = Math.floor(maxMdmg.max*(1+(getPc(maxMdmg) + extraMdmgMod.max)));
+        maxMdmg.max = maxMdmg.max * (1+aPwr.max);
+        maxMdmg.max += Math.floor(strToMdmg.max * str.max);
+        addStat(maxMdmg);
       }
+      
       
       // crit chance %
       var crit = dupeStat(12);
@@ -385,7 +332,18 @@ function statHelper(hCodeValues) {
               statId = map.mapTo;
             }
             
-            effects.push({ id: statId, effect: effectId, max: skillLevelVals[valColName] });
+            var val = skillLevelVals[valColName];
+            if(val > 0) {
+              effects.push({ id: statId, effect: effectId, max: val });
+            }
+            else {
+              if(val.toString().indexOf(';') > 0) {
+                var vals = val.split(';');
+                if(vals.length > 0 && vals[0] > 0) {
+                  effects.push({ id: statId, effect: effectId, max: vals[0] });
+                }
+              }
+            }
           }
         }
         else {
