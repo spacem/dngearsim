@@ -153,7 +153,6 @@ function statHelper(hCodeValues) {
       // this shows as blue damage
       // i think there are magic and phis variants of this but doesnt matter
       var aPwr = dupeStat(3000);
-      addStat(aPwr);
       
       // I added this new calculation method
       // but I believe the calculation I did is the same
@@ -285,6 +284,7 @@ function statHelper(hCodeValues) {
 
       // fd
       var fd = dupeStat(29);
+      addStat(fd);
       var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
       
       var fdPc = dupeStat(1029);
