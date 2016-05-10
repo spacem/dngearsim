@@ -86,6 +86,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         getOptions: function(category, build, datas) {
           
           return [
+          { id: 93, name: 'level 93' },
           { id: 90, name: 'level 90' },
           { id: 80, name: 'level 80' },
           { id: 70, name: 'level 70' }, 
@@ -101,6 +102,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         getOptions: function(category, build, datas) {
           
           return [
+          { id: 93, name: 'level 93' },
           { id: 90, name: 'level 90' },
           { id: 80, name: 'level 80' },
           { id: 70, name: 'level 70' }, 
@@ -356,8 +358,8 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       weapons: ['exchangeStep','sixtyLevelStep','equipRankStep','itemStep','enhanceStep'],
       armour: ['exchangeStep','sixtyLevelStep','equipRankStep','itemStep','enhanceStep'],
       accessories: ['accExchangeStep','allLevelStep','equipRankStep','itemNameStep','itemStep'],
-      'offensive gems': ['sixtyLevelStep','equipRankStep','itemNameStep','itemStep'],
-      'increasing gems': ['sixtyLevelStep','equipRankStep','itemNameStep','itemStep'],
+      'offensive gems': ['sixtyLevelStep','equipRankStep','itemNameStep','itemStep','enhanceStep'],
+      'increasing gems': ['sixtyLevelStep','equipRankStep','itemNameStep','itemStep','enhanceStep'],
       'enhancement plates': ['allLevelStep','otherRankStep','distinctItemNameStep','itemStep'],
       'expedition plates': ['sixtyLevelStep','distinctItemNameStep','itemStep'],
       talisman: ['sixtyLevelStep','talismanRankStep','distinctItemNameStep','itemStep','enhanceTalismanStep'],
