@@ -48,7 +48,7 @@ function($timeout,dntData,statHelper) {
   }
   
   this.isMaxSkillLevel = function() {
-    return this.skillData && this.item && this.item.enchantmentNum >= this.skillData.length-1;
+    return this.skillData && this.item && this.item.enchantmentNum >= this.skillData.length;
   }
   
   this.prevEnchantment = function() {
