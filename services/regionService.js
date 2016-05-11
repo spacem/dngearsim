@@ -7,8 +7,9 @@ function region(translations,dntReset,dntData,$route) {
   var alternativeFiles = {region: 'ALT', name: 'Alternative user specified files', url : ''};
   var hostedFiles =[
       {region: 'na', name: 'english files from nexon north america', url : 'https://dnna.firebaseapp.com'},
-      {region: 'kdn', name: 'korean files from happyOZ', url : 'https://kdnfiles.firebaseapp.com'},
-      {region: 'cdn', name: 'chinese files from shanda', url : 'https://dnfiles.firebaseapp.com/cdn'},
+      // {region: 'kdn', name: 'korean files from happyOZ', url : 'https://kdnfiles.firebaseapp.com'},
+      // {region: 'cdn', name: 'chinese files from shanda', url : 'https://dnfiles.firebaseapp.com/cdn'},
+      {region: 'cdn', name: 'chinese files from shanda', url : 'https://kdnfiles.firebaseapp.com/cdn'},
       {region: 'sea', name: 'south east asia - english files from cherry credits', url : 'https://dnfiles.firebaseapp.com/sea'},
       {region: 'eu', name: 'europe - english files from Shanda', url : 'https://dnfiles.firebaseapp.com/eu'},
     ];
