@@ -119,7 +119,9 @@ function items(translations,dntData,itemColumnsToLoad) {
         minLevel: 0,
         minRank: 0 },
       event: {
-        mainDnt: 'itemtable_event.lzjson', 
+        mainDnt: 'itemtable_event.optimised.lzjson',
+        partsDnt: 'partstable_event.lzjson',
+        weaponDnt: 'weapontable_event.lzjson',
         setDnt: 'setitemtable_cash.lzjson',
         type: 'cash',
         minLevel: 0,
