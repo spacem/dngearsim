@@ -43,12 +43,13 @@ angular.module('dnsim')
         console.log(datas.length + ' boxes');
         for(var i=0;i<datas.length;++i) {
           var data = datas[i];
-          if(data.Type == 46 || data.Type == 8) {
+          if(data.Type == 46) {// || data.Type == 8) {
             var box = {
               id: data.id,
               name: vm.translate(data.NameID, data.NameIDParam),
               rank: hCodeValues.rankNames[data.Rank],
               icon: data.IconImageIndex,
+              fileName: data.fileName,
             }
             vm.boxes.push(box);
           }

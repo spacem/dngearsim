@@ -35,7 +35,7 @@
       </small>
     </h3>
     <small class="hidden-xs">
-      {{item.typeName}}: {{item.itemSource}} / {{item.id}} / {{item.pid}}
+      {{item.fileName}}{{item.typeName}}: {{item.itemSource}} / {{item.id}} / {{item.pid}}
       <span ng-show="item.potentialRatio != null">
         <br />
         potential&nbsp;ratio:&nbsp;{{item.potentialRatio}}
@@ -46,7 +46,7 @@
   </div>
   <div class="col-xs-12 col-md-8">
     <div class="row" ng-if="item.typeName != 'custom' &&  item.typeName != 'skills' &&  item.typeName != 'talisman'">
-      <div class="col-xs-12">
+      <div class="col-xs-12" ng-if="item.stats != null && item.stats.length > 0">
         <br class="hidden-xs" />
         <label>stats</label><br />
         <span dnsim-stats stats="item.stats" separator="'|'">
@@ -80,7 +80,11 @@
     </div>
   </div>
 </div>
-<div class="row" ng-if="item != null">
+<div class="row" ng-if="item.typeId == 46">
+  <dngearsim-item-view-box item="item">
+  </dngearsim-item-view-box>
+</div>
+<div class="row" ng-if="item != null && this.item.typeName != null">
     <dngearsim-group-assignment item="item">
     </dngearsim-group-assignment>
 </div>

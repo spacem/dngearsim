@@ -49,6 +49,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           if(item.typeName == 'skills') {
             itemString += ':J' + item.baseJobName;
           }
+          if(item.fileName) {
+            itemString += ':F' + item.fileName;
+          }
         }
         
         if(item.name) {
@@ -100,6 +103,15 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
                 id: parseInt(splitStat[0], 36),
                 max: Number(splitStat[1])
               });
+            });
+          }
+          else if(itemBit.charAt(0) == 'F') {
+            
+            item.fileName = itemBit.substr(1);
+            angular.forEach(items, function(itemSource, key) {
+              if(itemSource.mainDnt && itemSource.mainDnt.indexOf(item.fileName + '.') == 0) {
+                item.itemSource = key;
+              }
             });
           }
         });
@@ -179,6 +191,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           rank: hCodeValues.rankNames[0],
           enchantmentNum: item.enchantmentNum,
           name: translations.translate(skillData.NameID),
+          // icon: skillData.IconImageIndex,
         };
         
         newItem.stats = statHelper.getSkillStats(newItem, skillLevelDatas);
@@ -297,12 +310,32 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           return newItem;
         }
       }
+      
+      if(item.fileName) {
+        var datas = dntData.find(item.fileName + '.lzjson', 'id', item.id);
+        if(datas.length > 0) {
+          var d = datas[0];
+          var newItem = {
+            id: item.id,
+            data: d,
+            levelLimit : d.LevelLimit,
+            needJobClass : d.NeedJobClass,
+            typeId : d.Type,
+            exchangeType: d.ExchangeType,
+            rank : hCodeValues.rankNames[d.Rank],
+            fileName: item.fileName,
+          };
+          
+          itemFactory.initItem(newItem);
+          return newItem;
+        }
+        else {
+          return {name: 'unknown dnt'};
+        }
+      }
       else {
-        // console.log('what is this item source? ' + JSON.stringify(item));
         return {name: 'unknown item source'};
       }
-      
-      return null;
     },
     
     getDntFiles: function(item) {
@@ -359,8 +392,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
         else if(item.typeName == 'custom') {
         }
-        else {
-          // console.log('cannot reload item ' + JSON.stringify(item));
+        
+        if(item.fileName) {
+          dntFiles[item.fileName + '.lzjson'] = null;
         }
       }
       

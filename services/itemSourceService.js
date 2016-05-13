@@ -125,7 +125,14 @@ function items(translations,dntData,itemColumnsToLoad) {
         setDnt: 'setitemtable_cash.lzjson',
         type: 'cash',
         minLevel: 0,
-        minRank: 0 }
+        minRank: 0 },
+      xtras: {
+        mainDnt: 'itemtable_vehicle.lzjson',
+        partsDnt: 'vehiclepartstable.lzjson',
+        setDnt: 'setitemtable_cash.lzjson',
+        type: 'xtras',
+        minLevel: 0,
+        minRank: 0 },
     };
     
     // now that the sources are set up add some methods on them for initialisation
