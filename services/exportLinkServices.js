@@ -55,7 +55,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
         
         if(item.name) {
-          itemString += ':.' + item.name.replace(/ /g, '-');
+          itemString += ':.' + item.name.replace(/ /g, '-').replace(/\//g, ' ');
         }
 
         return itemString;
