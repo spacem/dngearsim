@@ -8,10 +8,9 @@ function region(translations,dntReset,dntData,$route) {
   var hostedFiles =[
       {region: 'na', name: 'english files from nexon north america', url : 'https://dnna.firebaseapp.com'},
       // {region: 'kdn', name: 'korean files from happyOZ', url : 'https://kdnfiles.firebaseapp.com'},
-      // {region: 'cdn', name: 'chinese files from shanda', url : 'https://dnfiles.firebaseapp.com/cdn'},
-      {region: 'cdn', name: 'chinese files from shanda', url : 'https://kdnfiles.firebaseapp.com/cdn'},
-      {region: 'sea', name: 'south east asia - english files from cherry credits', url : 'https://dnfiles.firebaseapp.com/sea'},
-      {region: 'eu', name: 'europe - english files from Shanda', url : 'https://dnfiles.firebaseapp.com/eu'},
+      {region: 'cdn', name: 'chinese files from shanda', url : 'https://cdnfiles.firebaseapp.com'},
+      {region: 'sea', name: 'south east asia - english files from cherry credits', url : 'https://seadnfiles.firebaseapp.com'},
+      {region: 'eu', name: 'europe - english files from cherry credits', url : 'https://eufiles.firebaseapp.com'},
     ];
   
   var dntLocationRegion = localStorage.getItem('lastDNTRegion');
