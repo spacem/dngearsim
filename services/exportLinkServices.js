@@ -209,23 +209,29 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         
           var totalRatio = 0;
           var p = null;
-          if(item.pid > 0) {
-            var ps = dntData.find(itemType.potentialDnt, 'id', item.pid);
-            if(ps.length > 0) {
-              p = ps[0];
-              
-              if(p.PotentialID != d.TypeParam1) {
-                // this happened one time
-                // not sure how but it corrupted the stats
-                p = null;
-              }
-              else {
-                var potentials = dntData.find(itemType.potentialDnt, 'PotentialID', p.PotentialID);
-                angular.forEach(potentials, function(value, key) {
-                  totalRatio += value.PotentialRatio;
-                });
-              }
+          
+          var ps = dntData.find(itemType.potentialDnt, 'id', item.pid);
+          if(ps.length == 0) {
+            ps = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
+          }
+          
+          if(ps.length > 0) {
+            p = ps[0];
+            
+            if(p.PotentialID != d.TypeParam1) {
+              // this happened one time
+              // not sure how but it corrupted the stats
+              p = null;
             }
+            else {
+              var potentials = dntData.find(itemType.potentialDnt, 'PotentialID', p.PotentialID);
+              angular.forEach(potentials, function(value, key) {
+                totalRatio += value.PotentialRatio;
+              });
+            }
+          }
+          else {
+            console.log('bad potential');
           }
           
           var newItem = itemFactory.createItem(itemType.name, d, p, totalRatio);

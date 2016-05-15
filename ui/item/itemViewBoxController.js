@@ -12,7 +12,29 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   
   var vm = this;
   
-  var pouchFileName = 'itemdroptable_item.lzjson';
+  var pouchFileNames = [
+    'itemdroptable.lzjson',
+    'itemdroptable_abyss.lzjson',
+    'itemdroptable_apprentice.lzjson',
+    'itemdroptable_compound.lzjson',
+    'itemdroptable_cook.lzjson',
+    'itemdroptable_darklair.lzjson',
+    'itemdroptable_dimension.lzjson',
+    'itemdroptable_disjoint.lzjson',
+    'itemdroptable_dnexpedition.lzjson',
+    'itemdroptable_event.lzjson',
+    'itemdroptable_farm.lzjson',
+    'itemdroptable_fishing.lzjson',
+    'itemdroptable_guildwar.lzjson',
+    'itemdroptable_item.lzjson',
+    'itemdroptable_monsteritem.lzjson',
+    'itemdroptable_propdrop.lzjson',
+    'itemdroptable_pvp.lzjson',
+    'itemdroptable_randomcompound.lzjson',
+    'itemdroptable_stageclear.lzjson',
+    'itemdroptable_themepark.lzjson',
+    'itemdroptable_union.lzjson']
+  
   var allItemFileName = 'all-items.lzjson';
   var charmItemtable = 'charmitemtable.lzjson';
   var commonCharmItemtable = 'charmitemtable_common.lzjson';
@@ -22,7 +44,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
     files = [allItemFileName, charmItemtable, commonCharmItemtable];
   }
   else if (this.item.typeId == 8) {
-    files = [allItemFileName, pouchFileName];
+    files = [allItemFileName].concat(pouchFileNames);
   }
 
   for(var i=0;i<files.length;++i) {
@@ -34,7 +56,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   }
   
   this.initBoxContents = function() {
-    console.log('init contents');
+    //console.log('init contents');
 
     for(var i=0;i<files.length;++i) {
       if(!dntData.isLoaded(files[i])) {
@@ -48,26 +70,25 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
       vm.items = [];
       
       
-      if(this.item.typeId == 46) {
+      if(vm.item.typeId == 46) {
         vm.getCharmItems(d.TypeParam1);
       }
-      else if (this.item.typeId == 8) {
-        vm.getPouchItems(d.TypeParam1);
+      else if (vm.item.typeId == 8) {
+        for(var f=0;f<pouchFileNames.length;++f) {
+          vm.getPouchItems(d.TypeParam1, pouchFileNames[f]);
+        }
       }
       
     }
   }
   
-  this.getPouchItems = function(boxType) {
-    console.log('TypeParam1 ' + boxType);
+  this.getPouchItems = function(boxType, pouchFileName) {
+    // console.log('checking ' + pouchFileName + ' for ' + boxType);
     
     var pouchData = dntData.find(pouchFileName, 'id', boxType);
     if(pouchData.length == 0) {
-      vm.noDropsFound = true;
-      console.log('no drops');
     }
     else {
-      console.log('found pouch');
       var gold = pouchData[0].GoldMin;
 
       var itemIndex = 0;
@@ -76,15 +97,15 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
         var isGroup = pouchData[0]['IsGroup' + itemIndex];
         var pouchItem = pouchData[0]['Item' + itemIndex + 'Index'];
         var pouchItemCount = pouchData[0]['Item' + itemIndex + 'Info'];
-        console.log('pouch contains ' + pouchItem);
+        //console.log('pouch contains ' + pouchItem);
         if(pouchItem) {
           if(isGroup) {
-            vm.getPouchItems(pouchItem);
+            vm.getPouchItems(pouchItem, pouchFileName);
           }
           else {
             var itemds = dntData.find(allItemFileName, 'id', pouchItem);
             if(itemds.length > 0) {
-              console.log('found item ');
+              //console.log('found item ');
   
               vm.items.push({
                 count: pouchItemCount,
@@ -108,7 +129,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
     var charmFiles = [charmItemtable, commonCharmItemtable];
     for(var i=0;i<charmFiles.length;++i) {
       
-      console.log('box: ' + boxType);
+      //console.log('box: ' + boxType);
 
       var charmData = dntData.getData(charmFiles[i]);
       for(var c=0;c<charmData.length;++c) {

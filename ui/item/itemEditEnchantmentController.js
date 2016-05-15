@@ -107,6 +107,10 @@ function(dntData,hCodeValues,items,$timeout,translations) {
     dntData.init(fileName, null, function() {}, function() {
       $timeout(function() {
         
+        if(!vm.enchantmentAfter) {
+          return;
+        }
+        
         vm.materials = [];
         for(var i=1;i<=5;++i) {
           var itemId = vm.enchantmentAfter['NeedItemID' + i];
