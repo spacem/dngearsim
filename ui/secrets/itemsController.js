@@ -1,18 +1,18 @@
 angular.module('dnsim')
 .controller('ItemsCtrl', 
-  ['$window','$timeout','$routeParams','hCodeValues','region','translations','dntData',
-  function($window, $timeout, $routeParams, hCodeValues, region, translations, dntData) {
+  ['$window','$timeout','hCodeValues','region','translations','dntData',
+  function($window, $timeout, hCodeValues, region, translations, dntData) {
     
     'use strict';
     
     var vm = this;
     
-    this.boxes = [];
+    this.boxes = null;
     this.boxeContents = [];
     this.maxDisplay = 10;
     this.currentResults = 0;
 
-    this.nameSearch = localStorage.getItem('nameSearch');
+    this.nameSearch = localStorage.getItem('itemNameSearch');
     if(this.nameSearch == null) {
       this.nameSearch = '';
     }
@@ -30,7 +30,9 @@ angular.module('dnsim')
     
     this.initBoxes = function() {
       // console.log('init boxes');
-      if(dntData.isLoaded(fileName)) {
+      if(dntData.isLoaded(fileName) && translations.isLoaded()) {
+        vm.boxes = [];
+        
         var datas = dntData.getData(fileName);
         // console.log(datas.length + ' boxes');
         for(var i=0;i<datas.length;++i) {
@@ -50,7 +52,10 @@ angular.module('dnsim')
     }
     
     this.getResults = function() {
-      localStorage.setItem('nameSearch', vm.nameSearch);
+      localStorage.setItem('itemNameSearch', vm.nameSearch);
+      if(vm.boxes == null) {
+        vm.initBoxes();
+      }
   
       var newResults = [];
       var numBoxes = vm.boxes.length;
