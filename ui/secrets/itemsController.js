@@ -1,5 +1,5 @@
 angular.module('dnsim')
-.controller('BoxesCtrl', 
+.controller('ItemsCtrl', 
   ['$window','$timeout','$routeParams','hCodeValues','region','translations','dntData',
   function($window, $timeout, $routeParams, hCodeValues, region, translations, dntData) {
     
@@ -29,13 +29,13 @@ angular.module('dnsim')
     });
     
     this.initBoxes = function() {
-      console.log('init boxes');
+      // console.log('init boxes');
       if(dntData.isLoaded(fileName)) {
         var datas = dntData.getData(fileName);
-        console.log(datas.length + ' boxes');
+        // console.log(datas.length + ' boxes');
         for(var i=0;i<datas.length;++i) {
           var data = datas[i];
-          if(data.Type == 46 || data.Type == 8) {
+          if(data.NameID > 0) {
             var box = {
               id: data.id,
               name: vm.translate(data.NameID, data.NameIDParam),
@@ -90,18 +90,7 @@ angular.module('dnsim')
     }
     
     this.translate = function(nameId, nameParam) {
-      if(!nameId) {
-        return 'unknown';
-      }
-      else 
-      {
-        var translated = translations.translate(nameId);
-        if(translated.indexOf('{0}') == 0) {
-          translated = translations.translate(nameParam);
-        }
-        
-        return translated;
-      }
+      return translations.translate(nameId, nameParam);
     }
   }]
 );

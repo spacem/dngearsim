@@ -180,6 +180,14 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         
         var skillData = dntData.find(skillDnt, 'id', item.id)[0];
         var skillLevelDatas = dntData.getData(skillLevelDnt);
+
+        var skillLevelVals = {};
+        angular.forEach(skillLevelDatas, function(value, index) {
+          if(value.SkillIndex == item.id && value.SkillLevel == item.enchantmentNum) {
+            skillLevelVals = value;
+            return;
+          }
+        });
         
         var newItem = {
           id: item.id,
@@ -190,7 +198,8 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           baseJobName: item.baseJobName,
           rank: hCodeValues.rankNames[0],
           enchantmentNum: item.enchantmentNum,
-          name: translations.translate(skillData.NameID),
+          name: translations.translate(skillData.NameID, skillData.NameIDParam),
+          description: translations.translate(skillLevelVals.SkillExplanationID, skillLevelVals.SkillExplanationIDParam),
           // icon: skillData.IconImageIndex,
         };
         
@@ -330,6 +339,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
             exchangeType: d.ExchangeType,
             rank : hCodeValues.rankNames[d.Rank],
             fileName: item.fileName,
+            description: translations.translate(d.DescriptionID, d.DescriptionIDParam),
           };
           
           itemFactory.initItem(newItem);

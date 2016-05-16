@@ -122,18 +122,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       var p = item.potential;
   
       if(item.name == null) {
-        var nameValue = d.NameIDParam;
-        if(nameValue == null || nameValue == '') {
-          nameValue = d.NameID;
-        }
-  
-        var translatedName = translations.translate(nameValue);
-        if(typeof translatedName == 'string') {
-          item.name = translatedName.replace(/\{|\}/g,'').replace(/\,/g,' ');
-        }
-        else {
-          item.name = translatedName.toString();
-        }
+        item.name = translations.translate(d.NameID, d.NameIDParam);
       }
       
       if(item.sparkTypeId == null && d.TypeParam2 > 0) {

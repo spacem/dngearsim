@@ -90,12 +90,38 @@ function translations($routeParams, $rootScope) {
       return this.loaded;
     },
     
-    translate : function(value) {
+    translate : function(id,idParam) {
       if(this.loaded) {
-        return dnTranslations.translate(value);
+        
+        var name;
+        if(!id) {
+          return '';
+        }
+        else {
+          name = dnTranslations.translate(id);
+          
+          if(typeof name != 'string') {
+            return 'm' + name;
+          }
+        }
+        
+        if(idParam) {
+          var params = idParam.split(',');
+          for(var p=0;p<params.length;++p) {
+            var pid = params[p];
+            if(pid.indexOf('{') == 0) {
+              pid = params[p].replace(/\{|\}/g,'');
+              pid = dnTranslations.translate(pid);
+            }
+            
+            name = name.replace('{' + p + '}', pid);
+          }
+        }
+
+        return name;
       }
       else {
-        return value;
+        return 'm' + id;
       }
     }
   }

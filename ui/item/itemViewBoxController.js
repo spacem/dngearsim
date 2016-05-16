@@ -16,7 +16,6 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
     'itemdroptable.lzjson',
     'itemdroptable_abyss.lzjson',
     'itemdroptable_apprentice.lzjson',
-    'itemdroptable_compound.lzjson',
     'itemdroptable_cook.lzjson',
     'itemdroptable_darklair.lzjson',
     'itemdroptable_dimension.lzjson',
@@ -156,18 +155,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   }
   
   this.translate = function(nameId, nameParam) {
-    if(!nameId) {
-      return 'unknown';
-    }
-    else 
-    {
-      var translated = translations.translate(nameId);
-      if(translated.indexOf('{0}') == 0) {
-        translated = translations.translate(nameParam);
-      }
-      
-      return translated;
-    }
+    return translations.translate(nameId, nameParam);
   }
 
 }])

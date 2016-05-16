@@ -3,13 +3,14 @@ angular.module('dnsim').controller('NavCtrl',
   function($scope,$location,translations,region,itemCategory) {
     'use strict';
 
-    var aboutAction = { path: 'about', name: 'about', icon: 'question-sign' }
+    var aboutAction = { path: 'about', name: '', icon: 'question-sign' }
     
     var noMenu = [];
     var noLocationMenu = [aboutAction];
     var normalMenu = [
       {path: 'builds', name:'builds', icon: 'wrench'},
-      {path: 'search', name:'item search', icon: 'search'},
+      {path: 'search', name:'gear', icon: 'search'},
+      {path: 'items', name:'items', icon: 'search'},
       aboutAction,
       ];
       

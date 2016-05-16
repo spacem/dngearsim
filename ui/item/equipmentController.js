@@ -14,14 +14,17 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   $scope.item.setId = null;
   
   $scope.getDescription = function() {
-    if($scope.itemType &&
+    if($scope.item.description) {
+      return $scope.item.description;
+    }
+    else if($scope.itemType &&
       $scope.itemType.name == 'title' &&
       translations.isLoaded() &&
       dntData.isLoaded($scope.itemType.mainDnt)) {
 
       var itemData = dntData.find($scope.itemType.mainDnt, 'id', $scope.item.id);
       if(itemData && itemData.length > 0 && itemData[0].DescriptionID > 0) {
-        return translations.translate(itemData[0].DescriptionID);
+        return translations.translate(itemData[0].DescriptionID, itemData[0].DescriptionIDParam);
       }
     }
     return '';
@@ -48,10 +51,16 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   
   $scope.getServerStorage = function() {
-    if($scope.itemType &&
-      dntData.isLoaded($scope.itemType.mainDnt)) {
+    var fileName = null;
+    if($scope.item.fileName && dntData.isLoaded($scope.item.fileName + '.lzjson')) {
+      fileName = $scope.item.fileName + '.lzjson';
+    }
+    else if($scope.itemType && dntData.isLoaded($scope.itemType.mainDnt)) {
+      fileName = $scope.itemType.mainDnt
+    }
 
-      var itemData = dntData.find($scope.itemType.mainDnt, 'id', $scope.item.id);
+    if(fileName) {
+      var itemData = dntData.find(fileName, 'id', $scope.item.id);
       if(itemData && itemData.length > 0 && 'AbleWStorage' in itemData[0] && 'IsCash' in itemData[0] && itemData[0].IsCash == 0) {
         if(itemData[0].AbleWStorage == 1) {
           return 'can put in server storage';

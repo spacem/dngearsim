@@ -9,8 +9,7 @@
   <div class="col-xs-12 col-md-4">
     <h3>
       <dnsim-item-link item="item"></dnsim-item-link><br />
-      <small>  
-      {{getDescription()}}
+      <small>
       {{getServerStorage()}}
       <br />
       <span ng-show="item.rank && item.rank.id > 0" class="{{item.rank.name}}-grade">
@@ -78,6 +77,11 @@
       <dngearsim-item-edit-spark item="item" on-change="handleChange()">
       </dngearsim-item-edit-spark>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    {{getDescription()}}
   </div>
 </div>
 <div class="row" ng-if="item.typeId == 46 || item.typeId == 8">

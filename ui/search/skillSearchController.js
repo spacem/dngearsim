@@ -141,7 +141,7 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
             newItem.id = skills[s].id;
             newItem.typeName = 'skills';
             newItem.itemSource = 'skills';
-            newItem.name = translations.translate(skills[s].NameID);
+            newItem.name = translations.translate(skills[s].NameID, skills[s].NameIDParam);
             newItem.needJobClass = skills[s].NeedJob;
             newItem.rank = hCodeValues.rankNames[0];
             newItem.baseJobName = baseName.toLowerCase();

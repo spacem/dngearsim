@@ -123,17 +123,7 @@ function(dntData,hCodeValues,items,$timeout,translations) {
             }
             else {
               var item = items[0];
-              var name = null;
-              if(item.NameID) {
-                name = translations.translate(item.NameID);
-                if(name.indexOf('{' == 0) && item.NameIDParam) {
-                  name = translations.translate(item.NameIDParam);
-                }
-              }
-
-              if(!name) {
-                name = 'M' + itemId;
-              }
+              var name = translations.translate(item.NameID, item.NameIDParam);
               
               if(item) {
                 var material = {
