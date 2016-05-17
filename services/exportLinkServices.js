@@ -346,7 +346,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           return newItem;
         }
         else {
-          return {name: 'unknown dnt'};
+          return {name: 'unknown item'};
         }
       }
       else {
