@@ -25,12 +25,12 @@ function statHelper(hCodeValues) {
         var setStats = [];
         angular.forEach(value.stats, function(stat, index) {
           if(stat.needSetNum <= value.numItems) {
-            stats = hCodeValues.mergeStats(stats, [stat]);
+            stats.push(stat);
           }
         });
       });
       
-      return stats;
+      return hCodeValues.mergeStats(stats);
     },
     
     getCombinedStats: function(groupItems) {
@@ -40,15 +40,15 @@ function statHelper(hCodeValues) {
         if(value != null) {
           
           if(value.fullStats != null) {
-            stats = hCodeValues.mergeStats(stats, value.fullStats);
+            stats = stats.concat(value.fullStats);
           }
           else {
-            stats = hCodeValues.mergeStats(stats, value.stats);
+            stats = stats.concat(value.stats);
           }
         }
       });
       
-      return stats;
+      return hCodeValues.mergeStats(stats);
     },
     
     getCalculatedStats: function(group, combinedStats) {
@@ -361,12 +361,12 @@ function statHelper(hCodeValues) {
       stats.nakedStats = this.getNakedStats(build);
       stats.combinedStats = this.getCombinedStats(build.items);
       stats.setStats = this.getSetStats(build.items);
-      stats.allStats = hCodeValues.mergeStats(stats.nakedStats, stats.combinedStats);
-      stats.allStats = hCodeValues.mergeStats(stats.allStats, stats.setStats);
+      stats.allStats = stats.nakedStats.concat(stats.combinedStats).concat(stats.setStats);
       if(build.heroStats != null && build.heroStats.length > 0) {
         stats.heroStats = build.heroStats;
-        stats.allStats = hCodeValues.mergeStats(stats.allStats, build.heroStats);
+        stats.allStats = stats.allStats.concat(build.heroStats);
       }
+      stats.allStats = hCodeValues.mergeStats(stats.allStats);
       
       stats.calculatedStats = this.getCalculatedStats(build, stats.allStats);
       return stats;

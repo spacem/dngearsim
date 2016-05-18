@@ -298,12 +298,18 @@ function hCodeValues() {
       }
       
       angular.forEach(stats1, function(value, key) {
-        add(value);
+        if(value) {
+          add(value);
+        }
       });
       
-      angular.forEach(stats2, function(value, key) {
-        add(value);
-      });
+      if(stats2) {
+        angular.forEach(stats2, function(value, key) {
+          if(value) {
+            add(value);
+          }
+        });
+      }
       
       var newStats = [];
       

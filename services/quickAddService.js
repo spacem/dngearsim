@@ -243,22 +243,29 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         name: 'enhance',
         getOptions: function(category, build, datas) {
           
-          return [
-          { id: 13, name: 'enhance to +13' },
-          { id: 12, name: 'enhance to +12' },
-          { id: 11, name: 'enhance to +11' },
-          { id: 10, name: 'enhance to +10' },
-          { id: 9, name: 'enhance to +9' },
-          { id: 8, name: 'enhance to +8' },
-          { id: 7, name: 'enhance to +7' },
-          { id: 6, name: 'enhance to +6' },
-          { id: 5, name: 'enhance to +5' },
-          { id: 4, name: 'enhance to +4' },
-          { id: 3, name: 'enhance to +3' },
-          { id: 2, name: 'enhance to +2' },
-          { id: 1, name: 'enhance to +1' },
-          { id: 0, name: 'not enhanced' },
-          ]
+          var item = getItem(datas);
+          if(item && item.enchantmentId) {
+            return [
+            { id: 14, name: 'enhance to +14' },
+            { id: 13, name: 'enhance to +13' },
+            { id: 12, name: 'enhance to +12' },
+            { id: 11, name: 'enhance to +11' },
+            { id: 10, name: 'enhance to +10' },
+            { id: 9, name: 'enhance to +9' },
+            { id: 8, name: 'enhance to +8' },
+            { id: 7, name: 'enhance to +7' },
+            { id: 6, name: 'enhance to +6' },
+            { id: 5, name: 'enhance to +5' },
+            { id: 4, name: 'enhance to +4' },
+            { id: 3, name: 'enhance to +3' },
+            { id: 2, name: 'enhance to +2' },
+            { id: 1, name: 'enhance to +1' },
+            { id: 0, name: 'not enhanced' },
+            ]
+          }
+          else {
+            return [{ id: 0, name: 'not enhanced' }];
+          }
         },
         alterItem: function(id, item) {
           item.enchantmentNum = id;
@@ -407,25 +414,27 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         }
       };
     },
-    getItem: function(datas) {
-      var item = null;
-      for(var d=0;d<datas.length;++d) {
-        if(datas[d].def.isItemStep) {
-          item = datas[d].value;
-        }
-      }
-      
-      for(var d=0;d<datas.length;++d) {
-        if(datas[d].def.alterItem) {
-          datas[d].def.alterItem(datas[d].value.id, item);
-        }
-      }
-      
-      return item;
-    },
+    getItem: getItem,
     getStepName: function(category, stepNumber) {
       return this.categorySteps[category.name][stepNumber];
     }
+  }
+  
+  function getItem(datas) {
+    var item = null;
+    for(var d=0;d<datas.length;++d) {
+      if(datas[d].def.isItemStep) {
+        item = datas[d].value;
+      }
+    }
+    
+    for(var d=0;d<datas.length;++d) {
+      if(datas[d].def.alterItem) {
+        datas[d].def.alterItem(datas[d].value.id, item);
+      }
+    }
+    
+    return item;
   }
   
   function findData(category, build, datas, maxItems) {

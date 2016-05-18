@@ -100,11 +100,11 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     var nakedStats = statHelper.getNakedStats(group);
     var combinedStats = statHelper.getCombinedStats(items);
     var setStats = statHelper.getSetStats(items);
-    var allStats = hCodeValues.mergeStats(nakedStats, combinedStats);
-    allStats = hCodeValues.mergeStats(allStats, setStats);
+    var allStats = nakedStats.concat(combinedStats).concat(setStats);
     if(group.heroStats != null && group.heroStats.length > 0) {
-      allStats = hCodeValues.mergeStats(allStats, group.heroStats);
+      allStats = allStats.concat(group.heroStats);
     }
+    allStats = hCodeValues.mergeStats(allStats);
     
     return statHelper.getCalculatedStats(group, allStats);
   }
