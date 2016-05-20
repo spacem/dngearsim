@@ -30,6 +30,7 @@ function(dntData,hCodeValues,items,$timeout,translations) {
 
       if(typeof vm.item.enchantmentNum != 'number') {
         vm.item.enchantmentNum = 6;
+        vm.onChange();
       }
       
       for(var i=0;i<vm.enchantments.length;++i) {

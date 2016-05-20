@@ -74,8 +74,6 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   $scope.handleChange = function() {
-    setFullStats();
-    
     $location.path('/item/' + exportLinkHelper.encodeItem($scope.item));
     $location.replace();
   }
@@ -129,6 +127,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         return;
       }
       
+      setFullStats();
       $window.document.title = 'DN Gear Sim | ' + $scope.item.name;
       if($scope.item.itemSource != 'custom') {
       
