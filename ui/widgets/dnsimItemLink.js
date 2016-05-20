@@ -1,9 +1,9 @@
 (function () {
 'use strict';
   
-angular.module('dnsim').directive('dnsimItemLink', ['exportLinkHelper','$location', dnsimItemLink]);
+angular.module('dnsim').directive('dnsimItemLink', ['exportLinkHelper','$location','region', dnsimItemLink]);
 
-function dnsimItemLink(exportLinkHelper,$location) {
+function dnsimItemLink(exportLinkHelper,$location,region) {
   return {
     restrict: 'E',
     scope: {
@@ -12,11 +12,11 @@ function dnsimItemLink(exportLinkHelper,$location) {
     },
     templateUrl: 'ui/widgets/dnsim-item-link.html?bust=' + Math.random().toString(36).slice(2),
     link: function($scope, element, attrs) {
-      $scope.itemLink = '/item/' + exportLinkHelper.encodeItem($scope.item);
+      $scope.itemLink = '/item/' + region.dntLocation.region + '/' + exportLinkHelper.encodeItem($scope.item);
       
       $scope.$watch('item', function(newValue, oldValue) {
         if (newValue) {
-          $scope.itemLink = '/item/' + exportLinkHelper.encodeItem($scope.item);
+          $scope.itemLink = '/item/' + region.dntLocation.region + '/' + exportLinkHelper.encodeItem($scope.item);
         }
       });
       

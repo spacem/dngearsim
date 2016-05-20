@@ -100,7 +100,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
     else {
       var numItems = 0;
       angular.forEach(allItems, function(item, index) {
-        if(item.typeName == vm.category.name) {
+        if(item && item.typeName == vm.category.name) {
           numItems++;
         }
       });

@@ -34,22 +34,22 @@ function config($routeProvider) {
     when('/saved', {
       redirectTo: '/builds'
     }).
-    when('/saved/:groupName', {
+    when('/saved/:groupName*', {
       redirectTo: '/builds/:groupName'
     }).
     when('/builds', {
       templateUrl: 'ui/builds/build-list.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'BuildListCtrl as buildList'
     }).
-    when('/builds/:groupName', {
+    when('/builds/:groupName*', {
       templateUrl: 'ui/builds/build-list.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'BuildListCtrl as buildList'
     }).
-    when('/view-group', {
+    when('/view-group/:region?', {
       templateUrl: 'ui/builds/view-group.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'ViewGroupCtrl'
     }).
-    when('/edit-build/:groupName', {
+    when('/edit-build/:groupName*', {
       templateUrl: 'ui/builds/edit-build.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'EditBuildCtrl as editGroup',
       reloadOnSearch: false,
@@ -59,7 +59,7 @@ function config($routeProvider) {
       controller: 'EditBuildCtrl as editGroup',
       reloadOnSearch: false,
     }).
-    when('/delete-build/:name', {
+    when('/delete-build/:name*', {
       templateUrl: 'ui/builds/delete-build.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'DeleteBuildCtrl as deleteBuild',
       reloadOnSearch: false,
@@ -84,12 +84,12 @@ function config($routeProvider) {
       templateUrl: 'ui/search/skill-search.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'SkillSearchCtrl as skillSearch'
     }).
-    when('/search/:itemType', {
+    when('/search/:itemType*', {
       templateUrl: 'ui/search/item-search.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'ItemSearchCtrl'
     }).
     
-    when('/item/:itemString', {
+    when('/item/:region?/:itemString*', {
       templateUrl: 'ui/item/equipment.html?bust=' + Math.random().toString(36).slice(2),
       controller: 'EquipmentCtrl',
       reloadOnSearch: false,

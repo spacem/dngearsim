@@ -1,8 +1,9 @@
 angular.module('dnsim').controller('EquipmentCtrl',
-['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location',
-function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location) {
+['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region',
+function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region) {
   'use strict';
   
+  region.setLocationByName($routeParams.region);
   $window.scrollTo(0, 0);
   $scope.jobName = null;
   $scope.item = exportLinkHelper.decodeItem($routeParams.itemString);
@@ -74,13 +75,8 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   $scope.handleChange = function() {
-    $location.path('/item/' + exportLinkHelper.encodeItem($scope.item));
+    $location.path('/item/' + region.dntLocation.region + '/' + exportLinkHelper.encodeItem($scope.item));
     $location.replace();
-  }
-  
-  $scope.getLocation = function() {
-    // todo: re-encode
-    return '#/item/' + exportLinkHelper.encodeItem($scope.item);
   }
   
   function getJobName() {

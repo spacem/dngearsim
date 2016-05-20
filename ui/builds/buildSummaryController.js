@@ -9,11 +9,6 @@ function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
   this.stats = statHelper.getBuildStats(this.build);
   this.itemsByCategory = itemCategory.getItemsByCategory(this.build.items);
   
-  this.toggleGroup = function() {
-    localStorage.setItem('currentGroup', vm.buildName);
-    $location.url('/builds/' + vm.buildName);
-  }
-  
   this.getSaveDate = function(group) {
     if(vm.build.lastUpdate > 0) {
       var lastUpdate = new Date(vm.build.lastUpdate);

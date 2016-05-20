@@ -10,7 +10,7 @@ function($timeout,statHelper,saveHelper) {
     vm.item.removeItem = true;
     var newItemList = [];
     angular.forEach(vm.build.items, function(gItem, index) {
-      if(!gItem.removeItem) {
+      if(gItem && !gItem.removeItem) {
         newItemList.push(gItem);
       }
     });

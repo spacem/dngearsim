@@ -9,8 +9,12 @@
 </div>
 <div id="saved-group" class="row" ng-show="buildList.anyItems()" ng-repeat="(buildName, build) in buildList.savedItems track by $index">
   
-  <dngearsim-build-summary build-name="buildName" build="build" ng-if="buildName != buildList.currentGroup">
-  </dngearsim-build-summary>
+  <div class="col-xs-12 group-header" id="/builds/{{buildName}}" ng-click="buildList.toggleGroup(buildName)" ng-if="buildName != buildList.currentGroup">
+  <button class="btn btn-link btn-block group-header-btn">
+    <dngearsim-build-summary build-name="buildName" build="build">
+    </dngearsim-build-summary>
+  </button>
+  </div>
   
   <dngearsim-build build-name="buildName" build="build" ng-if="buildName == buildList.currentGroup" on-change="buildList.handleChange()">
   </dngearsim-build>

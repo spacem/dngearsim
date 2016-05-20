@@ -40,6 +40,11 @@ angular.module('dnsim').controller('BuildListCtrl',
       this.savedItems = saveHelper.getSavedItems();
       $timeout();
     }
+  
+    this.toggleGroup = function(buildName) {
+      localStorage.setItem('currentGroup', buildName);
+      $location.url('/builds/' + buildName);
+    }
     
     $timeout(function() {
       $anchorScroll('/builds/' + vm.currentGroup);

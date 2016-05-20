@@ -1,13 +1,9 @@
-<div class="col-xs-12 group-header" id="/builds/{{buildName}}" ng-click="buildCtrl.toggleGroup()">
-  <button class="btn btn-link btn-block group-header-btn">
-    <h3 class="text-left">
-      {{buildCtrl.buildName}}
-    <small>
-      <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span><span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}&nbsp;</span><span ng-show="buildCtrl.build.enemyLevel > 0">vs&nbsp;lv{{buildCtrl.build.enemyLevel}}&nbsp;</span>
-      <br />
-      <span dnsim-stats stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'"></span><br />
-      {{buildCtrl.getBuildSummary()}}
-    </small>
-    </h3>
-  </button>
-</div>
+<h3 class="text-left">
+  {{buildCtrl.buildName}}
+<small>
+  <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span><span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}&nbsp;</span><span ng-show="buildCtrl.build.enemyLevel > 0">vs&nbsp;lv{{buildCtrl.build.enemyLevel}}&nbsp;</span>
+  <br />
+  <span dnsim-stats stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'"></span><br />
+  {{buildCtrl.getBuildSummary()}}
+</small>
+</h3>

@@ -2,13 +2,13 @@
 'use strict';
 
 angular.module('dnsim').factory('exportLinkHelper', 
-['$http','items','dntData','itemFactory','hCodeValues','itemColumnsToLoad','statHelper','translations','itemCategory',exportLinkHelper]);
-function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations,itemCategory) {
+['$http','items','dntData','itemFactory','hCodeValues','itemColumnsToLoad','statHelper','translations','itemCategory','region',exportLinkHelper]);
+function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations,itemCategory,region) {
   'use strict';
   
   return {
     
-    encodeItem: function(item) {
+    encodeItem: function(item, small) {
       if(item != null) {
         var itemString;
 
@@ -54,7 +54,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           }
         }
         
-        if(item.name) {
+        if(item.name && !small) {
           itemString += ':.' + item.name.replace(/ /g, '-').replace(/\//g, ' ');
         }
 
@@ -125,16 +125,36 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       var self = this;
       if(group != null) {
         angular.forEach(group.items, function(item, key) {
-          var itemString = self.encodeItem(item);  
+          var itemString = self.encodeItem(item, true);  
           if(itemString != null && itemString.length > 0) {
             itemStrings.push(itemString);
           }
         });
       }
   
-      var retVal = '#/view-group?';
+      var retVal = '#/view-group/' + region.dntLocation.region + '/?';
       
-      return retVal + '&g=' + encodeURI(groupName) + '&i=' + itemStrings.join(',');
+      
+      if(group.enemyLevel) {
+        retVal += '&e=' + group.enemyLevel;
+      }
+      if(group.playerLevel) {
+        retVal += '&p=' + group.playerLevel;
+      }
+      if(group.heroLevel) {
+        retVal += '&h=' + group.heroLevel;
+      }
+      if(group.job && group.job.id) {
+        retVal += '&j=' + group.job.id;
+      }
+      if(group.damageType && group.damageType.id) {
+        retVal += '&d=' + group.damageType.id;
+      }
+      if(group.element && group.element.id) {
+        retVal += '&t=' + group.element.id;
+      }
+      retVal += '&g=' + encodeURI(groupName) + '&i=' + itemStrings.join(',');
+      return retVal
     },
 
     createShortUrl: function(groupName, group) {

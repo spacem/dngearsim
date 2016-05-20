@@ -12,8 +12,12 @@ angular.module('dnsim').controller('RegionCtrl',
         $timeout();
       });
     
-    $scope.dntLocation = region.dntLocation;
-    $scope.tlocation = region.tlocation;
+    $scope.getDntLocation = function() {
+      return region.dntLocation;
+    }
+    $scope.getTlocation = function() {
+      return region.tlocation;
+    }
      
     $scope.getHostedFiles = function() {
       // console.log('getting hosted files');
@@ -31,14 +35,17 @@ angular.module('dnsim').controller('RegionCtrl',
     
     $scope.setTLocation = function(location) {
       region.setTLocation(location);
-      $scope.tlocation = region.tlocation;
       $scope.edit = false;
     }
     
     $scope.setLocation = function(location) {
-      region.setLocation(location);
-      $scope.dntLocation = region.dntLocation;
-      $scope.tlocation = region.tlocation;
+      if($routeParams.region) {
+        $routeParams.region = location.region;
+        $route.updateParams($routeParams);
+      }
+      else {
+        region.setLocation(location);
+      }
       $scope.edit = !$scope.edit;
     }
   }

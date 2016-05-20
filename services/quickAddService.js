@@ -51,7 +51,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
             
             var numExchange = 0;
             for(var i=0;i<build.items.length;++i) {
-              if(build.items[i].exchangeType == exId) {
+              if(build.items[i] && build.items[i].exchangeType == exId) {
                 numExchange++;
               }
             }

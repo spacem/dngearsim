@@ -73,6 +73,16 @@ function jobs(dntData, translations, itemColumnsToLoad) {
       return this.allJobs;
     },
     
+    getById: function(id) {
+      var data = dntData.getData(fileName);
+      var numRows = data.length;
+      for(var r=0;r<numRows;++r) {
+        if(data[r].id == id) {
+          return this.createJob(data[r]);
+        }
+      }
+    },
+    
     createJob : function(d) {
       var t = this;
       return {

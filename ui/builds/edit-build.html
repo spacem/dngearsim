@@ -49,9 +49,15 @@
     </select>
   </div>
 </div>
-
-<div class="row" ng-hide="editGroup.isLoading()">
-  <div class="col-xs-12">
+<br />
+<div class="row">
+  <div class="col-xs-4 col-sm-2">
+    <button class="btn btn-default" ng-click="editGroup.ok()" ng-disabled="editGroup.invalidGroupName()">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+      save
+    </button>
+  </div>
+  <div class="col-xs-8 col-sm-10">
     <label>stat caps</label>
     <p>
 cbase:&nbsp;{{editGroup.getStatCap('Cbase', editGroup.enemyLevel) }} |
@@ -98,16 +104,6 @@ ElementDefMin:&nbsp;{{editGroup.getJobConversion('ElementDefenseMin')}} |
 ElementDefMax:&nbsp;{{editGroup.getJobConversion('ElementDefenseMax')}} |
 -->
     </p>
-  </div>
-</div>
- 
-<div class="row">
-  <div class="col-xs-12">
-    <br />
-    <button class="btn btn-default" ng-click="editGroup.ok()" ng-disabled="editGroup.invalidGroupName()">
-      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-      save
-    </button>
   </div>
 </div>
 </dnsim-loading>
