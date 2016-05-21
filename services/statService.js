@@ -238,6 +238,20 @@ function statHelper(hCodeValues) {
       fdPc.max = Math.min(Math.max(0.35*Number(fd.max)/maxFd,Math.pow(Number(fd.max)/maxFd,2.2)),1);
       addStat(fdPc);
       
+      // elements
+      var firePc = dupeStat(16);
+      addStat(firePc);
+      
+      var icePc = dupeStat(17);
+      addStat(icePc);
+      
+      var lightPc = dupeStat(18);
+      addStat(lightPc);
+      
+      var darkPc = dupeStat(19);
+      addStat(darkPc);
+      
+      // average damage
       function addAvgDamageStat(id, min, max) {
         
         var avgDmg = (min+max)/2;
@@ -247,7 +261,6 @@ function statHelper(hCodeValues) {
         if(group.element && group.element.id > 0) {
           var elementStat = statLookup[hCodeValues.elements[group.element.id].dmgStat];
           if(elementStat) {
-            addStat(elementStat);
             avgDmg = avgDmg * (1+Number(elementStat.max));
           }
         }
