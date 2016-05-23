@@ -53,7 +53,11 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   $scope.getServerStorage = function() {
     var fileName = null;
-    if($scope.item.fileName && dntData.isLoaded($scope.item.fileName + '.lzjson')) {
+    
+    if($scope.item.fileName && dntData.isLoaded($scope.item.fileName + '.optimised.lzjson')) {
+      fileName = $scope.item.fileName + '.optimised.lzjson';
+    }
+    else if($scope.item.fileName && dntData.isLoaded($scope.item.fileName + '.lzjson')) {
       fileName = $scope.item.fileName + '.lzjson';
     }
     else if($scope.itemType && dntData.isLoaded($scope.itemType.mainDnt)) {
