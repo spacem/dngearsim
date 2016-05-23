@@ -116,6 +116,7 @@ function hCodeValues() {
       3000: {id: 3000, name: 'atk pwr', display: toPercent },
       3008: {id: 3008, name: 'avg eqhp', display: inThousands, summaryDisplay: true },
       
+      4012: {id: 4050, name: 'skCrit', display: inThousands },
       4050: {id: 4050, name: 'skStr%', display: toPercent },
       4051: {id: 4051, name: 'skAgi%', display: toPercent },
       4052: {id: 4052, name: 'skInt%', display: toPercent },
@@ -126,7 +127,6 @@ function hCodeValues() {
       // special cases for skills
       10164: {id: 10164, name: 'intToPdmg', display: toPercent },
       10165: {id: 10165, name: 'strToMdmg', display: toPercent },
-      
       
       // 8001: {id: 8001, name: 'whiteDMG', display: toOneDec },
       // 8002: {id: 8002, name: 'greenDMG', display: toOneDec },
@@ -194,8 +194,24 @@ function hCodeValues() {
       134 : { id: 134, name: 'physicial defense%' },
       185 : { id: 185, name: 'wots attack power', mapTo: 3000 },
       251 : { id: 251, name: 'critical chance%', mapTo: 1012 },
-      10164 : { id: 10164, name: 'intToPdmg', mapTo: 10164 },
-      10165 : { id: 10165, name: 'strToMdmg', mapTo: 10165 },
+      164 : { id: 164, name: 'intToPdmg', mapTo: 10164 },
+      165 : { id: 165, name: 'strToMdmg', mapTo: 10165 },
+      222: {
+        id: 222, 
+        name: 'hellfire', 
+        getVals: function(val) {
+          if(val.indexOf(';') > 0) {
+            var vals = val.split(';');
+            return [
+              {id: 62, effect: 222, max: Number(vals[0])/100.0},
+              {id: 4012, effect: 222, max: Number(vals[1])},
+              ];
+          }
+          else {
+            return [{id: 62, effect: 222, max: Number(val)/100.0}];
+          }
+        }
+      },
     },
     
     customItems: 

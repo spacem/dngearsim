@@ -94,6 +94,12 @@ function config($routeProvider) {
       controller: 'EquipmentCtrl',
       reloadOnSearch: false,
     }).
+    
+    when('/export', {
+      templateUrl: 'ui/nav/export.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'ExportCtrl',
+    }).
+    
     otherwise({
       redirectTo: '/builds'
     });

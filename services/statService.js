@@ -215,6 +215,9 @@ function statHelper(hCodeValues) {
       var crit = dupeStat(12);
       crit.max += (agi.max*Number(group.conversions.Critical));
       applyPc(crit);
+      
+      var skCrit = dupeStat(4012);
+      crit.max += skCrit.max;
       addStat(crit);
       
       var critChance = Math.min(0.89, crit.max / Number(group.enemyStatCaps.Ccritical));
@@ -337,23 +340,35 @@ function statHelper(hCodeValues) {
         if(item.d && colName in item.d && valColName in skillLevelVals) {
           if(item.d[colName] > 0) {
             
+            var val = skillLevelVals[valColName];
+            
             // for now add 10k
             var effectId = item.d[colName];
-            var statId = 10000 + effectId;
             var map = hCodeValues.skillEffectMapping[effectId];
-            if(map && map.mapTo) {
-              statId = map.mapTo;
-            }
-            
-            var val = skillLevelVals[valColName];
-            if(val > 0) {
-              effects.push({ id: statId, effect: effectId, max: val });
+            if(map && map.getVals) {
+              var vals = map.getVals(val);
+              for(var i=0;i<vals.length;++i) {
+                effects.push(vals[i]);
+              }
             }
             else {
-              if(val.toString().indexOf(';') > 0) {
-                var vals = val.split(';');
-                if(vals.length > 0 && vals[0] > 0) {
-                  effects.push({ id: statId, effect: effectId, max: vals[0] });
+              var statId;
+              if(map && map.mapTo) {
+                statId = map.mapTo;
+              }
+              else {
+                statId = 10000 + effectId;
+              }
+              
+              if(val > 0) {
+                effects.push({ id: statId, effect: effectId, max: val });
+              }
+              else {
+                if(val.toString().indexOf(';') > 0) {
+                  var vals = val.split(';');
+                  if(vals.length > 0 && vals[0] > 0) {
+                    effects.push({ id: statId, effect: effectId, max: vals[0] });
+                  }
                 }
               }
             }
