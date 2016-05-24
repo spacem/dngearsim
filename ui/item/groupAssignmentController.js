@@ -85,6 +85,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
   }
   
   this.getGroupCalcStats = function() {
+    
     if(this.groupCalcStats == null) {
       
       var group = vm.savedItems[vm.groupName];

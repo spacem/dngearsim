@@ -8,7 +8,7 @@ function dnsimItemLink(exportLinkHelper,$location,region) {
     restrict: 'E',
     scope: {
       item: '=item',
-      onClose: '&onClose'
+      noClick: '=noClick',
     },
     templateUrl: 'ui/widgets/dnsim-item-link.html?bust=' + Math.random().toString(36).slice(2),
     link: function($scope, element, attrs) {
@@ -21,7 +21,9 @@ function dnsimItemLink(exportLinkHelper,$location,region) {
       });
       
       $scope.openItem = function() {
-        $location.path($scope.itemLink);
+        if(!$scope.noClick) {
+          $location.path($scope.itemLink);
+        }
       }
       
       $scope.getIcon = function() {

@@ -1,4 +1,4 @@
-<a class="{{item.rank.name}}-grade text-left" href="#{{itemLink}}" ng-click="openItem()">
+<a class="{{item.rank.name}}-grade text-left" ng-href="#{{itemLink}}" ng-click="openItem()" ng-if="!noClick">
   <span
     ng-if="getIcon()"
     class="item-icon {{item.rank.name}}-grade"
@@ -9,3 +9,12 @@
   </span>
   {{getJobName(item.needJobClass)}} <span ng-show="item.levelLimit > 1">lv{{item.levelLimit}}</span> {{item.name}}
 </a>
+
+<span ng-if="noClick">
+  <span
+    ng-if="getIcon()"
+    class="item-icon {{item.rank.name}}-grade"
+    ng-style="{'background': 'url(icons/' + getIcon() + ')', 'background-position': '-' + getIconXPostion() + 'px -' + getIconYPostion() + 'px'}">
+  </span>
+  {{item.name}}
+</span>

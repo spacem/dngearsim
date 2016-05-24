@@ -100,6 +100,11 @@ function config($routeProvider) {
       controller: 'ExportCtrl',
     }).
     
+    when('/talismans', {
+      templateUrl: 'ui/builds/build-talismans.html?bust=' + Math.random().toString(36).slice(2),
+      controller: 'BuildTalismansCtrl as ctrl',
+    }).
+    
     otherwise({
       redirectTo: '/builds'
     });
