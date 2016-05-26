@@ -53,6 +53,10 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       return null;
     }
     
+    if('potentialDntEx' in itemType && !dntData.isLoaded(itemType.potentialDntEx)) {
+      return null;
+    }
+    
     var start = new Date().getTime();
     
     itemType.items = [];
@@ -90,6 +94,10 @@ function itemFactory(translations,dntData,hCodeValues,items) {
           var potentials = [];
           if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
             potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
+            
+            if(potentials.length == 0 && 'potentialDntEx' in itemType) {
+              potentials = dntData.find(itemType.potentialDntEx, 'PotentialID', dTypeParam1);
+            }
           }
           
           var totalRatio = 0;
@@ -162,8 +170,8 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         }
       }
       
-      item.data = null;
-      item.potential = null;
+      delete item.data;
+      delete item.potential;
     }
   }
   

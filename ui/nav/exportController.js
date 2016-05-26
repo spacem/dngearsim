@@ -7,6 +7,9 @@ angular.module('dnsim').controller('ExportCtrl',
   $window.document.title = 'DN Gear Sim | EXPORT';
   
   var rawSavedData = saveHelper.getSavedItems();
-  $scope.exportData = JSON.stringify(rawSavedData, null, 2);
+  $scope.exportData = JSON.stringify(rawSavedData, null, 1);
   
+  $scope.save = function() {
+    localStorage.setItem('savedItems', LZString.compressToUTF16($scope.exportData));
+  }
 }]);

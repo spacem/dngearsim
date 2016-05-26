@@ -1,9 +1,9 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('dntData', ['$rootScope',dntData]);
+angular.module('dnsim').factory('dntData', ['$rootScope','$timeout',dntData]);
 
-function dntData($rootScope) {
+function dntData($rootScope,$timeout) {
   
   function createLoader(dntLocation, file, colsToLoad) {
 
@@ -40,24 +40,26 @@ function dntData($rootScope) {
                 
               $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
 
-              this.reader.loadDntFromServerFile(
-                this.dntLocation.url + '/' + file,
-                function(msg) { if(t.progressCallback != null) t.progressCallback(msg) }, 
-                function(result, fileName) {
-                  // console.info('dnt loading complete : ' + file);
-                  t.loaded = true;
-                  
-                  angular.forEach(t.completeCallbacks, function(value, key) {
-                    value();
-                  });
-                  t.completeCallbacks = [];
-                  $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
-                },
-                function(msg) {
-                  $rootScope.$broadcast('DNTDATA_LOAD_ERROR');
-                  t.startedLoading = false;
-                  t.loaded = false;
-                }  );
+              $timeout(function() {
+                t.reader.loadDntFromServerFile(
+                  t.dntLocation.url + '/' + file,
+                  function(msg) { if(t.progressCallback != null) t.progressCallback(msg) }, 
+                  function(result, fileName) {
+                    // console.info('dnt loading complete : ' + file);
+                    t.loaded = true;
+                    
+                    angular.forEach(t.completeCallbacks, function(value, key) {
+                      value();
+                    });
+                    t.completeCallbacks = [];
+                    $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
+                  },
+                  function(msg) {
+                    $rootScope.$broadcast('DNTDATA_LOAD_ERROR');
+                    t.startedLoading = false;
+                    t.loaded = false;
+                  }  );
+              });
             }
             else {
               // console.log("dnt location not set!");

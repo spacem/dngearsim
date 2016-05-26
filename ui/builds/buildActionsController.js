@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('buildActionsCtrl',
 
-['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper','exportLinkHelper','groupHelper','translations','dntData',
-function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,exportLinkHelper,groupHelper,translations,dntData) {
+['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper','exportLinkHelper','groupHelper','translations','dntData','dntReset',
+function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,exportLinkHelper,groupHelper,translations,dntData,dntReset) {
   'use strict';
   
   var vm = this;
@@ -35,18 +35,26 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
     $location.path('/builds/' + newGroupName);
   }
   
+  this.reloaded = false;
   this.reloadGroup = function() {
-  
+    dntReset();
+    vm.reloaded = false;
+    
+    translations.init(progress, tryInit);
+
     var files = groupHelper.getDntFiles(vm.build);
     angular.forEach(files, function(columns, fileName) {
       dntData.init(fileName, columns, progress, tryInit);
     });
     
-    translations.init(progress, tryInit);
     vm.onChange();
   }
 
   function tryInit() {
+    if(vm.reloaded) {
+      return;
+    }
+    
     var allLoaded = true;
     var files = groupHelper.getDntFiles(vm.build);
     angular.forEach(files, function(columns, fileName) {
@@ -60,7 +68,9 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
       var newItems = groupHelper.reloadGroup(vm.buildName, vm.build);
       saveHelper.updatedSavedItems(vm.buildName, newItems);
       vm.build.items = newItems;
-      $timeout();
+      
+      vm.reloaded = true;
+      $timeout(vm.onChange);
     }
   }
   

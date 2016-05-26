@@ -1,11 +1,9 @@
-<div class="row" ng-if="numLoading > 0">
-  <div class="col-xs-12" ng-if="loadError">
-    <br />
-    data files cannot be loaded
-  </div>
-  <div class="col-xs-12 loading" ng-if="!loadError">
-    loading ({{(1+totalToLoad-numLoading) + '/' + totalToLoad}})
-  </div>
+<div class="col-xs-12" ng-if="loadError">
+  <br />
+  data files cannot be loaded
+</div>
+<div class="col-xs-12 loading" ng-if="!loadError && numLoading">
+  loading ({{(1+totalToLoad-numLoading) + '/' + totalToLoad}})
 </div>
 
-<ng-transclude ng-if="numLoading == 0" />
+<ng-transclude ng-show="!numLoading" />

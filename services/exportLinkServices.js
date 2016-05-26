@@ -189,6 +189,12 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         item.itemSource = item.itemTypeName;
       }
       
+      console.log('checking ' + item.itemSource)
+      if(item.itemSource == 'rbTech') {
+        item.itemSource = 'tech';
+        console.log('changed to ' + item.itemSource)
+      }
+      
       if(item.itemSource == 'custom' || item.typeName == 'custom') {
         item.typeName = 'custom';
         return item;
@@ -231,7 +237,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         var itemType = items[item.itemSource];
         var ds = dntData.find(itemType.mainDnt, 'id', item.id);
         if(ds.length == 0) {
-          // console.log('item ' + item.id + ' not found?');
+          console.log('item ' + item.id + ' not found in ' + itemType.mainDnt);
         }
         else {
           var d = ds[0];
@@ -242,6 +248,13 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           var ps = dntData.find(itemType.potentialDnt, 'id', item.pid);
           if(ps.length == 0) {
             ps = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
+          }
+          
+          if(ps.length == 0) {
+            var ps = dntData.find(itemType.potentialDntEx, 'id', item.pid);
+            if(ps.length == 0) {
+              ps = dntData.find(itemType.potentialDntEx, 'PotentialID', d.TypeParam1);
+            }
           }
           
           if(ps.length > 0) {
@@ -370,7 +383,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
       }
       else {
-        return {name: 'unknown item source'};
+        return {name: 'unknown item source: ' + item.itemSource};
       }
     },
     
@@ -385,6 +398,10 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           item.itemSource = item.itemTypeName;
         }
         
+        if(item.itemSource == 'rbTech') {
+          item.itemSource = 'tech';
+        }
+        
         if(item.itemSource in items) {
           var itemType = items[item.itemSource];
           
@@ -394,6 +411,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
           if('potentialDnt' in itemType) {
             dntFiles[itemType.potentialDnt] = itemColumnsToLoad.potentialDnt;
+          }
+          if('potentialDntEx' in itemType) {
+            dntFiles[itemType.potentialDntEx] = itemColumnsToLoad.potentialDnt;
           }
           
           if('enchantDnt' in itemType) {

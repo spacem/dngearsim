@@ -25,10 +25,20 @@ function(dntData,items,hCodeValues) {
     if(!vm.potentials) {
       if(vm.item && vm.item.pid && 'potentialDnt' in vm.itemType) {
         var potentials = dntData.find(vm.itemType.potentialDnt, 'id', vm.item.pid);
+        
         if(potentials.length == 1) {
           vm.potential = potentials[0];
           vm.potentials = dntData.find(vm.itemType.potentialDnt, 'PotentialID', vm.potential.PotentialID);
           vm.potentialStats = getPotentialStats(vm.potentials);
+        }
+        else if('potentialDntEx' in vm.itemType) {
+          potentials = dntData.find(vm.itemType.potentialDntEx, 'id', vm.item.pid);
+        
+          if(potentials.length == 1) {
+            vm.potential = potentials[0];
+            vm.potentials = dntData.find(vm.itemType.potentialDntEx, 'PotentialID', vm.potential.PotentialID);
+            vm.potentialStats = getPotentialStats(vm.potentials);
+          }
         }
       }
     }

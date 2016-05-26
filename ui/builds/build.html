@@ -1,6 +1,6 @@
-<div class="col-xs-12 group-header" id="/builds/{{buildName}}">
-  <div class="row">
-    <div class="col-xs-12 col-md-6 col-lg-7" ng-click="buildCtrl.toggleGroup()">
+<div class="col-xs-12">
+  <div class="row" id="/builds/{{buildName}}">
+    <div class="col-xs-12 col-md-6 col-lg-7 group-header" ng-click="buildCtrl.toggleGroup()">
       <button class="btn btn-link btn-block group-header-btn">
         <h3 class="text-left">
           {{buildCtrl.buildName}}
@@ -13,6 +13,7 @@
         </h3>
       </button>
     </div>
+    <dnsim-loading>
     <div class="col-xs-12 col-md-6 col-lg-5">
       <br class="hidden-xs hidden-sm" /><br class="hidden-xs hidden-sm" />
       <dngearsim-build-actions build-name="buildName" build="build" on-change="buildCtrl.handleChange()">
@@ -24,54 +25,55 @@
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
       you must edit the build and set both level and class
     </div>
-  </div>
-</div>
-
-<div class="col-xs-12 col-md-10">
-  <br />
-  <div class="row">
-    <div class="col-xs-4 col-md-2">
+    
+    <div class="col-xs-12 col-md-10">
+      <br />
       <div class="row">
-        <div class="col-xs-12 group-header" ng-repeat="cat in buildCtrl.getCategories() track by $index">
-          <button ng-class="{'btn btn-block selected-link': cat.name == buildCtrl.category.name, 'btn btn-block btn-link': cat.name != buildCtrl.category.name}" ng-click="buildCtrl.setSelectedCategory(cat.name)">
-            <p class="text-left">
-              {{cat.name}}
-              </p>
-          </button>
+        <div class="col-xs-4 col-md-2">
+          <div class="row">
+            <div class="col-xs-12 group-header" ng-repeat="cat in buildCtrl.getCategories() track by $index">
+              <button ng-class="{'btn btn-block selected-link': cat.name == buildCtrl.category.name, 'btn btn-block btn-link': cat.name != buildCtrl.category.name}" ng-click="buildCtrl.setSelectedCategory(cat.name)">
+                <p class="text-left">
+                  {{cat.name}}
+                  </p>
+              </button>
+            </div>
+          </div>
+        </div>
+    
+        <div class="col-xs-8 col-md-10">
+          <div class="row">
+            <table class="table">
+              
+              <tr><th>{{buildCtrl.getItemCount()}}</th></tr>
+              
+              <tr ng-if="buildCtrl.allowMoreItems()"><th>
+                <dngearsim-quick-add build="buildCtrl.build" build-name="buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" />
+              </th></tr>
+              
+              <tr ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
+                <td><dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item></td>
+              </tr>
+              
+              <tr><th>
+                  <a href="#/{{buildCtrl.category.path}}">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    search {{buildCtrl.category.name}}
+                  </a>
+              </th></tr>
+              
+            </table>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="col-xs-8 col-md-10">
+    
+    <div class="col-xs-12 col-md-2 group-header">
       <div class="row">
-        <table class="table">
-          
-          <tr><th>{{buildCtrl.getItemCount()}}</th></tr>
-          
-          <tr ng-if="buildCtrl.allowMoreItems()"><th>
-            <dngearsim-quick-add build="buildCtrl.build" build-name="buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" />
-          </th></tr>
-          
-          <tr ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
-            <td><dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item></td>
-          </tr>
-          
-          <tr><th>
-              <a href="#/{{buildCtrl.category.path}}">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                search {{buildCtrl.category.name}}
-              </a>
-          </th></tr>
-          
-        </table>
+       <dngearsim-build-stats stats="buildCtrl.stats">
+       </dngearsim-build-stats>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="col-xs-12 col-md-2 group-header">
-  <div class="row">
-   <dngearsim-build-stats stats="buildCtrl.stats">
-   </dngearsim-build-stats>
+    </dnsim-loading>
   </div>
 </div>

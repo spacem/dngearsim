@@ -17,18 +17,11 @@ function items(translations,dntData,itemColumnsToLoad) {
       tech: { 
         mainDnt: 'itemtable_skilllevelup.lzjson', 
         potentialDnt: 'potentialtable.optimised.lzjson',
+        potentialDntEx: 'potentialtable_reboot.optimised.lzjson',
         sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
         type: 'techs', 
         minLevel: 24,
-        minRank: 0,
-        maxLevel: 80},
-      
-      rbTech: { 
-        mainDnt: 'itemtable_skilllevelup.lzjson', 
-        potentialDnt: 'potentialtable_reboot.optimised.lzjson',
-        type: 'techs', 
-        minLevel: 90,
-        minRank: 0 },
+        minRank: 0},
       
       tman: { 
         mainDnt: 'itemtable_talisman.optimised.lzjson', 
@@ -40,6 +33,7 @@ function items(translations,dntData,itemColumnsToLoad) {
       gem: { 
         mainDnt: 'itemtable_dragonjewel.optimised.lzjson', 
         potentialDnt: 'potentialtable_dragonjewel.optimised.lzjson',
+        potentialDntEx: 'potentialtable_reboot.optimised.lzjson',
         enchantDnt: 'enchanttable_dragonjewel.optimised.lzjson', 
         gemDnt: 'dragonjeweltable.optimised.lzjson',
         type: 'gems',
@@ -165,6 +159,9 @@ function items(translations,dntData,itemColumnsToLoad) {
         if('potentialDnt' in itemSource) {
           dntData.init(itemSource.potentialDnt, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) });
         }
+        if('potentialDntEx' in itemSource) {
+          dntData.init(itemSource.potentialDntEx, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) });
+        }
         if('gemDnt' in itemSource) {
           dntData.init(itemSource.gemDnt, itemColumnsToLoad.gemDnt, progress, function() { doComplete(itemSource, complete) });
         }
@@ -177,6 +174,7 @@ function items(translations,dntData,itemColumnsToLoad) {
       if(translations.isLoaded() && 
       dntData.isLoaded(itemSource.mainDnt) && 
       (!('potentialDnt' in itemSource) || dntData.isLoaded(itemSource.potentialDnt)) &&
+      (!('potentialDntEx' in itemSource) || dntData.isLoaded(itemSource.potentialDntEx)) &&
       (!('gemDnt' in itemSource) || dntData.isLoaded(itemSource.gemDnt))
       ) {
         complete();
