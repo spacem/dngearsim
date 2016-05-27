@@ -21,6 +21,7 @@ angular.module('dnsim').controller('ViewGroupCtrl',
       $scope.job = { id: $routeParams.j };
       $scope.damageType = hCodeValues.damageTypes[$routeParams.d];
       $scope.element = hCodeValues.elements[$routeParams.t];
+      $scope.secondaryElement = hCodeValues.elements[$routeParams.s];
         
       var items = [];
       
@@ -87,6 +88,7 @@ angular.module('dnsim').controller('ViewGroupCtrl',
           job: $scope.job,
           damageType: $scope.damageType,
           element: $scope.element,
+          secondaryElement: $scope.secondaryElement,
           enemyStatCaps: $scope.enemyStatCaps,
           playerStatCaps: $scope.playerStatCaps,
           conversions: $scope.conversions,
@@ -117,6 +119,7 @@ angular.module('dnsim').controller('ViewGroupCtrl',
         $scope.job,
         $scope.damageType,
         $scope.element,
+        $scope.secondaryElement,
         $scope.enemyStatCaps, $scope.playerStatCaps, $scope.conversions, $scope.baseStats, $scope.heroStats);
       
       $location.url('/builds/' + newBuildName);

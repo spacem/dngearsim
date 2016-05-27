@@ -28,60 +28,30 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     return;
   }
   
-  this.clearGroup = function() {
-    this.addHPAffectAmount = null;
-    this.addMDmgAffectAmount = null;
-    this.addPDmgAffectAmount = null;
-    this.addAvgDmgAffectAmount = null;
+  this.summaryStatIds = [];
+  for(var id in hCodeValues.stats) {
+    if(hCodeValues.stats[id].summaryDisplay) {
+      this.summaryStatIds.push(id);
+    }
+  }
     
-    this.replaceHPAffectAmount = [];
-    this.replaceMDmgAffectAmount = [];
-    this.replacePDmgAffectAmount = [];
-    this.replaceAvgDmgAffectAmount = [];
+  this.clearGroup = function() {
+    this.addAffectAmount = null;
+    this.replaceAffectAmount = [];
 
     this.groupItems = null;
     this.groupCalcStats = null
   }
   this.clearGroup();
   
-  this.getAddHPAffectAmount = function() {
+  this.getAddAffectAmount = function(stat) {
     this.initAddAffects();
-    return this.addHPAffectAmount;
+    return this.addAffectAmount[stat];
   }
   
-  this.getAddMDmgAffectAmount = function() {
-    this.initAddAffects();
-    return this.addMDmgAffectAmount;
-  }
-  
-  this.getAddPDmgAffectAmount = function() {
-    this.initAddAffects();
-    return this.addPDmgAffectAmount;
-  }
-  
-  this.getAddAvgDmgAffectAmount = function() {
-    this.initAddAffects();
-    return this.addAvgDmgAffectAmount;
-  }
-  
-  this.getReplaceHPAffectAmount = function(itemIndex, item) {
+  this.getReplaceAffectAmount = function(statId, itemIndex, item) {
     this.initReplaceAffects(itemIndex, item);
-    return this.replaceHPAffectAmount[itemIndex];
-  }
-
-  this.getReplaceMDmgAffectAmount = function(itemIndex, item) {
-    this.initReplaceAffects(itemIndex, item);
-    return this.replaceMDmgAffectAmount[itemIndex];
-  }
-  
-  this.getReplacePDmgAffectAmount = function(itemIndex, item) {
-    this.initReplaceAffects(itemIndex, item);
-    return this.replacePDmgAffectAmount[itemIndex];
-  }
-  
-  this.getReplaceAvgDmgAffectAmount = function(itemIndex, item) {
-    this.initReplaceAffects(itemIndex, item);
-    return this.replaceAvgDmgAffectAmount[itemIndex];
+    return this.replaceAffectAmount[itemIndex][statId];
   }
   
   this.getGroupCalcStats = function() {
@@ -111,24 +81,26 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
   }
   
   this.initAddAffects = function() {
-    if(vm.addHPAffectAmount || vm.addMDmgAffectAmount || vm.addPDmgAffectAmount || vm.addAvgDmgAffectAmount) {
+    
+    if(vm.addAffectAmount) {
       return;
     }
     
     var origStats = vm.getGroupCalcStats();
-    
     var group = vm.savedItems[vm.groupName];
     var newItems = group.items.concat([vm.item]);
     var newStats = vm.getCalculatedStats(group, newItems);
     
-    vm.addHPAffectAmount = calcStatPercent(vm.getHpStat(newStats).max, vm.getHpStat(origStats).max);
-    vm.addPDmgAffectAmount = calcStatPercent(vm.getPDmgStat(newStats).max, vm.getPDmgStat(origStats).max);
-    vm.addMDmgAffectAmount = calcStatPercent(vm.getMDmgStat(newStats).max, vm.getMDmgStat(origStats).max);
-    vm.addAvgDmgAffectAmount = calcStatPercent(vm.getAvgDmgStat(newStats).max, vm.getAvgDmgStat(origStats).max);
+    this.addAffectAmount = {};
+    for(var id in hCodeValues.stats) {
+      if(hCodeValues.stats[id].summaryDisplay) {
+        vm.addAffectAmount[id] = calcStatPercent(vm.getStat(id, newStats).max, vm.getStat(id, origStats).max);
+      }
+    }
   }
   
   this.initReplaceAffects = function(itemIndex, item) {
-    if(vm.replaceHPAffectAmount[itemIndex] || vm.replaceMDmgAffectAmount[itemIndex] || vm.replacePDmgAffectAmount[itemIndex] || vm.replaceAvgDmgAffectAmount[itemIndex]) {
+    if(vm.replaceAffectAmount[itemIndex]) {
       return;
     }
     
@@ -143,10 +115,12 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     var newStats = vm.getCalculatedStats(group, newItems);
     var origStats = vm.getGroupCalcStats();
     
-    vm.replaceHPAffectAmount[itemIndex] = calcStatPercent(vm.getHpStat(newStats).max, vm.getHpStat(origStats).max);
-    vm.replacePDmgAffectAmount[itemIndex] = calcStatPercent(vm.getPDmgStat(newStats).max, vm.getPDmgStat(origStats).max);
-    vm.replaceMDmgAffectAmount[itemIndex] = calcStatPercent(vm.getMDmgStat(newStats).max, vm.getMDmgStat(origStats).max);
-    vm.replaceAvgDmgAffectAmount[itemIndex] = calcStatPercent(vm.getAvgDmgStat(newStats).max, vm.getAvgDmgStat(origStats).max);
+    this.replaceAffectAmount[itemIndex] = {};
+    for(var id in hCodeValues.stats) {
+      if(hCodeValues.stats[id].summaryDisplay) {
+        vm.replaceAffectAmount[itemIndex][id] = calcStatPercent(vm.getStat(id, newStats).max, vm.getStat(id, origStats).max);
+      }
+    }
   }
   
   function calcStatPercent(newVal, origVal) {
@@ -159,23 +133,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     }
   }
   
-  this.getHpStat = function(stats) {
-    return getStat(3008, stats);
-  }
-  
-  this.getPDmgStat = function(stats) {
-    return getStat(1004, stats);
-  }
-  
-  this.getMDmgStat = function(stats) {
-    return getStat(1006, stats);
-  }
-  
-  this.getAvgDmgStat = function(stats) {
-    return getStat(1001, stats);
-  }
-  
-  function getStat(id, stats) {
+  this.getStat = function(id, stats) {
     var len = stats.length;
     for(var i=0;i<len;++i) {
       if(stats[i].id == id) {
@@ -183,6 +141,25 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
       }
     }
     return {id: id, max:0};
+  }
+  
+  this.getStatName = function(id) {
+    var retVal = '';
+    if(hCodeValues.stats[id].element == 'primary') {
+      var eleId = 0;
+      if(vm.savedItems[vm.groupName].element) {
+        eleId = vm.savedItems[vm.groupName].element.id;
+      }
+      retVal += hCodeValues.elements[eleId].name;
+    }
+    else if(hCodeValues.stats[id].element == 'secondary') {
+      var eleId = 0;
+      if(vm.savedItems[vm.groupName].secondaryElement) {
+        eleId = vm.savedItems[vm.groupName].secondaryElement.id;
+      }
+      retVal += hCodeValues.elements[eleId].name;
+    }
+    return retVal + ' ' + hCodeValues.stats[id].name;
   }
   
   this.getGroupItems = function() {

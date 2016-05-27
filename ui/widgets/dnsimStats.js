@@ -8,6 +8,7 @@ function dnsimStats(hCodeValues) {
     restrict: 'A',
     scope: {
       stats: '=stats',
+      build: '=build',
       altStats: '=altStats',
       separator: '=separator',
       filter: '=filter',
@@ -70,6 +71,23 @@ function dnsimStats(hCodeValues) {
           
             if('needSetNum' in stat) {
               output += stat.needSetNum + '&nbsp;';
+            }
+            
+            if($scope.build) {
+              if(def.element == 'primary') {
+                var eleId = 0;
+                if($scope.build.element) {
+                  eleId = $scope.build.element.id;
+                }
+                output += hCodeValues.elements[eleId].name + '&nbsp;';
+              }
+              else if(def.element == 'secondary') {
+                var eleId = 0;
+                if($scope.build.secondaryElement) {
+                  eleId = $scope.build.secondaryElement.id;
+                }
+                output += hCodeValues.elements[eleId].name + '&nbsp;';
+              }
             }
             
             output += def.name+':&nbsp;'+def.display(stat);

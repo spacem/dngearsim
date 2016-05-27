@@ -8,7 +8,7 @@
           <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span><span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}&nbsp;</span><span ng-show="buildCtrl.build.enemyLevel > 0">vs&nbsp;lv{{buildCtrl.build.enemyLevel}}&nbsp;</span>
           <br />
           {{buildCtrl.getSaveDate()}} {{buildCtrl.getSaveTime()}}<span class="hidden-xs"> | </span><br class="visible-xs" />
-          <span dnsim-stats stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'" />
+          <span dnsim-stats build="buildCtrl.build" stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'" />
         </small>
         </h3>
       </button>
@@ -70,7 +70,7 @@
     
     <div class="col-xs-12 col-md-2 group-header">
       <div class="row">
-       <dngearsim-build-stats stats="buildCtrl.stats">
+       <dngearsim-build-stats stats="buildCtrl.stats" build="buildCtrl.build">
        </dngearsim-build-stats>
       </div>
     </div>

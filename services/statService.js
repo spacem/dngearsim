@@ -257,18 +257,49 @@ function statHelper(hCodeValues) {
       // average damage
       function addAvgDamageStat(id, min, max) {
         
-        var avgDmg = (min+max)/2;
-        avgDmg += (critChance * (critDamagePc+1) * avgDmg * 0.75);
-        avgDmg = avgDmg * (1 + fdPc.max);
+        var nonEleDamage = (min+max)/2;
+        // add crit (assume 25% crit resist - ie. x0.75)
+        nonEleDamage += (critChance * (critDamagePc+1) * nonEleDamage * 0.75);
+        // apply fd
+        nonEleDamage = nonEleDamage * (1 + fdPc.max);
         
+        // apply element(s)
+        // assume no elemental resist (since probably have resist reduction anyways)
+        var avgDmg = nonEleDamage;
         if(group.element && group.element.id > 0) {
           var elementStat = statLookup[hCodeValues.elements[group.element.id].dmgStat];
           if(elementStat) {
             avgDmg = avgDmg * (1+Number(elementStat.max));
           }
         }
-        
         addStat({id: id, max: avgDmg});
+        var secElementId = 0;
+        var priElementId = 0;
+        if(group.element) {
+          priElementId = group.element.id;
+        }
+        else {
+          priElementId = 0;
+        }
+        if(group.secondaryElement) {
+          secElementId = group.secondaryElement.id;
+        }
+        else {
+          secElementId = 0;
+        }
+        
+        if(secElementId != priElementId) {
+          if(secElementId > 0) {
+            var secondaryElementStat = statLookup[hCodeValues.elements[group.secondaryElement.id].dmgStat];
+            if(secondaryElementStat) {
+              var secAvgDmg = nonEleDamage * (1+Number(secondaryElementStat.max));
+              addStat({id: id + 1000, max: secAvgDmg});
+            }
+          }
+          else {
+            addStat({id: id + 1000, max: nonEleDamage});
+          }
+        }
       }
       
       // average damages

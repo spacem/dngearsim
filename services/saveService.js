@@ -83,7 +83,7 @@ function saveHelper(itemCategory) {
     },
     
     renameSavedGroup: function(
-      oldGroupName, newGroupName, enemyLevel, playerLevel, heroLevel, job, damageType, element,
+      oldGroupName, newGroupName, enemyLevel, playerLevel, heroLevel, job, damageType, element, secondaryElement,
       enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats) {
         
       var savedItems = this.getSavedItems();
@@ -104,6 +104,7 @@ function saveHelper(itemCategory) {
       savedItems[newGroupName].job = job;
       savedItems[newGroupName].damageType = damageType;
       savedItems[newGroupName].element = element;
+      savedItems[newGroupName].secondaryElement = secondaryElement;
       savedItems[newGroupName].enemyStatCaps = enemyStatCaps;
       savedItems[newGroupName].playerStatCaps = playerStatCaps;
       savedItems[newGroupName].conversions = conversions;

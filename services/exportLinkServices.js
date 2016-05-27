@@ -153,6 +153,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       if(group.element && group.element.id) {
         retVal += '&t=' + group.element.id;
       }
+      if(group.secondaryElement && group.secondaryElement.id) {
+        retVal += '&s=' + group.secondaryElement.id;
+      }
       retVal += '&g=' + encodeURI(groupName) + '&i=' + itemStrings.join(',');
       return retVal
     },

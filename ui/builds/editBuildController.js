@@ -37,6 +37,13 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
   else {
     this.element = hCodeValues.elements[0];
   }
+    
+  if(this.group.secondaryElement) {
+    this.secondaryElement = this.group.secondaryElement;
+  }
+  else {
+    this.secondaryElement = hCodeValues.elements[0];
+  }
 
   this.jobs = [this.job];
   if(this.group.enemyLevel) {
@@ -129,6 +136,7 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
       this.job,
       this.damageType,
       this.element,
+      this.secondaryElement,
       enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats);
     
     $location.path('/builds/' + this.groupName);

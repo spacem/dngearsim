@@ -99,9 +99,9 @@ function hCodeValues() {
       107: {id: 107, name: 'mp?', display: toNoDec, hide: true },
       
       // stats below here are ones I made up
-      1001: {id: 1001, name: 'avg dmg', display: inThousands, summaryDisplay: true },
-      1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true },
-      1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true },
+      1001: {id: 1001, name: 'avg dmg', display: inThousands, summaryDisplay: true, element: 'primary' },
+      1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true, element: 'primary' },
+      1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true, element: 'primary' },
       
       1008: {id: 1008, name: 'pdef', display: toPercent },
       1009: {id: 1009, name: 'mdef', display: toPercent },
@@ -110,11 +110,15 @@ function hCodeValues() {
       1029: {id: 1029, name: 'fd calc', display: toPercent },
       1103: {id: 1103, name: 'crit dmg', display: toPercent },
       
+      2001: {id: 2001, name: 'avg dmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
+      2004: {id: 2004, name: 'avg pdmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
+      2006: {id: 2006, name: 'avg mdmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
+      
       2008: {id: 2008, name: 'pdef eqhp', display: inThousands },
       2009: {id: 2009, name: 'mdef eqhp', display: inThousands },
       
       3000: {id: 3000, name: 'atk pwr', display: toPercent },
-      3008: {id: 3008, name: 'avg eqhp', display: inThousands, summaryDisplay: true },
+      3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true },
       
       4012: {id: 4050, name: 'skCrit', display: inThousands },
       4050: {id: 4050, name: 'skStr%', display: toPercent },
@@ -156,7 +160,7 @@ function hCodeValues() {
     },
     
     elements : {
-      0 : { id: 0, name: 'not elemental' },
+      0 : { id: 0, name: 'non elemental' },
       1 : { id: 1, name: 'fire', dmgStat: 16 },
       2 : { id: 2, name: 'ice', dmgStat: 17 },
       3 : { id: 3, name: 'light', dmgStat: 18 },

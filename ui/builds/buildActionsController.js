@@ -26,6 +26,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
       vm.build.job,
       vm.build.damageType,
       vm.build.element,
+      vm.build.secondaryElement,
       vm.build.enemyStatCaps, 
       vm.build.playerStatCaps, 
       vm.build.conversions, 

@@ -9,6 +9,7 @@ function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
     scope: true,
     bindToController: {
       stats: '=stats',
+      build: '=build',
     },
     controller: 'buildStatsCtrl',
     controllerAs: 'statsCtrl',
