@@ -45,20 +45,50 @@
   </div>
   <div class="col-xs-12 col-md-8">
     <div class="row" ng-if="item.typeName != 'custom' &&  item.typeName != 'skills' &&  item.typeName != 'talisman'">
-      <div class="col-xs-12" ng-if="item.stats != null && item.stats.length > 0">
-        <br class="hidden-xs" />
+      <!-- virtical layout -->
+      <div class="col-xs-3 hidden-xs" ng-if="item.stats != null && item.stats.length > 0">
+        <br />
+        <label>stats</label><br />
+        <div dnsim-stats stats="item.stats">
+        </div>
+      </div>
+      <div class="col-xs-3 hidden-xs" ng-if="item.setStats != null && item.setStats.length > 0">
+        <br /><label>set stats</label><br />
+        <div dnsim-stats stats="item.setStats"></div>
+      </div>
+      <div class="col-xs-6 hidden-xs">
+        <div class="row">
+          <br />
+          <div class="col-xs-12" ng-if="item.enchantmentStats && item.enchantmentStats.length > 0">
+            <label>+{{item.enchantmentNum}} enchantment stats:</label><br />
+            <div dnsim-stats stats="item.enchantmentStats">
+            </div>
+            <br />
+          </div>
+          <dngearsim-item-edit-enchantment item="item" on-change="handleChange()">
+          </dngearsim-item-edit-enchantment>
+        </div>
+      </div>
+      
+      <!-- horizontal layout for mobile -->
+      <div class="col-xs-12 visible-xs-block" ng-if="item.stats != null && item.stats.length > 0">
         <label>stats</label><br />
         <span dnsim-stats stats="item.stats" separator="'|'">
         </span>
       </div>
-      
-      <div class="col-xs-12" ng-if="item.setStats != null && item.setStats.length > 0">
+      <div class="col-xs-12 visible-xs-block" ng-if="item.setStats != null && item.setStats.length > 0">
         <br /><label>set stats</label><br />
-        <span dnsim-stats stats="item.setStats" separator="'|'">
+        <span dnsim-stats stats="item.setStats" separator="'|'"></span>
       </div>
-      
-      <dngearsim-item-edit-enchantment item="item" on-change="handleChange()">
+      <div class="col-xs-12 visible-xs-block" ng-if="item.enchantmentStats && item.enchantmentStats.length > 0">
+        <br /><label>+{{item.enchantmentNum}} enchantment stats:</label><br />
+        <span dnsim-stats stats="item.enchantmentStats" separator="'|'">
+        </span>
+        <br />
+      </div>
+      <dngearsim-item-edit-enchantment item="item" on-change="handleChange()" class="visible-xs-block">
       </dngearsim-item-edit-enchantment>
+      <!-- -->
       
     </div>
     <div class="row" ng-if="item.typeName == 'talisman'">

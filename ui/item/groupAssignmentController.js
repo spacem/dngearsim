@@ -234,7 +234,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
             return false;
           }
         }
-        console.log('maxexchange reached ' + items.length + '>=' + cat.maxExchange + ' for ' + cat.name);
+        // console.log('maxexchange reached ' + items.length + '>=' + cat.maxExchange + ' for ' + cat.name);
         return true;
       }
     }

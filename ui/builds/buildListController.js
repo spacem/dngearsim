@@ -47,6 +47,7 @@ angular.module('dnsim').controller('BuildListCtrl',
     }
     
     $timeout(function() {
+      // $anchorScroll.yOffset = 30;
       $anchorScroll('/builds/' + vm.currentGroup);
     });
   }]

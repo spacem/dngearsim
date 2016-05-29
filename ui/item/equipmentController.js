@@ -4,7 +4,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   'use strict';
   
   region.setLocationByName($routeParams.region);
+  
   $window.scrollTo(0, 0);
+  
   $scope.jobName = null;
   $scope.item = exportLinkHelper.decodeItem($routeParams.itemString);
   if('itemSource' in $scope.item) {
@@ -32,7 +34,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   $scope.getExchangeType = function() {
-    console.log('getting exchange');
+    // console.log('getting exchange');
     var exchangeDnt = 'exchange.lzjson';
     if(translations.isLoaded() &&
       dntData.isLoaded(exchangeDnt) &&

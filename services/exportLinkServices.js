@@ -192,7 +192,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         item.itemSource = item.itemTypeName;
       }
       
-      console.log('checking ' + item.itemSource)
+      // console.log('checking ' + item.itemSource)
       if(item.itemSource == 'rbTech') {
         item.itemSource = 'tech';
         console.log('changed to ' + item.itemSource)
