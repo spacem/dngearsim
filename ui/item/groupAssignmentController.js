@@ -37,7 +37,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     
   this.clearGroup = function() {
     this.addAffectAmount = null;
-    this.replaceAffectAmount = [];
+    this.replaceAffectAmount = {};
 
     this.groupItems = null;
     this.groupCalcStats = null

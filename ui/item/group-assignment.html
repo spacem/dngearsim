@@ -28,7 +28,7 @@
         this build needs to be set up before stats can be shown
     </div>
   </div>
-  <div class="row" ng-repeat="groupItem in editCtrl.getGroupItems() track by $index">
+  <div class="row" ng-repeat="groupItem in editCtrl.getGroupItems() track by $index" ng-init="listIndex = $index">
     <div class="col-xs-12 item-type-grouping">
     </div>
     <div class="col-xs-12 col-md-3">
@@ -45,10 +45,10 @@
     <div class="col-xs-9 col-md-8">
       
       <br />
-      <span ng-if="editCtrl.getReplaceAffectAmount(statId, $parent.$index, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds">
-        <b ng-if="editCtrl.getReplaceAffectAmount(statId, $parent.$index, groupItem) > 0">increase</b>
-        <b ng-if="editCtrl.getReplaceAffectAmount(statId, $parent.$index, groupItem) < 0">decreases</b>
-        {{editCtrl.getStatName(statId)}} by {{editCtrl.getReplaceAffectAmount(statId, $parent.$index, groupItem)}}%
+      <span ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds">
+        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">increase</b>
+        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">decreases</b>
+        {{editCtrl.getStatName(statId)}} by {{editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem)}}%
         <br />
       </span>
       
