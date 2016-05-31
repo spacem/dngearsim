@@ -44,6 +44,10 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     return this.groupCalcStats;
   }
   
+  this.getBuild = function() {
+    return vm.savedItems[vm.groupName];
+  }
+  
   this.pickup = function(index) {
     vm.selectedIndex = index;
     

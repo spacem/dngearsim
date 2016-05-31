@@ -12,12 +12,13 @@
   <div class="col-xs-12 col-sm-8">
     <div class="row" ng-if="ctrl.groupName">
       <div class="col-xs-12">
-        <h4><a href="#/builds/{{ctrl.groupName}}">{{ctrl.groupName}}</a><br /> <small> <span dnsim-stats stats="ctrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" /> </small> </h4>
+        <h4><a href="#/builds/{{ctrl.groupName}}">{{ctrl.groupName}}</a><br /> <small> <span dnsim-stats build="ctrl.getBuild()" stats="ctrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" /> </small> </h4>
       </div>
     </div>
-  
+  <!--
     <button class="btn btn-default" ng-show="ctrl.groupNames.length > 1" ng-dblclick="ctrl.prevGroup()" ng-click="ctrl.prevGroup()">&lt; prev build</button>
     <button class="btn btn-default" ng-show="ctrl.groupNames.length > 1" ng-dblclick="ctrl.nextGroup()" ng-click="ctrl.nextGroup()">next build &gt;</button>
+    -->
   </div>
 </div>
 
