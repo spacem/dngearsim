@@ -67,6 +67,10 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     return this.groupCalcStats;
   }
   
+  this.getBuild = function() {
+    return vm.savedItems[vm.groupName];
+  }
+  
   this.getCalculatedStats = function(group, items) {
     var nakedStats = statHelper.getNakedStats(group);
     var combinedStats = statHelper.getCombinedStats(items);
