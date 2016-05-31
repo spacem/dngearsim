@@ -10,7 +10,7 @@ function dnsimItemLink(exportLinkHelper,$location,region) {
       item: '=item',
       noClick: '=noClick',
     },
-    templateUrl: 'ui/widgets/dnsim-item-link.html?bust=' + Math.random().toString(36).slice(2),
+    templateUrl: 'ui/widgets/dnsim-item-link.html',
     link: function($scope, element, attrs) {
       $scope.itemLink = '/item/' + region.dntLocation.region + '/' + exportLinkHelper.encodeItem($scope.item);
       
@@ -24,33 +24,6 @@ function dnsimItemLink(exportLinkHelper,$location,region) {
         if(!$scope.noClick) {
           $location.path($scope.itemLink);
         }
-      }
-      
-      $scope.getIcon = function() {
-        if($scope.item.icon > 0) {
-          var fileIndex = Math.floor($scope.item.icon/200 + 1);
-          if(fileIndex > 9) {
-            return 'itemicon' + fileIndex + '.png';
-          }
-          else {
-            return 'itemicon0' + fileIndex + '.png';
-          }
-        }
-        return null;
-      }
-      
-      $scope.getIconXPostion = function() {
-        if($scope.item.icon > 0) {
-          return (($scope.item.icon % 10) * 40) + 5;
-        }
-        return 0;
-      }
-      
-      $scope.getIconYPostion = function() {
-        if($scope.item.icon > 0) {
-          return (Math.floor(($scope.item.icon % 200) / 10) * 40) + 4;
-        }
-        return 0;
       }
     },
   };

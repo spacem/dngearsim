@@ -19,9 +19,9 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
   
   <link rel="stylesheet" href="dngearsim.css"></link>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   
 </head>
 <body ng-app="dnsim">
@@ -44,7 +44,17 @@
   </div>
 </div>
 </header>
-<div id="nav" ng-controller="NavCtrl" dngearsim-nav class="container">
+<div id="nav" class="container">
+  <div class="row" dngearsim-nav ng-controller="NavCtrl">
+  </div>
+  <div class="row">
+    <div class="col-xs-12" id="app" ng-view>
+      <br />
+      <div class="row">
+        <div class="col-xs-12 loading">loading...</div>
+      </div>
+    </div>
+  </div>
 </div>
 <div id="footer-break" class="container-fluid">
   <div class="row">
@@ -74,10 +84,14 @@
 <script src="../dntviewer/dntreader.js"></script>
 <script src="../dntviewer/dntranslations.js"></script>
 
+<script src="bower_components/angulartics/dist/angulartics.min.js"></script>
+<script src="bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js"></script>
+
 <script src="app.js"></script>
 
 <script src="ui/widgets/dnsimCategoryLinks.js"></script>
 <script src="ui/widgets/dnsimItemLink.js"></script>
+<script src="ui/widgets/dnsimItemIcon.js"></script>
 <script src="ui/widgets/dnsimLoading.js"></script>
 <script src="ui/widgets/dnsimSelectAllOnClick.js"></script>
 <script src="ui/widgets/dnsimStats.js"></script>
@@ -148,7 +162,6 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-72901872-1', 'auto');
-  ga('send', 'pageview');
 </script>
 </body>
 </html>

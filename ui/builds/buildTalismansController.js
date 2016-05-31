@@ -1,10 +1,15 @@
 angular.module('dnsim').controller('BuildTalismansCtrl',
 
-['$location','$routeParams','$timeout','saveHelper','statHelper','jobs','hCodeValues','itemColumnsToLoad','character',
-function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,itemColumnsToLoad,character) {
+['$window','$location','$routeParams','$timeout','saveHelper','statHelper','jobs','hCodeValues','itemColumnsToLoad','character',
+function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,itemColumnsToLoad,character) {
   'use strict';
   
   var vm = this;
+  
+  document.body.className = 'default-back';
+  $window.document.title = 'DN Gear Sim | TALISMANS';
+  $window.scrollTo(0, 0);
+  
   this.savedItems = saveHelper.getSavedItems();
   this.groupNames = Object.keys(this.savedItems);
   if(!this.groupNames) {
@@ -30,8 +35,6 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
   
   this.getGroupCalcStats = function() {
     if(this.groupCalcStats == null) {
-      console.log('getting group calc stats');
-      
       var group = vm.savedItems[vm.groupName];
       if(group) {
         this.groupCalcStats = this.getCalculatedStats(group, group.items);
@@ -62,8 +65,6 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
     
     return statHelper.getCalculatedStats(group, allStats);
   }
-  
-  
   
   this.nextGroup = function() {
     
@@ -127,6 +128,13 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
     '+0%',
     ];
   
+  this.summaryStatIds = [];
+  for(var id in hCodeValues.stats) {
+    if(hCodeValues.stats[id].summaryDisplay) {
+      this.summaryStatIds.push(id);
+    }
+  }
+  
   this.pcIndexes = {};
   this.pcIndexes['100'] = 0;
   this.pcIndexes['75'] = 1;
@@ -150,11 +158,15 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
         var rowIndex = 0;
         for(;;) {
           if(!vm.rows[rowIndex]) {
-            vm.rows[rowIndex] = [{enchantNum:100},{enchantNum:75},{enchantNum:25},{enchantNum:0}];
+            vm.rows[rowIndex] = vm.makeFakeCells();
           }
           
-          if(!vm.rows[rowIndex][pcIndex].item) {
-            var data = { item: item, index: index };
+          if(vm.rows[rowIndex][pcIndex].index < 0) {
+            if(!item.enchantmentNum) {
+              item.enchantmentNum = 0;
+            }
+            
+            var data = vm.makeCell(item, index);
             vm.rows[rowIndex][pcIndex] = data;
             break;
           }
@@ -167,25 +179,43 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
     });
     
     if(vm.rows.length < 3) {
-      vm.rows[vm.rows.length+1] = [{enchantNum:100},{enchantNum:75},{enchantNum:25},{enchantNum:0}];
+      vm.rows[vm.rows.length+1] = vm.makeFakeCells();
+    }
+  }
+  
+  this.makeFakeCells = function(num) {
+    return [vm.makeCell({enchantmentNum:100},-1),vm.makeCell({enchantmentNum:75},-2),vm.makeCell({enchantmentNum:25},-3),vm.makeCell({enchantmentNum:0},-4)];
+  }
+  
+  this.makeCell = function(item, index) {
+    return { item: item, index: index };
+  }
+  
+  this.click = function(col) {
+    if(vm.selectedIndex == -1) {
+      if(col.index >= 0) {
+        vm.pickup(col.index);
+      }
+    }
+    else {
+      vm.move(col);
     }
   }
   
   this.move = function(col) {
     
     var items = vm.savedItems[vm.groupName].items;
-    if(col.item) {
+    if(col.index >= 0) {
       var swapEnchantmentNumber = col.item.enchantmentNum;
       
       vm.setTalisman(col.item, items[vm.selectedIndex].enchantmentNum);
       vm.setTalisman(items[vm.selectedIndex], swapEnchantmentNumber);
-      
       items[col.index] = items[vm.selectedIndex];
       items[vm.selectedIndex] = col.item;
     }
     else {
       var item = items[vm.selectedIndex];
-      vm.setTalisman(item, col.enchantNum);
+      vm.setTalisman(item, col.item.enchantmentNum);
       items.splice(vm.selectedIndex, 1);
       items.push(item);
     }
@@ -193,14 +223,16 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
     vm.groupCalcStats = null;
     vm.selectedIndex = -1;
     vm.updateRows();
-    
+    vm.replaceAffectAmount = {};
     $timeout();
   }
   
   this.setTalisman = function(item, newEnhancementNum) {
     var extraStats = [];
     angular.forEach(item.stats, function(stat, index) {
-      extraStats.push({id: stat.id, max: stat.max * (newEnhancementNum/100)});
+      if(newEnhancementNum) {
+        extraStats.push({id: stat.id, max: stat.max * (newEnhancementNum/100)});
+      }
     });
     
     item.enchantmentStats = extraStats;
@@ -210,55 +242,41 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
   }
   
     
-  this.replaceHPAffectAmount = [];
-  this.replaceMDmgAffectAmount = [];
-  this.replacePDmgAffectAmount = [];
-  this.replaceAvgDmgAffectAmount = [];
-
-  this.getReplaceHPAffectAmount = function(itemIndex, item) {
+  this.replaceAffectAmount = {};
+  this.getReplaceAffectAmount = function(statId, itemIndex, item) {
     this.initReplaceAffects(itemIndex, item);
-    return this.replaceHPAffectAmount[itemIndex];
-  }
-
-  this.getReplaceMDmgAffectAmount = function(itemIndex, item) {
-    this.initReplaceAffects(itemIndex, item);
-    return this.replaceMDmgAffectAmount[itemIndex];
-  }
-  
-  this.getReplacePDmgAffectAmount = function(itemIndex, item) {
-    this.initReplaceAffects(itemIndex, item);
-    return this.replacePDmgAffectAmount[itemIndex];
-  }
-  
-  this.getReplaceAvgDmgAffectAmount = function(itemIndex, item) {
-    this.initReplaceAffects(itemIndex, item);
-    return this.replaceAvgDmgAffectAmount[itemIndex];
+    if(this.replaceAffectAmount[itemIndex]) {
+      return this.replaceAffectAmount[itemIndex][statId];
+    }
   }
   
   this.initReplaceAffects = function(itemIndex, item) {
-    if(vm.replaceHPAffectAmount[itemIndex] || vm.replaceMDmgAffectAmount[itemIndex] || vm.replacePDmgAffectAmount[itemIndex] || vm.replaceAvgDmgAffectAmount[itemIndex]) {
+    if(vm.replaceAffectAmount[itemIndex] || vm.selectedIndex == -1) {
       return;
     }
+    this.replaceAffectAmount[itemIndex] = {};
     
     var group = vm.savedItems[vm.groupName];
-    
     var item2 = group.items[vm.selectedIndex];
+    
     var extraStats = [];
-    angular.forEach(item.stats, function(stat, index) {
-      extraStats.push({id: stat.id, max: stat.max * (item2.enchantmentNum/100)});
-    });
-    var fullStats1 = hCodeValues.mergeStats(extraStats, item.stats);
+    var fullStats1 = [];
+    if(item.stats) {
+      angular.forEach(item.stats, function(stat, index) {
+        extraStats.push({id: stat.id, max: stat.max * (item2.enchantmentNum/100)});
+      });
+      fullStats1 = hCodeValues.mergeStats(extraStats, item.stats);
+    }
     
     extraStats = [];
     angular.forEach(item2.stats, function(stat, index) {
       extraStats.push({id: stat.id, max: stat.max * (item.enchantmentNum/100)});
     });
     var fullStats2 = hCodeValues.mergeStats(extraStats, item2.stats);
-    
-    
-    var newItems = [{fullStats: fullStats1}, {fullStats: fullStats2}];
+
+    var newItems = [{stats: fullStats1}, {stats: fullStats2}];
     angular.forEach(group.items, function(gItem , index) {
-      if(item !== gItem && item2 != gItem) {
+      if(item !== gItem && item2 !== gItem) {
         newItems.push(gItem);
       }
     });
@@ -266,29 +284,33 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
     var newStats = vm.getCalculatedStats(group, newItems);
     var origStats = vm.getGroupCalcStats();
     
-    vm.replaceHPAffectAmount[itemIndex] = calcStatPercent(vm.getHpStat(newStats).max, vm.getHpStat(origStats).max);
-    vm.replacePDmgAffectAmount[itemIndex] = calcStatPercent(vm.getPDmgStat(newStats).max, vm.getPDmgStat(origStats).max);
-    vm.replaceMDmgAffectAmount[itemIndex] = calcStatPercent(vm.getMDmgStat(newStats).max, vm.getMDmgStat(origStats).max);
-    vm.replaceAvgDmgAffectAmount[itemIndex] = calcStatPercent(vm.getAvgDmgStat(newStats).max, vm.getAvgDmgStat(origStats).max);
+    for(var id in hCodeValues.stats) {
+      if(hCodeValues.stats[id].summaryDisplay) {
+        vm.replaceAffectAmount[itemIndex][id] = calcStatPercent(vm.getStat(id, newStats).max, vm.getStat(id, origStats).max);
+      }
+    }
   }
   
-  this.getHpStat = function(stats) {
-    return getStat(3008, stats);
+  this.getStatName = function(id) {
+    var retVal = '';
+    if(hCodeValues.stats[id].element == 'primary') {
+      var eleId = 0;
+      if(vm.savedItems[vm.groupName].element) {
+        eleId = vm.savedItems[vm.groupName].element.id;
+      }
+      retVal += hCodeValues.elements[eleId].name;
+    }
+    else if(hCodeValues.stats[id].element == 'secondary') {
+      var eleId = 0;
+      if(vm.savedItems[vm.groupName].secondaryElement) {
+        eleId = vm.savedItems[vm.groupName].secondaryElement.id;
+      }
+      retVal += hCodeValues.elements[eleId].name;
+    }
+    return retVal + ' ' + hCodeValues.stats[id].name;
   }
   
-  this.getPDmgStat = function(stats) {
-    return getStat(1004, stats);
-  }
-  
-  this.getMDmgStat = function(stats) {
-    return getStat(1006, stats);
-  }
-  
-  this.getAvgDmgStat = function(stats) {
-    return getStat(1001, stats);
-  }
-  
-  function getStat(id, stats) {
+  this.getStat = function(id, stats) {
     var len = stats.length;
     for(var i=0;i<len;++i) {
       if(stats[i].id == id) {
@@ -300,7 +322,6 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
   
   function calcStatPercent(newVal, origVal) {
     if(newVal && origVal) {
-      // console.log('orig: ' + origVal + ',new: ' + newVal);
       return Math.round(10000 * (1 - (origVal / newVal))) / 100;
     }
     else {
@@ -308,7 +329,10 @@ function($location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,
     }
   }
   
-  
+  this.save = function() {
+    saveHelper.updatedSavedItems(vm.groupName, vm.savedItems[vm.groupName].items);
+    $location.path('/builds/' + vm.groupName);
+  }
   
   this.updateRows();
   

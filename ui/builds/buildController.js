@@ -133,6 +133,6 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
     },
     controller: 'buildCtrl',
     controllerAs: 'buildCtrl',
-    templateUrl: 'ui/builds/build.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/builds/build.html'
   };
 });

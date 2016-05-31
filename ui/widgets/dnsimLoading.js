@@ -10,7 +10,7 @@ function dnsimLoading(dntData, translations, $timeout) {
     transclude: true,
     scope: {
     },
-    templateUrl: 'ui/widgets/dnsim-loading.html?bust=' + Math.random().toString(36).slice(2),
+    templateUrl: 'ui/widgets/dnsim-loading.html',
     link: function($scope, element, attrs) {
       $scope.$on('TRANSLATION_LOAD_EVENT', function() {
         $scope.setLoadCount();

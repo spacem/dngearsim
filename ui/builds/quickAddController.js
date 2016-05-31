@@ -117,6 +117,6 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
     },
     controller: 'quickAddCtrl',
     controllerAs: 'quickAdd',
-    templateUrl: 'ui/builds/quick-add.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/builds/quick-add.html'
   };
 });

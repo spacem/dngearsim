@@ -160,6 +160,6 @@ function(dntData,hCodeValues,items,$timeout,translations) {
     },
     controller: 'itemEditEnchantmentCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-enchantment.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/item-edit-enchantment.html'
   };
 });

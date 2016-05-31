@@ -36,6 +36,6 @@ angular.module('dnsim').controller('itemEditTalismanCtrl',
     },
     controller: 'itemEditTalismanCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-talisman.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/item-edit-talisman.html'
   };
 });

@@ -91,6 +91,6 @@ function(dntData,hCodeValues,items) {
     },
     controller: 'itemEditSparkCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-spark.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/item-edit-spark.html'
   };
 });

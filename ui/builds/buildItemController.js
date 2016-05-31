@@ -31,6 +31,6 @@ function($timeout,statHelper,saveHelper) {
     },
     controller: 'buildItemCtrl',
     controllerAs: 'buildItem',
-    templateUrl: 'ui/builds/build-item.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/builds/build-item.html'
   };
 });

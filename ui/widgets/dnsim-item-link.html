@@ -1,20 +1,7 @@
-<a class="{{item.rank.name}}-grade text-left" ng-href="#{{itemLink}}" ng-click="openItem()" ng-if="!noClick">
-  <span
-    ng-if="getIcon()"
-    class="item-icon {{item.rank.name}}-grade"
-    ng-style="{'background': 'url(icons/' + getIcon() + ')', 'background-position': '-' + getIconXPostion() + 'px -' + getIconYPostion() + 'px'}">
-  </span>
+<a class="{{item.rank.name}}-grade text-left" ng-href="#{{itemLink}}" ng-click="openItem()">
+  <dnsim-item-icon item="item" style="float: left;"></dnsim-item-icon>
   <span ng-show="item.enchantmentNum > 0">
     +{{item.enchantmentNum}}<span ng-show="item.typeName == 'talisman'">%</span>
   </span>
   {{getJobName(item.needJobClass)}} <span ng-show="item.levelLimit > 1">lv{{item.levelLimit}}</span> {{item.name}}
 </a>
-
-<span ng-if="noClick">
-  <span
-    ng-if="getIcon()"
-    class="item-icon {{item.rank.name}}-grade"
-    ng-style="{'background': 'url(icons/' + getIcon() + ')', 'background-position': '-' + getIconXPostion() + 'px -' + getIconYPostion() + 'px'}">
-  </span>
-  {{item.name}}
-</span>

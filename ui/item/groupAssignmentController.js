@@ -325,6 +325,6 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     },
     controller: 'groupAssignmentCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/group-assignment.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/group-assignment.html'
   };
 });

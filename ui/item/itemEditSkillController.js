@@ -78,6 +78,6 @@ function($timeout,dntData,statHelper) {
     },
     controller: 'itemEditSkillCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-skill.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/item-edit-skill.html'
   };
 });

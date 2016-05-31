@@ -52,6 +52,6 @@ angular.module('dnsim').controller('RegionCtrl',
 ])
 .directive('dngearsimRegion', function() {
   return {
-    templateUrl: 'ui/region/region.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/region/region.html'
   };
 });

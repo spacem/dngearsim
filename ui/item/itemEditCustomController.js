@@ -69,6 +69,6 @@ function(hCodeValues) {
     },
     controller: 'itemEditCustomCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-custom.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/item-edit-custom.html'
   };
 });

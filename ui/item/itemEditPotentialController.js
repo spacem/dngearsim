@@ -132,6 +132,6 @@ function(dntData,items,hCodeValues) {
     },
     controller: 'itemEditPotentialCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-potential.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/item-edit-potential.html'
   };
 });

@@ -50,6 +50,6 @@ function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
     },
     controller: 'buildSummaryCtrl',
     controllerAs: 'buildCtrl',
-    templateUrl: 'ui/builds/build-summary.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/builds/build-summary.html'
   };
 });

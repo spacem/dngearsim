@@ -13,6 +13,6 @@ function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
     },
     controller: 'buildStatsCtrl',
     controllerAs: 'statsCtrl',
-    templateUrl: 'ui/builds/build-stats.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/builds/build-stats.html'
   };
 });

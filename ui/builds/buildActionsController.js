@@ -99,6 +99,6 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
     },
     controller: 'buildActionsCtrl',
     controllerAs: 'buildActions',
-    templateUrl: 'ui/builds/build-actions.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/builds/build-actions.html'
   };
 });

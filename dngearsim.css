@@ -220,11 +220,14 @@ word-break: normal;
   padding: 0px;
 }
 .item-icon {
-  display: block; 
-  float: left;
+  display: inline-block;
   width: 34px;
   height: 35px;
   border: solid 2px;
   border-radius: 10px;
   margin-right: 4px;
+}
+.talisman-toggle {
+  padding-left: 0;
+  padding-right: 0;
 }

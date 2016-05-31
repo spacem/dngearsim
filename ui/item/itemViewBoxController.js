@@ -167,6 +167,6 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
     },
     controller: 'itemViewBoxCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/item/item-view-box.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/item/item-view-box.html'
   };
 });

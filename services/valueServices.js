@@ -99,9 +99,9 @@ function hCodeValues() {
       107: {id: 107, name: 'mp?', display: toNoDec, hide: true },
       
       // stats below here are ones I made up
-      1001: {id: 1001, name: 'avg dmg', display: inThousands, summaryDisplay: true, element: 'primary' },
-      1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true, element: 'primary' },
-      1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true, element: 'primary' },
+      1001: {id: 1001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'primary' },
+      1004: {id: 1004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'primary' },
+      1006: {id: 1006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'primary' },
       
       1008: {id: 1008, name: 'pdef', display: toPercent },
       1009: {id: 1009, name: 'mdef', display: toPercent },
@@ -110,9 +110,9 @@ function hCodeValues() {
       1029: {id: 1029, name: 'fd calc', display: toPercent },
       1103: {id: 1103, name: 'crit dmg', display: toPercent },
       
-      2001: {id: 2001, name: 'avg dmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
-      2004: {id: 2004, name: 'avg pdmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
-      2006: {id: 2006, name: 'avg mdmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
+      2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
+      2004: {id: 2004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
+      2006: {id: 2006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'secondary' },
       
       2008: {id: 2008, name: 'pdef eqhp', display: inThousands },
       2009: {id: 2009, name: 'mdef eqhp', display: inThousands },
@@ -174,19 +174,20 @@ function hCodeValues() {
       3 : { id: 3, name: 'both combined' },
     },
     
+    // note: skills shown on-screen have 1k added to their id
     skillEffectMapping : {
-      2 : { id: 2, name: 'phyisical attack power' },
+      2 : { id: 2, name: 'phyisical attack power', mapTo: 3000 },
       13 : { id: 13, name: 'mp', mapTo: 26 },
       25 : { id: 25, name: 'action speed' },
       29 : { id: 29, name: 'magic attack power', mapTo: 3000 },
-      32 : { id: 34, name: 'fire %', mapTo: 16 },
-      33 : { id: 35, name: 'ice %', mapTo: 17 },
+      32 : { id: 32, name: 'fire %', mapTo: 16 },
+      33 : { id: 33, name: 'ice %', mapTo: 17 },
       34 : { id: 34, name: 'light %', mapTo: 18 },
       35 : { id: 35, name: 'dark %', mapTo: 19 },
-      36 : { id: 38, name: 'fire def', mapTo: 20 },
-      37 : { id: 38, name: 'ice def', mapTo: 21 },
+      36 : { id: 36, name: 'fire def', mapTo: 20 },
+      37 : { id: 37, name: 'ice def', mapTo: 21 },
       38 : { id: 38, name: 'light def', mapTo: 22 },
-      39 : { id: 38, name: 'dark def', mapTo: 23 },
+      39 : { id: 39, name: 'dark def', mapTo: 23 },
       58 : { id: 58, name: 'hp%', mapTo: 4075 },
       59 : { id: 59, name: 'mp%', mapTo: 4076 },
       65 : { id: 65, name: 'range' },

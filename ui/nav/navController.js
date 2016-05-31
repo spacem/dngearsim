@@ -80,6 +80,6 @@ angular.module('dnsim').controller('NavCtrl',
 ])
 .directive('dngearsimNav', function() {
   return {
-    templateUrl: 'ui/nav/nav.html?bust=' + Math.random().toString(36).slice(2)
+    templateUrl: 'ui/nav/nav.html'
   };
 });

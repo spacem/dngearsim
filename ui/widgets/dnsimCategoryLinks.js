@@ -8,7 +8,7 @@ function dnsimCategoryLinks(itemCategory,$location) {
     restrict: 'E',
     scope: {
     },
-    templateUrl: 'ui/widgets/dnsim-category-links.html?bust=' + Math.random().toString(36).slice(2),
+    templateUrl: 'ui/widgets/dnsim-category-links.html',
     link: function($scope, element, attrs) {
       
       $scope.categories = itemCategory.categories;

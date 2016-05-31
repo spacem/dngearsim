@@ -18,7 +18,7 @@ angular.module('dnsim')
     }
     
     document.body.className = 'default-back';
-    $window.document.title = 'Boxes';
+    $window.document.title = 'DN Gear Sim | ITEM SEARCH';
     
     var fileName = 'all-items.lzjson';
     
@@ -55,6 +55,10 @@ angular.module('dnsim')
       localStorage.setItem('itemNameSearch', vm.nameSearch);
       if(vm.boxes == null) {
         vm.initBoxes();
+      }
+      
+      if(vm.boxes == null) {
+        return;
       }
   
       var newResults = [];
