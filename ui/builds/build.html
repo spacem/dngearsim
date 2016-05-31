@@ -49,7 +49,12 @@
               
               <tr><th>
                 <dngearsim-quick-add build="buildCtrl.build" build-name="buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
-                <span ng-if="buildCtrl.category.name == 'talisman'"> | <a href="#talismans">set talisman positions</a></span>
+                <span ng-if="buildCtrl.category.name == 'talisman'"> |
+                  <a href="#talismans">
+                    <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+                    set talisman positions
+                  </a>
+                </span>
               </th></tr>
               
               <tr ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
