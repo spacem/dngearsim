@@ -75,11 +75,16 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
       var numIncreasingSlots = 0;
       var numIncreasingGems = {};
       angular.forEach(allItems, function(item, index) {
-        if(item.typeName == vm.category.name && item.sparkTypeId >= 0) {
-          if(!(item.sparkTypeId in numIncreasingGems)) {
-            numIncreasingGems[item.sparkTypeId] = 0;
+        if(item.typeName == vm.category.name) {
+          var gemType = item.sparkTypeId;
+          if(!gemType) {
+            gemType = 0;
           }
-          numIncreasingGems[item.sparkTypeId]++;
+          
+          if(!(gemType in numIncreasingGems)) {
+            numIncreasingGems[gemType] = 0;
+          }
+          numIncreasingGems[gemType]++;
           totalIncreasingGems++;
         }
         else if(item.increasingGemSlots) {
