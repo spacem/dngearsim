@@ -33,8 +33,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       stats : null,
       potentialRatio : null,
       typeName : null,
-      enchantmentId : null,
-      sparkTypeId: null,
       sparkId: null,
     };
   };
@@ -133,7 +131,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         item.name = translations.translate(d.NameID, d.NameIDParam);
       }
       
-      if(item.sparkTypeId == null && d.TypeParam2 > 0) {
+      if(!item.sparkTypeId && d.TypeParam2 > 0) {
         item.sparkTypeId = d.TypeParam2;
       }
       
@@ -147,7 +145,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         item.stats = stats;
       }
       
-      if(!item.skillId) {
+      if(d.SkillID && !item.skillId) {
         item.skillId = d.SkillID;
       }
       
@@ -158,7 +156,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         }
       }
       
-      if(item.enchantmentId == null ) {
+      if(d.EnchantID && !item.enchantmentId) {
         item.enchantmentId = d.EnchantID;
       }
       

@@ -135,6 +135,8 @@ function(
     }
   }
   
+  $scope.rankChecked = hCodeValues.checkedRank;
+  
   $scope.getResults = function() {
     var allItems = itemCategory.getItems($scope.itemCategory.name);
     if(allItems == null) {
@@ -167,7 +169,7 @@ function(
         }
           
         if(!$scope.itemCategory.hideRank) {
-          if(e.rank != null && !$scope.grades[e.rank.id].checked) {
+          if(e.rank != null && !$scope.rankChecked[e.rank.id]) {
             continue;
           }
         }

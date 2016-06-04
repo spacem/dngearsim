@@ -49,6 +49,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           if(item.typeName == 'skills') {
             itemString += ':J' + item.baseJobName;
           }
+          if(item.pve) {
+            itemString += ':V' + item.pve;
+          }
           if(item.fileName) {
             itemString += ':F' + item.fileName;
           }
@@ -86,7 +89,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           }
           else if(itemBit.charAt(0) == 'J') {
             item.baseJobName = itemBit.substr(1);
-            item.pve = 'pve';
+          }
+          else if(itemBit.charAt(0) == 'V') {
+            item.pve = itemBit.substr(1);
           }
           else if(itemBit.charAt(0) == '_') {
             item.itemSource = itemBit.substr(1);
@@ -205,7 +210,11 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       else if(item.itemSource == 'skills' || item.typeName == 'skills') {
         
         var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
-        var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.lzjson';
+        var pv = 'pve';
+        if(item.pve == 'pvp') {
+          pv = 'pvp';
+        }
+        var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + pv + '.lzjson';
         
         var skillData = dntData.find(skillDnt, 'id', item.id)[0];
         var skillLevelDatas = dntData.getData(skillLevelDnt);
@@ -220,7 +229,6 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         
         var newItem = {
           id: item.id,
-          d: skillData,
           itemSource: item.itemSource,
           typeName: item.itemSource,
           needJobClass: skillData.NeedJob,
@@ -229,10 +237,11 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           enchantmentNum: item.enchantmentNum,
           name: translations.translate(skillData.NameID, skillData.NameIDParam),
           description: translations.translate(skillLevelVals.SkillExplanationID, skillLevelVals.SkillExplanationIDParam),
-          // icon: skillData.IconImageIndex,
+          icon: skillData.IconImageIndex,
+          pve: item.pve,
         };
         
-        newItem.stats = statHelper.getSkillStats(newItem, skillLevelDatas);
+        newItem.stats = statHelper.getSkillStats(newItem, skillData, skillLevelDatas);
         return newItem;
       }
       else if(item.itemSource in items) {
@@ -445,9 +454,11 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
         else if(item.itemSource == 'skills' || item.typeName == 'skills') {
             var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
+            dntFiles[skillDnt] = null;
             var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.lzjson';
             dntFiles[skillLevelDnt] = null;
-            dntFiles[skillDnt] = null;
+            skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pvp' + '.lzjson';
+            dntFiles[skillLevelDnt] = null;
         }
         else if(item.typeName == 'custom') {
         }

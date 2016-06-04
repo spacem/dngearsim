@@ -137,6 +137,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
           if(!$scope.item.pve || $scope.item.pve != 'pvp') {
             $scope.item.pve = 'pve';
           }
+          else {
+            $scope.item.pve = 'pvp';
+          }
         }
     
         if($scope.item.needJobClass > 0) {

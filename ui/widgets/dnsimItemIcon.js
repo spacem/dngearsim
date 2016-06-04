@@ -21,11 +21,20 @@ function dnsimItemIcon(exportLinkHelper,$location,region) {
       $scope.getIcon = function() {
         if($scope.item && $scope.item.icon > 0) {
           var fileIndex = Math.floor($scope.item.icon/200 + 1);
-          if(fileIndex > 9) {
-            return 'itemicon' + fileIndex + '.png';
+          
+          var prefix;
+          if($scope.item.typeName == 'skills') {
+            prefix = 'skillicon';
           }
           else {
-            return 'itemicon0' + fileIndex + '.png';
+            prefix = 'itemicon';
+          }
+          
+          if(fileIndex > 9) {
+            return prefix + fileIndex + '.png';
+          }
+          else {
+            return prefix + '0' + fileIndex + '.png';
           }
         }
         return null;

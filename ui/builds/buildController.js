@@ -75,7 +75,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
       var numIncreasingSlots = 0;
       var numIncreasingGems = {};
       angular.forEach(allItems, function(item, index) {
-        if(item.typeName == vm.category.name) {
+        if(item.typeName == vm.category.name && item.sparkTypeId >= 0) {
           if(!(item.sparkTypeId in numIncreasingGems)) {
             numIncreasingGems[item.sparkTypeId] = 0;
           }

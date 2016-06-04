@@ -19,31 +19,13 @@ function($timeout,dntData,statHelper) {
     var dntFile = 'skillleveltable_character' + vm.item.baseJobName + vm.item.pve + '.lzjson';
     dntData.init(dntFile, null, reportProgress, function() { $timeout(function() {
       vm.skillData = dntData.find(dntFile, 'SkillIndex', vm.item.id);
-      vm.getSkillStats();
     })});
-  }
-  
-  this.getSkillStats = function() {
-    if(!vm.item) {
-      return;
-    }
-    
-    if(!vm.skillData || vm.skillData.length == 0) {
-      return;
-    }
-    
-    if(!vm.item.enchantmentNum) {
-      vm.item.enchantmentNum = 1;
-    }
-    
-    vm.item.stats = statHelper.getSkillStats(vm.item, vm.skillData);
-    vm.onChange();
   }
   
   this.nextEnchantment = function() {
     if(this.skillData && this.item.enchantmentNum < this.skillData.length) {
       this.item.enchantmentNum++;
-      this.getSkillStats();
+      vm.onChange();
     }
   }
   
@@ -59,7 +41,7 @@ function($timeout,dntData,statHelper) {
       this.item.enchantmentNum = 0;
     }
 
-    this.getSkillStats();
+    vm.onChange();
   }
   
   this.initSkills();

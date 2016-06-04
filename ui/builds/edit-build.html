@@ -1,54 +1,75 @@
 <dnsim-loading>
 
-<div class="row">
+<div class="row" ng-if="!editGroup.job && !editGroup.bJob">
   <div class="col-xs-12">
-    <br />
+    <label>choose the character class</label>
+  </div>
+  <div class="col-xs-12 col-sm-4 col-lg-3">
+    <button class="btn btn-default btn-block" ng-repeat="bJob in editGroup.getBaseJobs()" ng-click="editGroup.bJob = bJob">
+      <span class="class-image class-{{bJob}}"></span>
+      {{editGroup.getJobName(bJob)}}
+    </button>
   </div>
 </div>
-  
-<div class="row">
-  <div class="col-xs-12 col-md-6 ng-class: {'bg-danger' : editGroup.invalidGroupName()};">
+<div class="row" ng-show="!editGroup.job && editGroup.bJob">
+  <div class="col-xs-12">
+    <label>choose the specialisation</label>
+  </div>
+  <div class="col-xs-12 col-sm-4 col-lg-3">
+    <button class="btn btn-default btn-block" ng-repeat="fJob in editGroup.getFinalJobs()" ng-click="editGroup.setJob(fJob)">
+      <dnsim-job-icon item="fJob"></dnsim-job-icon>
+      {{fJob.name}}
+    </button>
+    <button class="btn btn-default btn-block" ng-click="editGroup.bJob = null">
+      <span class="job-icon">&nbsp;</span>
+      &lt; different class
+    </button>
+  </div>
+</div>
+<div class="row" ng-show="editGroup.job">
+  <div class="col-xs-12">
+    <h2>
+      <dnsim-job-icon item="editGroup.job"></dnsim-job-icon>
+      {{editGroup.job.name}} <small><button class="btn btn-link" ng-click="editGroup.job=null">change class/specialisation</button></small>
+    </h2>
+  </div>
+  <div class="col-xs-12 col-md-3 ng-class: {'bg-danger' : editGroup.invalidGroupName()};">
     <label>build name
     </label>
-    <input type="text" class="form-control" id="groupNameInput" ng-model="editGroup.groupName" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" />
+    <input type="text" class="form-control" id="groupNameInput" ng-model="editGroup.groupName" ng-keyup="$event.keyCode == 13 ? ok() : null" />
   </div>
-  <div class="col-xs-4 col-md-2">
+  <div class="col-xs-4 col-md-3">
     <label>enemy&nbsp;lvl
     </label>
-    <input class="form-control" ng-model="editGroup.enemyLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" dnsim-string-to-number step="any" />
+    <input class="form-control" ng-model="editGroup.enemyLevel" ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" dnsim-string-to-number step="any" />
   </div>
-  <div class="col-xs-4 col-md-2">
+  <div class="col-xs-4 col-md-3">
     <label>player&nbsp;lvl
     </label>
-    <input class="form-control" ng-model="editGroup.playerLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" dnsim-string-to-number step="any" />
+    <input class="form-control" ng-model="editGroup.playerLevel" ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" dnsim-string-to-number step="any" />
   </div>
-  <div class="col-xs-4 col-md-2">
+  <div class="col-xs-4 col-md-3">
     <label>hero&nbsp;lvl
     </label>
-    <input class="form-control" ng-model="editGroup.heroLevel" autofocus ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" dnsim-string-to-number step="any" ng-change="editGroup.setHeroStats()" />
+    <input class="form-control" ng-model="editGroup.heroLevel" ng-keyup="$event.keyCode == 13 ? ok() : null" type="number" dnsim-string-to-number step="any" ng-change="editGroup.setHeroStats()" />
   </div>
-  <div class="col-xs-6 col-md-3">
-    <label>class: 
-    </label>
-    <select ng-model="editGroup.job" class="form-control"
-     ng-options="job.name for job in editGroup.jobs track by job.id">
-    </select>
+  <div class="hidden-xs hidden-sm col-md-3">
   </div>
-  <div class="col-xs-6 col-md-3">
+  <div class="col-xs-4 col-md-3">
     <label>damage type: 
     </label>
     <select ng-model="editGroup.damageType" class="form-control"
      ng-options="damage.name for damage in editGroup.damageTypes track by damage.id">
     </select>
   </div>
-  <div class="col-xs-6 col-md-3">
+  <div class="col-xs-4 col-md-3">
     <label>primary element: 
     </label>
     <select ng-model="editGroup.element" class="form-control"
      ng-options="element.name for element in editGroup.elements track by element.id">
     </select>
   </div>
-  <div class="col-xs-6 col-md-3">
+  <div class="col-xs-4 col-md-3">
     <label>secondary element: 
     </label>
     <select ng-model="editGroup.secondaryElement" class="form-control"
@@ -57,14 +78,14 @@
   </div>
 </div>
 <br />
-<div class="row">
-  <div class="col-xs-4 col-sm-2">
+<div class="row" ng-if="editGroup.job">
+  <div class="col-xs-4 col-md-3">
     <button class="btn btn-default" ng-click="editGroup.ok()" ng-disabled="editGroup.invalidGroupName()">
       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
       save
     </button>
   </div>
-  <div class="col-xs-8 col-sm-10">
+  <div class="col-xs-8 col-md-9">
     <label>stat caps</label>
     <p>
 cbase:&nbsp;{{editGroup.getStatCap('Cbase', editGroup.enemyLevel) }} |
@@ -96,20 +117,6 @@ vit&nbsp;to&nbsp;pdef:&nbsp;{{editGroup.getJobConversion('PhysicalDefense') | nu
 int&nbsp;to&nbsp;mdef:&nbsp;{{editGroup.getJobConversion('MagicDefense') | number:2}} |
 agi&nbsp;to&nbsp;crit:&nbsp;{{editGroup.getJobConversion('Critical')}} |
 str&nbsp;int&nbsp;to&nbsp;cdmg:&nbsp;{{editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
-<!--
-agi&nbsp;to&nbsp;crit&nbsp;resist:&nbsp;{{editGroup.getJobConversion('CriticalResistance') | number:2}} |
-Stiff:&nbsp;{{editGroup.getJobConversion('Stiff') | number:2}} |
-StiffResist:&nbsp;{{editGroup.getJobConversion('StiffResistance') | number:2}} |
-Stun:&nbsp;{{editGroup.getJobConversion('Stun') | number:2}} |
-StunResist:&nbsp;{{editGroup.getJobConversion('StunResistance') | number:2}} |
-MoveSpeed:&nbsp;{{editGroup.getJobConversion('MoveSpeed')}} |
-MoveSpeedRevision:&nbsp;{{editGroup.getJobConversion('MoveSpeedRevision')}} |
-DownDelay:&nbsp;{{editGroup.getJobConversion('DownDelay')}} |
-ElementAttack:&nbsp;{{editGroup.getJobConversion('ElementAttack')}} |
-ElementDefense:&nbsp;{{editGroup.getJobConversion('ElementDefense')}} |
-ElementDefMin:&nbsp;{{editGroup.getJobConversion('ElementDefenseMin')}} |
-ElementDefMax:&nbsp;{{editGroup.getJobConversion('ElementDefenseMax')}} |
--->
     </p>
   </div>
 </div>

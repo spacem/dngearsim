@@ -347,7 +347,7 @@ function statHelper(hCodeValues) {
       }
     },
     
-    getSkillStats : function (item, skillData) {
+    getSkillStats : function (item, data, skillData) {
 
       var skillLevelVals = null;
       angular.forEach(skillData, function(value, index) {
@@ -368,13 +368,13 @@ function statHelper(hCodeValues) {
       while(stillCols) {
         var colName = 'EffectClass' + index;
         var valColName = 'EffectClassValue' + index;
-        if(item.d && colName in item.d && valColName in skillLevelVals) {
-          if(item.d[colName] > 0) {
+        if(data && colName in data && valColName in skillLevelVals) {
+          if(data[colName] > 0) {
             
             var val = skillLevelVals[valColName];
             
             // for now add 10k
-            var effectId = item.d[colName];
+            var effectId = data[colName];
             var map = hCodeValues.skillEffectMapping[effectId];
             if(map && map.getVals) {
               var vals = map.getVals(val);

@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('EditBuildCtrl',
 
-['$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad','character',
-function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad,character) {
+['$window','$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad','character',
+function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad,character) {
   'use strict';
   
   var vm = this;
@@ -23,7 +23,6 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
   this.elements = hCodeValues.elements;
   this.damageTypes = hCodeValues.damageTypes;
   
-  this.job = {id: -1, name: ''};
   if(this.group.damageType) {
     this.damageType = this.group.damageType;
   }
@@ -45,7 +44,6 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
     this.secondaryElement = hCodeValues.elements[0];
   }
 
-  this.jobs = [this.job];
   if(this.group.enemyLevel) {
     this.enemyLevel = this.group.enemyLevel;
   }
@@ -67,10 +65,35 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
     this.heroLevel = 1;
   }
   
+  this.getFinalJobs = function() {
+    var allJobs = jobs.getFinalJobs();
+    var finalJobs = [];
+    for(var j=0;j<allJobs.length;++j) {
+      if(jobs.getBaseJobName(allJobs[j]) == this.bJob) {
+        finalJobs.push(allJobs[j]);
+      }
+    }
+    return finalJobs;
+  }
+  
+  this.getBaseJobs = function() {
+    return jobs.getBaseJobs();
+  }
+  
+  this.getJobName = function(englishName) {
+    var allJobs = jobs.getAllJobs();
+    for(var j=0;j<allJobs.length;++j) {
+      if(allJobs[j].d.EnglishName == englishName) {
+        return allJobs[j].name;
+      }
+    }
+  }
+  
   this.init = function(vm) {
     var newJobs = jobs.getFinalJobs();
     if(newJobs.length > 0) {
       $timeout( function() {
+        
         if('job' in vm.group) {
           angular.forEach(newJobs, function(value, key) {
             if(value.id == vm.group.job.id) {
@@ -78,11 +101,15 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
             }
           });
         }
-        newJobs.splice(0, 0, vm.jobs[0]);
-        vm.jobs = newJobs;
+        
         vm.setHeroStats();
       });
     }
+  }
+  
+  this.setJob = function(job) {
+    this.job = job;
+    $window.scrollTo(0, 0);
   }
   
   function reportProgress(msg) {

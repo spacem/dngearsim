@@ -12,7 +12,7 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
   this.job = {id: -1, d:{}, name: ''};
   this.jobs = [this.job];
   this.allJobs = [];
-  this.maxDisplay = 10;
+  this.maxDisplay = 60;
   this.currentResults = 0;
   this.dntName = '';
   this.skills = [];
@@ -84,12 +84,6 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
         var baseName = jobs.getBaseJobName(vm.job);
         baseJobNames.push(baseName);
       }
-      else {
-        angular.forEach(jobs.getBaseJobs(), function(jobName, index) {
-          baseJobNames.push(jobName);
-        });
-        // console.log('got ' + baseJobNames);
-      }
 
       angular.forEach(baseJobNames, function(baseName, index) {
         var dntName = getDntName(baseName);
@@ -145,7 +139,7 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
             newItem.needJobClass = skills[s].NeedJob;
             newItem.rank = hCodeValues.rankNames[0];
             newItem.baseJobName = baseName.toLowerCase();
-            // newItem.icon = skills[s].IconImageIndex;
+            newItem.icon = skills[s].IconImageIndex;
             
             vm.skills.push(newItem);
           }

@@ -3,7 +3,8 @@
     <div class="col-xs-12 col-md-6 col-lg-7 group-header" ng-click="buildCtrl.toggleGroup()">
       <button class="btn btn-link btn-block group-header-btn">
         <h3 class="text-left">
-          {{buildCtrl.buildName}}
+        <dnsim-job-icon item="buildCtrl.build.job"></dnsim-job-icon>
+        {{buildCtrl.buildName}}
         <small>
           <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span><span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}&nbsp;</span><span ng-show="buildCtrl.build.enemyLevel > 0">vs&nbsp;lv{{buildCtrl.build.enemyLevel}}&nbsp;</span>
           <br />

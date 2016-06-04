@@ -140,12 +140,21 @@ function hCodeValues() {
     },
   
     rankNames : {
-      0 : { id: 0, name : 'normal', checked: true },
-      1 : { id: 1, name : 'magic', checked: true },
-      2 : { id: 2, name : 'rare', checked: true },
-      3 : { id: 3, name : 'epic', checked: true },
-      4 : { id: 4, name : 'unique', checked: true },
-      5 : { id: 5, name : 'legendary', checked: true },
+      0 : { id: 0, name : 'normal' },
+      1 : { id: 1, name : 'magic' },
+      2 : { id: 2, name : 'rare' },
+      3 : { id: 3, name : 'epic' },
+      4 : { id: 4, name : 'unique' },
+      5 : { id: 5, name : 'legendary' },
+    },
+    
+    checkedRank : {
+      0 : true,
+      1 : true,
+      2 : true,
+      3 : true,
+      4 : true,
+      5 : true,
     },
     
     typeNames : {
@@ -160,7 +169,7 @@ function hCodeValues() {
     },
     
     elements : {
-      0 : { id: 0, name: 'non elemental' },
+      0 : { id: 0, name: 'non-ele' },
       1 : { id: 1, name: 'fire', dmgStat: 16 },
       2 : { id: 2, name: 'ice', dmgStat: 17 },
       3 : { id: 3, name: 'light', dmgStat: 18 },

@@ -15,7 +15,7 @@ describe('exportLinkHelper', function () {
     needJobClass : 4,
     typeId : 7,
     typeName : 'typeName',
-    rank : { id: 2, name : 'rare', checked: true },
+    rank : { id: 2, name : 'rare' },
     enchantmentId : 12345,
     enchantmentNum: 6,
     sparkTypeId: 3,

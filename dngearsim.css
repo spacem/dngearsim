@@ -231,3 +231,47 @@ word-break: normal;
   padding-left: 0;
   padding-right: 0;
 }
+.job-icon {
+  display: inline-block;
+  width: 40px;
+  height: 34px;
+  float: left;
+}
+h3 .job-icon {
+  margin-top:5px;
+  height: 40px;
+}
+.class-image {
+  width:60px;
+  height: 34px;
+  display: inline-block;
+  background: transparent url(images/classes.png);
+  float: left;
+}
+.class-WARRIOR {
+  background-position: -5px -0px;
+}
+.class-ARCHER {
+  background-position: -80px -0px;
+}
+.class-CLERIC {
+  background-position: -160px -10px;
+}
+.class-SOCERESS {
+  background-position: -230px -0px;
+}
+.class-ACADEMIC {
+  background-position: -310px -10px;
+}
+.class-KALI {
+  background-position: -380px -10px;
+}
+.class-ASSASSIN {
+  background-position: -460px 0px;
+}
+.class-LENCEA {
+  background-position: -530px 0px;
+}
+.class-MACHINA {
+  background-position: -610px -10px;
+}
