@@ -1,11 +1,20 @@
 
 <div class="col-xs-12" ng-if="editCtrl.getEnchantments() && editCtrl.getEnchantments().length > 0">
-  <div class="form-group">
+  <div class="form-group" ng-if="editCtrl.enhancementOptions.length == 0">
     <button class="btn btn-default" ng-dblclick="editCtrl.prevEnchantment()" ng-click="editCtrl.prevEnchantment()" ng-disabled="editCtrl.item.enchantmentNum < 1">- reduce</button>
     <button class="btn btn-default" ng-dblclick="editCtrl.nextEnchantment()" ng-click="editCtrl.nextEnchantment()" ng-disabled="editCtrl.isMaxEnchantLevel()">+ enhance</button>
   </div>
+  <div class="form-group" ng-if="editCtrl.enhancementOptions.length > 0">
+    <button 
+      class="btn btn-default btn-block"
+      ng-dblclick="editCtrl.setEnchantmentNum(enhancementOption)"
+      ng-click="editCtrl.setEnchantmentNum(enhancementOption)"
+      ng-repeat="enhancementOption in editCtrl.enhancementOptions">
+        +{{enhancementOption}}
+    </button>
+  </div>
 </div>
-<div class="col-xs-12" ng-hide="editCtrl.enchantmentAfter == null || editCtrl.isMaxEnchantLevel()">
+<div class="col-xs-12" ng-hide="editCtrl.enchantmentAfter == null || editCtrl.isMaxEnchantLevel() || editCtrl.enhancementOptions.length > 0">
   <label>when enhancing:</label><br />
   cost: {{editCtrl.enchantmentCost}} | min down: {{editCtrl.enchantmentAfter.MinDown}} | max down: {{editCtrl.enchantmentAfter.MaxDown}}<br />
   enchant ratio: {{editCtrl.enchantmentAfter.EnchantRatio | percentage}} | break ratio: {{editCtrl.enchantmentAfter.BreakRatio | percentage}}<br />

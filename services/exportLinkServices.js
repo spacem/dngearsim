@@ -276,6 +276,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               // this happened one time
               // not sure how but it corrupted the stats
               p = null;
+            console.log('bad potential');
             }
             else {
               var potentials = dntData.find(itemType.potentialDnt, 'PotentialID', p.PotentialID);
@@ -283,9 +284,6 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
                 totalRatio += value.PotentialRatio;
               });
             }
-          }
-          else {
-            console.log('bad potential');
           }
           
           var newItem = itemFactory.createItem(itemType.name, d, p, totalRatio);

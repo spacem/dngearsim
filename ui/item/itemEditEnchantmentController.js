@@ -19,6 +19,7 @@ function(dntData,hCodeValues,items,$timeout,translations) {
   vm.enchantment = null;
   vm.enchantmentAfter = null;
   vm.enchantmentCost = '';
+  vm.enhancementOptions = [];
   if(vm.item.enchantmentStats == null) {
     vm.item.enchantmentStats = [];
   }
@@ -70,24 +71,25 @@ function(dntData,hCodeValues,items,$timeout,translations) {
     }
   }
   
+  this.setEnchantmentNum = function(enhancementOption) {
+    vm.item.enchantmentNum = enhancementOption;
+    vm.enhancementOptions = [];
+    vm.setEnchantment();
+    vm.onChange();
+  }
+  
   this.nextEnchantment = function() {
-    if(vm.item.enchantmentNum < vm.enchantments.length) {
-      vm.item.enchantmentNum++;
-      vm.setEnchantment();
-      vm.onChange();
+    vm.enhancementOptions = [vm.item.enchantmentNum];
+    for(var i=vm.item.enchantmentNum;vm.enchantments[i];++i) {
+      vm.enhancementOptions.push(vm.enchantments[i].EnchantLevel);
     }
   }
   
   this.prevEnchantment = function() {
-    if(vm.item.enchantmentNum > 0) {
-      vm.item.enchantmentNum--;
+    vm.enhancementOptions = [vm.item.enchantmentNum];
+    for(var i=vm.item.enchantmentNum;i>0;--i) {
+      vm.enhancementOptions.push(vm.enchantments[i-1].EnchantLevel-1);
     }
-    else {
-      vm.item.enchantmentNum = 0;
-    }
-
-    vm.setEnchantment();
-    vm.onChange();
   }
   
   this.getEnchantments = function() {
