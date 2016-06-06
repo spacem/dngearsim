@@ -454,6 +454,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       if(build.job.id > 0 && item.needJobClass > 0 && !jobs.isClassJob(build.job.d, item.needJobClass)) {
         continue;
       }
+      itemFactory.initItem(item);
       
       var addItem = true;
       for(var d=0;d<datas.length;++d) {
@@ -464,7 +465,6 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       }
       
       if(addItem) {
-        itemFactory.initItem(item);
         retVal.push(item);
       }
       
