@@ -9,11 +9,21 @@ function(hCodeValues) {
     return;
   }
   
+  var vm = this;
+  
   this.stat = {id:-1, name:''};
   this.newStatVal = 0;
 
+  this.dropdownStats = [];
+  for(var id in hCodeValues.stats) {
+    if(!hCodeValues.stats[id].noCustom) {
+      this.dropdownStats.push(hCodeValues.stats[id]);
+    }
+  }
+  this.dropdownStats.sort()
+
   this.getStats = function() {
-    return hCodeValues.stats;
+    return this.dropdownStats;
   }
   
   this.newStat = function() {
