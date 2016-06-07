@@ -5,8 +5,20 @@ angular.module('dnsim').controller('BuildListCtrl',
     
     var vm = this;
     document.body.className = 'saved-back';
-    this.savedItems = saveHelper.getSavedItems();
     this.currentGroup = localStorage.getItem('currentGroup');
+    this.setupBuilds = function() {
+      vm.savedItems = saveHelper.getSavedItems();
+      vm.buildNames = Object.keys(vm.savedItems).sort();
+      vm.builds = [];
+      for(var i=0;i<vm.buildNames.length;++i) {
+        vm.builds.push({
+          name: vm.buildNames[i],
+          build: vm.savedItems[vm.buildNames[i]],
+        });
+      }
+    }
+    this.setupBuilds();
+    
     if('groupName' in $routeParams) {
       if($routeParams.groupName != this.currentGroup) {
         this.currentGroup = $routeParams.groupName;
@@ -36,9 +48,9 @@ angular.module('dnsim').controller('BuildListCtrl',
     }
     
     this.handleChange = function() {
-      console.log('handling build change');
-      this.savedItems = saveHelper.getSavedItems();
+      vm.setupBuilds();
       $timeout();
+      console.log('change');
     }
   
     this.toggleGroup = function(buildName) {
@@ -47,7 +59,6 @@ angular.module('dnsim').controller('BuildListCtrl',
     }
     
     $timeout(function() {
-      // $anchorScroll.yOffset = 30;
       $anchorScroll('/builds/' + vm.currentGroup);
     });
   }]

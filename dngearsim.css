@@ -65,14 +65,12 @@ body {
   border-color: #dc2355;
 }
 .modal-loading {
-  background: url(images/loading.gif) no-repeat center center;
-  height: 147px;
-  background-size:contain;
+  background: url(images/irine_small.gif) no-repeat center center;
+  height: 119px;
 }
 .loading {
-  background: url(images/loading.gif) no-repeat center center;
-  background-size:contain;
-  height: 147px;
+  background: url(images/irine_small.gif) no-repeat center center;
+  height: 180px;
   border-color: #8d8578;
   border-style: solid;
   border-width: 5px;

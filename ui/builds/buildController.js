@@ -122,9 +122,6 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
   
   this.handleChange = function() {
     vm.onChange();
-    $timeout(function() {
-      vm.stats = statHelper.getBuildStats(vm.build);
-    });
   }
   
 }])

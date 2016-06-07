@@ -117,7 +117,9 @@ function hCodeValues() {
       2008: {id: 2008, name: 'pdef eqhp', display: inThousands },
       2009: {id: 2009, name: 'mdef eqhp', display: inThousands },
       
-      3000: {id: 3000, name: 'atk pwr', display: toPercent },
+      3000: {id: 3000, name: 'skDmg%', display: toPercent },
+      3001: {id: 3000, name: 'skPDmg%', display: toPercent },
+      3002: {id: 3000, name: 'skMDmg%', display: toPercent },
       3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true },
       
       4012: {id: 4050, name: 'skCrit', display: inThousands },
@@ -185,10 +187,10 @@ function hCodeValues() {
     
     // note: skills shown on-screen have 1k added to their id
     skillEffectMapping : {
-      2 : { id: 2, name: 'phyisical attack power', mapTo: 3000 },
+      2 : { id: 2, name: 'phyisical attack power', mapTo: 3001 },
       13 : { id: 13, name: 'mp', mapTo: 26 },
       25 : { id: 25, name: 'action speed' },
-      29 : { id: 29, name: 'magic attack power', mapTo: 3000 },
+      29 : { id: 29, name: 'magic attack power', mapTo: 3002 },
       32 : { id: 32, name: 'fire %', mapTo: 16 },
       33 : { id: 33, name: 'ice %', mapTo: 17 },
       34 : { id: 34, name: 'light %', mapTo: 18 },

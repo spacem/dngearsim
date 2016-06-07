@@ -83,8 +83,10 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
   }
     
   this.setShortUrl = function() {
-    var longUrl = exportLinkHelper.createGroupLink(vm.buildName, vm.build);
-    vm.build.shortUrl = sessionStorage.getItem(longUrl);
+    if(vm.build) {
+      var longUrl = exportLinkHelper.createGroupLink(vm.buildName, vm.build);
+      vm.build.shortUrl = sessionStorage.getItem(longUrl);
+    }
   }
   
   this.setShortUrl();

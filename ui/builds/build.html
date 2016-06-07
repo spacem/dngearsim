@@ -1,5 +1,5 @@
-<div class="col-xs-12">
-  <div class="row" id="/builds/{{buildName}}">
+<div class="col-xs-12" id="/builds/{{buildCtrl.buildName}}">
+  <div class="row">
     <div class="col-xs-12 col-md-6 col-lg-7 group-header" ng-click="buildCtrl.toggleGroup()">
       <button class="btn btn-link btn-block group-header-btn">
         <h3 class="text-left">
@@ -17,7 +17,7 @@
     <dnsim-loading>
     <div class="col-xs-12 col-md-6 col-lg-5">
       <br class="hidden-xs hidden-sm" /><br class="hidden-xs hidden-sm" />
-      <dngearsim-build-actions build-name="buildName" build="build" on-change="buildCtrl.handleChange()">
+      <dngearsim-build-actions build-name="buildCtrl.buildName" build="buildCtrl.build" on-change="buildCtrl.handleChange()">
       </dngearsim-build-actions>
     </div>
     <div class="col-xs-6" ng-show="buildCtrl.stats.calculatedStats.length == 0">

@@ -30,7 +30,7 @@ function($timeout,statHelper,saveHelper) {
       onChange: '&onChange'
     },
     controller: 'buildItemCtrl',
-    controllerAs: 'buildItem',
+    controllerAs: 'ctrl',
     templateUrl: 'ui/builds/build-item.html'
   };
 });

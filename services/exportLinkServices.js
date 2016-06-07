@@ -128,14 +128,17 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
     createGroupLink: function(groupName, group) {
       var itemStrings = [];
       var self = this;
-      if(group != null) {
-        angular.forEach(group.items, function(item, key) {
-          var itemString = self.encodeItem(item, true);  
-          if(itemString != null && itemString.length > 0) {
-            itemStrings.push(itemString);
-          }
-        });
+      
+      if(group == null) {
+        return '';
       }
+      
+      angular.forEach(group.items, function(item, key) {
+        var itemString = self.encodeItem(item, true);  
+        if(itemString != null && itemString.length > 0) {
+          itemStrings.push(itemString);
+        }
+      });
   
       var retVal = '#/view-group/' + region.dntLocation.region + '/?';
       
@@ -208,6 +211,10 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         return item;
       }
       else if(item.itemSource == 'skills' || item.typeName == 'skills') {
+        
+        if(!item.enchantmentNum) {
+          item.enchantmentNum = 1;
+        }
         
         var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
         var pv = 'pve';

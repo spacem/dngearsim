@@ -79,17 +79,30 @@ function(dntData,hCodeValues,items,$timeout,translations) {
   }
   
   this.nextEnchantment = function() {
-    vm.enhancementOptions = [vm.item.enchantmentNum];
-    for(var i=vm.item.enchantmentNum;vm.enchantments[i];++i) {
-      vm.enhancementOptions.push(vm.enchantments[i].EnchantLevel);
+    for(var i=vm.item.enchantmentNum;i==0||vm.enchantments[i-1];++i) {
+      if(i == 0) {
+        vm.enhancementOptions.push({number: 0});
+      }
+      else {
+        vm.enhancementOptions.push(vm.getOption(vm.enchantments[i-1]));
+      }
     }
   }
   
   this.prevEnchantment = function() {
-    vm.enhancementOptions = [vm.item.enchantmentNum];
+    vm.enhancementOptions = [];
     for(var i=vm.item.enchantmentNum;i>0;--i) {
-      vm.enhancementOptions.push(vm.enchantments[i-1].EnchantLevel-1);
+      vm.enhancementOptions.push(vm.getOption(vm.enchantments[i-1]));
     }
+    
+    vm.enhancementOptions.push({number: 0});
+  }
+  
+  this.getOption = function(enchantment) {
+    return {
+      number: enchantment.EnchantLevel,
+      stats: hCodeValues.getStats(enchantment)
+    };
   }
   
   this.getEnchantments = function() {

@@ -27,11 +27,11 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
             }
             
             var exchange = dntData.find('exchange.lzjson','ExchangeType',exId);
+            var exName = '';
             if(exchange && exchange.length > 0 && exchange[0].NameID > 0) {
               var exName = translations.translate(exchange[0].NameID).toLowerCase();
-              
-              exchanges.push({id: exId, name: exName.toLowerCase()});
             }
+            exchanges.push({id: exId, name: exName.toLowerCase()});
           }
           
           return exchanges;

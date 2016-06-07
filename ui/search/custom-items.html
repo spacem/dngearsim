@@ -29,7 +29,7 @@
 <tr ng-repeat="result in customItems.getResults() track by $index">
   <td>
     <div>
-      <dnsim-item-link item="result" on-close="customItems.itemLinkClosed()" />
+      <dnsim-item-link item="result" />
     </div>
     <div>
       <span dnsim-stats stats="result.stats" separator="'|'" />

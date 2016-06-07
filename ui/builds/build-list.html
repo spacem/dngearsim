@@ -7,16 +7,16 @@
     </button>
   </div>
 </div>
-<div id="saved-group" class="row" ng-show="buildList.anyItems()" ng-repeat="(buildName, build) in buildList.savedItems track by $index">
+<div id="saved-group" class="row" ng-if="buildList.builds && buildList.builds.length > 0" ng-repeat="b in buildList.builds">
   
-  <div class="col-xs-12 group-header" id="/builds/{{buildName}}" ng-click="buildList.toggleGroup(buildName)" ng-if="buildName != buildList.currentGroup">
-  <button class="btn btn-link btn-block group-header-btn">
-    <dngearsim-build-summary build-name="buildName" build="build">
+  <div class="col-xs-12 group-header" ng-show="b.name != buildList.currentGroup">
+  <button class="btn btn-link btn-block group-header-btn" ng-click="buildList.toggleGroup(b.name)">
+    <dngearsim-build-summary build-name="b.name" build="b.build">
     </dngearsim-build-summary>
   </button>
   </div>
   
-  <dngearsim-build build-name="buildName" build="build" ng-if="buildName == buildList.currentGroup" on-change="buildList.handleChange()">
+  <dngearsim-build build-name="b.name" build="b.build" ng-if="b.name == buildList.currentGroup" on-change="buildList.handleChange()">
   </dngearsim-build>
 
 </div>
