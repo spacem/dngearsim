@@ -1,10 +1,13 @@
 <dnsim-loading>
 
 <div class="row" ng-if="!editGroup.job && !editGroup.bJob">
-  <div class="col-xs-12">
+  <div class="hidden-xs col-sm-4">&nbsp;</div>
+  <div class="col-xs-12 col-sm-8">
+    <br />
     <label>choose the character class</label>
   </div>
-  <div class="col-xs-12 col-sm-4 col-lg-3">
+  <div class="hidden-xs col-sm-4">&nbsp;</div>
+  <div class="col-xs-12 col-sm-4">
     <button class="btn btn-default btn-block" ng-repeat="bJob in editGroup.getBaseJobs()" ng-click="editGroup.bJob = bJob">
       <span class="class-image class-{{bJob}}"></span>
       {{editGroup.getJobName(bJob)}}
@@ -12,10 +15,13 @@
   </div>
 </div>
 <div class="row" ng-show="!editGroup.job && editGroup.bJob">
-  <div class="col-xs-12">
+  <div class="hidden-xs col-sm-4">&nbsp;</div>
+  <div class="col-xs-12 col-sm-8">
+    <br />
     <label>choose the specialisation</label>
   </div>
-  <div class="col-xs-12 col-sm-4 col-lg-3">
+  <div class="hidden-xs col-sm-4">&nbsp;</div>
+  <div class="col-xs-12 col-sm-4">
     <button class="btn btn-default btn-block" ng-repeat="fJob in editGroup.getFinalJobs()" ng-click="editGroup.setJob(fJob)">
       <dnsim-job-icon item="fJob"></dnsim-job-icon>
       {{fJob.name}}
