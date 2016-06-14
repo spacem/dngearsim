@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemViewBoxCtrl',
 
-['$window','$timeout','$routeParams','hCodeValues','region','translations','dntData',
-  function($window, $timeout, $routeParams, hCodeValues, region, translations, dntData) {
+['$timeout','dntData','itemFactory',
+  function($timeout, dntData, itemFactory) {
   'use strict';
   
   if(this.item == null) return;
@@ -109,14 +109,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
               vm.items.push({
                 count: pouchItemCount,
                 gold: gold,
-                item: {
-                  id: pouchItem,
-                  name: vm.translate(itemds[0].NameID, itemds[0].NameIDParam),
-                  rank: hCodeValues.rankNames[itemds[0].Rank],
-                  icon: itemds[0].IconImageIndex,
-                  levelLimit : itemds[0].LevelLimit,
-                  fileName: itemds[0].fileName,
-                }
+                item: itemFactory.createBasicItem(itemds[0])
               });
             }
           }
@@ -141,23 +134,12 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
             vm.items.push({
               count: cd.Count,
               gold: cd.Gold,
-              item: {
-                id: itemds[0].id,
-                name: vm.translate(itemds[0].NameID, itemds[0].NameIDParam),
-                rank: hCodeValues.rankNames[itemds[0].Rank],
-                icon: itemds[0].IconImageIndex,
-                levelLimit : itemds[0].LevelLimit,
-                fileName: itemds[0].fileName,
-              }
+              item: itemFactory.createBasicItem(itemds[0])
             });
           }
         }
       }
     }
-  }
-  
-  this.translate = function(nameId, nameParam) {
-    return translations.translate(nameId, nameParam);
   }
 
 }])

@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemViewExtractionCtrl',
 
-['$timeout','hCodeValues','translations','dntData','itemFactory','items',
-  function($timeout, hCodeValues, translations, dntData, itemFactory, items) {
+['$timeout','dntData','itemFactory','items',
+  function($timeout, dntData, itemFactory, items) {
   'use strict';
   
   if(this.item == null) return;
@@ -84,24 +84,13 @@ angular.module('dnsim').controller('itemViewExtractionCtrl',
               vm.items.push({
                 count: pouchItemCount,
                 gold: gold,
-                item: {
-                  id: pouchItem,
-                  name: vm.translate(itemds[0].NameID, itemds[0].NameIDParam),
-                  rank: hCodeValues.rankNames[itemds[0].Rank],
-                  icon: itemds[0].IconImageIndex,
-                  levelLimit : itemds[0].LevelLimit,
-                  fileName: itemds[0].fileName,
-                }
+                item: itemFactory.createBasicItem(itemds[0]),
               });
             }
           }
         }
       } while(pouchItem);
     }
-  }
-  
-  this.translate = function(nameId, nameParam) {
-    return translations.translate(nameId, nameParam);
   }
 
 }])

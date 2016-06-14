@@ -119,6 +119,7 @@
 </div>
 <div class="row">
   <div class="col-xs-12 item-type-grouping">
+    |
     <span ng-if="hasContents">
       <button class="btn btn-link" ng-click="setDetail('contents')" ng-disabled="detail == 'contents'">contents</button> |
     </span>
@@ -126,7 +127,10 @@
       <button class="btn btn-link" ng-click="setDetail('use')" ng-disabled="detail == 'use'">use</button> |
     </span>
     <span ng-if="canExtract">
-      <button class="btn btn-link" ng-click="setDetail('extract')" ng-disabled="detail == 'extract'">extract</button>
+      <button class="btn btn-link" ng-click="setDetail('extract')" ng-disabled="detail == 'extract'">extract</button> |
+    </span>
+    <span ng-if="canTransfer">
+      <button class="btn btn-link" ng-click="setDetail('transfer')" ng-disabled="detail == 'transfer'">enhancement transfer</button> |
     </span>
   </div>
 </div>
@@ -141,5 +145,9 @@
 <div class="row" ng-if="detail == 'use'">
     <dngearsim-group-assignment item="item">
     </dngearsim-group-assignment>
+</div>
+<div class="row" ng-if="detail == 'transfer'">
+  <dngearsim-item-view-transfer item="item">
+  </dngearsim-item-view-transfer>
 </div>
 </dnsim-loading>

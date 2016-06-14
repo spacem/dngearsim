@@ -141,6 +141,11 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       if(itemData.DisjointDrop1 > 0) {
         $scope.canExtract = true;
       }
+      
+      if((itemData.Type == 0 || itemData.Type == 1) && $scope.item.enchantmentNum > 0) {
+        $scope.canTransfer = true;
+      }
+      
       if($scope.item.typeName != null) {
         $scope.canUse = true;
         $scope.detail = 'use';
@@ -151,6 +156,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       }
       else if($scope.canExtract) {
         $scope.detail = 'extract';
+      }
+      else if($scope.canTransfer) {
+        $scope.detail = 'transfer';
       }
     }
   }

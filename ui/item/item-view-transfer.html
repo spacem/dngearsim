@@ -1,0 +1,20 @@
+<div class="col-xs-12 item-type-grouping">
+  <h3>enhancement transfer<br ><small>options are:</small></h3>
+</div>
+<div class="col-xs-12" ng-if="ctrl.matchingTransfers == 0">
+  enhancement cannot be transfered
+</div>
+<div class="col-xs-12" ng-repeat="transfer in ctrl.matchingTransfers">
+  <div class="row">
+    <h4 class="col-xs-12 {{transfer.rank.name}}-grade">level {{transfer.level}} +{{transfer.enchantmentNum}} {{transfer.rank.name}}<br /><small>costs: {{transfer.gold}} gold, and...</small></h4>
+    <div class="col-xs-12 col-sm-3" ng-if="transfer.numItem1 > 0">
+      <dnsim-item-link item="transfer.item1"></dnsim-item-link>
+      <span ng-if="transfer.numItem1 > 1">&nbsp;x{{transfer.numItem1}}</span>
+    </div>
+    <div class="col-xs-12 col-sm-9" ng-if="transfer.numItem2 > 0">
+      <dnsim-item-link item="transfer.item2"></dnsim-item-link>
+      <span ng-if="transfer.numItem2 > 1">&nbsp;x{{transfer.numItem2}}</span>
+    </div>
+    <div class="col-xs-12"><br /></div>
+  </div>
+</div>

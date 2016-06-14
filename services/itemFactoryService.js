@@ -11,6 +11,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     initItem: initItem,
     createItem: createItem,
     getItemData: getItemData,
+    createBasicItem: createBasicItem,
   };
   
   function createItem(itemSourceName, d, p, totalRatio) {
@@ -209,6 +210,20 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     }
     
     return [];
+  }
+  
+  function createBasicItem(d) {
+    if(!d) {
+      return [];
+    }
+    return {
+      id: d.id,
+      name: translations.translate(d.NameID, d.NameIDParam),
+      rank: hCodeValues.rankNames[d.Rank],
+      icon: d.IconImageIndex,
+      levelLimit : d.LevelLimit,
+      fileName: d.fileName,
+    };
   }
 }
 })();
