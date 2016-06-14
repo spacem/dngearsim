@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('EquipmentCtrl',
-['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region',
-function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region) {
+['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region','itemFactory',
+function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region,itemFactory) {
   'use strict';
   
   region.setLocationByName($routeParams.region);
@@ -15,6 +15,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   $scope.item.setStats = null;
   $scope.item.setId = null;
+  $scope.detail = null;
   
   $scope.getDescription = function() {
     if($scope.item.description) {
@@ -52,29 +53,18 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     return '';
   }
   
+  $scope.setDetail = function(detail) {
+    $scope.detail = detail;
+  }
   
   $scope.getServerStorage = function() {
-    var fileName = null;
-    
-    if($scope.item.fileName && dntData.isLoaded($scope.item.fileName + '.optimised.lzjson')) {
-      fileName = $scope.item.fileName + '.optimised.lzjson';
-    }
-    else if($scope.item.fileName && dntData.isLoaded($scope.item.fileName + '.lzjson')) {
-      fileName = $scope.item.fileName + '.lzjson';
-    }
-    else if($scope.itemType && dntData.isLoaded($scope.itemType.mainDnt)) {
-      fileName = $scope.itemType.mainDnt
-    }
-
-    if(fileName) {
-      var itemData = dntData.find(fileName, 'id', $scope.item.id);
-      if(itemData && itemData.length > 0 && 'AbleWStorage' in itemData[0] && 'IsCash' in itemData[0] && itemData[0].IsCash == 0) {
-        if(itemData[0].AbleWStorage == 1) {
-          return 'can put in server storage';
-        }
-        else if(itemData[0].AbleWStorage == 0) {
-          return 'not transferable';
-        }
+    var itemData = itemFactory.getItemData($scope.item);
+    if(itemData && 'AbleWStorage' in itemData && 'IsCash' in itemData && itemData.IsCash == 0) {
+      if(itemData.AbleWStorage == 1) {
+        return 'can put in server storage';
+      }
+      else if(itemData.AbleWStorage == 0) {
+        return 'not transferable';
       }
     }
     return '';
@@ -145,6 +135,22 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         if($scope.item.needJobClass > 0) {
           getJobName();
         }
+      }
+      
+      var itemData = itemFactory.getItemData($scope.item);
+      if(itemData.DisjointDrop1 > 0) {
+        $scope.canExtract = true;
+      }
+      if($scope.item.typeName != null) {
+        $scope.canUse = true;
+        $scope.detail = 'use';
+      }
+      else if($scope.item.typeId == 46 || $scope.item.typeId == 8) {
+        $scope.hasContents = true;
+        $scope.detail = 'contents';
+      }
+      else if($scope.canExtract) {
+        $scope.detail = 'extract';
       }
     }
   }

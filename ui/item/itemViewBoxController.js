@@ -114,6 +114,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
                   name: vm.translate(itemds[0].NameID, itemds[0].NameIDParam),
                   rank: hCodeValues.rankNames[itemds[0].Rank],
                   icon: itemds[0].IconImageIndex,
+                  levelLimit : itemds[0].LevelLimit,
                   fileName: itemds[0].fileName,
                 }
               });
@@ -145,6 +146,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
                 name: vm.translate(itemds[0].NameID, itemds[0].NameIDParam),
                 rank: hCodeValues.rankNames[itemds[0].Rank],
                 icon: itemds[0].IconImageIndex,
+                levelLimit : itemds[0].LevelLimit,
                 fileName: itemds[0].fileName,
               }
             });

@@ -10,6 +10,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     loadItems: loadItems,
     initItem: initItem,
     createItem: createItem,
+    getItemData: getItemData,
   };
   
   function createItem(itemSourceName, d, p, totalRatio) {
@@ -183,6 +184,31 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     }
 
     return null;
+  }
+  
+  function getItemData(item) {
+    
+    var fileName = null;
+    var itemType = items[item.itemSource];
+    
+    if(item.fileName && dntData.isLoaded(item.fileName + '.optimised.lzjson')) {
+      fileName = item.fileName + '.optimised.lzjson';
+    }
+    else if(item.fileName && dntData.isLoaded(item.fileName + '.lzjson')) {
+      fileName = item.fileName + '.lzjson';
+    }
+    else if(itemType && dntData.isLoaded(itemType.mainDnt)) {
+      fileName = itemType.mainDnt
+    }
+
+    if(fileName) {
+      var itemData = dntData.find(fileName, 'id', item.id);
+      if(itemData && itemData.length > 0) {
+        return itemData[0];
+      }
+    }
+    
+    return [];
   }
 }
 })();

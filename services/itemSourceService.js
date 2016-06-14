@@ -15,7 +15,7 @@ function items(translations,dntData,itemColumnsToLoad) {
       // wspr: { mainDnt: 'itemtable_source.dnt', type: 'wellspring', minLevel: 24 },
       
       tech: { 
-        mainDnt: 'itemtable_skilllevelup.lzjson', 
+        mainDnt: 'itemtable_skilllevelup.optimised.lzjson', 
         potentialDnt: 'potentialtable.optimised.lzjson',
         potentialDntEx: 'potentialtable_reboot.optimised.lzjson',
         sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
@@ -114,16 +114,16 @@ function items(translations,dntData,itemColumnsToLoad) {
         minRank: 0 },
       event: {
         mainDnt: 'itemtable_event.optimised.lzjson',
-        partsDnt: 'partstable_event.lzjson',
-        weaponDnt: 'weapontable_event.lzjson',
-        setDnt: 'setitemtable_cash.lzjson',
+        partsDnt: 'partstable_event.optimised.lzjson',
+        weaponDnt: 'weapontable_event.optimised.lzjson',
+        setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'cash',
         minLevel: 0,
         minRank: 0 },
       xtras: {
-        mainDnt: 'itemtable_vehicle.lzjson',
-        partsDnt: 'vehiclepartstable.lzjson',
-        setDnt: 'setitemtable_cash.lzjson',
+        mainDnt: 'itemtable_vehicle.optimised.lzjson',
+        partsDnt: 'vehiclepartstable.optimised.lzjson',
+        setDnt: 'setitemtable_cash.optimised.lzjson',
         type: 'xtras',
         minLevel: 0,
         minRank: 0 },
