@@ -158,6 +158,9 @@ function hCodeValues() {
       88001: 'battlefield', 88002: 'battlefield', 88003: 'battlefield', 88004: 'battlefield', 88005: 'battlefield', 88006: 'battlefield', 88007: 'battlefield', 88008: 'battlefield', 88009: 'battlefield', 
       66001: 'erosion',
       35006: 'plate',
+      14051: 'abyss', 14052: 'abyss', 14053: 'abyss', 14054: 'abyss', 14055: 'abyss', 14056: 'abyss', 14057: 'abyss', 14058: 'abyss', 14059: 'abyss', 
+      40011: 'daredevil faire', 40012: 'daredevil faire', 40013: 'daredevil faire', 40014: 'daredevil faire', 40015: 'daredevil faire', 40016: 'daredevil faire', 40017: 'daredevil faire', 40018: 'daredevil faire',
+      40001: 'daredevil faire', 40002: 'daredevil faire', 
     },
     
     checkedRank : {
