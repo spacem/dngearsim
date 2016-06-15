@@ -160,6 +160,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       else if($scope.canTransfer) {
         $scope.detail = 'transfer';
       }
+      else {
+        $scope.detail = 'shops';
+      }
     }
   }
 

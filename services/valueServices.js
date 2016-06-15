@@ -146,6 +146,20 @@ function hCodeValues() {
       5 : { id: 5, name : 'legendary' },
     },
     
+    shopNames : {
+      28001: 'lament',28002: 'lament',28003: 'lament',28004: 'lament',28005: 'lament',28006: 'lament',28007: 'lament',28008: 'lament',28009: 'lament',
+      29001: 'aura',29002: 'aura',29003: 'aura',29004: 'aura',29005: 'aura',29006: 'aura',29007: 'aura',29008: 'aura',29009: 'aura',
+      5001: 'medal',5002: 'medal',5003: 'medal',5004: 'medal',5005: 'medal',5006: 'medal',5007: 'medal',5008: 'medal',5009: 'medal',
+      5101: 'ladder',5102: 'ladder',5103: 'ladder',5104: 'ladder',5105: 'ladder',5106: 'ladder',5107: 'ladder',5108: 'ladder',5109: 'ladder',
+      59001: 'garden bunny',
+      52001 : 'nightmare', 52002 : 'nightmare', 52003 : 'nightmare', 52004 : 'nightmare', 52005 : 'nightmare', 52006 : 'nightmare', 52007 : 'nightmare', 52008 : 'nightmare', 52009 : 'nightmare',
+      21: 'blacksmith', 22: 'blacksmith', 23: 'blacksmith', 24: 'blacksmith', 25: 'blacksmith', 26: 'blacksmith', 27: 'blacksmith', 28: 'blacksmith', 29: 'blacksmith', 
+      89001: 'guild master',
+      88001: 'battlefield', 88002: 'battlefield', 88003: 'battlefield', 88004: 'battlefield', 88005: 'battlefield', 88006: 'battlefield', 88007: 'battlefield', 88008: 'battlefield', 88009: 'battlefield', 
+      66001: 'erosion',
+      35006: 'plate',
+    },
+    
     checkedRank : {
       0 : true,
       1 : true,

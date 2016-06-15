@@ -43,6 +43,7 @@ angular.module('dnsim')
               name: vm.translate(data.NameID, data.NameIDParam),
               rank: hCodeValues.rankNames[data.Rank],
               icon: data.IconImageIndex,
+              levelLimit: data.LevelLimit,
               fileName: data.fileName,
             }
             vm.boxes.push(box);

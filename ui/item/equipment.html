@@ -132,6 +132,9 @@
     <span ng-if="canTransfer">
       <button class="btn btn-link" ng-click="setDetail('transfer')" ng-disabled="detail == 'transfer'">enhancement transfer</button> |
     </span>
+    <span>
+      <button class="btn btn-link" ng-click="setDetail('shops')" ng-disabled="detail == 'shops'">shops</button> |
+    </span>
   </div>
 </div>
 <div class="row" ng-if="detail == 'extract'">
@@ -149,5 +152,9 @@
 <div class="row" ng-if="detail == 'transfer'">
   <dngearsim-item-view-transfer item="item">
   </dngearsim-item-view-transfer>
+</div>
+<div class="row" ng-if="detail == 'shops'">
+  <dngearsim-item-view-shop item="item">
+  </dngearsim-item-view-shop>
 </div>
 </dnsim-loading>

@@ -1,0 +1,25 @@
+<div class="col-xs-12 item-type-grouping">
+  <h3>purchase from npc<br ><small>options are:</small></h3>
+</div>
+<div class="col-xs-12" ng-if="ctrl.shopCosts == 0">
+  item not found in the shops
+</div>
+<div class="col-xs-12" ng-repeat="s in ctrl.shopCosts">
+  <div class="row">
+    <h4 class="col-xs-12">{{s.shopName.toString().toLowerCase()}} shop / {{s.tabName.toLowerCase()}}:
+    <br />
+    <small ng-if="s.ladderPoints > 0">{{s.ladderPoints}} ladder points</small>
+    <small ng-if="s.nightmarePoints > 0">{{s.nightmarePoints}} nightmare points,</small>
+    <small ng-if="s.gold > 0">{{s.gold}} gold</small>
+    </h4>
+    <div class="col-xs-12 col-sm-3" ng-if="s.numItem1 > 0">
+      <dnsim-item-link item="s.item1"></dnsim-item-link>
+      <span ng-if="s.numItem1 > 1">&nbsp;x{{s.numItem1}}</span>
+    </div>
+    <div class="col-xs-12 col-sm-9" ng-if="s.numItem2 > 0">
+      <dnsim-item-link item="s.item2"></dnsim-item-link>
+      <span ng-if="s.numItem2 > 1">&nbsp;x{{s.numItem2}}</span>
+    </div>
+    <div class="col-xs-12"><br /></div>
+  </div>
+</div>
