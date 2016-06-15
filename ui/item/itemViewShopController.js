@@ -12,10 +12,10 @@ angular.module('dnsim').controller('itemViewShopCtrl',
   var cShopFileName = 'combinedshoptable.lzjson';
   var cSysShopFileName = 'combinedshoptable_system.lzjson';
   var cCashShopFileName = 'combinedshoptable_cash.lzjson';
-  var shopFileName = 'shoptable.lzjson';
+  // var shopFileName = 'shoptable.lzjson';
   var allItemFileName = 'all-items.lzjson';
   
-  var files = [cCashShopFileName,cSysShopFileName,cShopFileName,shopFileName,allItemFileName];
+  var files = [cCashShopFileName,cSysShopFileName,cShopFileName,allItemFileName];
   for(var i=0;i<files.length;++i) {
     dntData.init(files[i], null, function() {}, function() {
       $timeout(function() {
@@ -35,7 +35,7 @@ angular.module('dnsim').controller('itemViewShopCtrl',
     getCombinedCosts(cShopFileName);
     getCombinedCosts(cSysShopFileName);
     getCombinedCosts(cCashShopFileName);
-    getShopCosts();
+    // getShopCosts();
     
     var newShopCosts = [];
     for(var i=0;i<vm.shopCosts.length;++i) {
@@ -57,6 +57,7 @@ angular.module('dnsim').controller('itemViewShopCtrl',
     vm.shopCosts = newShopCosts;
   }
   
+  /*
   function getShopCosts() {
     var shops = dntData.getData(shopFileName);
     
@@ -96,7 +97,7 @@ angular.module('dnsim').controller('itemViewShopCtrl',
         }
       }
     }
-  }
+  }*/
 
   function getCombinedCosts(fileName) {
     var shops = dntData.find(fileName, 'itemindex', vm.item.id);
