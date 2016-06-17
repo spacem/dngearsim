@@ -122,7 +122,7 @@ function hCodeValues() {
       3002: {id: 3000, name: 'skMDmg%', display: toPercent },
       3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true },
       
-      4012: {id: 4050, name: 'skCrit', display: inThousands },
+      4012: {id: 4012, name: 'skCrit', display: inThousands },
       4050: {id: 4050, name: 'skStr%', display: toPercent },
       4051: {id: 4051, name: 'skAgi%', display: toPercent },
       4052: {id: 4052, name: 'skInt%', display: toPercent },
