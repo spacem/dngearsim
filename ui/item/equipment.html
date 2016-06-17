@@ -130,10 +130,13 @@
       <button class="btn btn-link" ng-click="setDetail('extract')" ng-disabled="detail == 'extract'">extract</button> |
     </span>
     <span ng-if="canTransfer">
-      <button class="btn btn-link" ng-click="setDetail('transfer')" ng-disabled="detail == 'transfer'">enhancement transfer</button> |
+      <button class="btn btn-link" ng-click="setDetail('transfer')" ng-disabled="detail == 'transfer'">transfer</button> |
     </span>
     <span>
-      <button class="btn btn-link" ng-click="setDetail('shops')" ng-disabled="detail == 'shops'">shops</button> |
+      <button class="btn btn-link" ng-click="setDetail('shops')" ng-disabled="detail == 'shops'">buy</button> |
+    </span>
+    <span>
+      <button class="btn btn-link" ng-click="setDetail('craft')" ng-disabled="detail == 'craft'">craft</button> |
     </span>
   </div>
 </div>
@@ -156,5 +159,9 @@
 <div class="row" ng-if="detail == 'shops'">
   <dngearsim-item-view-shop item="item">
   </dngearsim-item-view-shop>
+</div>
+<div class="row" ng-if="detail == 'craft'">
+  <dngearsim-item-view-craft item="item">
+  </dngearsim-item-view-craft>
 </div>
 </dnsim-loading>

@@ -162,6 +162,7 @@ function hCodeValues() {
       40011: 'daredevil faire', 40012: 'daredevil faire', 40013: 'daredevil faire', 40014: 'daredevil faire', 40015: 'daredevil faire', 40016: 'daredevil faire', 40017: 'daredevil faire', 40018: 'daredevil faire',
       40001: 'daredevil faire', 40002: 'daredevil faire', 
       91001: 'wrath',
+      45001: 'farm',
     },
     
     checkedRank : {

@@ -41,9 +41,12 @@ angular.module('dnsim').controller('itemViewShopCtrl',
     for(var i=0;i<vm.shopCosts.length;++i) {
       var found = false;
       for(var j=0;j<newShopCosts.length;++j) {
-        if(vm.shopCosts[i].shopName == newShopCosts[j].shopName &&
-          vm.shopCosts[i].tabName == newShopCosts[j].tabName &&
-          vm.shopCosts[i].gold == newShopCosts[j].gold) {
+        if(vm.shopCosts[i].tabName == newShopCosts[j].tabName &&
+          vm.shopCosts[i].gold == newShopCosts[j].gold &&
+          vm.shopCosts[i].item1.id == newShopCosts[j].item1.id &&
+          vm.shopCosts[i].numItem1.id == newShopCosts[j].numItem1.id &&
+          vm.shopCosts[i].item2.id == newShopCosts[j].item2.id &&
+          vm.shopCosts[i].numItem2.id == newShopCosts[j].numItem2.id) {
             found = true;
             break;
         }
@@ -116,6 +119,8 @@ angular.module('dnsim').controller('itemViewShopCtrl',
         ladderPoints: 0,
         item1: itemFactory.createBasicItem(item1s[0]),
         item2: itemFactory.createBasicItem(item2s[0]),
+        numItem1: 0,
+        numItem2: 0,
       };
       
       if(shopCost.shopName in hCodeValues.shopNames) {
