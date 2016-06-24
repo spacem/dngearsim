@@ -146,6 +146,14 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         $scope.canTransfer = true;
       }
       
+      if($scope.item.setId) {
+        $scope.isInSet = true;
+      }
+      
+      if($scope.item.typeId == 5) {
+        $scope.isPlate = true;
+      }
+      
       if($scope.item.typeName != null) {
         $scope.canUse = true;
         $scope.detail = 'use';
@@ -159,6 +167,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       }
       else if($scope.canTransfer) {
         $scope.detail = 'transfer';
+      }
+      else if($scope.isPlate) {
+        $scope.detail = 'plate';
       }
       else {
         $scope.detail = 'shops';

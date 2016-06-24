@@ -42,14 +42,14 @@ function hCodeValues() {
       5  : {id: 5, name: 'maxPdmg', display: toNoDec, hide: true, pc: 55 },
       6  : {id: 6, name: 'mdmg', display: toNoDec, combineWith: 7, type: 'dps', pc: 56 },
       7  : {id: 7, name: 'maxMdmg', display: toNoDec, hide: true, pc: 57 },
-      8  : {id: 8, name: 'def', display: toNoDec, type: 'def', pc: 58 },
-      9  : {id: 9, name: 'mdef', display: toNoDec, type: 'def', pc: 59 },
-      10 : {id: 10, name: 'para', display: toNoDec, pc: 60, noCustom: true },
-      11 : {id: 11, name: 'para resist', display: toNoDec, pc: 61, noCustom: true },
+      8  : {id: 8, name: 'def', display: inThousands, type: 'def', pc: 58 },
+      9  : {id: 9, name: 'mdef', display: inThousands, type: 'def', pc: 59 },
+      10 : {id: 10, name: 'para', display: inThousands, pc: 60, noCustom: true },
+      11 : {id: 11, name: 'para resist', display: inThousands, pc: 61, noCustom: true },
       12 : {id: 12, name: 'crit', display: toNoDec, type: 'dps', pc: 62 },
-      13 : {id: 13, name: 'crit resist', display: toNoDec, pc: 63, noCustom: true },
-      14 : {id: 14, name: 'stun', display: toNoDec, pc: 64, noCustom: true },
-      15 : {id: 15, name: 'stun resist', display: toNoDec, pc: 65, noCustom: true },
+      13 : {id: 13, name: 'crit resist', display: inThousands, pc: 63, noCustom: true },
+      14 : {id: 14, name: 'stun', display: inThousands, pc: 64, noCustom: true },
+      15 : {id: 15, name: 'stun resist', display: inThousands, pc: 65, noCustom: true },
       16 : {id: 16, name: 'fire%', display: toPercent, type: 'dps' },
       17 : {id: 17, name: 'ice%', display: toPercent, type: 'dps' },
       18 : {id: 18, name: 'light%', display: toPercent, type: 'dps' },
@@ -65,7 +65,7 @@ function hCodeValues() {
       // these are both min and max
       // shows with the same name but these are used really just for set bonus I think
       32 : {id: 32, name: 'pdmg', display: toNoDec, type: 'dps', pc: 54 },
-      33 : {id: 33, name: 'mdmg', display: toNoDec, type: 'dps', pc: 54 },
+      33 : {id: 33, name: 'mdmg', display: toNoDec, type: 'dps', pc: 56 },
       
       50 : {id: 50, name: 'str%', display: toPercent },
       51 : {id: 51, name: 'agi%', display: toPercent },
@@ -96,7 +96,7 @@ function hCodeValues() {
 
       103: {id: 103, name: 'crit dmg', display: toNoDec, type: 'dps', pc: 104 },
       104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true },
-      107: {id: 107, name: 'mp?', display: toNoDec, hide: true, noCustom: true },
+      107: {id: 107, name: 'mp?', display: toNoDec, noCustom: true, hide: true },
       
       // stats below here are ones I made up
       1001: {id: 1001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true },
@@ -252,17 +252,25 @@ function hCodeValues() {
     ],
   
     getStats : function(data) {
-      var currentState = 1;
+      var currentState = 0;
       var statVals = []
       for(;;) {
+        currentState++;
         
         var stateProp = 'State' + currentState;
-        if(stateProp in data) {
-          
-          var stateId = data[stateProp];
-          if(stateId == -1) {
-            break;
-          }
+        if(!(stateProp in data)) {
+          break;
+        }
+
+        var stateId = data[stateProp];
+        if(stateId == -1) {
+          break;
+        }
+        
+        if(stateId == 107) {
+          // is this mp?
+        }
+        else {
           
           var currentData = {};
           
@@ -302,8 +310,6 @@ function hCodeValues() {
           }
           
           this.setupStat(currentData, stateId);
-
-          currentState++;
           
           if(currentData.max > 0 ||
             currentData.max < 0 ||
@@ -312,9 +318,6 @@ function hCodeValues() {
               
             statVals.push(currentData);
           }
-        }
-        else {
-          break;
         }
       }
       

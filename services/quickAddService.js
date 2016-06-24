@@ -171,6 +171,30 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return false;
         }
       },
+      gemRankStep: {
+        name: 'rank',
+        getOptions: function(category, build, datas) {
+          
+          return [
+          { id: 5, name: 'legendary' },
+          { id: 999, name: 'quality epic' },
+          { id: 3, name: 'epic' },
+          ];
+        },
+        matchesItem: function(id, item) {
+          itemFactory.initItem(item);
+          if(item.name) {
+            var index = item.name.indexOf('Quality');
+            if(id == 999) {
+              return item.rank.id == 3 && index == 0;
+            }
+            else {
+              return item.rank.id == id && index != 0;
+            }
+          }
+          return false;
+        }
+      },
       otherRankStep: {
         name: 'rank',
         getOptions: function(category, build, datas) {
@@ -350,6 +374,50 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         },
         isItemStep: true,
       },
+      numStatsStep: {
+        name: 'Num Stats',
+        getOptions: function(category, build, datas) {
+          var items = findData(category, build, datas);
+          var numStats = {};
+          
+          for(var i=0;i<items.length;++i) {
+            var len = 0;
+            for(var j=0;j<items[i].stats.length;++j) {
+              var stat = hCodeValues.stats[items[i].stats[j].id];
+              if(stat && !stat.hide) {
+                len++;
+              }
+            }
+            numStats[len + 'x stats'] = len;
+          }
+          
+          var retVal = [];
+          for(var val in numStats) {
+            retVal.push({
+              id: numStats[val],
+              name: val,
+            });
+          }
+          
+          retVal = retVal.sort(function(a, b) {
+              return a.id - b.id;
+            });
+          
+          return retVal;
+        },
+        matchesItem: function(id, item) {
+          var len = 0;
+          for(var j=0;j<item.stats.length;++j) {
+            var stat = hCodeValues.stats[item.stats[j].id];
+            if(stat && !stat.hide) {
+              len++;
+            }
+          }
+            
+          return len == id;
+        },
+        isItemStep: true,
+      },
       customStep: {
         name: 'misc',
         getOptions: function(category, build, datas) {
@@ -365,11 +433,11 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       weapons: ['exchangeStep','sixtyLevelStep','equipRankStep','itemStep','enhanceStep'],
       armour: ['exchangeStep','sixtyLevelStep','equipRankStep','itemStep','enhanceStep'],
       accessories: ['accExchangeStep','allLevelStep','equipRankStep','itemNameStep','itemStep'],
-      'offensive gems': ['sixtyLevelStep','equipRankStep','itemNameStep','itemStep','enhanceStep'],
-      'increasing gems': ['sixtyLevelStep','equipRankStep','itemNameStep','itemStep','enhanceStep'],
-      'enhancement plates': ['allLevelStep','otherRankStep','distinctItemNameStep','itemStep'],
-      'expedition plates': ['sixtyLevelStep','distinctItemNameStep','itemStep'],
-      talisman: ['sixtyLevelStep','talismanRankStep','distinctItemNameStep','itemStep','enhanceTalismanStep'],
+      'offensive gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
+      'increasing gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
+      'enhancement plates': ['allLevelStep','otherRankStep','distinctItemNameStep','numStatsStep','itemStep'],
+      'expedition plates': ['sixtyLevelStep','distinctItemNameStep','numStatsStep','itemStep'],
+      talisman: ['sixtyLevelStep','talismanRankStep','distinctItemNameStep','numStatsStep','itemStep','enhanceTalismanStep'],
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
       cash: ['accExchangeStep','cashRankStep','itemNameStep','itemStep'],
       techs: ['exchangeStep','allLevelStep','techRankStep','techSkillStep','itemStep'],

@@ -9,15 +9,15 @@
 <div class="row">
   <div class="col-xs-0 col-md-2" ng-hide="itemCategory.hideRank"></div>
   <div class="hidden-xs col-md-10 form-group" ng-hide="itemCategory.hideRank">
-    <span class="form-group" ng-repeat="(id,value) in grades track by $index">
+    <span class="form-group" ng-repeat="(id,value) in ::grades track by $index">
     <label class="checkbox-inline">
-      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}"> {{value.name}} 
+      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
     </label>
     </span>
   </div>
-  <div class="visible-xs col-xs-6 form-group" ng-hide="itemCategory.hideRank" ng-repeat="(id,value) in grades track by $index">
+  <div class="visible-xs col-xs-6 form-group" ng-hide="itemCategory.hideRank" ng-repeat="(id,value) in ::grades track by $index">
     <label class="checkbox-inline">
-      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}"> {{value.name}}&nbsp;
+      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}"> {{value.name}}
     </label>
   </div>
   

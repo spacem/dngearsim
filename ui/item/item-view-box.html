@@ -3,7 +3,7 @@
 </div>
 <div class="col-xs-12">
 </div>
-<div class="col-xs-12" ng-repeat="item in ctrl.items">
+<div class="col-xs-12" ng-repeat="item in ctrl.items track by $index">
   <dnsim-item-link item="item.item"></dnsim-item-link>
   <span ng-if="item.count > 1">&nbsp;x{{item.count}}</span>
   <span ng-if="item.gold > 0">{{item.gold/100/100}}g</span>

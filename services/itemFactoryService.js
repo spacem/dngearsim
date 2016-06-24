@@ -111,7 +111,24 @@ function itemFactory(translations,dntData,hCodeValues,items) {
           }
           else {
             for(var p=0;p<numPotentials;++p) {
-              itemType.items.push(this.createItem(itemType.name, d, potentials[p], totalRatio));
+              
+              var found = false;
+              for(var q=0;q<p;++q) {
+                if(potentialsMatch(potentials[p], potentials[q])) {
+                  found = true;
+                  break;
+                }
+              }
+              
+              if(!found) {
+                for(var q=p+1;q<numPotentials;++q) {
+                  if(potentialsMatch(potentials[p], potentials[q])) {
+                    potentials[p].PotentialRatio += potentials[q].PotentialRatio;
+                  }
+                }
+                
+                itemType.items.push(this.createItem(itemType.name, d, potentials[p], totalRatio));
+              }
             }
           }
         }
@@ -121,6 +138,56 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     var end = new Date().getTime();
     var time = end - start;
     console.log('item init time: ' + time/1000 + 's for ' + itemType.name);
+  }
+  
+  function potentialsMatch(p1, p2) {
+    
+    var i = 1;
+    var j = 1;
+    for(;;) {
+      var state1Col = 'State' + i;
+      var state2Col = 'State' + j;
+      
+      if(p1[state1Col] == 107) {
+        i++;
+        state1Col = 'State' + i;
+      }
+      if(p2[state2Col] == 107) {
+        j++;
+        state2Col = 'State' + j;
+      }
+      
+      if(!(state1Col in p1 || state2Col in p2)) {
+        return true;
+      }
+      
+      if(!(state1Col in p1)) {
+        return false;
+      }
+      if(!(state2Col in p2)) {
+        return false;
+      }
+      
+      if(p1[state1Col] == -1 && p2[state2Col] == -1) {
+        return true;
+      }
+      
+      if(!(p1[state1Col] >= 0 || p2[state2Col] >= 0)) {
+        return true;
+      }
+      
+      if(p1[state1Col] != p2[state2Col]) {
+        return false;
+      }
+      
+      var val1Col = 'State' + i + 'Value';
+      var val2Col = 'State' + j + 'Value';
+      if(p1[val1Col] != p2[val2Col]) {
+        return false;
+      }
+      
+      ++i;
+    }
   }
   
   function initItem(item) {

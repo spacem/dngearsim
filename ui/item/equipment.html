@@ -126,6 +126,9 @@
     <span ng-if="canUse">
       <button class="btn btn-link" ng-click="setDetail('use')" ng-disabled="detail == 'use'">use</button> |
     </span>
+    <span ng-if="isPlate">
+      <button class="btn btn-link" ng-click="setDetail('plate')" ng-disabled="detail == 'plate'">plate</button> |
+    </span>
     <span ng-if="canExtract">
       <button class="btn btn-link" ng-click="setDetail('extract')" ng-disabled="detail == 'extract'">extract</button> |
     </span>
@@ -137,6 +140,9 @@
     </span>
     <span>
       <button class="btn btn-link" ng-click="setDetail('craft')" ng-disabled="detail == 'craft'">craft</button> |
+    </span>
+    <span ng-if="isInSet">
+      <button class="btn btn-link" ng-click="setDetail('set')" ng-disabled="detail == 'set'">set</button> |
     </span>
   </div>
 </div>
@@ -163,5 +169,13 @@
 <div class="row" ng-if="detail == 'craft'">
   <dngearsim-item-view-craft item="item">
   </dngearsim-item-view-craft>
+</div>
+<div class="row" ng-if="detail == 'set'">
+  <dngearsim-item-view-set item="item">
+  </dngearsim-item-view-set>
+</div>
+<div class="row" ng-if="detail == 'plate'">
+  <dngearsim-item-view-plate item="item">
+  </dngearsim-item-view-plate>
 </div>
 </dnsim-loading>

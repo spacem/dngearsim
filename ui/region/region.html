@@ -2,7 +2,7 @@
   <button 
     ng-class="{'dark-toggle' : currentLocation != $parent.getDntLocation(), 'light-toggle' : currentLocation == $parent.getDntLocation()}" 
     ng-click="$parent.setLocation(currentLocation)"
-    ng-repeat="currentLocation in getHostedFiles()" 
+    ng-repeat="currentLocation in ::getHostedFiles() track by currentLocation.region" 
     title="{{currentLocation.name}}">
     {{currentLocation.region}}
   </button>
@@ -15,7 +15,7 @@
   <button ng-show="edit"
     ng-class="{'dark-toggle' : currentLocation != $parent.getTlocation(), 'light-toggle' : currentLocation == $parent.getTlocation()}" 
     ng-click="$parent.setTLocation(currentLocation)" 
-    ng-repeat="currentLocation in getHostedFiles()" 
+    ng-repeat="currentLocation in ::getHostedFiles() track by currentLocation.region"
     title="{{currentLocation.name}}">
     {{currentLocation.region}}
   </button>
