@@ -88,6 +88,14 @@ function items(translations,dntData,itemColumnsToLoad) {
         minLevel: 24,
         minRank: 3 },
 
+      c2016: { 
+        mainDnt: 'itemtable_common2016.lzjson', 
+        partsDnt: 'partstable_common2016.lzjson', 
+        weaponDnt: 'weapontable_common2016.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        minRank: 0 },
       c2015: { 
         mainDnt: 'itemtable_common2015.optimised.lzjson', 
         partsDnt: 'partstable_common2015.optimised.lzjson', 
