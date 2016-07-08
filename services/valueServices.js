@@ -252,8 +252,23 @@ function hCodeValues() {
     ],
   
     getStats : function(data) {
+
+      var useMax=false;
+      var useStateXVal=false;
+      var mightHaveSets=true;
+      var prop = 'State1_Max';
+      if(prop in data) {
+        useMax = true;
+      }
+      else {
+        prop = 'State1Value';
+        if(prop in data) {
+          useStateXVal = true;
+        }
+      }
+      
       var currentState = 0;
-      var statVals = []
+      var statVals = [];
       for(;;) {
         currentState++;
         
@@ -272,50 +287,37 @@ function hCodeValues() {
         }
         else {
           
-          var currentData = {};
+          var currentData = { id: stateId };
           
           var prop;
         
-          prop = 'State' + currentState + '_Max';
-          if(prop in data) {
+          if(useMax) {
+            prop = 'State' + currentState + '_Max';
             currentData.max = data[prop];
           }
-          
-          prop = 'State' + currentState + 'Value';
-          if(prop in data) {
+          else if(useStateXVal) {
+            prop = 'State' + currentState + 'Value';
             currentData.max = data[prop];
           }
-          
-          prop = 'StateValue' + currentState;
-          if(prop in data) {
+          else {
+            prop = 'StateValue' + currentState;
             currentData.max = Number(data[prop]);
           }
           
-          prop = 'State' + currentState + '_Min';
-          if(prop in data && currentData.max != data[prop]) {
-            currentData.min = Number(data[prop]);
-          }
-          
-          prop = 'State' + currentState + '_GenProb';
-          if(prop in data) {
-            currentData.genProb = data[prop];
-          }
-          
-          prop = 'NeedSetNum' + currentState;
-          if(prop in data) {
-            if(data[prop] == 0) {
-              break;
+          if(currentData.max > 0 || currentData.max < 0) {
+            if(mightHaveSets) {
+              prop = 'NeedSetNum' + currentState;
+              if(prop in data) {
+                if(data[prop] == 0) {
+                  break;
+                }
+                currentData.needSetNum = data[prop];
+              }
+              else {
+                mightHaveSets = false;
+              }
             }
-            currentData.needSetNum = data[prop];
-          }
           
-          this.setupStat(currentData, stateId);
-          
-          if(currentData.max > 0 ||
-            currentData.max < 0 ||
-            currentData.min < 0 ||
-            currentData.min > 0) {
-              
             statVals.push(currentData);
           }
         }
@@ -364,8 +366,7 @@ function hCodeValues() {
       var newStats = [];
       
       for(var key in statMap) {
-        var stat = { max : statMap[key] };
-        this.setupStat(stat, key);
+        var stat = { max : statMap[key], id: key };
         newStats.push(stat);
       }
         

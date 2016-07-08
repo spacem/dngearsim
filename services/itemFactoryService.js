@@ -91,6 +91,22 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         if(dState1_GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0) {
           var d = dntData.getRow(itemType.mainDnt, r);
           
+          if(itemType.type == 'techs') {
+            var exists = false;
+            for(var i=0;i<itemType.items.length;++i) {
+              if(itemType.items[i].needJobClass == d.NeedJobClass &&
+                itemType.items[i].levelLimit == d.LevelLimit &&
+                itemType.items[i].potential && itemType.items[i].potential.PotentialID == dTypeParam1) {
+                  exists = true;
+                  break;
+                }
+            }
+            
+            if(exists) {
+              continue;
+            }
+          }
+          
           var potentials = [];
           if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
             potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);

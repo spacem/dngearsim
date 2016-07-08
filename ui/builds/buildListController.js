@@ -22,7 +22,7 @@ angular.module('dnsim').controller('BuildListCtrl',
     if('groupName' in $routeParams) {
       if($routeParams.groupName != this.currentGroup) {
         this.currentGroup = $routeParams.groupName;
-        localStorage.setItem('currentGroup', this.currentGroup);
+        saveHelper.saveBuildSelection(this.currentGroup, this.savedItems);
       }
     }
     else if(this.currentGroup && this.currentGroup in this.savedItems) {
@@ -54,7 +54,7 @@ angular.module('dnsim').controller('BuildListCtrl',
     }
   
     this.toggleGroup = function(buildName) {
-      localStorage.setItem('currentGroup', buildName);
+      saveHelper.saveBuildSelection(buildName, this.savedItems);
       $location.url('/builds/' + buildName);
     }
     

@@ -317,7 +317,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
   }
   
   function saveGroup() {
-    localStorage.setItem('currentGroup', vm.groupName);
+    saveHelper.saveBuildSelection(vm.groupName, vm.savedItems);
   }
   
 }])

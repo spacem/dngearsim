@@ -19,6 +19,15 @@ function saveHelper(itemCategory) {
       localStorage.setItem('lastSavedGroup', groupName);
     },
     
+    saveBuildSelection : function(buildName, builds) {
+      console.log('saving selection');
+      localStorage.setItem('currentGroup', buildName);
+      if(builds && buildName in builds && builds[buildName].job && builds[buildName].job.id) {
+        console.log('also job');
+        localStorage.setItem('jobNumber', builds[buildName].job.id);
+      }
+    },
+    
     importGroup: function(groupName, updatedItems) {
       var items = this.getSavedItems();
       groupName = this.getUniqueGroupName(groupName, items);

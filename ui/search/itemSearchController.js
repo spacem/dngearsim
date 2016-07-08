@@ -6,6 +6,7 @@ angular.module('dnsim').controller('ItemSearchCtrl',
 'hCodeValues',
 'itemFactory',
 'region',
+'saveHelper',
 function(
   $scope,$window,$routeParams,$timeout,$location,
   translations,
@@ -13,7 +14,8 @@ function(
   jobs,
   hCodeValues,
   itemFactory,
-  region) {
+  region,
+  saveHelper) {
   'use strict';
   
   $scope.itemCategory = itemCategory.byPath('search/' + $routeParams.itemType);
@@ -148,6 +150,8 @@ function(
       });
     
     $scope.save();
+    
+    var start = new Date().getTime();
           
     var pcStatId = -1;
     if('pc' in $scope.stat) {
@@ -209,29 +213,25 @@ function(
           var statFound = false;
           
           var statVal = {};
-          angular.forEach(e.stats, function(stat, index) {
+          for(var s=0;s<e.stats.length;++s) {
+            var stat = e.stats[s]
             if(stat.id == $scope.stat.id) {
               statFound = true;
               statVal.i = curDisplay;
               statVal.s = Number(stat.max);
+              break;
             }
             else if(stat.id == pcStatId) {
               statFound = true;
               statVal.i = curDisplay;
-              statVal.pc = Number(stat.max);
+              statVal.s = Number(stat.max);
             }
-          });
+          }
           
           if(!statFound) {
             continue;
           }
           else {
-            if(statVal.s && statVal.pc) {
-              statVal.s = statVal.s * (1.0 + statVal.pc);
-            }
-            else if(statVal.pc) {
-              statVal.s = statVal.pc;
-            }
             statVals.push(statVal);
           }
         }
@@ -257,6 +257,9 @@ function(
     }
     
     $scope.totalNumResults = newResults.length;
+            
+    var end = new Date().getTime();
+    var time = end - start;
     
     return newResults;
   };

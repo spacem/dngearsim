@@ -122,7 +122,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   }
   
   function saveGroup() {
-    localStorage.setItem('currentGroup', vm.groupName);
+    saveHelper.saveBuildSelection(vm.groupName, vm.savedItems);
   }
   
   this.headers = [
