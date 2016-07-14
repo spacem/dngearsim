@@ -24,7 +24,7 @@ describe('exportLinkHelper', function () {
   };
 
   it('encodes item with all parts', function() {
-    var itemString = exportLinkHelper.encodeItem(testItem);
+    var itemString = exportLinkHelper.encodeItem(testItem, false);
     expect(itemString).toBe('I4:_source:E6:P2:H1:.test');
   });
   
@@ -43,6 +43,6 @@ describe('exportLinkHelper', function () {
     var testGroup = { items: [testItem]}
     
     var groupString = exportLinkHelper.createGroupLink('groupname', testGroup);
-    expect(groupString).toBe('#/view-group?&g=groupname&i=I4:_source:E6:P2:H1:.test');
+    expect(groupString).toBe('#/view-group/na/?&g=groupname&i=I4:_source:E6:P2:H1');
   });
 });

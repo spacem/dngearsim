@@ -42,7 +42,7 @@ describe('statHelper', function () {
     expect(cStrStat.max).toBe(Math.floor(12 + (12 * 0.7)));
   });
   
-  it('doesnt add element when not in group', function() {
+  it('adds element even when not in group', function() {
     
     var lightStat = {id: 18, max: 1.2};
     group.element = { id: 0, name: 'not elemental' };
@@ -70,8 +70,11 @@ describe('statHelper', function () {
     
     expect(cFireStat).toBe(null);
     expect(cIceStat).toBe(null);
-    expect(cLightStat).toBe(null);
     expect(cDarkStat).toBe(null);
+    
+    expect(cLightStat.id).toBe(18);
+    expect(cLightStat.max).toBe(1.2);
+    
   });
   
   it('adds element when in group', function() {

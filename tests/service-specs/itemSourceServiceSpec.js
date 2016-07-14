@@ -17,7 +17,7 @@ describe('items', function () {
       return false;
     },
     init: function(dntName, colsToLoad, progress, complete) {
-      console.log('init: ' + dntName);
+      // console.log('init: ' + dntName);
       this.initCalled[dntName] = true;
     }
   };

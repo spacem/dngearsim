@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for services/itemSourceService.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">services/</a> itemSourceService.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">72.22% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>26/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">54.55% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.87% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>26/31</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">525×</span>
+<span class="cline-any cline-yes">525×</span>
+<span class="cline-any cline-yes">525×</span>
+<span class="cline-any cline-yes">525×</span>
+<span class="cline-any cline-yes">525×</span>
+<span class="cline-any cline-yes">60×</span>
+<span class="cline-any cline-yes">60×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function () {
+'use strict';
+&nbsp;
+angular.module('dnsim').factory('items',
+['translations','dntData','itemColumnsToLoad',items]);
+function items(translations,dntData,itemColumnsToLoad) {
+  
+  var itemSources = {
+    
+      title : {
+        mainDnt: 'appellationtable.optimised.lzjson', 
+        type: 'titles', 
+        minLevel: 0, 
+        minRank: 0 },
+      // wspr: { mainDnt: 'itemtable_source.dnt', type: 'wellspring', minLevel: 24 },
+      
+      tech: { 
+        mainDnt: 'itemtable_skilllevelup.optimised.lzjson', 
+        potentialDnt: 'potentialtable.optimised.lzjson',
+        potentialDntEx: 'potentialtable_reboot.optimised.lzjson',
+        sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
+        type: 'techs', 
+        minLevel: 24,
+        minRank: 0},
+      
+      tman: { 
+        mainDnt: 'itemtable_talisman.optimised.lzjson', 
+        type: 'talisman', 
+        potentialDnt: 'potentialtable_talismanitem.optimised.lzjson',
+        minLevel: 24,
+        minRank: 0 },
+      
+      gem: { 
+        mainDnt: 'itemtable_dragonjewel.optimised.lzjson', 
+        potentialDnt: 'potentialtable_dragonjewel.optimised.lzjson',
+        potentialDntEx: 'potentialtable_reboot.optimised.lzjson',
+        enchantDnt: 'enchanttable_dragonjewel.optimised.lzjson', 
+        gemDnt: 'dragonjeweltable.optimised.lzjson',
+        type: 'gems',
+        minLevel: 24,
+        minRank: 3},
+      
+      plate: { 
+        mainDnt : 'itemtable_glyph.optimised.lzjson', 
+        potentialDnt: 'potentialtable_glyph.optimised.lzjson',
+        type: 'plates',
+        minLevel: 16,
+        minRank: 2 },
+&nbsp;
+      items: {
+        mainDnt: 'itemtable.optimised.lzjson', 
+        partsDnt: 'partstable.optimised.lzjson', 
+        weaponDnt: 'weapontable.optimised.lzjson', 
+        enchantDnt: 'enchanttable.optimised.lzjson', 
+        potentialDnt: 'potentialtable.optimised.lzjson',
+        setDnt: 'setitemtable.optimised.lzjson',
+        type: 'equipment',
+        minLevel: 80,
+        minRank: 3 },
+      eq: {
+        mainDnt: 'itemtable_equipment.optimised.lzjson', 
+        partsDnt: 'partstable_equipment.optimised.lzjson', 
+        weaponDnt: 'weapontable_equipment.optimised.lzjson', 
+        enchantDnt: 'enchanttable.optimised.lzjson', 
+        potentialDnt: 'potentialtable.optimised.lzjson',
+        sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
+        setDnt: 'setitemtable.optimised.lzjson',
+        type: 'equipment',
+        minLevel: 24,
+        minRank: 3 },
+      rbeq: { 
+        mainDnt: 'itemtable_reboot.optimised.lzjson', 
+        partsDnt: 'partstable_reboot.optimised.lzjson', 
+        weaponDnt: 'weapontable_reboot.optimised.lzjson', 
+        enchantDnt: 'enchanttable_reboot.optimised.lzjson', 
+        potentialDnt: 'potentialtable_reboot.optimised.lzjson',
+        setDnt: 'setitemtable.optimised.lzjson',
+        type: 'equipment',
+        minLevel: 24,
+        minRank: 3 },
+      pvpeq: { 
+        mainDnt: 'itemtable_pvp.optimised.lzjson',
+        partsDnt: 'partstable_pvp.optimised.lzjson', 
+        weaponDnt: 'weapontable_pvp.optimised.lzjson', 
+        enchantDnt: 'enchanttable.optimised.lzjson', 
+        setDnt: 'setitemtable.optimised.lzjson',
+        type: 'equipment',
+        minLevel: 24,
+        minRank: 3 },
+&nbsp;
+      c2016: { 
+        mainDnt: 'itemtable_common2016.lzjson', 
+        partsDnt: 'partstable_common2016.lzjson', 
+        weaponDnt: 'weapontable_common2016.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        minRank: 0 },
+      c2015: { 
+        mainDnt: 'itemtable_common2015.optimised.lzjson', 
+        partsDnt: 'partstable_common2015.optimised.lzjson', 
+        weaponDnt: 'weapontable_common2015.optimised.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        minRank: 0 },
+      c2014: { 
+        mainDnt: 'itemtable_common2014.optimised.lzjson', 
+        partsDnt: 'partstable_common2014.optimised.lzjson', 
+        weaponDnt: 'weapontable_common2014.optimised.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        minRank: 0 },
+      cash: { 
+        mainDnt: 'itemtable_cash.optimised.lzjson', 
+        partsDnt: 'partstable_cash.optimised.lzjson', 
+        weaponDnt: 'weapontable_cash.optimised.lzjson', 
+        setDnt: 'setitemtable_cash.optimised.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        minRank: 0 },
+      event: {
+        mainDnt: 'itemtable_event.optimised.lzjson',
+        partsDnt: 'partstable_event.optimised.lzjson',
+        weaponDnt: 'weapontable_event.optimised.lzjson',
+        setDnt: 'setitemtable_cash.optimised.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        minRank: 0 },
+      xtras: {
+        mainDnt: 'itemtable_vehicle.optimised.lzjson',
+        partsDnt: 'vehiclepartstable.optimised.lzjson',
+        setDnt: 'setitemtable_cash.optimised.lzjson',
+        type: 'xtras',
+        minLevel: 0,
+        minRank: 0 },
+    };
+    
+    // now that the sources are set up add some methods on them for initialisation
+    // each source will store the items from that source for reuse by searches
+    angular.forEach(itemSources, function(itemSource, key) {
+      itemSource.name = key;
+      itemSource.loading = false;
+      itemSource.items = null;
+      itemSource.init = init; // decalared below
+      itemSource.reset = function() {
+        itemSource.items = null;
+        itemSource.loading = false;
+      };
+    });
+&nbsp;
+    return itemSources;
+  
+  
+    function init(progress, complete) {
+      var itemSource = this;
+      itemSource.loading = true;
+  
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(itemSource.items != null) {
+<span class="cstat-no" title="statement not covered" >        complete();</span>
+      }
+      else {
+        
+        translations.init(progress, <span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >doComplete(itemSource, complete) }</span>);
+        dntData.init(itemSource.mainDnt, itemColumnsToLoad.mainDnt, progress, <span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >doComplete(itemSource, complete) }</span>);
+        <span class="missing-if-branch" title="else path not taken" >E</span>if('potentialDnt' in itemSource) {
+          dntData.init(itemSource.potentialDnt, itemColumnsToLoad.potentialDnt, progress, <span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >doComplete(itemSource, complete) }</span>);
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if('potentialDntEx' in itemSource) {
+<span class="cstat-no" title="statement not covered" >          dntData.init(itemSource.potentialDntEx, itemColumnsToLoad.potentialDnt, progress, <span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >doComplete(itemSource, complete) }</span>);</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if('gemDnt' in itemSource) {
+<span class="cstat-no" title="statement not covered" >          dntData.init(itemSource.gemDnt, itemColumnsToLoad.gemDnt, progress, <span class="fstat-no" title="function not covered" >function() {</span> <span class="cstat-no" title="statement not covered" >doComplete(itemSource, complete) }</span>);</span>
+        }
+  
+        doComplete(itemSource, complete);
+      }
+    }
+    
+    function doComplete(itemSource, complete) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(translations.isLoaded() &amp;&amp; 
+<span class="branch-1 cbranch-no" title="branch not covered" >      dntData.isLoaded(itemSource.mainDnt) </span>&amp;&amp; 
+      (<span class="branch-2 cbranch-no" title="branch not covered" >!('potentialDnt' in itemSource) </span>|| <span class="branch-3 cbranch-no" title="branch not covered" >dntData.isLoaded(itemSource.potentialDnt))</span> &amp;&amp;
+      (<span class="branch-4 cbranch-no" title="branch not covered" >!('potentialDntEx' in itemSource) </span>|| <span class="branch-5 cbranch-no" title="branch not covered" >dntData.isLoaded(itemSource.potentialDntEx))</span> &amp;&amp;
+      (<span class="branch-6 cbranch-no" title="branch not covered" >!('gemDnt' in itemSource) </span>|| <span class="branch-7 cbranch-no" title="branch not covered" >dntData.isLoaded(itemSource.gemDnt))</span>
+      ) {
+<span class="cstat-no" title="statement not covered" >        complete();</span>
+<span class="cstat-no" title="statement not covered" >        itemSource.loading = false;</span>
+      }
+    }
+  };
+})();</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jul 13 2016 22:20:53 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

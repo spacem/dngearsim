@@ -62,7 +62,7 @@ function jobs(dntData, translations, itemColumnsToLoad) {
     },
     
     getAllJobs : function () {
-      if(this.allJobs == null && this.isLoaded()) {
+      if(this.allJobs == null && this.isLoaded() && translations.isLoaded()) {
         var jobs = [];
         var data = dntData.getData(fileName);
         var numRows = data.length;

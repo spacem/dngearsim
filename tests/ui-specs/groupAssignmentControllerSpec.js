@@ -104,36 +104,4 @@ describe('GroupAssignmentController', function() {
     var controller = $controller('groupAssignmentCtrl', { 'saveHelper': savedItemsMock, 'statHelper': statHelperMock });
     expect(controller.getGroupCalcStats().length).toBe(4);
   });
-  
-  it('looks up avg dmg', function () {
-    var controller = $controller('groupAssignmentCtrl', { 'saveHelper': savedItemsMock, 'statHelper': statHelperMock });
-    var stat = controller.getAvgDmgStat(controller.getGroupCalcStats());
-    expect(stat.id).toBeDefined();
-    expect(stat.max).toBeDefined();
-    expect(hCodeValues.stats[stat.id].name).toBe('avg dmg');
-  });
-  
-  it('looks up avg pdmg', function () {
-    var controller = $controller('groupAssignmentCtrl', { 'saveHelper': savedItemsMock, 'statHelper': statHelperMock });
-    var stat = controller.getPDmgStat(controller.getGroupCalcStats());
-    expect(stat.id).toBeDefined();
-    expect(stat.max).toBeDefined();
-    expect(hCodeValues.stats[stat.id].name).toBe('avg pdmg');
-  });
-  
-  it('looks up avg mdmg', function () {
-    var controller = $controller('groupAssignmentCtrl', { 'saveHelper': savedItemsMock, 'statHelper': statHelperMock });
-    var stat = controller.getMDmgStat(controller.getGroupCalcStats());
-    expect(stat.id).toBeDefined();
-    expect(stat.max).toBeDefined();
-    expect(hCodeValues.stats[stat.id].name).toBe('avg mdmg');
-  });
-  
-  it('looks up eq hp', function () {
-    var controller = $controller('groupAssignmentCtrl', { 'saveHelper': savedItemsMock, 'statHelper': statHelperMock });
-    var stat = controller.getHpStat(controller.getGroupCalcStats());
-    expect(stat.id).toBeDefined();
-    expect(stat.max).toBeDefined();
-    expect(hCodeValues.stats[stat.id].name).toBe('avg eqhp');
-  });
 });

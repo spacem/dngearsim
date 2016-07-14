@@ -366,7 +366,7 @@ function hCodeValues() {
       var newStats = [];
       
       for(var key in statMap) {
-        var stat = { max : statMap[key], id: key };
+        var stat = { max : statMap[key], id: Number(key) };
         newStats.push(stat);
       }
         

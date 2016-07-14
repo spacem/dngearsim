@@ -21,10 +21,16 @@ describe('jobs', function () {
     }
   };
   
+  var mockTranslations = {
+    isLoaded: function() { return true; },
+    translate: function(id, param) { return 'test' + id; }
+  }
+  
   var jobs;
   beforeEach(function() {
     module(function($provide) {
       $provide.value('dntData', mockDntData);
+      $provide.value('translations', mockTranslations);
     });
   
     inject(function($injector) {

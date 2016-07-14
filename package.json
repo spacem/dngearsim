@@ -1,0 +1,26 @@
+{
+  "name": "dngearsim",
+  "version": "0.0.0",
+  "description": "Dragon Nest Gear Simulator",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-jasmine": "^2.4.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.4",
+    "jasmine-core": "^2.4.1",
+    "socket.io": "1.4.5",
+    "phantomjs": "1.9.19",
+    "karma": "^1.1.1",
+    "karma-coverage": "^1.1.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "karma-spec-reporter": "0.0.26"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/gulp test",
+    "build": "./node_modules/.bin/gulp"
+  }
+}

@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for services/valueServices.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">services/</a> valueServices.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50.57% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>44/87</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">26.09% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>12/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">53.85% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50.57% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>44/87</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function () {
+'use strict';
+&nbsp;
+angular.module('dnsim').factory('hCodeValues', [hCodeValues]);
+function hCodeValues() {
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function toOneDec(stat) {</span>
+<span class="cstat-no" title="statement not covered" >    return Math.round(stat.max*10)/10;</span>
+  }
+<span class="fstat-no" title="function not covered" >  function toNoDec(stat) {</span>
+<span class="cstat-no" title="statement not covered" >    return Math.floor(stat.max);</span>
+  }
+<span class="fstat-no" title="function not covered" >  function inThousands(stat) {</span>
+<span class="cstat-no" title="statement not covered" >    var val = Number(stat.max);</span>
+<span class="cstat-no" title="statement not covered" >    if(val &lt; 100) {</span>
+<span class="cstat-no" title="statement not covered" >      return val;</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if(val &lt; 100000) {</span>
+<span class="cstat-no" title="statement not covered" >      return Math.round(val/100)/10 + 'k';</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if(val &lt; 1000000) {</span>
+<span class="cstat-no" title="statement not covered" >      return Math.round(val/1000) + 'k';</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if(val &lt; 10000000) {</span>
+<span class="cstat-no" title="statement not covered" >      return Math.round(val/10000)/100 + 'm';</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >      return Math.round(val/1000000) + 'm';</span>
+    }
+  }
+<span class="fstat-no" title="function not covered" >  function toPercent(stat) {</span>
+<span class="cstat-no" title="statement not covered" >    return (Math.floor(stat.max*100000)/1000) + '%';</span>
+  }
+  
+  return {
+    stats : {
+      0  : {id: 0, name: 'str', display: toNoDec, type: 'dps', pc: 50, skPc: 4050 },
+      1  : {id: 1, name: 'agi', display: toNoDec, type: 'dps', pc: 51, skPc: 4051 },
+      2  : {id: 2, name: 'int', display: toNoDec, type: 'dps', pc: 52, skPc: 4052 },
+      3  : {id: 3, name: 'vit', display: toNoDec, type: 'def', pc: 53, skPc: 4053 },
+      4  : {id: 4, name: 'pdmg', display: toNoDec, combineWith: 5, type: 'dps', pc: 54 },
+      5  : {id: 5, name: 'maxPdmg', display: toNoDec, hide: true, pc: 55 },
+      6  : {id: 6, name: 'mdmg', display: toNoDec, combineWith: 7, type: 'dps', pc: 56 },
+      7  : {id: 7, name: 'maxMdmg', display: toNoDec, hide: true, pc: 57 },
+      8  : {id: 8, name: 'def', display: inThousands, type: 'def', pc: 58 },
+      9  : {id: 9, name: 'mdef', display: inThousands, type: 'def', pc: 59 },
+      10 : {id: 10, name: 'para', display: inThousands, pc: 60, noCustom: true },
+      11 : {id: 11, name: 'para resist', display: inThousands, pc: 61, noCustom: true },
+      12 : {id: 12, name: 'crit', display: toNoDec, type: 'dps', pc: 62 },
+      13 : {id: 13, name: 'crit resist', display: inThousands, pc: 63, noCustom: true },
+      14 : {id: 14, name: 'stun', display: inThousands, pc: 64, noCustom: true },
+      15 : {id: 15, name: 'stun resist', display: inThousands, pc: 65, noCustom: true },
+      16 : {id: 16, name: 'fire%', display: toPercent, type: 'dps' },
+      17 : {id: 17, name: 'ice%', display: toPercent, type: 'dps' },
+      18 : {id: 18, name: 'light%', display: toPercent, type: 'dps' },
+      19 : {id: 19, name: 'dark%', display: toPercent, type: 'dps' },
+      20 : {id: 20, name: 'fire def', display: toPercent, type: 'def' },
+      21 : {id: 21, name: 'ice def', display: toPercent, type: 'def' },
+      22 : {id: 22, name: 'light def', display: toPercent, type: 'def' },
+      23 : {id: 23, name: 'dark def', display: toPercent, type: 'def' },
+      25 : {id: 25, name: 'hp', display: inThousands, type: 'def', pc: 75, skPc: 4075 },
+      26 : {id: 26, name: 'mp', display: inThousands, pc: 76, skPc: 4076 },
+      29 : {id: 29, name: 'fd', display: toNoDec, type: 'dps' },
+      
+      // these are both min and max
+      // shows with the same name but these are used really just for set bonus I think
+      32 : {id: 32, name: 'pdmg', display: toNoDec, type: 'dps', pc: 54 },
+      33 : {id: 33, name: 'mdmg', display: toNoDec, type: 'dps', pc: 56 },
+      
+      50 : {id: 50, name: 'str%', display: toPercent },
+      51 : {id: 51, name: 'agi%', display: toPercent },
+      52 : {id: 52, name: 'int%', display: toPercent },
+      53 : {id: 53, name: 'vit%', display: toPercent },
+      54 : {id: 54, name: 'pdmg%', display: toPercent, combineWith: 55 },
+      55 : {id: 55, name: 'maxPdmg%', display: toPercent, hide: true },
+      56 : {id: 56, name: 'mdmg%', display: toPercent, combineWith: 57 },
+      57 : {id: 57, name: 'maxMdmg%', display: toPercent, hide: true },
+      58 : {id: 58, name: 'def%', display: toPercent },
+      59 : {id: 59, name: 'mdef%', display: toPercent },
+      60 : {id: 60, name: 'para%', display: toPercent, noCustom: true },
+      61 : {id: 61, name: 'para resist%', display: toPercent, noCustom: true },
+      62 : {id: 62, name: 'crit%', display: toPercent },
+      63 : {id: 63, name: 'crit resist%', display: toPercent },
+      64 : {id: 64, name: 'stun%', display: toPercent, noCustom: true },
+      65 : {id: 65, name: 'stun resist%', display: toPercent, noCustom: true },
+      74 : {id: 74, name: 'move%', display: toPercent, noCustom: true },
+      75 : {id: 75, name: 'hp%', display: toPercent },
+      76 : {id: 76, name: 'mp%', display: toPercent },
+      77 : {id: 77, name: 'mp recover%', display: toPercent },
+      81 : {id: 81, name: 'safe move%', display: toPercent, noCustom: true },
+&nbsp;
+      // these are both min and max
+      // shows with the same name but these are used really just for set bonus I think
+      101 : {id: 101, name: 'pdmg%', display: toPercent, noCustom: true },
+      102 : {id: 102, name: 'mdmg%', display: toPercent, noCustom: true },
+&nbsp;
+      103: {id: 103, name: 'crit dmg', display: toNoDec, type: 'dps', pc: 104 },
+      104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true },
+      107: {id: 107, name: 'mp?', display: toNoDec, noCustom: true, hide: true },
+      
+      // stats below here are ones I made up
+      1001: {id: 1001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true },
+      1004: {id: 1004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true },
+      1006: {id: 1006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true },
+      
+      1008: {id: 1008, name: 'calc pdef', display: toPercent, noCustom: true },
+      1009: {id: 1009, name: 'calc mdef', display: toPercent, noCustom: true },
+      
+      1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true },
+      1029: {id: 1029, name: 'fd calc', display: toPercent, noCustom: true },
+      1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true },
+      
+      2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true },
+      2004: {id: 2004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true },
+      2006: {id: 2006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true },
+      
+      2008: {id: 2008, name: 'pdef eqhp', display: inThousands, noCustom: true },
+      2009: {id: 2009, name: 'mdef eqhp', display: inThousands, noCustom: true },
+      
+      3000: {id: 3000, name: 'skDmg%', display: toPercent },
+      3001: {id: 3000, name: 'skPDmg%', display: toPercent },
+      3002: {id: 3000, name: 'skMDmg%', display: toPercent },
+      3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true },
+      
+      4012: {id: 4012, name: 'skCrit', display: inThousands },
+      4050: {id: 4050, name: 'skStr%', display: toPercent },
+      4051: {id: 4051, name: 'skAgi%', display: toPercent },
+      4052: {id: 4052, name: 'skInt%', display: toPercent },
+      4053: {id: 4053, name: 'skVit%', display: toPercent },
+      4075: {id: 4075, name: 'skHp%', display: toPercent },
+      4076: {id: 4076, name: 'skMp%', display: toPercent },
+      
+      // special cases for skills
+      10164: {id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true },
+      10165: {id: 10165, name: 'strToMdmg', display: toPercent, noCustom: true },
+      
+      // items over 10000 are unknown skill effects
+    },
+  
+    rankNames : {
+      0 : { id: 0, name : 'normal' },
+      1 : { id: 1, name : 'magic' },
+      2 : { id: 2, name : 'rare' },
+      3 : { id: 3, name : 'epic' },
+      4 : { id: 4, name : 'unique' },
+      5 : { id: 5, name : 'legendary' },
+    },
+    
+    shopNames : {
+      28001: 'lament',28002: 'lament',28003: 'lament',28004: 'lament',28005: 'lament',28006: 'lament',28007: 'lament',28008: 'lament',28009: 'lament',
+      29001: 'aura',29002: 'aura',29003: 'aura',29004: 'aura',29005: 'aura',29006: 'aura',29007: 'aura',29008: 'aura',29009: 'aura',
+      5001: 'medal',5002: 'medal',5003: 'medal',5004: 'medal',5005: 'medal',5006: 'medal',5007: 'medal',5008: 'medal',5009: 'medal',
+      5101: 'ladder',5102: 'ladder',5103: 'ladder',5104: 'ladder',5105: 'ladder',5106: 'ladder',5107: 'ladder',5108: 'ladder',5109: 'ladder',
+      59001: 'garden bunny',
+      52001 : 'nightmare', 52002 : 'nightmare', 52003 : 'nightmare', 52004 : 'nightmare', 52005 : 'nightmare', 52006 : 'nightmare', 52007 : 'nightmare', 52008 : 'nightmare', 52009 : 'nightmare',
+      21: 'blacksmith', 22: 'blacksmith', 23: 'blacksmith', 24: 'blacksmith', 25: 'blacksmith', 26: 'blacksmith', 27: 'blacksmith', 28: 'blacksmith', 29: 'blacksmith', 
+      89001: 'guild master',
+      88001: 'battlefield', 88002: 'battlefield', 88003: 'battlefield', 88004: 'battlefield', 88005: 'battlefield', 88006: 'battlefield', 88007: 'battlefield', 88008: 'battlefield', 88009: 'battlefield', 
+      66001: 'erosion',
+      35006: 'plate',
+      14051: 'abyss', 14052: 'abyss', 14053: 'abyss', 14054: 'abyss', 14055: 'abyss', 14056: 'abyss', 14057: 'abyss', 14058: 'abyss', 14059: 'abyss', 
+      40011: 'daredevil faire', 40012: 'daredevil faire', 40013: 'daredevil faire', 40014: 'daredevil faire', 40015: 'daredevil faire', 40016: 'daredevil faire', 40017: 'daredevil faire', 40018: 'daredevil faire',
+      40001: 'daredevil faire', 40002: 'daredevil faire', 
+      91001: 'wrath',
+      45001: 'farm',
+    },
+    
+    checkedRank : {
+      0 : true,
+      1 : true,
+      2 : true,
+      3 : true,
+      4 : true,
+      5 : true,
+    },
+    
+    typeNames : {
+      0 : 'weapons',
+      1 : 'equipment',
+      5 : 'plates',
+      8 : 'pouch',
+      38 : 'plates',
+      90 : 'welspring',
+      132 : 'talisman',
+      139 : 'gems',
+    },
+    
+    elements : {
+      0 : { id: 0, name: 'non-ele' },
+      1 : { id: 1, name: 'fire', dmgStat: 16 },
+      2 : { id: 2, name: 'ice', dmgStat: 17 },
+      3 : { id: 3, name: 'light', dmgStat: 18 },
+      4 : { id: 4, name: 'dark', dmgStat: 19 },
+    },
+    
+    damageTypes : {
+      0 : { id: 0, name: 'both separate' },
+      1 : { id: 1, name: 'physical' },
+      2 : { id: 2, name: 'magical' },
+      3 : { id: 3, name: 'both combined' },
+    },
+    
+    // note: skills shown on-screen have 1k added to their id
+    skillEffectMapping : {
+      2 : { id: 2, name: 'phyisical attack power', mapTo: 3001 },
+      13 : { id: 13, name: 'mp', mapTo: 26 },
+      25 : { id: 25, name: 'action speed' },
+      29 : { id: 29, name: 'magic attack power', mapTo: 3002 },
+      32 : { id: 32, name: 'fire %', mapTo: 16 },
+      33 : { id: 33, name: 'ice %', mapTo: 17 },
+      34 : { id: 34, name: 'light %', mapTo: 18 },
+      35 : { id: 35, name: 'dark %', mapTo: 19 },
+      36 : { id: 36, name: 'fire def', mapTo: 20 },
+      37 : { id: 37, name: 'ice def', mapTo: 21 },
+      38 : { id: 38, name: 'light def', mapTo: 22 },
+      39 : { id: 39, name: 'dark def', mapTo: 23 },
+      58 : { id: 58, name: 'hp%', mapTo: 4075 },
+      59 : { id: 59, name: 'mp%', mapTo: 4076 },
+      65 : { id: 65, name: 'range' },
+      76 : { id: 76, name: 'movement speed', mapTo: 74 },
+      87 : { id: 87, name: 'str%', mapTo: 4050 },
+      88 : { id: 88, name: 'agi%', mapTo: 4051 },
+      89 : { id: 89, name: 'int%', mapTo: 4052 },
+      90 : { id: 90, name: 'vit%', mapTo: 4053 },
+      134 : { id: 134, name: 'physicial defense%' },
+      185 : { id: 185, name: 'wots attack power', mapTo: 3000 },
+      251 : { id: 251, name: 'critical chance%', mapTo: 1012 },
+      164 : { id: 164, name: 'intToPdmg', mapTo: 10164 },
+      165 : { id: 165, name: 'strToMdmg', mapTo: 10165 },
+      222: {
+        id: 222, 
+        name: 'hellfire', 
+        getVals: <span class="fstat-no" title="function not covered" >function(val) {</span>
+<span class="cstat-no" title="statement not covered" >          if(val.indexOf(';') &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            var vals = val.split(';');</span>
+<span class="cstat-no" title="statement not covered" >            return [</span>
+              {id: 62, effect: 222, max: Number(vals[0])/100.0},
+              {id: 4012, effect: 222, max: Number(vals[1])},
+              ];
+          }
+          else {
+<span class="cstat-no" title="statement not covered" >            return [{id: 62, effect: 222, max: Number(val)/100.0}];</span>
+          }
+        }
+      },
+    },
+    
+    customItems: 
+    [
+    {id: 0, typeName:'custom', name: 'wise plate fix', stats: [{id: 52, max:-0.001}]},
+    {id: 0, typeName:'custom', name: 'hp unified', stats: [{id: 4075, max:0.05}]},
+    ],
+  
+    getStats : function(data) {
+&nbsp;
+      var useMax=false;
+      var useStateXVal=false;
+      var mightHaveSets=true;
+      var prop = 'State1_Max';
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(prop in data) {
+<span class="cstat-no" title="statement not covered" >        useMax = true;</span>
+      }
+      else {
+        prop = 'State1Value';
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(prop in data) {
+<span class="cstat-no" title="statement not covered" >          useStateXVal = true;</span>
+        }
+      }
+      
+      var currentState = 0;
+      var statVals = [];
+      for(;;) {
+        currentState++;
+        
+        var stateProp = 'State' + currentState;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(!(stateProp in data)) {
+          break;
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var stateId = data[stateProp];</span>
+<span class="cstat-no" title="statement not covered" >        if(stateId == -1) {</span>
+<span class="cstat-no" title="statement not covered" >          break;</span>
+        }
+        
+<span class="cstat-no" title="statement not covered" >        if(stateId == 107) {</span>
+          // is this mp?
+        }
+        else {
+          
+<span class="cstat-no" title="statement not covered" >          var currentData = { id: stateId };</span>
+          
+<span class="cstat-no" title="statement not covered" >          var prop;</span>
+        
+<span class="cstat-no" title="statement not covered" >          if(useMax) {</span>
+<span class="cstat-no" title="statement not covered" >            prop = 'State' + currentState + '_Max';</span>
+<span class="cstat-no" title="statement not covered" >            currentData.max = data[prop];</span>
+          }
+          else <span class="cstat-no" title="statement not covered" >if(useStateXVal) {</span>
+<span class="cstat-no" title="statement not covered" >            prop = 'State' + currentState + 'Value';</span>
+<span class="cstat-no" title="statement not covered" >            currentData.max = data[prop];</span>
+          }
+          else {
+<span class="cstat-no" title="statement not covered" >            prop = 'StateValue' + currentState;</span>
+<span class="cstat-no" title="statement not covered" >            currentData.max = Number(data[prop]);</span>
+          }
+          
+<span class="cstat-no" title="statement not covered" >          if(currentData.max &gt; 0 || currentData.max &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            if(mightHaveSets) {</span>
+<span class="cstat-no" title="statement not covered" >              prop = 'NeedSetNum' + currentState;</span>
+<span class="cstat-no" title="statement not covered" >              if(prop in data) {</span>
+<span class="cstat-no" title="statement not covered" >                if(data[prop] == 0) {</span>
+<span class="cstat-no" title="statement not covered" >                  break;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                currentData.needSetNum = data[prop];</span>
+              }
+              else {
+<span class="cstat-no" title="statement not covered" >                mightHaveSets = false;</span>
+              }
+            }
+          
+<span class="cstat-no" title="statement not covered" >            statVals.push(currentData);</span>
+          }
+        }
+      }
+      
+      return statVals;
+    },
+    
+    setupStat : <span class="fstat-no" title="function not covered" >function(stat, id) {</span>
+<span class="cstat-no" title="statement not covered" >      stat.id = Number(id);</span>
+    },
+    
+    mergeStats : function(stats1, stats2) {
+      var statMap = {};
+      
+      var self = this;
+      function add(value) {
+        
+        var amount = Number(value.max);
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(self.stats[value.id] &amp;&amp; 'pc' in self.stats[value.id]) {
+          amount = Math.floor(amount);
+        }
+        
+        if(value.id in statMap) {
+          statMap[value.id] += amount;
+        }
+        else {
+          statMap[value.id] = amount;
+        }
+      }
+      
+      angular.forEach(stats1, function(value, key) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(value) {
+          add(value);
+        }
+      });
+      
+      if(stats2) {
+        angular.forEach(stats2, function(value, key) {
+          <span class="missing-if-branch" title="else path not taken" >E</span>if(value) {
+            add(value);
+          }
+        });
+      }
+      
+      var newStats = [];
+      
+      for(var key in statMap) {
+        var stat = { max : statMap[key], id: Number(key) };
+        newStats.push(stat);
+      }
+        
+      return newStats;
+    }
+  }
+}
+&nbsp;
+})();</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jul 13 2016 22:20:53 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

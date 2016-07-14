@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ui/builds/buildController.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">ui/builds/</a> buildController.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.37% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>1/73</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/34</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.37% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/73</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('dnsim').controller('buildCtrl',
+&nbsp;
+['$timeout','$location','hCodeValues','statHelper','itemCategory',
+<span class="fstat-no" title="function not covered" >function($timeout,$location,hCodeValues,statHelper,itemCategory) {</span>
+  'use strict';
+  
+<span class="cstat-no" title="statement not covered" >  var vm = this;</span>
+  
+<span class="cstat-no" title="statement not covered" >  this.stats = statHelper.getBuildStats(this.build);</span>
+  
+<span class="cstat-no" title="statement not covered" >  var selectedCategory = localStorage.getItem('selectedItemCategory');</span>
+<span class="cstat-no" title="statement not covered" >  this.category = itemCategory.byName(selectedCategory);</span>
+<span class="cstat-no" title="statement not covered" >  if(!this.category) {</span>
+<span class="cstat-no" title="statement not covered" >    selectedCategory = 'titles';</span>
+<span class="cstat-no" title="statement not covered" >    this.category = itemCategory.byName('titles');</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.getCategoryItems = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    return itemCategory.getItemsByCategory(this.build.items)[vm.category.name];</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.getCategories = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    return itemCategory.categories;</span>
+  }
+    
+<span class="cstat-no" title="statement not covered" >  this.setSelectedCategory = <span class="fstat-no" title="function not covered" >function(value) {</span></span>
+<span class="cstat-no" title="statement not covered" >    this.category = itemCategory.byName(value);</span>
+<span class="cstat-no" title="statement not covered" >    localStorage.setItem('selectedItemCategory', value);</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  this.toggleGroup = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    localStorage.setItem('currentGroup', null);</span>
+<span class="cstat-no" title="statement not covered" >    $location.url('/builds');</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.getSaveDate = <span class="fstat-no" title="function not covered" >function(group) {</span></span>
+<span class="cstat-no" title="statement not covered" >    if(vm.build.lastUpdate &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      var lastUpdate = new Date(vm.build.lastUpdate);</span>
+<span class="cstat-no" title="statement not covered" >      return lastUpdate.toLocaleDateString();</span>
+    }
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.getSaveTime = <span class="fstat-no" title="function not covered" >function(group) {</span></span>
+<span class="cstat-no" title="statement not covered" >    if(vm.build.lastUpdate &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      var lastUpdate = new Date(vm.build.lastUpdate);</span>
+<span class="cstat-no" title="statement not covered" >      return lastUpdate.toLocaleTimeString();</span>
+    }
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.allowMoreItems = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    return !vm.category.maxCat || this.getCategoryItems().length &lt; vm.category.maxCat;</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.getItemCount = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    var itemCountText = '';</span>
+<span class="cstat-no" title="statement not covered" >    var allItems = vm.build.items;</span>
+    
+<span class="cstat-no" title="statement not covered" >    if(vm.category.name == 'offensive gems') {</span>
+<span class="cstat-no" title="statement not covered" >      var numOffensiveSlots = 0;</span>
+<span class="cstat-no" title="statement not covered" >      var numOffensiveGems = 0;</span>
+<span class="cstat-no" title="statement not covered" >      angular.forEach(allItems, <span class="fstat-no" title="function not covered" >function(item, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if(item.typeName == vm.category.name) {</span>
+<span class="cstat-no" title="statement not covered" >          numOffensiveGems++;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if(item.offensiveGemSlots) {</span>
+<span class="cstat-no" title="statement not covered" >          numOffensiveSlots += item.offensiveGemSlots;</span>
+        }
+      });
+      
+<span class="cstat-no" title="statement not covered" >      itemCountText = numOffensiveGems + ' / ' + numOffensiveSlots;</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if(vm.category.name == 'increasing gems') {</span>
+      
+<span class="cstat-no" title="statement not covered" >      var totalIncreasingGems = 0;</span>
+<span class="cstat-no" title="statement not covered" >      var numIncreasingSlots = 0;</span>
+<span class="cstat-no" title="statement not covered" >      var numIncreasingGems = {};</span>
+<span class="cstat-no" title="statement not covered" >      angular.forEach(allItems, <span class="fstat-no" title="function not covered" >function(item, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if(item.typeName == vm.category.name) {</span>
+<span class="cstat-no" title="statement not covered" >          var gemType = item.sparkTypeId;</span>
+<span class="cstat-no" title="statement not covered" >          if(!gemType) {</span>
+<span class="cstat-no" title="statement not covered" >            gemType = 0;</span>
+          }
+          
+<span class="cstat-no" title="statement not covered" >          if(!(gemType in numIncreasingGems)) {</span>
+<span class="cstat-no" title="statement not covered" >            numIncreasingGems[gemType] = 0;</span>
+          }
+<span class="cstat-no" title="statement not covered" >          numIncreasingGems[gemType]++;</span>
+<span class="cstat-no" title="statement not covered" >          totalIncreasingGems++;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if(item.increasingGemSlots) {</span>
+<span class="cstat-no" title="statement not covered" >          numIncreasingSlots += item.increasingGemSlots;</span>
+        }
+      });
+      
+<span class="cstat-no" title="statement not covered" >      itemCountText = ''</span>
+<span class="cstat-no" title="statement not covered" >      angular.forEach(numIncreasingGems, <span class="fstat-no" title="function not covered" >function(number, gemType) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if(itemCountText.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >          itemCountText += '+';</span>
+        }
+<span class="cstat-no" title="statement not covered" >        itemCountText += number;</span>
+      });
+      
+<span class="cstat-no" title="statement not covered" >      itemCountText = totalIncreasingGems + ' (' + itemCountText + ') / ' + numIncreasingSlots;</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >      var numItems = 0;</span>
+<span class="cstat-no" title="statement not covered" >      angular.forEach(allItems, <span class="fstat-no" title="function not covered" >function(item, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if(item &amp;&amp; item.typeName == vm.category.name) {</span>
+<span class="cstat-no" title="statement not covered" >          numItems++;</span>
+        }
+      });
+      
+<span class="cstat-no" title="statement not covered" >      itemCountText = numItems;</span>
+<span class="cstat-no" title="statement not covered" >      var cat = itemCategory.byName(vm.category.name);</span>
+<span class="cstat-no" title="statement not covered" >      if(cat &amp;&amp; 'numItemText' in cat) {</span>
+<span class="cstat-no" title="statement not covered" >        itemCountText += ' / ' + cat.numItemText;</span>
+      }
+    }
+    
+<span class="cstat-no" title="statement not covered" >    return itemCountText + ' ' + vm.category.name;</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.handleChange = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    vm.onChange();</span>
+  }
+  
+}])
+.directive('dngearsimBuild', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    scope: true,
+    bindToController: {
+      buildName: '=buildName',
+      build: '=build',
+      onChange: '&amp;onChange'
+    },
+    controller: 'buildCtrl',
+    controllerAs: 'buildCtrl',
+    templateUrl: 'ui/builds/build.html'
+  };
+});</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jul 13 2016 22:20:53 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

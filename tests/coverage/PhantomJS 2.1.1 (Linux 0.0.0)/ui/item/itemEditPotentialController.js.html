@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ui/item/itemEditPotentialController.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">ui/item/</a> itemEditPotentialController.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.05% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/74</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/44</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.11% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/73</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('dnsim').controller('itemEditPotentialCtrl',
+&nbsp;
+['dntData','items','hCodeValues',
+<span class="fstat-no" title="function not covered" >function(dntData,items,hCodeValues) {</span>
+  'use strict';
+  
+<span class="cstat-no" title="statement not covered" >  this.potentials = null;</span>
+<span class="cstat-no" title="statement not covered" >  this.potential = null;</span>
+<span class="cstat-no" title="statement not covered" >  this.changingPotentials = false;</span>
+<span class="cstat-no" title="statement not covered" >  this.potentialStats = {};</span>
+  
+<span class="cstat-no" title="statement not covered" >  if(this.item == null) <span class="cstat-no" title="statement not covered" >return;</span></span>
+  
+<span class="cstat-no" title="statement not covered" >  if('itemSource' in this.item) {</span>
+<span class="cstat-no" title="statement not covered" >    this.itemType = items[this.item.itemSource];</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  if(!this.itemType || !this.item.pid || !('potentialDnt' in this.itemType)) {</span>
+<span class="cstat-no" title="statement not covered" >    return;</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  var vm = this;</span>
+  
+<span class="cstat-no" title="statement not covered" >  this.getPotentials = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    if(!vm.potentials) {</span>
+<span class="cstat-no" title="statement not covered" >      if(vm.item &amp;&amp; vm.item.pid &amp;&amp; 'potentialDnt' in vm.itemType) {</span>
+<span class="cstat-no" title="statement not covered" >        var potentials = dntData.find(vm.itemType.potentialDnt, 'id', vm.item.pid);</span>
+        
+<span class="cstat-no" title="statement not covered" >        if(potentials.length == 1) {</span>
+<span class="cstat-no" title="statement not covered" >          vm.potential = potentials[0];</span>
+<span class="cstat-no" title="statement not covered" >          vm.potentials = dntData.find(vm.itemType.potentialDnt, 'PotentialID', vm.potential.PotentialID);</span>
+<span class="cstat-no" title="statement not covered" >          vm.potentialStats = getPotentialStats(vm.potentials);</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if('potentialDntEx' in vm.itemType) {</span>
+<span class="cstat-no" title="statement not covered" >          potentials = dntData.find(vm.itemType.potentialDntEx, 'id', vm.item.pid);</span>
+        
+<span class="cstat-no" title="statement not covered" >          if(potentials.length == 1) {</span>
+<span class="cstat-no" title="statement not covered" >            vm.potential = potentials[0];</span>
+<span class="cstat-no" title="statement not covered" >            vm.potentials = dntData.find(vm.itemType.potentialDntEx, 'PotentialID', vm.potential.PotentialID);</span>
+<span class="cstat-no" title="statement not covered" >            vm.potentialStats = getPotentialStats(vm.potentials);</span>
+          }
+        }
+      }
+    }
+    
+<span class="cstat-no" title="statement not covered" >    return vm.potentials;</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.nextPotential = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    for(var i=0;i&lt;vm.potentials.length;++i) {</span>
+<span class="cstat-no" title="statement not covered" >      if(vm.potential.id == vm.potentials[i].id) {</span>
+<span class="cstat-no" title="statement not covered" >        vm.potential = vm.potentials[i+1];</span>
+<span class="cstat-no" title="statement not covered" >        vm.item.pid = vm.potential.id;</span>
+<span class="cstat-no" title="statement not covered" >        vm.onChange();</span>
+<span class="cstat-no" title="statement not covered" >        this.changingPotentials = true;</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+    }
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.prevPotential = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    for(var i=0;i&lt;vm.potentials.length;++i) {</span>
+<span class="cstat-no" title="statement not covered" >      if(vm.potential.id == vm.potentials[i].id) {</span>
+<span class="cstat-no" title="statement not covered" >        vm.potential = vm.potentials[i-1];</span>
+<span class="cstat-no" title="statement not covered" >        vm.item.pid = vm.potential.id;</span>
+<span class="cstat-no" title="statement not covered" >        vm.onChange();</span>
+<span class="cstat-no" title="statement not covered" >        this.changingPotentials = true;</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+    }
+  }
+    
+<span class="cstat-no" title="statement not covered" >  this.changePotential = <span class="fstat-no" title="function not covered" >function(pid) {</span></span>
+<span class="cstat-no" title="statement not covered" >    for(var i=0;i&lt;vm.potentials.length;++i) {</span>
+<span class="cstat-no" title="statement not covered" >      if(pid == vm.potentials[i].id) {</span>
+<span class="cstat-no" title="statement not covered" >        vm.potential = vm.potentials[i];</span>
+<span class="cstat-no" title="statement not covered" >        vm.item.pid = vm.potential.id;</span>
+<span class="cstat-no" title="statement not covered" >        vm.changingPotentials = false;</span>
+<span class="cstat-no" title="statement not covered" >        vm.onChange();</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+    }
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.isFirstPotential = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    this.getPotentials();</span>
+<span class="cstat-no" title="statement not covered" >    return !vm.potentials || vm.potentials.length &lt;= 1 || !vm.potential || vm.potential.id == vm.potentials[0].id;</span>
+  }
+  
+<span class="cstat-no" title="statement not covered" >  this.isLastPotential = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    this.getPotentials();</span>
+<span class="cstat-no" title="statement not covered" >    return !vm.potentials || vm.potentials.length &lt;= 1 || !vm.potential || vm.potential.id == vm.potentials[vm.potentials.length-1].id;</span>
+  }
+  
+<span class="fstat-no" title="function not covered" >  function getPotentialStats() {</span>
+<span class="cstat-no" title="statement not covered" >    var pStats = {};</span>
+<span class="cstat-no" title="statement not covered" >    var emptyStatId = null;</span>
+    
+<span class="cstat-no" title="statement not covered" >    if(vm.potentials != null) {</span>
+<span class="cstat-no" title="statement not covered" >      angular.forEach(vm.potentials, <span class="fstat-no" title="function not covered" >function(p, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var stats = [];</span>
+<span class="cstat-no" title="statement not covered" >        angular.forEach(hCodeValues.getStats(p), <span class="fstat-no" title="function not covered" >function(stat, sIndex) {</span></span>
+<span class="cstat-no" title="statement not covered" >          if(!hCodeValues.stats[stat.id].hide) {</span>
+<span class="cstat-no" title="statement not covered" >            stats.push(stat);</span>
+          }
+        });
+        
+<span class="cstat-no" title="statement not covered" >        if(stats.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >          pStats[p.id] = stats;</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if(!emptyStatId) {</span>
+<span class="cstat-no" title="statement not covered" >          pStats[p.id] = [];</span>
+<span class="cstat-no" title="statement not covered" >          emptyStatId = p.id;</span>
+        }
+      });
+    }
+    
+<span class="cstat-no" title="statement not covered" >    return pStats;</span>
+  }
+  
+<span class="fstat-no" title="function not covered" >  function reportProgress(msg) {</span>
+    // console.log('progress: ' + msg);
+  }
+&nbsp;
+}])
+.directive('dngearsimItemEditPotential', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    scope: true,
+    bindToController: {
+      item: '=item',
+      onChange: '&amp;onChange',
+    },
+    controller: 'itemEditPotentialCtrl',
+    controllerAs: 'editCtrl',
+    templateUrl: 'ui/item/item-edit-potential.html'
+  };
+});</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jul 13 2016 22:20:53 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

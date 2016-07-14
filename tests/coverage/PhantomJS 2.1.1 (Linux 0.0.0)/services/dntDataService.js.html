@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for services/dntDataService.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">services/</a> dntDataService.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">39.25% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>42/107</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>15/50</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">57.14% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>16/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">39.62% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>42/106</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">(function () {
+'use strict';
+&nbsp;
+angular.module('dnsim').factory('dntData', ['$rootScope','$timeout',dntData]);
+&nbsp;
+function dntData($rootScope,$timeout) {
+  
+  function createLoader(dntLocation, file, colsToLoad) {
+&nbsp;
+    var loader = {
+      reader: new DntReader(),
+      
+      loaded: false,
+      startedLoading: false,
+      
+      file: file,
+      
+      dntLocation: dntLocation,
+      progressCallback: null,
+      completeCallbacks : [],
+      
+      init: function(progress, complete) {
+        
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(this.loaded) {
+<span class="cstat-no" title="statement not covered" >          complete();</span>
+        }
+        else {
+          this.progressCallback = progress;
+          this.completeCallbacks.push(complete);
+          
+          <span class="missing-if-branch" title="else path not taken" >E</span>if(!this.startedLoading) {
+            this.startedLoading = true;
+            var t = this;
+            
+            this.reader.colsToLoad = colsToLoad;
+            
+            <span class="missing-if-branch" title="if path not taken" >I</span>if(this.dntLocation != null &amp;&amp; 
+<span class="branch-1 cbranch-no" title="branch not covered" >              this.dntLocation.url != null </span>&amp;&amp;
+<span class="branch-2 cbranch-no" title="branch not covered" >              this.dntLocation.url.length &gt; 0)</span> {
+                
+<span class="cstat-no" title="statement not covered" >              $rootScope.$broadcast('DNTDATA_LOAD_EVENT');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >              $timeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                t.reader.loadDntFromServerFile(</span>
+                  t.dntLocation.url + '/' + file,
+<span class="fstat-no" title="function not covered" >                  function(msg) {</span> <span class="cstat-no" title="statement not covered" >if(t.progressCallback != null) <span class="cstat-no" title="statement not covered" >t.progressCallback(msg) }</span></span>, 
+<span class="fstat-no" title="function not covered" >                  function(result, fileName) {</span>
+                    // console.info('dnt loading complete : ' + file);
+<span class="cstat-no" title="statement not covered" >                    t.loaded = true;</span>
+                    
+<span class="cstat-no" title="statement not covered" >                    angular.forEach(t.completeCallbacks, <span class="fstat-no" title="function not covered" >function(value, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >                      value();</span>
+                    });
+<span class="cstat-no" title="statement not covered" >                    t.completeCallbacks = [];</span>
+<span class="cstat-no" title="statement not covered" >                    $rootScope.$broadcast('DNTDATA_LOAD_EVENT');</span>
+                  },
+<span class="fstat-no" title="function not covered" >                  function(msg) {</span>
+<span class="cstat-no" title="statement not covered" >                    $rootScope.$broadcast('DNTDATA_LOAD_ERROR');</span>
+<span class="cstat-no" title="statement not covered" >                    t.startedLoading = false;</span>
+<span class="cstat-no" title="statement not covered" >                    t.loaded = false;</span>
+                  }  );
+              });
+            }
+            else {
+              // console.log("dnt location not set!");
+            }
+          }
+        }
+      },
+      
+      reset: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >        this.reader = new DntReader();</span>
+<span class="cstat-no" title="statement not covered" >        this.loaded = false;</span>
+<span class="cstat-no" title="statement not covered" >        this.startedLoading = false;</span>
+      }
+    }
+  
+    return loader;
+  };
+  
+  return {
+    loaders : {},
+    findIndexes : {},
+    dntLocation : null,
+    
+    setLocation: function(location) {
+      this.dntLocation = location;
+      var t = this;
+      angular.forEach(this.loaders, <span class="fstat-no" title="function not covered" >function(value, key) {</span>
+<span class="cstat-no" title="statement not covered" >        if(value.dntLocation != location) {</span>
+<span class="cstat-no" title="statement not covered" >          value.dntLocation = location;</span>
+<span class="cstat-no" title="statement not covered" >          t.reset(key);</span>
+        }
+      });
+    },
+    
+    init : function (fileName, colsToLoad, progress, complete) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if(!(fileName in this.loaders)) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(fileName.length &gt; 0) {
+          this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);
+        }
+      }
+      this.loaders[fileName].init(progress, complete);
+    },
+    getData : function (fileName) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(this.isLoaded(fileName)) {
+<span class="cstat-no" title="statement not covered" >        var reader = this.loaders[fileName].reader;</span>
+<span class="cstat-no" title="statement not covered" >        var retVal = new Array(reader.numRows);</span>
+<span class="cstat-no" title="statement not covered" >        for(var i=0;i&lt;reader.numRows;++i) {</span>
+<span class="cstat-no" title="statement not covered" >          retVal[i] = reader.getRow(i);</span>
+        }
+        
+<span class="cstat-no" title="statement not covered" >        return retVal;</span>
+      }
+      else {
+        return [];
+      }
+    },
+    find : function(fileName, column, value) {
+      var results = this.findFast(fileName, column, value);
+      var retVal = [];
+      var numResults = results.length;
+      for(var i=0;i&lt;numResults;++i) {
+<span class="cstat-no" title="statement not covered" >        retVal.push(this.getRow(fileName, results[i]));</span>
+      }
+      
+      return retVal;
+    },
+    findFast : function(fileName, column, value) {
+      
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(this.isLoaded(fileName)) {
+<span class="cstat-no" title="statement not covered" >        if(!(fileName in this.findIndexes)){</span>
+<span class="cstat-no" title="statement not covered" >          this.findIndexes[fileName] = {};</span>
+        }
+        
+<span class="cstat-no" title="statement not covered" >        var reader = this.loaders[fileName].reader;</span>
+<span class="cstat-no" title="statement not covered" >        var colIndex = reader.columnIndexes[column];</span>
+        
+<span class="cstat-no" title="statement not covered" >        var findIndex = this.findIndexes[fileName];</span>
+        
+<span class="cstat-no" title="statement not covered" >        if(!(column in findIndex)) {</span>
+<span class="cstat-no" title="statement not covered" >          var index = {}</span>
+<span class="cstat-no" title="statement not covered" >          findIndex[column] = index;</span>
+          
+<span class="cstat-no" title="statement not covered" >          var results = [];</span>
+          
+<span class="cstat-no" title="statement not covered" >          var data = reader.data;</span>
+<span class="cstat-no" title="statement not covered" >          var len = data.length;</span>
+<span class="cstat-no" title="statement not covered" >          for(var r=0;r&lt;len;++r) {</span>
+<span class="cstat-no" title="statement not covered" >            var d = data[r];</span>
+<span class="cstat-no" title="statement not covered" >            var val = d[colIndex];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if(!(val in index)) {</span>
+<span class="cstat-no" title="statement not covered" >              index[val] = [r];</span>
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >              index[val].push(r);</span>
+            }
+          }
+        }
+        
+<span class="cstat-no" title="statement not covered" >        if(value in findIndex[column]) {</span>
+<span class="cstat-no" title="statement not covered" >          return findIndex[column][value];</span>
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >          return [];</span>
+        }
+      }
+      
+      return [];
+    },
+    isLoaded : function(fileName) {
+      return fileName in this.loaders &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this.loaders[fileName].loaded;</span>
+    },
+    hasStartedLoading : function(fileName) {
+      return this.isLoaded(fileName) || (fileName in this.loaders &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >this.loaders[fileName].startedLoading)</span>;
+    },
+    reset : function(fileName) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(fileName in this.loaders) {
+<span class="cstat-no" title="statement not covered" >        this.loaders[fileName].reset();</span>
+<span class="cstat-no" title="statement not covered" >        delete this.loaders[fileName];</span>
+<span class="cstat-no" title="statement not covered" >        delete this.findIndexes[fileName];</span>
+      }
+    },
+    resetAll : function() {
+      var t = this;
+      angular.forEach(this.loaders, <span class="fstat-no" title="function not covered" >function(value, key) {</span>
+<span class="cstat-no" title="statement not covered" >        t.reset(key);</span>
+      });
+    },
+    anyLoading : <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >      var t = this;</span>
+<span class="cstat-no" title="statement not covered" >      var found = 0;</span>
+<span class="cstat-no" title="statement not covered" >      angular.forEach(this.loaders, <span class="fstat-no" title="function not covered" >function(value, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if(!value.loaded &amp;&amp; value.startedLoading) {</span>
+<span class="cstat-no" title="statement not covered" >          found++;</span>
+        }
+      });
+      
+<span class="cstat-no" title="statement not covered" >      return found;</span>
+    },
+    getNumRows : function(fileName) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(this.isLoaded(fileName)) {
+<span class="cstat-no" title="statement not covered" >        return this.loaders[fileName].reader.numRows;</span>
+      }
+      else {
+        return 0;
+      }
+    },
+    getRow : function(fileName, index) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(this.isLoaded(fileName)) {
+<span class="cstat-no" title="statement not covered" >        return this.loaders[fileName].reader.getRow(index);</span>
+      }
+      else {
+        return {};
+      }
+    },
+    lookupValue: function(fileName, data, columnName) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if(this.isLoaded(fileName)) {
+<span class="cstat-no" title="statement not covered" >        return data[this.loaders[fileName].reader.columnNames[columnName]];</span>
+      }
+      else {
+        return null;
+      }
+    },
+    convertData: <span class="fstat-no" title="function not covered" >function(fileName, data) {</span>
+<span class="cstat-no" title="statement not covered" >      if(this.isLoaded(fileName)) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.loaders[fileName].reader.convertData(data);</span>
+      }
+      else {
+<span class="cstat-no" title="statement not covered" >        return null;</span>
+      }
+    },
+    getValue : <span class="fstat-no" title="function not covered" >function(fileName, index, columnName) {</span>
+<span class="cstat-no" title="statement not covered" >      if(this.isLoaded(fileName)) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.loaders[fileName].reader.getValue(index, columnName);</span>
+      }
+      else {
+<span class="cstat-no" title="statement not covered" >        return null;</span>
+      }
+    }
+  };
+}
+&nbsp;
+})();</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jul 13 2016 22:20:53 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -15,7 +15,7 @@ describe('initItem', function () {
   it('populates null with basic info from data', function() {
     var d = {
       id: 123,
-      NameIDParam: 44,
+      NameID: 44,
       TypeParam2: 55,
       EnchantID: 66,
       LevelLimit: 90,
