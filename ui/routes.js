@@ -88,8 +88,8 @@ function config($routeProvider) {
     }).
     
     when('/item/:region?/:itemString*', {
-      templateUrl: 'ui/item/equipment.html',
-      controller: 'EquipmentCtrl',
+      templateUrl: 'ui/item/item.html',
+      controller: 'ItemCtrl',
       reloadOnSearch: false,
     }).
     

@@ -1,4 +1,4 @@
-angular.module('dnsim').controller('EquipmentCtrl',
+angular.module('dnsim').controller('ItemCtrl',
 ['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region','itemFactory',
 function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region,itemFactory) {
   'use strict';

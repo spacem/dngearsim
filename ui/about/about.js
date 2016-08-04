@@ -1,3 +1,5 @@
+(function () {
+'use strict';
 angular.module('dnsim')
 .controller('AboutCtrl', 
   ['$window',
@@ -7,3 +9,4 @@ angular.module('dnsim')
     $window.document.title = 'DN Gear Sim';
   }]
 );
+})();
