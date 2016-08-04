@@ -2,8 +2,10 @@ var gulp = require('gulp');
 
 gulp.task('default', function() {
     gulp.start('html');
-    gulp.start('js');
     gulp.start('libs');
+    gulp.start('dntviewer');
+    gulp.start('js');
+    gulp.start('test');
 });
 
 // html templates
@@ -37,10 +39,26 @@ gulp.task('js', function() {
 gulp.task('libs', function() {
   gulp.src([
       'bower_components/lz-string/libs/lz-string.min.js',
+      'bower_components/angular/angular.min.js',
+      'bower_components/angular-route/angular-route.min.js',
       'bower_components/angulartics/dist/angulartics.min.js',
       'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
     ])
+    .pipe(uglify())
     .pipe(concat('libs.min.js'))
+    .pipe(gulp.dest('min'))
+})
+
+gulp.task('dntviewer', function() {
+  gulp.src([
+      '../dntviewer/simplerreader.js',
+      '../dntviewer/dntreader.js',
+      '../dntviewer/dntranslations.js',
+    ])
+    .pipe(sourcemaps.init())
+    .pipe(concat('dntviewer.min.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('min'))
 })
 
@@ -74,7 +92,7 @@ gulp.task('tdd', function (done) {
 });
 
 // watcher
-gulp.task('watch', ['default', 'test'], function() {
-  gulp.watch(['services/**/*.js', 'ui/**/*.js', 'ui/**/*.html', 'tests/**/*.js'], ['default', 'test'])
+gulp.task('watch', ['default'], function() {
+  gulp.watch(['services/**/*.js', 'ui/**/*.js', 'ui/**/*.html', 'tests/**/*.js'], ['default'])
 })
 

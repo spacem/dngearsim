@@ -5,7 +5,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   'use strict';
   
   if(this.item == null) return;
-  if(this.item.typeId != 46 && this.item.typeId != 8) {
+  if(this.item.typeId != 46 && this.item.typeId != 8 && this.item.typeId != 112) {
     console.log('not box item type ' + this.item.typeId);
     return;
   }
@@ -39,7 +39,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   var commonCharmItemtable = 'charmitemtable_common.lzjson';
   
   var files;
-  if(this.item.typeId == 46) {
+  if(this.item.typeId == 46 || this.item.typeId == 112) {
     files = [allItemFileName, charmItemtable, commonCharmItemtable];
   }
   else if (this.item.typeId == 8) {
@@ -69,20 +69,23 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
       vm.items = [];
       
       
-      if(vm.item.typeId == 46) {
+      if(vm.item.typeId == 46 || vm.item.typeId == 112) {
         vm.getCharmItems(d.TypeParam1);
       }
       else if (vm.item.typeId == 8) {
-        for(var f=0;f<pouchFileNames.length;++f) {
-          vm.getPouchItems(d.TypeParam1, pouchFileNames[f]);
-        }
+        vm.getPouchItems(d.TypeParam1);
       }
       
     }
   }
   
-  this.getPouchItems = function(boxType, pouchFileName) {
-    // console.log('checking ' + pouchFileName + ' for ' + boxType);
+  this.getPouchItems = function(boxType) {
+    for(var f=0;f<pouchFileNames.length;++f) {
+      vm.getPouchItemsFromFile(boxType, pouchFileNames[f]);
+    }
+  }
+  
+  this.getPouchItemsFromFile = function(boxType, pouchFileName) {
     
     var pouchData = dntData.find(pouchFileName, 'id', boxType);
     if(pouchData.length == 0) {
@@ -102,14 +105,16 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
             vm.getPouchItems(pouchItem, pouchFileName);
           }
           else {
+            // console.log('adding item ' + pouchItem);
             var itemds = dntData.find(allItemFileName, 'id', pouchItem);
             if(itemds.length > 0) {
-              //console.log('found item ');
+              var basicItem = itemFactory.createBasicItem(itemds[0]);
+              // console.log('found item ' + basicItem.name);
   
               vm.items.push({
                 count: pouchItemCount,
                 gold: gold,
-                item: itemFactory.createBasicItem(itemds[0])
+                item: basicItem
               });
             }
           }

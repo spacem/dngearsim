@@ -158,7 +158,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         $scope.canUse = true;
         $scope.detail = 'use';
       }
-      else if($scope.item.typeId == 46 || $scope.item.typeId == 8) {
+      else if($scope.item.typeId == 46 || $scope.item.typeId == 8 || $scope.item.typeId == 112) {
         $scope.hasContents = true;
         $scope.detail = 'contents';
       }

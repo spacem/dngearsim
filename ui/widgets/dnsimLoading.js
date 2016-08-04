@@ -32,6 +32,7 @@ function dnsimLoading(dntData, translations, $timeout) {
         });
       });
 
+      $scope.numLoading = 0;
       $scope.setLoadCount = function() {
         var n = dntData.anyLoading();
         if(!translations.isLoaded())

@@ -37,7 +37,7 @@ function dntData($rootScope,$timeout) {
             if(this.dntLocation != null && 
               this.dntLocation.url != null &&
               this.dntLocation.url.length > 0) {
-                
+
               $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
 
               $timeout(function() {
