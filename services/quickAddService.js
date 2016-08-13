@@ -152,7 +152,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           
           return [
           { id: 2, name: 'rare' },
-          { id: 999, name: 'quality' },
+          { id: 999, name: 'quality high grade' },
           { id: 1, name: 'magic' },
           { id: 0, name: 'normal' },
           ];
@@ -160,7 +160,11 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         matchesItem: function(id, item) {
           itemFactory.initItem(item);
           if(item.name) {
-            var index = item.name.indexOf('Quality');
+            // todo: change this to use the name id
+            var index = Math.max(
+              item.name.indexOf('Quality'),
+              item.name.indexOf('High Grade'));
+              
             if(id == 999) {
               return index == 0;
             }
@@ -177,14 +181,16 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           
           return [
           { id: 5, name: 'legendary' },
-          { id: 999, name: 'quality epic' },
+          { id: 999, name: 'quality high grade epic' },
           { id: 3, name: 'epic' },
           ];
         },
         matchesItem: function(id, item) {
           itemFactory.initItem(item);
           if(item.name) {
-            var index = item.name.indexOf('Quality');
+            var index = Math.max(
+              item.name.indexOf('Quality'),
+              item.name.indexOf('High Grade'));
             if(id == 999) {
               return item.rank.id == 3 && index == 0;
             }
