@@ -1,0 +1,27 @@
+<br />Thanks for logging in {{ctrl.user.displayName || ctrl.user.email}}
+<br>
+<br>
+Below are your local builds and saved builds.
+For now you can save/load these. This screen is under development and will probably change a lot.
+<br>
+<br>
+Be warned that builds saved online might get deleted.
+<br>
+<br>
+Saving builds online will overwrite whatever is there.
+Loading builds locally will rename the build if one exists.
+<br>
+<br>
+Eventually you may be able to browse builds from other users so dont save any builds you want to keep private.
+
+<h3>local builds</h3>
+<div ng-repeat="(buildName, build) in ctrl.builds track by $index">
+  <button class="btn btn-default" ng-click="ctrl.save(buildName, build)">save online</button>
+  {{buildName}}
+</div>
+
+<h3>server builds</h3>
+<div ng-repeat="(buildName, build) in ctrl.storedBuilds track by $index">
+  <button class="btn btn-default" ng-click="ctrl.load(buildName, build)">load to browser</button>
+  {{buildName}}
+</div>

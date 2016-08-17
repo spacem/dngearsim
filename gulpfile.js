@@ -5,7 +5,6 @@ gulp.task('default', function() {
     gulp.start('libs');
     gulp.start('dntviewer');
     gulp.start('js');
-    gulp.start('test');
 });
 
 // html templates
@@ -43,6 +42,8 @@ gulp.task('libs', function() {
       'bower_components/angular-route/angular-route.min.js',
       'bower_components/angulartics/dist/angulartics.min.js',
       'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
+      'bower_components/firebase/firebase.js',
+      'bower_components/angularfire/dist/angularfire.min.js',
     ])
     .pipe(uglify())
     .pipe(concat('libs.min.js'))
@@ -65,7 +66,7 @@ gulp.task('dntviewer', function() {
 
 // test
 var Karma = require('karma').Server;
-gulp.task('test', ['default'], function (done) {
+gulp.task('test', ['libs','default'], function (done) {
   process.env.LC_ALL='C'; // prevent invalid language tag errors
   
   return new Karma({

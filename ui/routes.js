@@ -103,6 +103,11 @@ function config($routeProvider) {
       controller: 'BuildTalismansCtrl as ctrl',
     }).
     
+    when('/profile', {
+      templateUrl: 'ui/online/profile.html',
+      controller: 'ProfileCtrl as ctrl',
+    }).
+    
     otherwise({
       redirectTo: '/builds'
     });

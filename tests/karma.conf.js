@@ -5,12 +5,8 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
     port: 9876,
     files: [
-      '../bower_components/angular/angular.min.js',
-      '../bower_components/angular-route/angular-route.min.js',
-      '../bower_components/angular-animate/angular-animate.min.js',
-      '../bower_components/angular-mocks/angular-mocks.js',
-      
       '../min/libs.min.js',
+      '../bower_components/angular-mocks/angular-mocks.js',
       
       '../../dntviewer/simplerreader.js',
       '../../dntviewer/dntreader.js',
