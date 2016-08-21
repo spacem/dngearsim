@@ -8,6 +8,6 @@
     "angular-animate": "~1.5.7",
     "lz-string": "~1.4.4",
     "firebase": "~3.3.0",
-    "angularfire": "~2.0.1"
+    "underscore": "~1.8.3"
   }
 }

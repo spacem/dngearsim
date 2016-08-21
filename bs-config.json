@@ -4,5 +4,6 @@
     "min/app.min.js",
     "index.html",
     "dngearsim.css",
-    "app.js"]
+    "app.js"],
+  "ghostMode": false
 }

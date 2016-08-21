@@ -76,19 +76,6 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
     return finalJobs;
   }
   
-  this.getBaseJobs = function() {
-    return jobs.getBaseJobs();
-  }
-  
-  this.getJobName = function(englishName) {
-    var allJobs = jobs.getAllJobs();
-    for(var j=0;j<allJobs.length;++j) {
-      if(allJobs[j].d.EnglishName == englishName) {
-        return allJobs[j].name;
-      }
-    }
-  }
-  
   this.init = function(vm) {
     var newJobs = jobs.getFinalJobs();
     if(newJobs.length > 0) {
@@ -107,8 +94,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
     }
   }
   
-  this.setJob = function(job) {
-    this.job = job;
+  this.setJob = function() {
     $window.scrollTo(0, 0);
   }
   

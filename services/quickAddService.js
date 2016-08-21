@@ -16,9 +16,11 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
             var exId = category.limitExchange[e];
             
             var numExchange = 0;
-            for(var i=0;i<build.items.length;++i) {
-              if(build.items[i].exchangeType == exId) {
-                numExchange++;
+            if(build.items) {
+              for(var i=0;i<build.items.length;++i) {
+                if(build.items[i].exchangeType == exId) {
+                  numExchange++;
+                }
               }
             }
             
@@ -258,6 +260,8 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
               case 230: // Miraculous
               case 279: // Provoking
               // case 1280: // Dragon Tamer
+              case 1313: // Jakard's Demise
+              case 2032: // Sharing Goddess's Grief
                 usefulTitles.push(allTitles[i]);
             }
           }

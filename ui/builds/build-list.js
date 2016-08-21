@@ -58,6 +58,14 @@ angular.module('dnsim').controller('BuildListCtrl',
       $location.url('/builds/' + buildName);
     }
     
+    this.publish = function() {
+      $location.url('/publish');
+    }
+    
+    this.search = function() {
+      $location.url('/build-search');
+    }
+    
     $timeout(function() {
       $anchorScroll('/builds/' + vm.currentGroup);
     });

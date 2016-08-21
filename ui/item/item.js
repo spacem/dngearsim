@@ -179,6 +179,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
 
   
   function setFullStats() {
+    // full stats are cleared when publishing builds
     $scope.item.fullStats = $scope.item.stats;
     
     if($scope.item.enchantmentStats != null && $scope.item.enchantmentStats.length > 0) {

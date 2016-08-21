@@ -1,37 +1,6 @@
 <dnsim-loading>
-
-<div class="row" ng-if="!editGroup.job && !editGroup.bJob">
-  <div class="hidden-xs col-sm-4">&nbsp;</div>
-  <div class="col-xs-12 col-sm-8">
-    <br />
-    <label>choose the character class</label>
-  </div>
-  <div class="hidden-xs col-sm-4">&nbsp;</div>
-  <div class="col-xs-12 col-sm-4">
-    <button class="btn btn-default btn-block" ng-repeat="bJob in editGroup.getBaseJobs()" ng-click="editGroup.bJob = bJob">
-      <span class="class-image class-{{bJob}}"></span>
-      {{editGroup.getJobName(bJob)}}
-    </button>
-  </div>
-</div>
-<div class="row" ng-show="!editGroup.job && editGroup.bJob">
-  <div class="hidden-xs col-sm-4">&nbsp;</div>
-  <div class="col-xs-12 col-sm-8">
-    <br />
-    <label>choose the specialisation</label>
-  </div>
-  <div class="hidden-xs col-sm-4">&nbsp;</div>
-  <div class="col-xs-12 col-sm-4">
-    <button class="btn btn-default btn-block" ng-repeat="fJob in editGroup.getFinalJobs()" ng-click="editGroup.setJob(fJob)">
-      <dnsim-job-icon item="fJob"></dnsim-job-icon>
-      {{fJob.name}}
-    </button>
-    <button class="btn btn-default btn-block" ng-click="editGroup.bJob = null">
-      <span class="job-icon">&nbsp;</span>
-      &lt; different class
-    </button>
-  </div>
-</div>
+  
+<dnsim-choose-class ng-show="!editGroup.job" job="editGroup.job" on-set-job="setJob()"></dnsim-choose-class>
 <div class="row" ng-show="editGroup.job">
   <div class="col-xs-12">
     <h2>

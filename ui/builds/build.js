@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('buildCtrl',
 
-['$timeout','$location','hCodeValues','statHelper','itemCategory',
-function($timeout,$location,hCodeValues,statHelper,itemCategory) {
+['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper',
+function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
   'use strict';
   
   var vm = this;
@@ -16,7 +16,13 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
   }
   
   this.getCategoryItems = function() {
-    return itemCategory.getItemsByCategory(this.build.items)[vm.category.name];
+    var itemsByCat = itemCategory.getItemsByCategory(this.build.items);
+    if(vm.category.name in itemsByCat) {
+      return itemsByCat[vm.category.name];
+    }
+    else {
+      return [];
+    }
   }
   
   this.getCategories = function() {
@@ -124,6 +130,19 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
     vm.onChange();
   }
   
+  this.removeItem = function(item) {
+    item.removeItem = true;
+    var newItemList = [];
+    angular.forEach(vm.build.items, function(gItem, index) {
+      if(gItem && !gItem.removeItem) {
+        newItemList.push(gItem);
+      }
+    });
+    
+    saveHelper.updatedSavedItems(vm.buildName, newItemList);
+    vm.onChange();
+  }
+  
 }])
 .directive('dngearsimBuild', function() {
   return {
@@ -131,7 +150,8 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory) {
     bindToController: {
       buildName: '=buildName',
       build: '=build',
-      onChange: '&onChange'
+      onChange: '&onChange',
+      server: '=server'
     },
     controller: 'buildCtrl',
     controllerAs: 'buildCtrl',

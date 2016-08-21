@@ -19,7 +19,7 @@
   };
   firebase.initializeApp(config);
 </script>
-  <script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
+  <script src="//www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
@@ -27,7 +27,7 @@
   <script type="text/javascript">
     // FirebaseUI config.
     var uiConfig = {
-      'signInSuccessUrl': '.#/profile',
+      'signInSuccessUrl': '.#/publish',
       'signInOptions': [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -52,7 +52,7 @@
   <body>
     
 <div id="head" class="container-fluid chunkyness">
-  <div class="row">
+  <div class="row login">
     <div class="xs-col-12">
       <div class="container">
         <div class="row">
@@ -64,7 +64,7 @@
         </div>
         
         <div class="row">
-          <div class="login">
+          <div>
             <p class="text-right">
               <script>
                 function hideReset() {
@@ -76,6 +76,8 @@
                   document.getElementById('message').innerHTML = message;
                 }
               </script>
+              
+              <a href=".">skip log in</a><br />
               <button class="btn btn-link" onclick="document.getElementById('reset').style.visibility = 'visible'"> reset password </button><br />
               <span id="reset" style="visibility : hidden">
                 <input id="email" value="username@email"></input><br />
@@ -83,8 +85,6 @@
               </span><br />
               <span id="message"></span>
             </p>
-            <div id="firebaseui-auth-container">
-            </div>
           </div>
       </div>
 
@@ -93,11 +93,14 @@
   </div>
 </div>
 
+<div id="firebaseui-auth-container">
+</div>
   
 <footer>
   <div class="hidden-xs container-fluid chunkyness navbar-fixed-bottom">
   <div class="container text-right">
     <a href="https://discord.gg/011C92KwJWoCfRcEY">join discord chatroom</a> |
+    <a href="https://www.facebook.com/dngearsim">facebook page</a> |
     <a href="https://github.com/spacem/dngearsim">browse source code</a>
   </div>
   </div>

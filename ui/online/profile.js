@@ -1,38 +1,40 @@
 (function () {
 'use strict';
-angular.module('dnsim').controller('ProfileCtrl', ['$timeout', 'saveHelper', login]);
+angular.module('dnsim').controller('ProfileCtrl', ['$location', '$routeParams', 'onlineService', profile]);
 
-function login($timeout, saveHelper) {
+function profile($location, $routeParams, onlineService) {
   'use strict';
   
   var vm = this;
+  vm.uid = $routeParams.uid;
   
-  vm.builds = saveHelper.getSavedItems();
+  getSavedBuilds();
+  getProfile();
   
-  var config = {
-    apiKey: "AIzaSyC-Mckgho1xAI2SQzsKnpsr2ObDKOhdSrE",
-    authDomain: "dngearsim.firebaseapp.com",
-    databaseURL: "https://dngearsim.firebaseio.com",
-    storageBucket: "dngearsim.appspot.com",
-  };
-  firebase.initializeApp(config);
-  
-  var auth = firebase.auth();
-  
-  auth.onAuthStateChanged(function(user) {
-    vm.user = user;
-    $timeout();
-    
-    firebase.database().ref('builds/' + vm.user.uid).on('value', function(storedBuilds) {
-      vm.storedBuilds = storedBuilds.val();
-      $timeout();
+  function getSavedBuilds() {
+    onlineService.getUserBuilds(vm.uid).then(function(builds) {
+      if(builds) {
+        vm.storedBuilds = builds;
+      }
+      else {
+        vm.storedBuilds = {};
+      }
     });
-    
-    console.log('got user: ', user);
-  });
+  }
   
-  this.save = function(buildName, build) {
-    firebase.database().ref('builds/' + vm.user.uid + '/' + buildName).set(angular.copy(build));
+  function getProfile() {
+    onlineService.getProfile(vm.uid).then(function(profile) {
+      if(profile) {
+        vm.profile = profile;
+      }
+      else {
+        vm.profile = {};
+      }
+    });
+  }
+  
+  this.openServer = function(buildName) {
+    $location.path('/published/' + vm.uid + '/' + buildName);
   }
   
   this.load = function(buildName, build) {
@@ -56,24 +58,9 @@ function login($timeout, saveHelper) {
       build.heroStats);
       
     vm.builds = saveHelper.getSavedItems();
+    
+    $location.path('/builds/' + newGroupName);
   }
-  
-  this.signOut = function() {
-    auth.signOut().then(function() {
-      // Sign-out successful.
-    }, function(error) {
-      // An error happened.
-    });
-  }
-  
-  this.resetPassword = function() {
-    auth.sendPasswordResetEmail(vm.user.email).then(function() {
-      // Email sent.
-    }, function(error) {
-      // An error happened.
-    });
-  }
-  
 }
 
 })();

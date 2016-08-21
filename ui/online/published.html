@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-xs-12" ng-if="!ctrl.profile || !ctrl.build">
+    loading...
+  </div>
+  <div class="col-xs-12" ng-if="ctrl.profile && ctrl.build">
+    <h3>
+      <dnsim-job-icon item="ctrl.build.job"></dnsim-job-icon>
+      {{ctrl.buildName}} 
+      <span ng-if="ctrl.build.guild">[{{ctrl.build.guild}}]</span>
+      <small>
+        <span ng-if="ctrl.build.region">in {{ctrl.build.region}}</span>
+        <span ng-if="ctrl.build.about">
+          <br />
+          <em>
+            {{ctrl.build.about}}
+          </em>
+        </span>
+        <br />
+        <span dnsim-stats build="ctrl.build" stats="ctrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'" />
+      </small>
+    </h3>
+    
+    <p>
+      created by: <a ng-href="#/profile/{{ctrl.uid}}">{{ctrl.profile.name || 'unnamed user'}}</a>
+      <br />
+      <em>{{ctrl.profile.about}}</em>
+    </p>
+    
+    <button class="btn btn-default" ng-click="ctrl.copyLocally()">
+      copy into local builds
+    </button>
+
+    <dngearsim-build server="true" build-name="ctrl.buildName" build="ctrl.build">
+    </dngearsim-build>
+  </div>
+</div>

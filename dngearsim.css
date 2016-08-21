@@ -242,11 +242,15 @@ background-position: -530px 0px;
 background-position: -610px -10px;
 }
 .login {
+  height:100vh;
   background: url(images/Npc_left_argenta.png) no-repeat center top;
 }
 #firebaseui-auth-container {
-  padding-top:100px;
-  padding-bottom:100px;
+  position: fixed;
+  bottom: 5vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   opacity: 0.8;
   filter: alpha(opacity=80);
 }

@@ -103,9 +103,29 @@ function config($routeProvider) {
       controller: 'BuildTalismansCtrl as ctrl',
     }).
     
-    when('/profile', {
+    when('/publish', {
+      templateUrl: 'ui/online/publish.html',
+      controller: 'PublishCtrl as ctrl',
+    }).
+    
+    when('/publish', {
+      templateUrl: 'ui/online/publish.html',
+      controller: 'PublishCtrl as ctrl',
+    }).
+    
+    when('/profile/:uid', {
       templateUrl: 'ui/online/profile.html',
       controller: 'ProfileCtrl as ctrl',
+    }).
+    
+    when('/published/:uid/:buildName*', {
+      templateUrl: 'ui/online/published.html',
+      controller: 'PublishedCtrl as ctrl',
+    }).
+    
+    when('/build-search/:jobId?', {
+      templateUrl: 'ui/online/build-search.html',
+      controller: 'BuildSearchCtrl as ctrl',
     }).
     
     otherwise({

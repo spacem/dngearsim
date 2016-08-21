@@ -1,6 +1,6 @@
 <div class="col-xs-12" id="/builds/{{buildCtrl.buildName}}">
   <div class="row">
-    <div class="col-xs-12 col-md-6 col-lg-7 group-header" ng-click="buildCtrl.toggleGroup()">
+    <div class="col-xs-12 col-md-6 col-lg-7 group-header" ng-click="buildCtrl.toggleGroup()" ng-if="!buildCtrl.server">
       <button class="btn btn-link btn-block group-header-btn">
         <h3 class="text-left">
         <dnsim-job-icon item="buildCtrl.build.job"></dnsim-job-icon>
@@ -15,7 +15,7 @@
       </button>
     </div>
     <dnsim-loading>
-    <div class="col-xs-12 col-md-6 col-lg-5">
+    <div class="col-xs-12 col-md-6 col-lg-5" ng-if="!buildCtrl.server">
       <br class="hidden-xs hidden-sm" /><br class="hidden-xs hidden-sm" />
       <dngearsim-build-actions build-name="buildCtrl.buildName" build="buildCtrl.build" on-change="buildCtrl.handleChange()">
       </dngearsim-build-actions>
@@ -48,7 +48,7 @@
               
               <tr><th>{{buildCtrl.getItemCount()}}</th></tr>
               
-              <tr><th>
+              <tr ng-if="!buildCtrl.server"><th>
                 <dngearsim-quick-add build="buildCtrl.build" build-name="buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
                 <span ng-if="buildCtrl.category.name == 'talisman'">&nbsp;|&nbsp;
                   <a class="btn btn-link" href="#talismans">
@@ -58,10 +58,17 @@
               </th></tr>
               
               <tr ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
-                <td><dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item></td>
+                <td>
+                  <dngearsim-build-item build="buildCtrl.build" build-name="buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item>
+                  <div ng-if="!buildCtrl.server">
+                    <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);">
+                      remove
+                    </button>
+                  </div>
+                </td>
               </tr>
               
-              <tr><th>
+              <tr ng-if="!buildCtrl.server"><th>
                   <a href="#/{{buildCtrl.category.path}}">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     search {{buildCtrl.category.name}}

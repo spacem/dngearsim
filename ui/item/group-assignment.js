@@ -92,7 +92,10 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     
     var origStats = vm.getGroupCalcStats();
     var group = vm.savedItems[vm.groupName];
-    var newItems = group.items.concat([vm.item]);
+    var newItems = [];
+    if(group.items) {
+      newItems = group.items.concat([vm.item]);
+    }
     var newStats = vm.getCalculatedStats(group, newItems);
     
     this.addAffectAmount = {};

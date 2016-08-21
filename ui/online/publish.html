@@ -1,0 +1,139 @@
+<dnsim-loading>
+
+<div class="row" ng-if="!ctrl.getUser()">
+  <div class="col-xs-12">
+    <br />
+    authenticating with firebase...
+  </div>
+</div>
+<div class="row" ng-if="ctrl.getUser()">
+  <div class="col-xs-12">
+    <h4>Logged In</h4>
+    Welcome {{ctrl.getUser().displayName || ctrl.getUser().email}}
+    <br /><br />
+  </div>
+  <div class="col-xs-12">
+    <button class="btn btn-link" ng-disabled="ctrl.show == 'profile' || !ctrl.show" ng-click="ctrl.show = 'profile'">profile</button> |
+    <button class="btn btn-link" ng-disabled="ctrl.show == 'builds'" ng-click="ctrl.show = 'builds'">builds</button> |
+    <button class="btn btn-link" ng-disabled="ctrl.show == 'delete'" ng-click="ctrl.show = 'delete'">delete account</button> |
+    <button class="btn btn-link" ng-click="ctrl.signOut()">log out</button>
+    <br /><br />
+  </div>
+  
+  <div class="col-xs-12" ng-if="ctrl.show == 'delete'">
+    <br />
+    <button class="btn btn-default" ng-click="ctrl.deleteAccount()">really delete?<br />all data will be lost<br />click to proceed</button>
+    <br /><br />
+  </div>
+      
+  <div class="col-xs-6" ng-if="!ctrl.profile && (!ctrl.show || ctrl.show == 'profile')">
+    loading...
+  </div>
+  
+  <div class="col-xs-12 form-group" ng-if="ctrl.profile && (!ctrl.show || ctrl.show == 'profile')">
+    <label>display name </label><br />
+    <input ng-model="ctrl.profile.name"></input>
+    <br /><br />
+    <label>about you</label>
+    <textarea ng-model="ctrl.profile.about" class="form-control" rows="5"></textarea>
+    <br />
+    <button ng-click="ctrl.saveProfile()" class="btn btn-default">save</button>
+    
+    <a class="btn btn-link" ng-href="#/profile/{{ctrl.getUser().uid}}">view profile page</a>
+    <br />
+  </div>
+  
+  <div class="col-xs-12" ng-if="ctrl.show == 'builds'">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4>local builds ({{ctrl.getNumBuilds()}})</h4>
+      </div>
+      <div class="col-xs-6" ng-if="ctrl.storedBuilds">
+        <h4>published builds ({{ctrl.getNumStoredBuilds()}} / {{ctrl.getBuildLimit()}})</h4>
+      </div>
+      
+      
+      <div class="col-xs-6" ng-if="!ctrl.storedBuilds">
+        loading...
+      </div>
+    </div>
+    
+    <div class="row" ng-repeat="buildName in ctrl.getAllBuildNames()" ng-if="ctrl.storedBuilds">
+      
+      <div class="col-xs-6" ng-if="!ctrl.builds[buildName]">
+        &nbsp;
+      </div>
+
+      <div class="col-xs-6" ng-if="ctrl.builds[buildName]">
+        <button class="btn btn-link btn-block group-header-btn" ng-click="ctrl.openLocal(buildName)">
+          <dngearsim-build-summary build-name="buildName" build="ctrl.builds[buildName]">
+          </dngearsim-build-summary>
+        </button>
+        <button ng-disabled="ctrl.getNumStoredBuilds() >= ctrl.getBuildLimit()" ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.startPublish(buildName)">save online</button>
+        <button ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.deleteLocal(buildName)">delete</button>
+        <button class="btn btn-default" ng-if="ctrl.localToDelete == buildName" ng-click="ctrl.reallyDeleteLocal(buildName)">press to actually delete</button>
+        <button class="btn btn-default" ng-if="ctrl.localToDelete == buildName" ng-click="ctrl.deleteLocal('')">cancel delete</button>
+      </div>
+      
+      <div class="col-xs-6" ng-if="!ctrl.storedBuilds[buildName] && ctrl.publishBuild != buildName">
+        &nbsp;
+      </div>
+
+      <div class="col-xs-6" ng-if="ctrl.publishBuild == buildName">
+        <div class="row form-group">
+          <div class="col-xs-12">
+            <br />
+            <h3>publish {{buildName}}</h3>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <label>region</label>
+            <select ng-model="ctrl.builds[buildName].region" class="form-control">
+              <option>cdn</option>
+              <option>eu</option>
+              <option>ina</option>
+              <option>jdn</option>
+              <option>kdn</option>
+              <option>na</option>
+              <option>ru</option>
+              <option>sea</option>
+              <option>tdn</option>
+              <option>other</option>
+            </select>
+          </div>
+          <div class="col-xs-12 col-sm-8">
+            <label>guild</label><br />
+            <input ng-model="ctrl.builds[buildName].guild" class="form-control"></input>
+          </div>
+          <div class="col-xs-12">
+            <label>about</label>
+            <input ng-model="ctrl.builds[buildName].about" class="form-control"></input>
+          </div>
+          <div class="col-xs-12 text-right">
+            <br />
+            <button class="btn btn-default" ng-click="ctrl.publishBuild = null">cancel</button>
+            <button class="btn btn-default" ng-click="ctrl.save(buildName, ctrl.builds[buildName])">publish</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-xs-6" ng-if="ctrl.storedBuilds && ctrl.storedBuilds[buildName] && ctrl.publishBuild != buildName">
+        <button class="btn btn-link btn-block group-header-btn" ng-click="ctrl.openServer(buildName)">
+          <dngearsim-build-summary build-name="buildName" build="ctrl.storedBuilds[buildName]">
+          </dngearsim-build-summary>
+        </button>
+        <p>
+          {{ctrl.storedBuilds[buildName].region}} <span ng-if="ctrl.storedBuilds[buildName].guild">[{{ctrl.storedBuilds[buildName].guild}}]</span>
+          <em>{{ctrl.storedBuilds[buildName].about}}</em>
+        </p>
+        <button ng-hide="ctrl.serverToDelete == buildName" class="btn btn-default" ng-click="ctrl.load(buildName, ctrl.storedBuilds[buildName])">load to browser</button>
+        <button ng-hide="ctrl.serverToDelete == buildName" class="btn btn-default" ng-click="ctrl.deleteServer(buildName)">delete</button>
+        <button class="btn btn-default" ng-if="ctrl.serverToDelete == buildName" ng-click="ctrl.reallyDeleteServer(buildName)">press to actually delete</button>
+        <button class="btn btn-default" ng-if="ctrl.serverToDelete == buildName" ng-click="ctrl.deleteServer('')">cancel delete</button>
+      </div>
+
+    </div>
+    
+  </div>
+</div>
+
+</dnsim-loading>
