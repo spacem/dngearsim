@@ -11,6 +11,11 @@ gulp.task('default', function() {
 var templateCache = require('gulp-angular-templatecache');
 var htmlmin = require('gulp-htmlmin');
 
+gulp.task('lib-css', function () {
+  return gulp.src('bower_components/angular-material/angular-material.min.css')
+    .pipe(gulp.dest('min'));
+});
+
 gulp.task('html', function () {
   return gulp.src('ui/**/*.html')
     .pipe(htmlmin({collapseWhitespace: true}))
@@ -35,7 +40,7 @@ gulp.task('js', function() {
 
 
 // libs
-gulp.task('libs', function() {
+gulp.task('libs', ['lib-css'], function() {
   return gulp.src([
       'bower_components/lz-string/libs/lz-string.min.js',
       'bower_components/angular/angular.min.js',

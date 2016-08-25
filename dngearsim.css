@@ -1,14 +1,7 @@
-.default-back {
+body {
 background-color: rgb(196,189,173);
 }
 
-.search-back {
-background-color: rgb(196,189,173);
-}
-
-.saved-back {
-background-color: rgb(196,189,173);
-}
 
 #nav {
 background-color: rgb(233,231,224);
