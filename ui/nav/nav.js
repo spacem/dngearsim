@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('NavCtrl', 
-  ['$scope','$location','translations','region','itemCategory',
-  function($scope,$location,translations,region,itemCategory) {
+  ['$scope','$location','translations','region','itemCategory','saveHelper',
+  function($scope,$location,translations,region,itemCategory,saveHelper) {
     'use strict';
 
     var aboutAction = { path: 'about', name: '', icon: 'question-sign' }
@@ -61,13 +61,20 @@ angular.module('dnsim').controller('NavCtrl',
       var menu = null;
       
       var currentBuild = localStorage.getItem('currentGroup');
+      if(currentBuild) {
+        var savedItems = saveHelper.getSavedItems();
+        if(!(currentBuild in savedItems)) {
+          currentBuild = null;
+        }
+      }
+
       if(region.dntLocation != null && region.dntLocation.url == '') {
         menu = noLocationMenu; 
       }
       else if(region.tlocation != null && region.tlocation.url == '') {
         menu = noLocationMenu; 
       }
-      else if(currentBuild) {
+      else if(currentBuild && currentBuild != 'null') {
         menu = withBuildMenu;
         buildAction.path = 'builds/' + currentBuild;
         buildAction.name = currentBuild;
