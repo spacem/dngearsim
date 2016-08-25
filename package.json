@@ -22,9 +22,13 @@
     "socket.io": "1.4.5"
   },
   "scripts": {
-    "test": "./node_modules/.bin/gulp test",
-    "build": "./node_modules/.bin/gulp",
+    "test": "gulp test",
+    "build": "gulp",
+    "watch": "gulp watch",
     "lite": "lite-server",
-    "postinstall": "./node_modules/.bin/bower install"
+    "postinstall": "bower install"
+  },
+  "dependencies": {
+    "bower": "^1.7.9"
   }
 }

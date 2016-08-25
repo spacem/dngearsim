@@ -25,7 +25,7 @@ var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('js', function() {
-  gulp.src(['ui/**/*.js', 'services/**/*.js'])
+  return gulp.src(['ui/**/*.js', 'services/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
     .pipe(uglify())
@@ -36,10 +36,14 @@ gulp.task('js', function() {
 
 // libs
 gulp.task('libs', function() {
-  gulp.src([
+  return gulp.src([
       'bower_components/lz-string/libs/lz-string.min.js',
       'bower_components/angular/angular.min.js',
       'bower_components/angular-route/angular-route.min.js',
+      'bower_components/angular-animate/angular-animate.min.js',
+      'bower_components/angular-aria/angular-aria.min.js',
+      'bower_components/angular-messages/angular-messages.min.js',
+      'bower_components/angular-material/angular-material.min.js',
       'bower_components/angulartics/dist/angulartics.min.js',
       'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
       'bower_components/firebase/firebase.js',
@@ -51,7 +55,7 @@ gulp.task('libs', function() {
 })
 
 gulp.task('dntviewer', function() {
-  gulp.src([
+  return gulp.src([
       '../dntviewer/simplerreader.js',
       '../dntviewer/dntreader.js',
       '../dntviewer/dntranslations.js',
@@ -94,6 +98,12 @@ gulp.task('tdd', function (done) {
 
 // watcher
 gulp.task('watch', ['default'], function() {
-  gulp.watch(['services/**/*.js', 'ui/**/*.js', 'ui/**/*.html', 'tests/**/*.js'], ['default'])
+  var watcher = gulp.watch(['services/**/*.js', 'ui/**/*.js', 'ui/**/*.html', 'tests/**/*.js'], ['html','js','dntviewer']);
+  watcher.on('change', logChange);
 })
+
+function logChange(event) {
+  console.log('*************************************************');
+  console.log('*** ' + event.path + ' was ' + event.type + ' ***');
+}
 
