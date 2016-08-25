@@ -12,6 +12,15 @@ border-radius: 10px;
 border-top-width: 0px;
 }
 
+.list-group-item {
+background-color: rgb(233,231,224);
+}
+
+.list-group-item.active {
+background-color: rgb(196,189,173);
+}
+
+
 /*
 .search-back {
 background: url(images/search-background.jpeg)  no-repeat center center fixed;

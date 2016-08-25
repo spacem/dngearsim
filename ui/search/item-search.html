@@ -2,17 +2,16 @@
   <div class="col-xs-12">&nbsp;</div>
 </div>
 <div class="row">
-<div class="col-xs-4 col-md-2">
-  <dnsim-category-links></dnsim-category-links>
+<div class="hidden-xs col-xs-4 col-md-3">
 </div>
-<div class="col-xs-8 col-md-10">
+<div class="col-xs-12 col-sm-8 col-md-9">
 <div class="row">
   <div class="col-xs-0 col-md-2" ng-hide="itemCategory.hideRank"></div>
   <div class="hidden-xs col-md-10 form-group" ng-hide="itemCategory.hideRank">
     <span class="form-group" ng-repeat="(id,value) in ::grades track by $index">
-      <label class="checkbox-inline">
-        <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
-      </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
+    </label>
     </span>
   </div>
   <div class="visible-xs col-xs-6 form-group" ng-hide="itemCategory.hideRank" ng-repeat="(id,value) in ::grades track by $index">
@@ -21,46 +20,42 @@
     </label>
   </div>
   
-  <div class="col-xs-6 col-md-2" ng-hide="itemCategory.hideLevel">
-    <md-input-container class="md-block">
+  <div class="col-xs-6 col-sm-2" ng-hide="itemCategory.hideLevel">
      <label>min&nbsp;lvl:
      </label>
      <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="minLevel" dnsim-select-all-on-click />
-    </md-input-container>
   </div>
-  <div class="col-xs-6 col-md-2" ng-hide="itemCategory.hideLevel">
-    <md-input-container class="md-block">
+  <div class="col-xs-6 col-sm-2" ng-hide="itemCategory.hideLevel">
      <label>max&nbsp;lvl:
      </label>
      <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="maxLevel" dnsim-select-all-on-click />
-    </md-input-container>
   </div>
-  <div class="col-xs-12 col-md-2">
-    <md-input-container class="md-block" flex-gt-sm>
+  <div class="col-xs-12 col-sm-2">
     <label>stat:</label>
-    <md-select ng-model="stat">
-      <md-option ng-repeat="s in stats track by $index" ng-value="s">{{s.name}}</md-option>
-    </md-select>
-    </md-input-container>
+    <select class="form-control" ng-model="stat" class="form-control"
+     ng-options="stat.name for stat in stats track by stat.id">
+    </select>
   </div>
   
-  <div class="col-xs-12 col-md-4">
-     <md-input-container class="md-block">
-      <label>name:</label>
-      <input type="text" ng-model="nameSearch" ng-model-options="{ debounce: 200 }" dnsim-select-all-on-click />
-     </md-input-container>
+  <div class="col-xs-12 col-sm-4">
+     <label>name:</label>
+     <input type="text" class="form-control" ng-model="nameSearch" ng-model-options="{ debounce: 200 }" dnsim-select-all-on-click />
   </div>
-  <div class="col-xs-12 col-md-2" ng-hide="itemCategory.hideJob">
-    <md-input-container class="md-block">
+  <div class="col-xs-12 col-sm-2" ng-hide="itemCategory.hideJob">
     <label>class: 
     </label>
-    <md-select ng-model="job">
-      <md-option ng-repeat="j in jobs track by $index" ng-value="j">{{j.name}}</md-option>
-    </md-select>
-    </md-input-container>
+    <select ng-model="job" class="form-control"
+     ng-options="job.name for job in jobs track by job.id">
+    </select>
   </div>
 </div>
-<div class="row"><div class="col-xs-12">&nbsp;</div></div>
+</div>
+
+<div class="hidden-xs col-xs-4 col-md-3">
+  <dnsim-category-links></dnsim-category-links>
+</div>
+
+<div class="col-xs-8 col-md-9">
 <dnsim-loading>
 <table class="table">
 <tr ng-repeat="result in getResults() track by $index">

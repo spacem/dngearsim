@@ -39,7 +39,6 @@
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
-<link rel="stylesheet" href="min/angular-material.min.css"></link>
 
 <link rel="stylesheet" href="dngearsim.css"></link>
 </head>
@@ -75,15 +74,15 @@
     <div class="col-xs-12" id="app" ng-view>
       <br />
       <div class="row">
-        <div class="col-xs-12 loading">loading...</div>
+        <div class="col-xs-12 loading"></div>
+        <div class="col-xs-12 text-center" ng-if="!loadError && numLoading">
+          loading...
+          <br /><br /><br />
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div id="footer-break" class="container-fluid">
-  <div class="row">
-    &nbsp;<br />&nbsp;
-  </div>
+  <br />
 </div>
 <div class="visible-xs-block">
   <div class="container-fluid chunkyness">

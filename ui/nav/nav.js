@@ -13,6 +13,16 @@ angular.module('dnsim').controller('NavCtrl',
       {path: 'items', name:'items', icon: 'search'},
       aboutAction,
       ];
+    
+    var buildAction = {path: 'builds', name:'builds', icon: 'wrench'};
+    
+    var withBuildMenu = [
+      {path: 'builds', name:'builds', icon: 'wrench'},
+      buildAction,
+      {path: 'search', name:'gear', icon: 'search'},
+      {path: 'items', name:'items', icon: 'search'},
+      aboutAction,
+      ];
       
     region.init();
   
@@ -49,11 +59,18 @@ angular.module('dnsim').controller('NavCtrl',
       
     $scope.getActions = function() {
       var menu = null;
+      
+      var currentBuild = localStorage.getItem('currentGroup');
       if(region.dntLocation != null && region.dntLocation.url == '') {
         menu = noLocationMenu; 
       }
       else if(region.tlocation != null && region.tlocation.url == '') {
         menu = noLocationMenu; 
+      }
+      else if(currentBuild) {
+        menu = withBuildMenu;
+        buildAction.path = 'builds/' + currentBuild;
+        buildAction.name = currentBuild;
       }
       else if($location.path() == '/view-group' || region.dntLocation == null) {
         menu = normalMenu;
@@ -61,6 +78,8 @@ angular.module('dnsim').controller('NavCtrl',
       else {
         menu = normalMenu;
       }
+
+      console.log('path:', $location.path());
       
       angular.forEach(menu, function(value, key) {
         delete value.extraCss;
@@ -70,7 +89,9 @@ angular.module('dnsim').controller('NavCtrl',
           }
         }
         else if(value.path.length > 1 && $location.path().indexOf('/' + value.path) == 0) {
-          value.extraCss = 'active';
+          if(value.path != 'builds' || $location.path() == '/builds') {
+            value.extraCss = 'active';
+          }
         }
       });
       

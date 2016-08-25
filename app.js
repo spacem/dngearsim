@@ -3,6 +3,6 @@
 
 // templates are imported via gulp job
 angular.module('templates', []);
-angular.module('dnsim', ['ngRoute','angulartics','angulartics.google.analytics','templates', 'ngMaterial']);
+angular.module('dnsim', ['ngRoute','angulartics','angulartics.google.analytics','templates', 'ngAria']);
 
 })();

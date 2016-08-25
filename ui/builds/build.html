@@ -1,18 +1,16 @@
 <div class="col-xs-12" id="/builds/{{buildCtrl.buildName}}">
   <div class="row">
-    <div class="col-xs-12 col-md-6 col-lg-7 group-header" ng-click="buildCtrl.toggleGroup()" ng-if="!buildCtrl.server">
-      <button class="btn btn-link btn-block group-header-btn">
+    <div class="col-xs-12 col-md-6 col-lg-7 group-header" ng-if="!buildCtrl.server">
         <h3 class="text-left">
         <dnsim-job-icon item="buildCtrl.build.job"></dnsim-job-icon>
         {{buildCtrl.buildName}}
         <small>
           <span ng-show="buildCtrl.build.playerLevel > 0">lv{{buildCtrl.build.playerLevel}}&nbsp;</span><span ng-show="buildCtrl.build.job && buildCtrl.build.job.id > 0">{{buildCtrl.build.job.name}}&nbsp;</span><span ng-show="buildCtrl.build.enemyLevel > 0">vs&nbsp;lv{{buildCtrl.build.enemyLevel}}&nbsp;</span>
           <br />
-          {{buildCtrl.getSaveDate()}} {{buildCtrl.getSaveTime()}}<span class="hidden-xs"> | </span><br class="visible-xs" />
+          {{buildCtrl.getSaveDate()}} {{buildCtrl.getSaveTime()}}<span class="hidden-xs"> </span><br />
           <span dnsim-stats build="buildCtrl.build" stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'" />
         </small>
         </h3>
-      </button>
     </div>
     <dnsim-loading>
     <div class="col-xs-12 col-md-6 col-lg-5" ng-if="!buildCtrl.server">

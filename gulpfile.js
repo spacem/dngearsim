@@ -47,8 +47,6 @@ gulp.task('libs', ['lib-css'], function() {
       'bower_components/angular-route/angular-route.min.js',
       'bower_components/angular-animate/angular-animate.min.js',
       'bower_components/angular-aria/angular-aria.min.js',
-      'bower_components/angular-messages/angular-messages.min.js',
-      'bower_components/angular-material/angular-material.min.js',
       'bower_components/angulartics/dist/angulartics.min.js',
       'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
       'bower_components/firebase/firebase.js',

@@ -1,11 +1,10 @@
 angular.module('dnsim').controller('BuildListCtrl', 
-  [ '$window','$location','$anchorScroll','$routeParams','$timeout','saveHelper',
-  function($window,$location,$anchorScroll,$routeParams,$timeout,saveHelper) {
+  [ '$window','$location','$routeParams','$timeout','saveHelper',
+  function($window,$location,$routeParams,$timeout,saveHelper) {
     'use strict';
     
     var vm = this;
     document.body.className = 'saved-back';
-    this.currentGroup = localStorage.getItem('currentGroup');
     this.setupBuilds = function() {
       vm.savedItems = saveHelper.getSavedItems();
       vm.buildNames = Object.keys(vm.savedItems).sort();
@@ -65,9 +64,5 @@ angular.module('dnsim').controller('BuildListCtrl',
     this.search = function() {
       $location.url('/build-search');
     }
-    
-    $timeout(function() {
-      $anchorScroll('/builds/' + vm.currentGroup);
-    });
   }]
 );

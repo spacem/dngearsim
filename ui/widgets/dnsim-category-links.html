@@ -1,10 +1,8 @@
-<div class="row">
-  <div class="col-xs-12 group-header" ng-repeat="action in ::categories track by $index">
-    <a ng-class="{'btn btn-block selected-link': action.extraCss == 'active', 'btn btn-block btn-link': action.extraCss != 'active'}" href="#/{{action.path}}" ng-click="$parent.setCategory(action)">
-      <p class="text-left">
-        <!-- <img height="20" width="20" style="display:inline;" src="images/{{action.name}}.png" /> -->
+<div class="list-group">
+  <button class="list-group-item"
+    ng-click="$parent.setCategory(action)"
+    ng-repeat="action in ::categories track by $index"
+    ng-class="{'active': action.extraCss == 'active'}">
         {{action.name}}
-      </p>
-    </a>
-  </div>
+  </button>
 </div>
