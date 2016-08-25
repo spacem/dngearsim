@@ -56,7 +56,7 @@ function dnsimStats(hCodeValues) {
           if(stat.id in hCodeValues.stats) {
             
             var def = hCodeValues.stats[stat.id];
-            if('hide' in def && def.hide) {
+            if(!$scope.filter && 'hide' in def && def.hide) {
               return;
             }
             

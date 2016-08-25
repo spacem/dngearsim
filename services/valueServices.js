@@ -42,7 +42,7 @@ function hCodeValues() {
       5  : {id: 5, name: 'maxPdmg', display: toNoDec, hide: true, pc: 55 },
       6  : {id: 6, name: 'mdmg', display: toNoDec, combineWith: 7, type: 'dps', pc: 56 },
       7  : {id: 7, name: 'maxMdmg', display: toNoDec, hide: true, pc: 57 },
-      8  : {id: 8, name: 'def', display: inThousands, type: 'def', pc: 58 },
+      8  : {id: 8, name: 'pdef', display: inThousands, type: 'def', pc: 58 },
       9  : {id: 9, name: 'mdef', display: inThousands, type: 'def', pc: 59 },
       10 : {id: 10, name: 'para', display: inThousands, pc: 60, noCustom: true },
       11 : {id: 11, name: 'para resist', display: inThousands, pc: 61, noCustom: true },
@@ -75,7 +75,7 @@ function hCodeValues() {
       55 : {id: 55, name: 'maxPdmg%', display: toPercent, hide: true },
       56 : {id: 56, name: 'mdmg%', display: toPercent, combineWith: 57 },
       57 : {id: 57, name: 'maxMdmg%', display: toPercent, hide: true },
-      58 : {id: 58, name: 'def%', display: toPercent },
+      58 : {id: 58, name: 'pdef%', display: toPercent },
       59 : {id: 59, name: 'mdef%', display: toPercent },
       60 : {id: 60, name: 'para%', display: toPercent, noCustom: true },
       61 : {id: 61, name: 'para resist%', display: toPercent, noCustom: true },
@@ -99,20 +99,20 @@ function hCodeValues() {
       107: {id: 107, name: 'mp?', display: toNoDec, noCustom: true, hide: true },
       
       // stats below here are ones I made up
-      1001: {id: 1001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true },
-      1004: {id: 1004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true },
-      1006: {id: 1006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true },
+      1001: {id: 1001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
+      1004: {id: 1004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
+      1006: {id: 1006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
       
-      1008: {id: 1008, name: 'calc pdef', display: toPercent, noCustom: true },
-      1009: {id: 1009, name: 'calc mdef', display: toPercent, noCustom: true },
+      1008: {id: 1008, name: 'pdef', display: toPercent, noCustom: true },
+      1009: {id: 1009, name: 'mdef', display: toPercent, noCustom: true },
       
       1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true },
-      1029: {id: 1029, name: 'fd calc', display: toPercent, noCustom: true },
+      1029: {id: 1029, name: 'fd', display: toPercent, noCustom: true },
       1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true },
       
-      2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true },
-      2004: {id: 2004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true },
-      2006: {id: 2006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true },
+      2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
+      2004: {id: 2004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
+      2006: {id: 2006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
       
       2008: {id: 2008, name: 'pdef eqhp', display: inThousands, noCustom: true },
       2009: {id: 2009, name: 'mdef eqhp', display: inThousands, noCustom: true },
@@ -120,7 +120,7 @@ function hCodeValues() {
       3000: {id: 3000, name: 'skDmg%', display: toPercent },
       3001: {id: 3000, name: 'skPDmg%', display: toPercent },
       3002: {id: 3000, name: 'skMDmg%', display: toPercent },
-      3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true },
+      3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
       
       4012: {id: 4012, name: 'skCrit', display: inThousands },
       4050: {id: 4050, name: 'skStr%', display: toPercent },
