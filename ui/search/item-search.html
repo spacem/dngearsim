@@ -1,6 +1,6 @@
 <div class="row">
   <div class="visible-xs-block col-xs-12">
-    <dnsim-category-links></dnsim-category-links>
+    <dnsim-category-links collapse="true"></dnsim-category-links>
   </div>
 </div>
 </div>
@@ -35,8 +35,7 @@
   </div>
   <div class="col-xs-12 col-sm-2">
     <label>stat:</label>
-    <select class="form-control" ng-model="stat" class="form-control"
-     ng-options="stat.name for stat in stats track by stat.id">
+    <select class="form-control" ng-model="stat" ng-options="stat.name for stat in stats track by stat.id">
     </select>
   </div>
   
@@ -54,22 +53,20 @@
 </div>
 </div>
 
-<div class="hidden-xs col-xs-4 col-md-3">
+<div class="hidden-xs col-sm-4 col-md-3">
   <dnsim-category-links></dnsim-category-links>
 </div>
 
-<div class="col-xs-8 col-md-9">
+<div class="col-xs-12 col-sm-8 col-md-9">
 <dnsim-loading>
 <table class="table">
 <tr ng-repeat="result in getResults() track by $index">
   <td>
-    <div class="row">
     <div>
       <dnsim-item-link item="result" />
     </div>
     <div>
       <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
-    </div>
     </div>
   </td>
 </tr>

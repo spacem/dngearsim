@@ -47,7 +47,7 @@ function(
   $scope.stats = [$scope.stat];
   
   angular.forEach(hCodeValues.stats, function(stat, statId) {
-    if(stat.type) {
+    if(stat.searchable) {
       $scope.stats.push(stat);
     }
   });

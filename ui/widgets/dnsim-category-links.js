@@ -7,15 +7,25 @@ function dnsimCategoryLinks(itemCategory,$location) {
   return {
     restrict: 'E',
     scope: {
+      collapse: '=collapse'
     },
     templateUrl: 'ui/widgets/dnsim-category-links.html',
     link: function($scope, element, attrs) {
       
       $scope.categories = itemCategory.categories;
+      $scope.collapsed = true;
       
       $scope.setCategory = function(action) {
-        localStorage.setItem('selectedItemCategory', action.name);
-        $location.path('/' + action.path);
+        if(action.extraCss == 'active') {
+        }
+        else {
+          localStorage.setItem('selectedItemCategory', action.name);
+          $location.path('/' + action.path);
+        }
+        
+        if($scope.collapse) {
+          $scope.collapsed = !$scope.collapsed;
+        }
       }
 
       angular.forEach($scope.categories, function(value, key) {
