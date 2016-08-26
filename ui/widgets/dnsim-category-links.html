@@ -2,8 +2,8 @@
   <button class="list-group-item"
     ng-click="$parent.setCategory(action)"
     ng-repeat="action in ::categories track by $index"
-    ng-class="{'active': action.extraCss == 'active'}"
-    ng-show="!$parent.collapse || !$parent.collapsed || action.extraCss == 'active'">
+    ng-class="{'active': action == $parent.cat}"
+    ng-show="!$parent.collapse || !$parent.collapsed || action == $parent.cat">
         {{action.name}}
   </button>
 </div>

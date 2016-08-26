@@ -25,9 +25,9 @@ function(
        catName = 'titles';
      }
      
-     var cat = itemCategory.byName(catName);
-     if(cat) {
-       $location.path(cat.path);
+     $scope.itemCategory = itemCategory.byName(catName);
+     if($scope.itemCategory) {
+       $location.path($scope.itemCategory.path);
      }
      return;
   }
@@ -77,6 +77,14 @@ function(
   }
   else {
     translations.init(reportProgress, function() { $timeout(init); } );
+  }
+
+  $scope.navigate = function() {
+    $timeout(function() {
+      if($scope.itemCategory) {
+        $location.path($scope.itemCategory.path);
+      }
+    });
   }
 
   $scope.save = function() {

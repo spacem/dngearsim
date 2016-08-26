@@ -7,7 +7,9 @@ function dnsimCategoryLinks(itemCategory,$location) {
   return {
     restrict: 'E',
     scope: {
-      collapse: '=collapse'
+      collapse: '=collapse',
+      cat: '=cat',
+      onChange: '&onChange'
     },
     templateUrl: 'ui/widgets/dnsim-category-links.html',
     link: function($scope, element, attrs) {
@@ -16,15 +18,15 @@ function dnsimCategoryLinks(itemCategory,$location) {
       $scope.collapsed = true;
       
       $scope.setCategory = function(action) {
-        if(action.extraCss == 'active') {
-        }
-        else {
-          localStorage.setItem('selectedItemCategory', action.name);
-          $location.path('/' + action.path);
-        }
+        $scope.cat = action;
+        localStorage.setItem('selectedItemCategory', action.name);
         
         if($scope.collapse) {
           $scope.collapsed = !$scope.collapsed;
+        }
+
+        if($scope.onChange) {
+          $scope.onChange();
         }
       }
 
