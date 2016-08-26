@@ -335,7 +335,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   
   this.save = function() {
     saveHelper.updatedSavedItems(vm.groupName, vm.savedItems[vm.groupName].items);
-    $location.path('/builds/' + vm.groupName);
+    $location.path('/build/' + vm.groupName);
   }
   
   this.updateRows();

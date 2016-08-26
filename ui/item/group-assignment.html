@@ -6,7 +6,7 @@
   
   <div class="row" ng-if="editCtrl.groupName">
     <div class="col-xs-12 col-md-3">
-      <h4><a href="#/builds/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a><br /> <small> <span dnsim-stats build="editCtrl.getBuild()" stats="editCtrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" /> </small> </h4>
+      <h4><a href="#/build/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a><br /> <small> <span dnsim-stats build="editCtrl.getBuild()" stats="editCtrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" /> </small> </h4>
     </div>
     <div class="col-xs-3 col-md-1 text-right" ng-if="!editCtrl.hasMaxExchangable()">
       <button class="btn btn-default" ng-dblclick="editCtrl.addToGroup()" ng-click="editCtrl.addToGroup()">add</button>

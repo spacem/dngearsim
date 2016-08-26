@@ -152,7 +152,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
       this.secondaryElement,
       enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats);
     
-    $location.path('/builds/' + this.groupName);
+    $location.path('/build/' + this.groupName);
   }
   
   this.setHeroStats = function() {

@@ -33,7 +33,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
       vm.build.baseStats, 
       vm.build.heroStats);
     
-    $location.path('/builds/' + newGroupName);
+    $location.path('/build/' + newGroupName);
   }
   
   this.reloaded = false;

@@ -59,7 +59,7 @@ function profile($location, $routeParams, onlineService) {
       
     vm.builds = saveHelper.getSavedItems();
     
-    $location.path('/builds/' + newGroupName);
+    $location.path('/build/' + newGroupName);
   }
 }
 

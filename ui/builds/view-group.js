@@ -122,7 +122,7 @@ angular.module('dnsim').controller('ViewGroupCtrl',
         $scope.secondaryElement,
         $scope.enemyStatCaps, $scope.playerStatCaps, $scope.conversions, $scope.baseStats, $scope.heroStats);
       
-      $location.url('/builds/' + newBuildName);
+      $location.url('/build/' + newBuildName);
     }
   }]
 );

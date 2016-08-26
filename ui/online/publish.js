@@ -89,7 +89,7 @@ function publish($location, saveHelper, onlineService, $routeParams, region) {
   }
   
   this.openLocal = function(buildName) {
-    $location.path('/builds/' + buildName);
+    $location.path('/build/' + buildName);
   }
   
   this.openServer = function(buildName) {

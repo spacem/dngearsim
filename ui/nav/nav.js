@@ -14,7 +14,7 @@ angular.module('dnsim').controller('NavCtrl',
       aboutAction,
       ];
     
-    var buildAction = {path: 'builds', name:'builds', icon: 'wrench'};
+    var buildAction = {path: 'build', name:'build', icon: 'wrench'};
     
     var withBuildMenu = [
       {path: 'builds', name:'builds', icon: 'wrench'},
@@ -76,7 +76,7 @@ angular.module('dnsim').controller('NavCtrl',
       }
       else if(currentBuild && currentBuild != 'null') {
         menu = withBuildMenu;
-        buildAction.path = 'builds/' + currentBuild;
+        buildAction.path = 'build/' + currentBuild;
         buildAction.name = currentBuild;
       }
       else if($location.path() == '/view-group' || region.dntLocation == null) {

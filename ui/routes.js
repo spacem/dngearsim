@@ -29,17 +29,11 @@ function config($routeProvider) {
     when('/', {
       redirectTo: '/builds'
     }).
-    when('/saved', {
-      redirectTo: '/builds'
-    }).
-    when('/saved/:groupName*', {
-      redirectTo: '/builds/:groupName'
-    }).
     when('/builds', {
       templateUrl: 'ui/builds/build-list.html',
       controller: 'BuildListCtrl as buildList'
     }).
-    when('/builds/:groupName*', {
+    when('/build/:groupName*', {
       templateUrl: 'ui/builds/build-list.html',
       controller: 'BuildListCtrl as buildList'
     }).
