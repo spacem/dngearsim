@@ -31,7 +31,7 @@ function dnsimCategoryLinksController(itemCategory) {
     localStorage.setItem('selectedItemCategory', action.name);
     
     if(vm.collapse) {
-      vm.collapsed = !$scope.collapsed;
+      vm.collapsed = !vm.collapsed;
     }
 
     if(vm.onChange) {
