@@ -1,16 +1,24 @@
-angular.module('dnsim').controller('SkillSearchCtrl',
+(function () {
+'use strict';
 
-['$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues','itemCategory','$location',
-function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues,itemCategory,$location) {
+angular.module('dnsim').directive('dngearsimSkillSearch', function() {
+  return {
+    scope: {},
+    bindToController: {
+      job: '=job',
+      jobs: '=jobs',
+    },
+    controller: ['$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues','itemCategory','$location', skillSearchCtrl],
+    controllerAs: 'skillSearch',
+    templateUrl: 'ui/search/skill-search.html'
+  };
+});
+
+function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues,itemCategory,$location) {
   'use strict';
   
-  $window.document.title = 'DN Gear Sim | SKILLS';
-  
   var vm = this;
-  document.body.className = 'search-back';
   
-  this.job = {id: -1, d:{}, name: ''};
-  this.jobs = [this.job];
   this.allJobs = [];
   this.maxDisplay = 60;
   this.currentResults = 0;
@@ -44,13 +52,6 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
   }
   
   this.isLoading = function() {
-    if(!jobs.isLoaded()) {
-      // console.log('jobs not loaded');
-      if(!jobs.hasStartedLoading()) {
-        init();
-      }
-      return true;      
-    }
     
     if(!translations.isLoaded()) {
       // console.log('transations not loaded');
@@ -248,4 +249,6 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
       jobs.init(reportProgress, function() { $timeout(jobInit); } );
     }
   }
-}]);
+}
+
+})();

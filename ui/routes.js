@@ -57,26 +57,7 @@ function config($routeProvider) {
       reloadOnSearch: false,
     }).
     
-    when('/item-search', {
-      redirectTo: '/search'
-    }).
-    when('/item-search/:itemType', {
-      redirectTo: '/search/:itemType'
-    }).
-    
-    when('/search', {
-      templateUrl: 'ui/search/item-search.html',
-      controller: 'ItemSearchCtrl'
-    }).
-    when('/search/custom', {
-      templateUrl: 'ui/search/custom-items.html',
-      controller: 'CustomItemCtrl as customItems'
-    }).
-    when('/search/skills', {
-      templateUrl: 'ui/search/skill-search.html',
-      controller: 'SkillSearchCtrl as skillSearch'
-    }).
-    when('/search/:itemType*', {
+    when('/search/:itemType?', {
       templateUrl: 'ui/search/item-search.html',
       controller: 'ItemSearchCtrl'
     }).

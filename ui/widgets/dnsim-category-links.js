@@ -6,40 +6,38 @@ angular.module('dnsim').directive('dnsimCategoryLinks', ['itemCategory','$locati
 function dnsimCategoryLinks(itemCategory,$location) {
   return {
     restrict: 'E',
-    scope: {
+    scope: {},
+    bindToController: {
       collapse: '=collapse',
       cat: '=cat',
       onChange: '&onChange'
     },
     templateUrl: 'ui/widgets/dnsim-category-links.html',
-    link: function($scope, element, attrs) {
-      
-      $scope.categories = itemCategory.categories;
-      $scope.collapsed = true;
-      
-      $scope.setCategory = function(action) {
-        $scope.cat = action;
-        localStorage.setItem('selectedItemCategory', action.name);
-        
-        if($scope.collapse) {
-          $scope.collapsed = !$scope.collapsed;
-        }
-
-        if($scope.onChange) {
-          $scope.onChange();
-        }
-      }
-
-      angular.forEach($scope.categories, function(value, key) {
-        if($location.path() == '/' + value.path) {
-          value.extraCss = 'active';
-        }
-        else {
-          value.extraCss = 'search-default';
-        }
-      });
-    },
+    controller: ['itemCategory', dnsimCategoryLinksController],
+    controllerAs: 'ctrl',
   };
+};
+
+function dnsimCategoryLinksController(itemCategory) {
+
+  var vm = this;
+
+  vm.categories = itemCategory.categories;
+  vm.collapsed = true;
+
+  vm.setCategory = function(action) {
+    console.log('setting cat', action);
+    vm.cat = action;
+    localStorage.setItem('selectedItemCategory', action.name);
+    
+    if(vm.collapse) {
+      vm.collapsed = !$scope.collapsed;
+    }
+
+    if(vm.onChange) {
+      vm.onChange();
+    }
+  }
 }
 
 })();

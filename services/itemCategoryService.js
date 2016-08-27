@@ -20,8 +20,8 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'search/costume', name:'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, limitExchange: [16,17,18,19,20,21,22]},
       {path: 'search/cash', name:'cash', sourceType: 'cash', numItemText: '8', maxCat: 8, maxExchange: 2, hideJob: true, limitExchange: [23,24,25,26,27,28,29]},
       {path: 'search/extras', name:'extras', sourceType: 'xtras', limitExchange: [47], hideJob: true,},
-      {path: 'search/skills', name:'skills'},
-      {path: 'search/custom', name:'custom'},
+      {path: 'search/skills', name:'skills', searchType: 'skills'},
+      {path: 'search/custom', name:'custom', searchType: 'custom'},
       ],
       
     byName: function(name) {

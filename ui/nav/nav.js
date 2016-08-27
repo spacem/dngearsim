@@ -85,8 +85,6 @@ angular.module('dnsim').controller('NavCtrl',
       else {
         menu = normalMenu;
       }
-
-      console.log('path:', $location.path());
       
       angular.forEach(menu, function(value, key) {
         delete value.extraCss;

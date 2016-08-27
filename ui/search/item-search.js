@@ -27,12 +27,12 @@ function(
      
      $scope.itemCategory = itemCategory.byName(catName);
      if($scope.itemCategory) {
+       console.log('moving');
        $location.path($scope.itemCategory.path);
      }
      return;
   }
-
-  document.body.className = 'search-back';
+  
   $window.document.title = 'DN Gear Sim | ' + $scope.itemCategory.name.toUpperCase();
   
   $scope.job = {id: -1, name: ''};
@@ -80,11 +80,14 @@ function(
   }
 
   $scope.navigate = function() {
-    $timeout(function() {
+    var catName = localStorage.getItem('selectedItemCategory');
+    if(catName) {
+      $scope.itemCategory = itemCategory.byName(catName);
       if($scope.itemCategory) {
+        console.log('navigating to ', $scope.itemCategory.path);
         $location.path($scope.itemCategory.path);
       }
-    });
+    }
   }
 
   $scope.save = function() {
@@ -149,13 +152,19 @@ function(
   
   $scope.getResults = function() {
     var allItems = itemCategory.getItems($scope.itemCategory.name);
+    if(allItems == null && searchObject && searchObject.getItems) {
+      allItems = searchObject.getItems();
+    }
+
     if(allItems == null) {
+      console.log('no items');
       return null;
     }
     
     allItems = allItems.sort(function(item1, item2) {
         return (item2.levelLimit - item1.levelLimit);
       });
+    console.log('got ', allItems);
     
     $scope.save();
     

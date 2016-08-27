@@ -1,30 +1,29 @@
-angular.module('dnsim').controller('CustomItemCtrl',
+(function () {
+'use strict';
 
-['$window','saveHelper','$location','hCodeValues','itemCategory','$timeout',
-function($window,saveHelper,$location,hCodeValues,itemCategory,$timeout) {
+angular.module('dnsim').directive('dngearsimCustomItems', function() {
+  return {
+    scope: {},
+    bindToController: {
+    },
+    controller: ['$window','saveHelper','$location','hCodeValues','itemCategory','$timeout', customItemCtrl],
+    controllerAs: 'customItems',
+    templateUrl: 'ui/search/custom-items.html'
+  };
+});
+
+function customItemCtrl($window,saveHelper,$location,hCodeValues,itemCategory,$timeout) {
   'use strict';
 
   var vm = this;
   
-  document.body.className = 'search-back';
-  $window.document.title = 'DN Gear Sim | CUSTOM ITEMS';
-  
   this.customItems = hCodeValues.customItems;
-  this.itemCategory = itemCategory.byName('custom');
   
   this.maxDisplay = 10;
   this.currentResults = 0;
   
   if(this.nameSearch == null) {
     this.nameSearch = '';
-  }
-
-  this.navigate = function() {
-    $timeout(function() {
-      if(vm.itemCategory) {
-        $location.path(vm.itemCategory.path);
-      }
-    });
   }
   
   this.getResults = function() {
@@ -46,4 +45,6 @@ function($window,saveHelper,$location,hCodeValues,itemCategory,$timeout) {
     }
     $location.path('/item/_custom:.' + this.nameSearch);
   }
-}]);
+}
+
+})();
