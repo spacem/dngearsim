@@ -11,7 +11,7 @@ function region(translations,dntReset,dntData,$route) {
       {region: 'cdn', name: 'chinese files from shanda', url : 'https://cdnfiles.firebaseapp.com'},
       {region: 'sea', name: 'south east asia - english files from cherry credits', url : 'https://seadnfiles.firebaseapp.com'},
       {region: 'eu', name: 'europe - english files from cherry credits', url : 'https://eufiles.firebaseapp.com'},
-      // {region: 'ina', name: 'indonesian files from gemscool', url : 'https://dnina.firebaseapp.com'},
+      {region: 'ina', name: 'indonesian files from gemscool', url : 'https://inafiles-da491.firebaseapp.com'},
     ];
   
   var dntLocationRegion = localStorage.getItem('lastDNTRegion');
