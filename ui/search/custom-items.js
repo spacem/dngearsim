@@ -1,19 +1,30 @@
 angular.module('dnsim').controller('CustomItemCtrl',
 
-['$window','saveHelper','$location','hCodeValues',
-function($window,saveHelper,$location,hCodeValues) {
+['$window','saveHelper','$location','hCodeValues','itemCategory','$timeout',
+function($window,saveHelper,$location,hCodeValues,itemCategory,$timeout) {
   'use strict';
+
+  var vm = this;
   
   document.body.className = 'search-back';
   $window.document.title = 'DN Gear Sim | CUSTOM ITEMS';
   
   this.customItems = hCodeValues.customItems;
+  this.itemCategory = itemCategory.byName('custom');
   
   this.maxDisplay = 10;
   this.currentResults = 0;
   
   if(this.nameSearch == null) {
     this.nameSearch = '';
+  }
+
+  this.navigate = function() {
+    $timeout(function() {
+      if(vm.itemCategory) {
+        $location.path(vm.itemCategory.path);
+      }
+    });
   }
   
   this.getResults = function() {

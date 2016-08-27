@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('SkillSearchCtrl',
 
-['$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues',
-function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues) {
+['$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues','itemCategory','$location',
+function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues,itemCategory,$location) {
   'use strict';
   
   $window.document.title = 'DN Gear Sim | SKILLS';
@@ -18,6 +18,8 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
   this.skills = [];
   this.loadedJobId = -1;
 
+  this.itemCategory = itemCategory.byName('skills');
+
   this.nameSearch = localStorage.getItem('nameSearch');
   if(this.nameSearch == null) {
     this.nameSearch = '';
@@ -31,6 +33,14 @@ function($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeVa
   }
   else {
     translations.init(reportProgress, function() { $timeout(init); } );
+  }
+
+  this.navigate = function() {
+    $timeout(function() {
+      if(vm.itemCategory) {
+        $location.path(vm.itemCategory.path);
+      }
+    });
   }
   
   this.isLoading = function() {
