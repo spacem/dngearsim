@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('groupAssignmentCtrl',
 
-['hCodeValues','statHelper','saveHelper','itemCategory',
-function(hCodeValues,statHelper,saveHelper,itemCategory) {
+['hCodeValues','statHelper','saveHelper','itemCategory','$scope',
+function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
   'use strict';
   
   var vm = this;
@@ -36,16 +36,21 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
   }
     
   this.clearGroup = function() {
-    this.addAffectAmount = null;
-    this.replaceAffectAmount = {};
+    vm.addAffectAmount = null;
+    vm.replaceAffectAmount = {};
 
-    this.groupItems = null;
-    this.groupCalcStats = null
+    vm.groupItems = null;
+    vm.groupCalcStats = null
   }
-  this.clearGroup();
+
+  $scope.$watch('editCtrl.item', function() {
+    // console.log('item changed');
+    vm.clearGroup();
+  });
   
   this.getAddAffectAmount = function(stat) {
     this.initAddAffects();
+    // console.log('add affect: ', this.addAffectAmount[stat], this.item);
     return this.addAffectAmount[stat];
   }
   
@@ -89,6 +94,8 @@ function(hCodeValues,statHelper,saveHelper,itemCategory) {
     if(vm.addAffectAmount) {
       return;
     }
+    
+    // console.log('initialising add affects ');
     
     var origStats = vm.getGroupCalcStats();
     var group = vm.savedItems[vm.groupName];

@@ -118,8 +118,9 @@ function hCodeValues() {
       2009: {id: 2009, name: 'mdef eqhp', display: inThousands, noCustom: true },
       
       3000: {id: 3000, name: 'skDmg%', display: toPercent },
-      3001: {id: 3000, name: 'skPDmg%', display: toPercent },
-      3002: {id: 3000, name: 'skMDmg%', display: toPercent },
+      3001: {id: 3001, name: 'skPDmg%', display: toPercent },
+      3002: {id: 3002, name: 'skMDmg%', display: toPercent },
+      
       3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
       
       4012: {id: 4012, name: 'skCrit', display: inThousands },
@@ -222,7 +223,8 @@ function hCodeValues() {
       88 : { id: 88, name: 'agi%', mapTo: 4051 },
       89 : { id: 89, name: 'int%', mapTo: 4052 },
       90 : { id: 90, name: 'vit%', mapTo: 4053 },
-      134 : { id: 134, name: 'physicial defense%' },
+      // 134 : { id: 134, name: 'p dmg reduction%' },
+      // 135 : { id: 135, name: 'm dmg reduction%' },
       185 : { id: 185, name: 'wots attack power', mapTo: 3000 },
       251 : { id: 251, name: 'critical chance%', mapTo: 1012 },
       164 : { id: 164, name: 'intToPdmg', mapTo: 10164 },

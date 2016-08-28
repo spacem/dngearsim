@@ -26,7 +26,7 @@ function dnsimCategoryLinksController(itemCategory) {
   vm.collapsed = true;
 
   vm.setCategory = function(action) {
-    console.log('setting cat', action);
+    // console.log('setting cat', action);
     vm.cat = action;
     localStorage.setItem('selectedItemCategory', action.name);
     

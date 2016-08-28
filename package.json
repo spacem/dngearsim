@@ -2,7 +2,16 @@
   "name": "dngearsim",
   "version": "0.0.0",
   "description": "Dragon Nest Gear Simulator",
-  "devDependencies": {
+  "scripts": {
+    "test": "gulp test",
+    "build": "gulp",
+    "watch": "gulp watch",
+    "lite": "lite-server",
+    "postinstall": "bower install"
+  },
+  "dependencies": {
+    "bower": "^1.7.9",
+    "gulp-plumber": "^1.1.0",
     "browser-sync": "^2.13.0",
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
@@ -21,14 +30,6 @@
     "phantomjs": "1.9.19",
     "socket.io": "1.4.5"
   },
-  "scripts": {
-    "test": "gulp test",
-    "build": "gulp",
-    "watch": "gulp watch",
-    "lite": "lite-server",
-    "postinstall": "bower install"
-  },
-  "dependencies": {
-    "bower": "^1.7.9"
+  "devDependencies": {
   }
 }

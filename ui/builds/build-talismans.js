@@ -29,7 +29,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   }
   
   if(!this.groupName) {
-    console.log('cannot find build');
+    // console.log('cannot find build');
     return;
   }
   

@@ -62,7 +62,7 @@ function config($routeProvider) {
       controller: 'ItemSearchCtrl'
     }).
     
-    when('/item/:region?/:itemString*', {
+    when('/item/:region?/:i*', {
       templateUrl: 'ui/item/item.html',
       controller: 'ItemCtrl',
       reloadOnSearch: false,

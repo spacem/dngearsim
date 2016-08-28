@@ -49,7 +49,7 @@ angular.module('dnsim').controller('BuildListCtrl',
     this.handleChange = function() {
       vm.setupBuilds();
       $timeout();
-      console.log('change');
+      // console.log('change');
     }
   
     this.toggleGroup = function(buildName) {

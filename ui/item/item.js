@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('ItemCtrl',
-['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region','itemFactory',
-function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region,itemFactory) {
+['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region','itemFactory','$timeout',
+function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region,itemFactory,$timeout) {
   'use strict';
   
   region.setLocationByName($routeParams.region);
@@ -8,7 +8,8 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   $window.scrollTo(0, 0);
   
   $scope.jobName = null;
-  $scope.item = exportLinkHelper.decodeItem($routeParams.itemString);
+  // console.log('search string: ', $routeParams.i);
+  $scope.item = exportLinkHelper.decodeItem($routeParams.i);
   if('itemSource' in $scope.item) {
     $scope.itemType = items[$scope.item.itemSource];
   }
@@ -71,8 +72,14 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   $scope.handleChange = function() {
-    $location.path('/item/' + region.dntLocation.region + '/' + exportLinkHelper.encodeItem($scope.item));
-    $location.replace();
+    // console.log('changes');
+    if($scope.item.itemSource != 'custom') {
+      $location.path('/item/' + region.dntLocation.region + '/' + exportLinkHelper.encodeItem($scope.item));
+    }
+    else {
+      setFullStats();
+      $scope.item = angular.copy($scope.item);
+    }
   }
   
   function getJobName() {

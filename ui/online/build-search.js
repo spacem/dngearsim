@@ -75,11 +75,11 @@ function buildSearch($routeParams,$location,$timeout,onlineService,jobs) {
     if(vm.job) {
       onlineService.getClassBuilds(vm.job).then(function(builds) {
         if(builds) {
-          console.log('got builds', builds);
+          // console.log('got builds', builds);
           vm.jobBuilds = builds;
         }
         else {
-          console.log('no builds');
+          // console.log('no builds');
           vm.jobBuilds = {};
         }
       });

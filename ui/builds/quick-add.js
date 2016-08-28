@@ -34,7 +34,7 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
     }
     else {
       vm.setOptions();
-      console.log('setup next step');
+      // console.log('setup next step');
     }
   }
   

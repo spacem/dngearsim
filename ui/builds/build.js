@@ -138,7 +138,9 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
         newItemList.push(gItem);
       }
     });
-    
+
+    vm.build.items = newItemList;
+    vm.stats = statHelper.getBuildStats(vm.build);
     saveHelper.updatedSavedItems(vm.buildName, newItemList);
     vm.onChange();
   }

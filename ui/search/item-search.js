@@ -27,7 +27,7 @@ function(
      
      $scope.itemCategory = itemCategory.byName(catName);
      if($scope.itemCategory) {
-       console.log('moving');
+       // console.log('moving');
        $location.path($scope.itemCategory.path);
      }
      return;
@@ -84,7 +84,7 @@ function(
     if(catName) {
       $scope.itemCategory = itemCategory.byName(catName);
       if($scope.itemCategory) {
-        console.log('navigating to ', $scope.itemCategory.path);
+        // console.log('navigating to ', $scope.itemCategory.path);
         $location.path($scope.itemCategory.path);
       }
     }
@@ -157,14 +157,14 @@ function(
     }
 
     if(allItems == null) {
-      console.log('no items');
+      // console.log('no items');
       return null;
     }
     
     allItems = allItems.sort(function(item1, item2) {
         return (item2.levelLimit - item1.levelLimit);
       });
-    console.log('got ', allItems);
+    // console.log('got ', allItems);
     
     $scope.save();
     

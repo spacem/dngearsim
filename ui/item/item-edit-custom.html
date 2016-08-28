@@ -1,21 +1,200 @@
-</div>
 <div class="col-xs-12">
-  <form class="form-inline">
-    <div class="form-group">
-      <input type="number" dnsim-string-to-number class="form-control" ng-model="editCtrl.newStatVal" step="any" />
-      <select class="form-control" ng-model="editCtrl.stat" class="form-control" ng-options="stat.name for stat in editCtrl.getStats() track by stat.id">
-      </select>
-      {{editCtrl.getNewStatDisplayValue()}} {{editCtrl.getNewStatName()}}<br />
-      <button class="btn btn-default" ng-click="editCtrl.addStat()"> add new stat</button>
-      <br /><br />
+  <button ng-disabled="editCtrl.customView=='basic' || !editCtrl.customView" class="btn btn-link" ng-click="editCtrl.customView='basic'">
+    basic
+  </button> |
+  <button ng-disabled="editCtrl.customView=='dmg'" class="btn btn-link" ng-click="editCtrl.customView='dmg'">
+    dmg
+  </button> |
+  <button ng-disabled="editCtrl.customView=='def'" class="btn btn-link" ng-click="editCtrl.customView='def'">
+    def
+  </button> |
+  <button ng-disabled="editCtrl.customView=='special'" class="btn btn-link" ng-click="editCtrl.customView='special'">
+    special
+  </button> |
+  <button ng-disabled="editCtrl.customView=='stats'" class="btn btn-link" ng-click="editCtrl.customView='stats'">
+    overview
+  </button> |
+</div>
+<div class="col-xs-12" ng-switch="editCtrl.customView">
+  <div class="row" ng-switch-when="stats">
+    <div class="col-xs-12" dnsim-stats stats="editCtrl.item.stats">
     </div>
-  </form>
-</div>
-<div class="col-xs-12" ng-show="editCtrl.item.stats.length > 0">
-  <label>stats</label>
-</div>
-<div class="col-xs-12" ng-repeat="stat in editCtrl.item.stats track by $index">
-    {{editCtrl.getStatDisplayValue(stat)}}
-    {{editCtrl.getStatName(stat)}}
-    <button class="btn btn-link" ng-click="editCtrl.removeStat(stat)">remove</button>
+  </div>
+
+  <div class="row"  ng-switch-default>
+    <div class="col-xs-4">
+      <label>str</label>
+      <input ng-model="editCtrl.statMap[0]" type="number" dnsim-string-to-number class="form-control" step="any" ng-model-options="{ debounce: 2000 }" />
+    </div>
+    <div class="col-xs-4">
+      <label>str %</label>
+      <input ng-model="editCtrl.statMap[50]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-4">
+      <label>skill str %</label>
+      <input ng-model="editCtrl.statMap[4050]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+    <div class="col-xs-4">
+      <label>agi</label>
+      <input ng-model="editCtrl.statMap[1]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-4">
+      <label>agi %</label>
+      <input ng-model="editCtrl.statMap[51]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-4">
+      <label>skill agi %</label>
+      <input ng-model="editCtrl.statMap[4051]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+    <div class="col-xs-4">
+      <label>int</label>
+      <input ng-model="editCtrl.statMap[2]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-4">
+      <label>int %</label>
+      <input ng-model="editCtrl.statMap[52]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-4">
+      <label>skill int %</label>
+      <input ng-model="editCtrl.statMap[4052]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+    <div class="col-xs-4">
+      <label>vit</label>
+      <input ng-model="editCtrl.statMap[3]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-4">
+      <label>vit %</label>
+      <input ng-model="editCtrl.statMap[53]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-4">
+      <label>skill vit %</label>
+      <input ng-model="editCtrl.statMap[4053]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+  </div>
+  <div class="row" ng-switch-when="dmg">
+
+    <div class="col-xs-3">
+      <label>min pdmg</label>
+      <input ng-model="editCtrl.statMap[4]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>max pdmg</label>
+      <input ng-model="editCtrl.statMap[5]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>pdmg%</label>
+      <input ng-model="editCtrl.statMap[101]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>skill pdmg%</label>
+      <input ng-model="editCtrl.statMap[3001]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+    <div class="col-xs-3">
+      <label>min mdmg</label>
+      <input ng-model="editCtrl.statMap[6]"  type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>max mdmg</label>
+      <input ng-model="editCtrl.statMap[7]"  type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+
+    <div class="col-xs-3">
+      <label>mdmg%</label>
+      <input ng-model="editCtrl.statMap[102]"  type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>skill mdmg%</label>
+      <input ng-model="editCtrl.statMap[3002]"  type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+    <div class="col-xs-3">
+      <label>fire%</label>
+      <input ng-model="editCtrl.statMap[16]"  type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>ice%</label>
+      <input ng-model="editCtrl.statMap[17]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>light%</label>
+      <input ng-model="editCtrl.statMap[18]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>dark%</label>
+      <input ng-model="editCtrl.statMap[19]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+  </div>
+  <div class="row" ng-switch-when="def">
+
+    <div class="col-xs-3">
+      <label>def</label>
+      <input ng-model="editCtrl.statMap[8]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>def%</label>
+      <input ng-model="editCtrl.statMap[58]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>mdef</label>
+      <input ng-model="editCtrl.statMap[9]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>mdef%</label>
+      <input ng-model="editCtrl.statMap[59]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+
+    <div class="col-xs-3">
+      <label>hp</label>
+      <input ng-model="editCtrl.statMap[25]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>hp%</label>
+      <input ng-model="editCtrl.statMap[75]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>skill hp%</label>
+      <input ng-model="editCtrl.statMap[4075]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+  </div>
+  <div class="row" ng-switch-when="special">
+
+    <div class="col-xs-3">
+      <label>crit</label>
+      <input ng-model="editCtrl.statMap[12]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>crit%</label>
+      <input ng-model="editCtrl.statMap[62]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>skill crit</label>
+      <input ng-model="editCtrl.statMap[4012]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>skill crit%</label>
+      <input ng-model="editCtrl.statMap[1012]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>crit dmg</label>
+      <input ng-model="editCtrl.statMap[103]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+    <div class="col-xs-3">
+      <label>crit dmg%</label>
+      <input ng-model="editCtrl.statMap[104]" type="number" dnsim-string-to-percent class="form-control" step="any" />
+    </div>
+
+    <div class="col-xs-3">
+      <label>fd</label>
+      <input ng-model="editCtrl.statMap[29]" type="number" dnsim-string-to-number class="form-control" step="any" />
+    </div>
+
+  </div>
 </div>

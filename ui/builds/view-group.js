@@ -108,7 +108,7 @@ angular.module('dnsim').controller('ViewGroupCtrl',
     
     $scope.copyGroup = function() {
       var newBuildName = saveHelper.importGroup($scope.buildName, $scope.build.items);
-      console.log('copying in as ' + newBuildName);
+      // console.log('copying in as ' + newBuildName);
       
       saveHelper.renameSavedGroup(
         newBuildName, 

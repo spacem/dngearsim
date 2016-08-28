@@ -20,10 +20,10 @@ function saveHelper(itemCategory) {
     },
     
     saveBuildSelection : function(buildName, builds) {
-      console.log('saving selection');
+      // console.log('saving selection');
       localStorage.setItem('currentGroup', buildName);
       if(builds && buildName in builds && builds[buildName].job && builds[buildName].job.id) {
-        console.log('also job');
+        // console.log('also job');
         localStorage.setItem('jobNumber', builds[buildName].job.id);
       }
     },

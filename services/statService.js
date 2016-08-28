@@ -221,8 +221,9 @@ function statHelper(hCodeValues) {
       var skCrit = dupeStat(4012);
       crit.max += skCrit.max;
       addStat(crit);
+      var itemCrit = dupeStat(1012);
       
-      var critChance = Math.min(0.89, crit.max / Number(group.enemyStatCaps.Ccritical));
+      var critChance = Math.min(0.89, (crit.max / Number(group.enemyStatCaps.Ccritical)) + itemCrit.max);
       retVal.push({id: 1012, max: critChance})
 
       // crit damage %

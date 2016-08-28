@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var plumber = require('gulp-plumber');
 
 gulp.task('default', function() {
     gulp.start('html');
@@ -11,13 +12,9 @@ gulp.task('default', function() {
 var templateCache = require('gulp-angular-templatecache');
 var htmlmin = require('gulp-htmlmin');
 
-gulp.task('lib-css', function () {
-  return gulp.src('bower_components/angular-material/angular-material.min.css')
-    .pipe(gulp.dest('min'));
-});
-
 gulp.task('html', function () {
   return gulp.src('ui/**/*.html')
+    .pipe(plumber())
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(templateCache({root: 'ui/', filename: 'templates.min.js'}))
     .pipe(gulp.dest('min'));
@@ -31,6 +28,7 @@ var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('js', function() {
   return gulp.src(['ui/**/*.js', 'services/**/*.js'])
+    .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
     .pipe(uglify())
@@ -40,7 +38,7 @@ gulp.task('js', function() {
 
 
 // libs
-gulp.task('libs', ['lib-css'], function() {
+gulp.task('libs', function() {
   return gulp.src([
       'bower_components/lz-string/libs/lz-string.min.js',
       'bower_components/angular/angular.min.js',
