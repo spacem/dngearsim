@@ -29,27 +29,27 @@
   <div class="col-xs-6 col-sm-2" ng-hide="itemCategory.hideLevel">
      <label>min&nbsp;lvl:
      </label>
-     <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="minLevel" dnsim-select-all-on-click />
+     <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="$parent.minLevel" dnsim-select-all-on-click />
   </div>
   <div class="col-xs-6 col-sm-2" ng-hide="itemCategory.hideLevel">
      <label>max&nbsp;lvl:
      </label>
-     <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="maxLevel" dnsim-select-all-on-click />
+     <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="$parent.maxLevel" dnsim-select-all-on-click />
   </div>
   <div class="col-xs-12 col-sm-2">
     <label>stat:</label>
-    <select class="form-control" ng-model="stat" ng-options="stat.name for stat in stats track by stat.id">
+    <select class="form-control" ng-model="$parent.stat" ng-options="stat.name for stat in stats track by stat.id">
     </select>
   </div>
   
   <div class="col-xs-12 col-sm-4">
      <label>name:</label>
-     <input type="text" class="form-control" ng-model="nameSearch" ng-model-options="{ debounce: 200 }" dnsim-select-all-on-click />
+     <input type="text" class="form-control" ng-model="$parent.nameSearch" ng-model-options="{ debounce: 200 }" dnsim-select-all-on-click />
   </div>
   <div class="col-xs-12 col-sm-2" ng-hide="itemCategory.hideJob">
     <label>class: 
     </label>
-    <select ng-model="job" class="form-control"
+    <select ng-model="$parent.job" class="form-control"
      ng-options="job.name for job in jobs track by job.id">
     </select>
   </div>

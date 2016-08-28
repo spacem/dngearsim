@@ -151,11 +151,8 @@ function(
   $scope.rankChecked = hCodeValues.checkedRank;
   
   $scope.getResults = function() {
+    // console.log('getting items');
     var allItems = itemCategory.getItems($scope.itemCategory.name);
-    if(allItems == null && searchObject && searchObject.getItems) {
-      allItems = searchObject.getItems();
-    }
-
     if(allItems == null) {
       // console.log('no items');
       return null;
@@ -207,8 +204,10 @@ function(
         if(e.typeName != $scope.itemCategory.name) {
           continue;
         }
+        // console.log('name filter', $scope.nameSearch); 
         
         if($scope.nameSearch != '') {
+          // console.log('filtering on name');
           var nameSearches = $scope.nameSearch.split(' ');
           if(nameSearches.length == 0) {
             nameSearches = [$scope.nameSearch];
