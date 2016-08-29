@@ -94,9 +94,12 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   function init() {
+    $scope.preInitItem = $scope.item;
+    $scope.item = null;
+  
     var anyToLoad = false;
     
-    angular.forEach(exportLinkHelper.getDntFiles($scope.item), function(columns, fileName) {
+    angular.forEach(exportLinkHelper.getDntFiles($scope.preInitItem), function(columns, fileName) {
       if(!dntData.isLoaded(fileName)) {
         dntData.init(fileName, columns, reportProgress, function() { tryInit() });
         anyToLoad = true;
@@ -121,7 +124,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   function tryInit() {
     if(!dntData.anyLoading() && translations.isLoaded() && jobs.isLoaded()) {
-      $scope.item = exportLinkHelper.reloadItem($scope.item);
+      $scope.item = exportLinkHelper.reloadItem($scope.preInitItem);
       if($scope.item == null) {
         return;
       }

@@ -1,10 +1,10 @@
 <dnsim-loading>
   
-<dnsim-choose-class ng-show="!editGroup.job" job="editGroup.job" on-set-job="setJob()"></dnsim-choose-class>
+<dnsim-choose-class ng-show="!editGroup.job" job="editGroup.job" on-set-job="setJob()" ng-if="editGroup.groupName"></dnsim-choose-class>
 <div class="row" ng-show="editGroup.job">
   <div class="col-xs-12">
     <h2>
-      <dnsim-job-icon item="editGroup.job"></dnsim-job-icon>
+      <dnsim-job-icon item="::editGroup.job"></dnsim-job-icon>
       {{editGroup.job.name}} <small><button class="btn btn-link" ng-click="editGroup.job=null">change class/specialisation</button></small>
     </h2>
   </div>

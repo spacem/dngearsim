@@ -4,6 +4,6 @@
     ng-repeat="action in ::ctrl.categories track by $index"
     ng-class="{'active': action == ctrl.cat}"
     ng-show="!ctrl.collapse || !ctrl.collapsed || action == ctrl.cat">
-        {{action.name}}
+        {{::action.name}}
   </button>
 </div>

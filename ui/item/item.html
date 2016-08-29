@@ -1,60 +1,54 @@
 <dnsim-loading>
-<div class="row">
-  <div class="col-xs-12" ng-if="item == null">
-    <br />
-    cannot load item
-  </div>
-</div>
 <div class="row" ng-if="item != null">
   <div class="col-xs-12 col-md-4">
     <h3>
-      <dnsim-item-link item="item"></dnsim-item-link><br />
+      <dnsim-item-link item="::item"></dnsim-item-link><br />
       <small>
-      {{getServerStorage()}}
+      {{::getServerStorage()}}
       <br />
-      <span ng-show="item.rank && item.rank.id > 0" class="{{item.rank.name}}-grade">
-      {{item.rank.name}}
+      <span ng-if="::item.rank && item.rank.id > 0" class="{{::item.rank.name}}-grade">
+      {{::item.rank.name}}
       </span>
-      <span ng-show="jobName">
-      {{jobName.toLowerCase()}}
+      <span ng-if="::jobName">
+      {{::jobName.toLowerCase()}}
       </span>
-      {{getExchangeType()}}
-      <span ng-show="item.levelLimit > 1">
-      req lvl{{item.levelLimit}}
+      {{::getExchangeType()}}
+      <span ng-if="::item.levelLimit > 1">
+      req lvl{{::item.levelLimit}}
       </span>
-      <span ng-if="item.offensiveGemSlots > 0 || item.increasingGemSlots > 0">
+      <span ng-if="::item.offensiveGemSlots > 0 || item.increasingGemSlots > 0">
         <br />
         gem slots:
-        <span ng-if="item.offensiveGemSlots > 0">
-          {{item.offensiveGemSlots}}x offensive
-          <span ng-if="item.increasingGemSlots > 0"> | </span>
+        <span ng-if="::item.offensiveGemSlots > 0">
+          {{::item.offensiveGemSlots}}x offensive
+          <span ng-if="::item.increasingGemSlots > 0"> | </span>
         </span>
-        <span ng-if="item.increasingGemSlots > 0">{{item.increasingGemSlots}}x increasing</span>
+        <span ng-if="::item.increasingGemSlots > 0">{{::item.increasingGemSlots}}x increasing</span>
       </span>
       </small>
     </h3>
     <small class="hidden-xs">
-      {{item.fileName}}{{item.typeName}}: {{item.itemSource}} / {{item.id}} / {{item.pid}}
-      <span ng-show="item.potentialRatio != null">
+      {{::item.fileName}}{{::item.typeName}}: {{::item.itemSource}} / {{::item.id}} / {{::item.pid}}
+      <span ng-if="::item.potentialRatio != null">
         <br />
-        potential&nbsp;ratio:&nbsp;{{item.potentialRatio}}
+        potential&nbsp;ratio:&nbsp;{{::item.potentialRatio}}
       </span>
     </small>
-    <dngearsim-item-edit-potential item="item" on-change="handleChange()">
+    <dngearsim-item-edit-potential item="::item" on-change="handleChange()">
     </dngearsim-item-edit-potential>
   </div>
   <div class="col-xs-12 col-md-8">
-    <div class="row" ng-if="item.typeName != 'custom' &&  item.typeName != 'skills' &&  item.typeName != 'talisman'">
+    <div class="row" ng-if="::item.typeName != 'custom' && item.typeName != 'skills' && item.typeName != 'talisman'">
       <!-- virtical layout -->
-      <div class="col-xs-3 hidden-xs" ng-if="item.stats != null && item.stats.length > 0">
+      <div class="col-xs-3 hidden-xs" ng-if="::item.stats != null && item.stats.length > 0">
         <br />
         <label>stats</label><br />
-        <div dnsim-stats stats="item.stats">
+        <div dnsim-stats stats="::item.stats">
         </div>
       </div>
-      <div class="col-xs-3 hidden-xs" ng-if="item.setStats != null && item.setStats.length > 0">
+      <div class="col-xs-3 hidden-xs" ng-if="::item.setStats != null && item.setStats.length > 0">
         <br /><label>set stats</label><br />
-        <div dnsim-stats stats="item.setStats"></div>
+        <div dnsim-stats stats="::item.setStats"></div>
       </div>
       <div class="col-xs-6 hidden-xs">
         <div class="row">
@@ -65,20 +59,20 @@
             </div>
             <br />
           </div>
-          <dngearsim-item-edit-enchantment item="item" on-change="handleChange()">
+          <dngearsim-item-edit-enchantment item="::item" on-change="handleChange()">
           </dngearsim-item-edit-enchantment>
         </div>
       </div>
       
       <!-- horizontal layout for mobile -->
-      <div class="col-xs-12 visible-xs-block" ng-if="item.stats != null && item.stats.length > 0">
+      <div class="col-xs-12 visible-xs-block" ng-if="::item.stats != null && item.stats.length > 0">
         <label>stats</label><br />
-        <span dnsim-stats stats="item.stats" separator="'|'">
+        <span dnsim-stats stats="::item.stats" separator="'|'">
         </span>
       </div>
-      <div class="col-xs-12 visible-xs-block" ng-if="item.setStats != null && item.setStats.length > 0">
+      <div class="col-xs-12 visible-xs-block" ng-if="::item.setStats != null && item.setStats.length > 0">
         <br /><label>set stats</label><br />
-        <span dnsim-stats stats="item.setStats" separator="'|'"></span>
+        <span dnsim-stats stats="::item.setStats" separator="'|'"></span>
       </div>
       <div class="col-xs-12 visible-xs-block" ng-if="item.enchantmentStats && item.enchantmentStats.length > 0">
         <br /><label>+{{item.enchantmentNum}} enchantment stats:</label><br />
@@ -86,38 +80,38 @@
         </span>
         <br />
       </div>
-      <dngearsim-item-edit-enchantment item="item" on-change="handleChange()" class="visible-xs-block">
+      <dngearsim-item-edit-enchantment item="::item" on-change="handleChange()" class="visible-xs-block">
       </dngearsim-item-edit-enchantment>
       <!-- -->
       
     </div>
-    <div class="row" ng-if="item.typeName == 'talisman'">
-      <dngearsim-item-edit-talisman item="item" on-change="handleChange()">
+    <div class="row" ng-if="::item.typeName == 'talisman'">
+      <dngearsim-item-edit-talisman item="::item" on-change="handleChange()">
       </dngearsim-item-edit-talisman>
     </div>
-    <div class="row" ng-if="item.typeName == 'custom'">
+    <div class="row" ng-if="::item.typeName == 'custom'">
       <dngearsim-item-edit-custom item="item" on-change="handleChange()">
       </dngearsim-item-edit-custom>
     </div>
-    <div class="row" ng-if="item.typeName == 'skills'">
+    <div class="row" ng-if="::item.typeName == 'skills'">
       <dngearsim-item-edit-skill item="item" on-change="handleChange()">
       </dngearsim-item-edit-skill>
     </div>
     <div class="row">
-      <dngearsim-item-edit-spark item="item" on-change="handleChange()">
+      <dngearsim-item-edit-spark item="::item" on-change="handleChange()">
       </dngearsim-item-edit-spark>
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-if="item != null">
   <div class="col-xs-12">
-    {{getDescription()}}
+    {{::getDescription()}}
   </div>
 </div>
 <div class="col-xs-12">
   <br />
 </div>
-<div class="row">
+<div class="row" ng-if="item != null">
   <div class="col-xs-12 item-type-grouping">
     |
     <span ng-if="hasContents">
@@ -146,36 +140,36 @@
     </span>
   </div>
 </div>
-<div class="row" ng-if="detail == 'extract'">
-  <dngearsim-item-view-extraction item="item">
+<div class="row" ng-if="detail == 'extract'" ng-if="item != null">
+  <dngearsim-item-view-extraction item="::item">
   </dngearsim-item-view-extraction>
 </div>
-<div class="row" ng-if="detail == 'contents'">
-  <dngearsim-item-view-box item="item">
+<div class="row" ng-if="detail == 'contents'" ng-if="item != null">
+  <dngearsim-item-view-box item="::item">
   </dngearsim-item-view-box>
 </div>
 <div class="row" ng-if="detail == 'use'">
-    <dngearsim-group-assignment item="item">
+    <dngearsim-group-assignment item="::item" ng-if="item != null">
     </dngearsim-group-assignment>
 </div>
-<div class="row" ng-if="detail == 'transfer'">
-  <dngearsim-item-view-transfer item="item">
+<div class="row" ng-if="detail == 'transfer'" ng-if="item != null">
+  <dngearsim-item-view-transfer item="::item">
   </dngearsim-item-view-transfer>
 </div>
-<div class="row" ng-if="detail == 'shops'">
-  <dngearsim-item-view-shop item="item">
+<div class="row" ng-if="detail == 'shops'" ng-if="item != null">
+  <dngearsim-item-view-shop item="::item">
   </dngearsim-item-view-shop>
 </div>
-<div class="row" ng-if="detail == 'craft'">
-  <dngearsim-item-view-craft item="item">
+<div class="row" ng-if="detail == 'craft'" ng-if="item != null">
+  <dngearsim-item-view-craft item="::item">
   </dngearsim-item-view-craft>
 </div>
-<div class="row" ng-if="detail == 'set'">
-  <dngearsim-item-view-set item="item">
+<div class="row" ng-if="detail == 'set'" ng-if="item != null">
+  <dngearsim-item-view-set item="::item">
   </dngearsim-item-view-set>
 </div>
-<div class="row" ng-if="detail == 'plate'">
-  <dngearsim-item-view-plate item="item">
+<div class="row" ng-if="detail == 'plate'" ng-if="item != null">
+  <dngearsim-item-view-plate item="::item">
   </dngearsim-item-view-plate>
 </div>
 </dnsim-loading>

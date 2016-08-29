@@ -20,10 +20,8 @@ function saveHelper(itemCategory) {
     },
     
     saveBuildSelection : function(buildName, builds) {
-      // console.log('saving selection');
-      localStorage.setItem('currentGroup', buildName);
+      this.setCurrentBuild(buildName);
       if(builds && buildName in builds && builds[buildName].job && builds[buildName].job.id) {
-        // console.log('also job');
         localStorage.setItem('jobNumber', builds[buildName].job.id);
       }
     },
@@ -71,6 +69,7 @@ function saveHelper(itemCategory) {
       if(groupName in items) {
         if(updatedItems.length == 0) {
           delete items[groupName];
+          this.setCurrentBuild(null);
           // console.log('no items to update');
         }
         else {
@@ -170,6 +169,27 @@ function saveHelper(itemCategory) {
       var stringifiedData = JSON.stringify(items);
       // console.log('saving: ' + stringifiedData);
       localStorage.setItem('hiddenTypes', LZString.compressToUTF16(stringifiedData));
+    },
+    
+    currentBuild: null,
+    getCurrentBuild: function() {
+      if(!this.currentBuild) {
+        this.currentBuild = localStorage.getItem('currentGroup');
+        if(this.currentBuild) {
+          var savedItems = this.getSavedItems();
+          if(!(this.currentBuild in savedItems)) {
+            localStorage.removeItem('currentGroup');
+            this.currentBuild = null;
+          }
+        }
+      }
+      
+      return this.currentBuild;
+    },
+    
+    setCurrentBuild: function(buildName) {
+      this.currentBuild = buildName;
+      localStorage.setItem('currentGroup', buildName);
     }
   };
 }

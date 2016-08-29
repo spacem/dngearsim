@@ -1,4 +1,4 @@
-<div class="row" ng-if="!ctrl.job && !ctrl.bJob">
+<div class="row" ng-if="!ctrl.job && !ctrl.bJob && ctrl.getBaseJobs().length > 0">
   <div class="hidden-xs col-sm-4">&nbsp;</div>
   <div class="col-xs-12 col-sm-8">
     <br />
@@ -21,7 +21,7 @@
   <div class="hidden-xs col-sm-4">&nbsp;</div>
   <div class="col-xs-12 col-sm-4">
     <button class="btn btn-default btn-block" ng-repeat="fJob in ctrl.getFinalJobs()" ng-click="ctrl.setJob(fJob)">
-      <dnsim-job-icon item="fJob"></dnsim-job-icon>
+      <dnsim-job-icon item="::fJob"></dnsim-job-icon>
       {{fJob.name}}
     </button>
     <button class="btn btn-default btn-block" ng-click="ctrl.bJob = null">

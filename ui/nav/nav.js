@@ -58,9 +58,10 @@ angular.module('dnsim').controller('NavCtrl',
     }
       
     $scope.getActions = function() {
+      console.log('getting actions');
       var menu = null;
       
-      var currentBuild = localStorage.getItem('currentGroup');
+      var currentBuild = saveHelper.getCurrentBuild();
       if(currentBuild) {
         var savedItems = saveHelper.getSavedItems();
         if(!(currentBuild in savedItems)) {

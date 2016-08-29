@@ -11,6 +11,8 @@ angular.module('dnsim').controller('RegionCtrl',
       function() {
         $timeout();
       });
+      
+    $scope.region = region;
     
     $scope.getDntLocation = function() {
       return region.dntLocation;

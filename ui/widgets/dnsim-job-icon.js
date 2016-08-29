@@ -1,32 +1,36 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').directive('dnsimJobIcon', ['exportLinkHelper','$location','region', dnsimJobIcon]);
+angular.module('dnsim').directive('dnsimJobIcon', [dnsimJobIcon]);
 
-function dnsimJobIcon(exportLinkHelper,$location,region) {
+function dnsimJobIcon() {
   return {
     restrict: 'E',
-    scope: {
+    scope: {},
+    bindToController: {
       item: '=item',
     },
     templateUrl: 'ui/widgets/dnsim-job-icon.html',
-    link: function($scope, element, attrs) {
+    controller: dnsimJobIconController,
+    controllerAs: 'ctrl'
+  }
+}
 
-      $scope.getIconXPostion = function() {
-        if($scope.item && $scope.item.d && $scope.item.d.JobIcon > 0) {
-          return (($scope.item.d.JobIcon % 9) * 44) + 5;
-        }
-        return 0;
-      }
-      
-      $scope.getIconYPostion = function() {
-        if($scope.item && $scope.item.d && $scope.item.d.JobIcon > 0) {
-          return (Math.floor($scope.item.d.JobIcon / 9) * 44) + 5;
-        }
-        return 0;
-      }
-    },
-  };
+function dnsimJobIconController() {
+
+  this.getIconXPostion = function() {
+    if(this.item && this.item.d && this.item.d.JobIcon > 0) {
+      return ((this.item.d.JobIcon % 9) * 44) + 5;
+    }
+    return 0;
+  }
+  
+  this.getIconYPostion = function() {
+    if(this.item && this.item.d && this.item.d.JobIcon > 0) {
+      return (Math.floor(this.item.d.JobIcon / 9) * 44) + 5;
+    }
+    return 0;
+  }
 }
 
 })();

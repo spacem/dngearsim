@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs">
   <li class="{{action.extraCss}} nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
     <a href="#/{{action.path}}" ng-click="$parent.fireAction(action)">
-      <span class="glyphicon glyphicon-{{action.icon}}" aria-hidden="true"></span> {{action.name}}
+      <span class="glyphicon glyphicon-{{::action.icon}}" aria-hidden="true"></span> {{action.name}}
     </a>
   </li>
 </ul>
 <div class="row">
-  <div class="col-xs-12" ng-if="noRegion()">
+  <div class="col-xs-12" ng-if="::noRegion()">
     WARNING: No region selected
   </div>
 </div>

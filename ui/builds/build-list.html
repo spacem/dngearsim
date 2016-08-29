@@ -1,4 +1,4 @@
-<div class="row" ng-if="!buildList.currentGroup">
+<div class="row" ng-if="::!buildList.currentGroup">
   <div class="col-xs-12 col-sm-8 col-lg-9">
   <div class="row">
     <div class="col-xs-12">
@@ -23,11 +23,11 @@
       </button>
     </div>
   </div>
-  <div id="saved-group" class="row" ng-if="buildList.builds && buildList.builds.length > 0" ng-repeat="b in buildList.builds">
+  <div id="saved-group" class="row" ng-if="::buildList.builds" ng-repeat="b in ::buildList.builds track by $index">
     
     <div class="col-xs-12 group-header">
     <button class="btn btn-link btn-block group-header-btn" ng-click="buildList.toggleGroup(b.name)">
-      <dngearsim-build-summary build-name="b.name" build="b.build">
+      <dngearsim-build-summary build-name="::b.name" build="::b.build">
       </dngearsim-build-summary>
     </button>
     </div>
@@ -38,7 +38,7 @@
     <img src="images/jasmin.png" />
   </div>
 </div>
-<div class="row" ng-if="buildList.currentGroup">
-  <dngearsim-build build-name="buildList.currentGroup" build="buildList.savedItems[buildList.currentGroup]" on-change="buildList.handleChange()">
+<div class="row" ng-if="::buildList.currentGroup">
+  <dngearsim-build build-name="::buildList.currentGroup" build="::buildList.savedItems[buildList.currentGroup]" on-change="buildList.handleChange()">
   </dngearsim-build>
 </div>

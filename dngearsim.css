@@ -126,6 +126,7 @@ border-radius: 10px;
 .toggle-box {
 display: inline;
 float: right;
+clear: right;
 background-color: #070506;
 }
 

@@ -10,35 +10,35 @@
 <div class="hidden-xs col-xs-4 col-md-3">
 </div>
 <div class="col-xs-12 col-sm-8 col-md-9">
-<div class="row" ng-if="!itemCategory.searchType">
+<div class="row" ng-if="::!itemCategory.searchType">
   <div class="col-xs-0 col-md-2"></div>
   <div class="hidden-xs col-md-10 form-group">
     <br />
     <span class="form-group" ng-repeat="(id,value) in ::grades track by $index">
     <label class="checkbox-inline">
-      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
+      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{::id}}">{{value.name}}&nbsp;
     </label>
     </span>
   </div>
-  <div class="visible-xs col-xs-6 form-group" ng-hide="itemCategory.hideRank" ng-repeat="(id,value) in ::grades track by $index">
+  <div class="visible-xs col-xs-6 form-group" ng-hide="::itemCategory.hideRank" ng-repeat="(id,value) in ::grades track by $index">
     <label class="checkbox-inline">
-      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{id}}"> {{value.name}}
+      <input type="checkbox" ng-model="$parent.rankChecked[id]" value="{{::id}}"> {{value.name}}
     </label>
   </div>
   
-  <div class="col-xs-6 col-sm-2" ng-hide="itemCategory.hideLevel">
+  <div class="col-xs-6 col-sm-2" ng-hide="::itemCategory.hideLevel">
      <label>min&nbsp;lvl:
      </label>
      <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="$parent.minLevel" dnsim-select-all-on-click />
   </div>
-  <div class="col-xs-6 col-sm-2" ng-hide="itemCategory.hideLevel">
+  <div class="col-xs-6 col-sm-2" ng-hide="::itemCategory.hideLevel">
      <label>max&nbsp;lvl:
      </label>
      <input type="number" dnsim-string-to-number step="any" class="form-control" ng-model="$parent.maxLevel" dnsim-select-all-on-click />
   </div>
   <div class="col-xs-12 col-sm-2">
     <label>stat:</label>
-    <select class="form-control" ng-model="$parent.stat" ng-options="stat.name for stat in stats track by stat.id">
+    <select class="form-control" ng-model="$parent.stat" ng-options="stat.name for stat in ::stats track by stat.id">
     </select>
   </div>
   
@@ -46,37 +46,37 @@
      <label>name:</label>
      <input type="text" class="form-control" ng-model="$parent.nameSearch" ng-model-options="{ debounce: 200 }" dnsim-select-all-on-click />
   </div>
-  <div class="col-xs-12 col-sm-2" ng-hide="itemCategory.hideJob">
+  <div class="col-xs-12 col-sm-2" ng-hide="::itemCategory.hideJob">
     <label>class: 
     </label>
     <select ng-model="$parent.job" class="form-control"
-     ng-options="job.name for job in jobs track by job.id">
+     ng-options="job.name for job in ::jobs track by job.id">
     </select>
   </div>
 </div>
 </div>
 
 <div class="hidden-xs col-sm-4 col-md-3">
-  <dnsim-category-links on-change="navigate()" cat="itemCategory"></dnsim-category-links>
+  <dnsim-category-links on-change="navigate()" cat="::itemCategory"></dnsim-category-links>
 </div>
 
-<div class="col-xs-12 col-sm-8 col-md-9" ng-if="itemCategory.searchType == 'skills'">
-  <dngearsim-skill-search jobs="jobs" job="job"></dngearsim-skill-search>
+<div class="col-xs-12 col-sm-8 col-md-9" ng-if="::itemCategory.searchType == 'skills'">
+  <dngearsim-skill-search jobs="::jobs" job="job"></dngearsim-skill-search>
 </div>
-<div class="col-xs-12 col-sm-8 col-md-9" ng-if="itemCategory.searchType == 'custom'">
+<div class="col-xs-12 col-sm-8 col-md-9" ng-if="::itemCategory.searchType == 'custom'">
   <dngearsim-custom-items></dngearsim-custom-items>
 </div>
 
-<div class="col-xs-12 col-sm-8 col-md-9" ng-if="!itemCategory.searchType">
+<div class="col-xs-12 col-sm-8 col-md-9" ng-if="::!itemCategory.searchType">
 <dnsim-loading>
 <table class="table">
 <tr ng-repeat="result in getResults() track by $index">
   <td>
     <div>
-      <dnsim-item-link item="result" />
+      <dnsim-item-link item="::result" />
     </div>
     <div>
-      <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" separator="'|'" />
+      <span dnsim-stats stats="::result.fullStats" alt-stats="::result.stats" separator="'|'" />
     </div>
   </td>
 </tr>

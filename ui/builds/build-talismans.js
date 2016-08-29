@@ -16,7 +16,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     this.groupNames = [];
   }
   if(this.groupNames.length > 0) {
-    this.groupName = localStorage.getItem('currentGroup');
+    this.groupName = saveHelper.getCurrentBuild();
   }
   else {
     this.groupName = null;

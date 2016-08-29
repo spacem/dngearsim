@@ -33,11 +33,6 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
     this.category = itemCategory.byName(value);
     localStorage.setItem('selectedItemCategory', value);
   }
-
-  this.toggleGroup = function() {
-    localStorage.setItem('currentGroup', null);
-    $location.url('/builds');
-  }
   
   this.getSaveDate = function(group) {
     if(vm.build.lastUpdate > 0) {
