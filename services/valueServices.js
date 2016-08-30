@@ -96,6 +96,7 @@ function hCodeValues() {
 
       103: {id: 103, name: 'crit dmg', display: toNoDec, dps: true, pc: 104 },
       104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true, dps: true },
+      105: {id: 104, name: 'pvp dmg', display: inThousands, noCustom: true, dps: true },
       107: {id: 107, name: 'mp?', display: toNoDec, noCustom: true, hide: true, def: true },
       
       // stats below here are ones I made up
