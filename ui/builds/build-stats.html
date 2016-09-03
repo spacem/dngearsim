@@ -15,13 +15,13 @@
   <div ng-if="statsCtrl.showItemStats" dnsim-stats stats="statsCtrl.stats.combinedStats"></div>
 </div>
 
-<div class="col-xs-6 col-md-12" ng-show="::statsCtrl.stats.heroStats != null && statsCtrl.stats.heroStats.length > 0">
+<div class="col-xs-6 col-md-12" ng-show="statsCtrl.stats.heroStats != null && statsCtrl.stats.heroStats.length > 0">
   <h4>hero&nbsp;stats</h4>
   <button class="btn btn-link" ng-show="!statsCtrl.showHeroStats" ng-click="statsCtrl.showHeroStats = true">show&nbsp;hero&nbsp;stats</button>
-  <div ng-if="statsCtrl.showHeroStats" dnsim-stats stats="::statsCtrl.stats.heroStats"></div>
+  <div ng-if="statsCtrl.showHeroStats" dnsim-stats stats="statsCtrl.stats.heroStats"></div>
 </div>
-<div class="col-xs-6 col-md-12" ng-show="::statsCtrl.stats.nakedStats.length > 0">
+<div class="col-xs-6 col-md-12" ng-show="statsCtrl.stats.nakedStats.length > 0">
   <h4>naked&nbsp;stats</h4>
   <button class="btn btn-link" ng-show="!statsCtrl.showNakedStats" ng-click="statsCtrl.showNakedStats = true">show&nbsp;naked&nbsp;stats</button>
-  <div  ng-if="statsCtrl.showNakedStats" dnsim-stats stats="::statsCtrl.stats.nakedStats"></div>
+  <div  ng-if="statsCtrl.showNakedStats" dnsim-stats stats="statsCtrl.stats.nakedStats"></div>
 </div>
