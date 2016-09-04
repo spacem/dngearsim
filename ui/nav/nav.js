@@ -58,7 +58,7 @@ angular.module('dnsim').controller('NavCtrl',
     }
       
     $scope.getActions = function() {
-      console.log('getting actions');
+      // console.log('getting actions');
       var menu = null;
       
       var currentBuild = saveHelper.getCurrentBuild();
