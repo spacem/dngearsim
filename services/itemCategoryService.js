@@ -12,10 +12,10 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'search/armour', name:'armour', sourceType: 'equipment', numItemText: '5', maxExchange: 1, maxCat: 5, limitExchange: [3,4,5,6,7]},
       {path: 'search/accessories', name:'accessories', sourceType: 'equipment', hideJob: true, maxCat: 4, maxExchange: 2, limitExchange: [8,9,10]},
       {path: 'search/techs', name:'techs', sourceType: 'techs', maxCat: 4, maxExchange: 2, limitExchange: [8,9,10]},
-      {path: 'search/offensive-gems', name:'offensive gems', sourceType: 'gems', hideJob: true, maxCat: 4, maxExchange: 4, limitExchange: [54]},
-      {path: 'search/increasing-gems', name:'increasing gems', sourceType: 'gems', hideJob: true, maxCat: 14, maxExchange: 14, limitExchange: [54]},
+      {path: 'search/offensive-gems', name:'offensive jades', sourceType: 'gems', hideJob: true, maxCat: 4, maxExchange: 4, limitExchange: [54]},
+      {path: 'search/increasing-gems', name:'increasing jades', sourceType: 'gems', hideJob: true, maxCat: 14, maxExchange: 14, limitExchange: [54]},
       {path: 'search/enhancement-plates', name:'enhancement plates', sourceType: 'plates', hideJob: true, numItemText: '8+3', maxCat: 11, maxExchange: 15, limitExchange: [33]},
-      {path: 'search/expedition-plates', name:'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, numItemText: '4', maxCat: 4, maxExchange: 15, limitExchange: [33]},
+      {path: 'search/expedition-plates', name:'unique plates', sourceType: 'plates', hideRank: true, hideJob: true, numItemText: '4', maxCat: 4, maxExchange: 15, limitExchange: [33]},
       {path: 'search/talisman', name:'talisman', sourceType: 'talisman', hideJob: true, numItemText: '8+4', maxCat: 12, maxExchange: 12, limitExchange: [52,53]},
       {path: 'search/costume', name:'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, limitExchange: [16,17,18,19,20,21,22]},
       {path: 'search/cash', name:'cash', sourceType: 'cash', numItemText: '8', maxCat: 8, maxExchange: 2, hideJob: true, limitExchange: [23,24,25,26,27,28,29]},
@@ -100,7 +100,7 @@ function itemCategory(itemFactory,items,dntData) {
             
             if(item.itemSource == 'plate') {
               if((item.rawData && rawData.Rank == 4) || (item.rank && item.rank.id == 4)) {
-                return cat.name == 'expedition plates';
+                return cat.name == 'unique plates';
               }
               else {
                 return cat.name == 'enhancement plates';
@@ -111,10 +111,10 @@ function itemCategory(itemFactory,items,dntData) {
               if(gemTypes.length > 0) {
                 
                 if(gemTypes[0].Type == 1) {
-                  return cat.name == 'offensive gems';
+                  return cat.name == 'offensive jades';
                 }
                 else if(gemTypes[0].Type == 2) {
-                  return cat.name == 'increasing gems';
+                  return cat.name == 'increasing jades';
                 }
                 else {
                   return false;

@@ -276,3 +276,58 @@ background-position: -610px -10px;
   opacity: 0.8;
   filter: alpha(opacity=80);
 }
+.cat-icon-titles {
+  background: url("images/icons/itemicon63.png") -285px -44px;
+}
+.cat-icon-armour {
+  background: url("images/icons/itemicon21.png") -325px -564px;
+}
+.cat-icon-weapons {
+  background: url("images/icons/itemicon08.png") -5px -404px;
+}
+.cat-icon-accessories {
+  background: url("images/icons/itemicon42.png") -45px -164px;
+}
+.cat-icon-techs {
+  background: url("images/icons/itemicon42.png") -45px -164px;
+}
+.cat-icon-offensive {
+  background: url("images/icons/itemicon92.png") -85px -44px;
+}
+.cat-icon-increasing {
+  background: url("images/icons/itemicon92.png") -325px -44px;
+}
+.cat-icon-enhancement {
+  background: url("images/icons/itemicon91.png") -125px -4px;
+}
+.cat-icon-unique {
+  background: url("images/icons/itemicon91.png") -205px -4px;
+}
+.cat-icon-talisman {
+  background: url("images/icons/itemicon92.png") -165px -124px;
+}
+.cat-icon-costume {
+  background: url("images/icons/itemicon04.png") -365px -724px;
+}
+.cat-icon-cash {
+  background: url("images/icons/itemicon23.png") -45px -724px;
+}
+.cat-icon-extras {
+  background: url("images/icons/itemicon64.png") -45px -44px;
+}
+.cat-icon-skills {
+  background: url("images/icons/skillicon02.png") -285px -204px;
+}
+.cat-icon-custom {
+  background: url("images/icons/skillicon07.png") -205px -44px;
+}
+
+.cat-icon {
+display: inline-block;
+width: 34px;
+height: 30px;
+margin-top: -8px;
+margin-bottom: -8px;
+-webkit-filter: grayscale(20%) sepia(10%);
+filter: grayscale(50%) invert(100%) blur(5px);
+}
