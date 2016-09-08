@@ -55,7 +55,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   }
   
   this.initBoxContents = function() {
-    //console.log('init contents');
+    console.log('init contents', this.item.fileName);
 
     for(var i=0;i<files.length;++i) {
       if(!dntData.isLoaded(files[i])) {
@@ -126,10 +126,10 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   this.getCharmItems = function(boxType) {
     var charmFiles = [charmItemtable, commonCharmItemtable];
     for(var i=0;i<charmFiles.length;++i) {
-      
-      //console.log('box: ' + boxType);
 
       var charmData = dntData.getData(charmFiles[i]);
+      console.log('box: ' + boxType, charmData);
+      
       for(var c=0;c<charmData.length;++c) {
         var cd = charmData[c];
         if(cd.CharmNum == boxType && cd.Look) {

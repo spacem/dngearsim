@@ -32,6 +32,14 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         return translations.translate(itemData[0].DescriptionID, itemData[0].DescriptionIDParam);
       }
     }
+    else if($scope.item.fileName &&
+      dntData.isLoaded($scope.item.fileName + '.lzjson')) {
+        
+      var itemData = dntData.find($scope.item.fileName + '.lzjson', 'id', $scope.item.id);
+      if(itemData && itemData.length > 0 && itemData[0].DescriptionID > 0) {
+        return translations.translate(itemData[0].DescriptionID, itemData[0].DescriptionIDParam);
+      } 
+    }
     return '';
   }
   
@@ -144,6 +152,12 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     
         if($scope.item.needJobClass > 0) {
           getJobName();
+        }
+        
+        if(!$scope.item.fileName) {
+          if($scope.item.itemSource in items && items[$scope.item.itemSource].mainDnt) {
+            $scope.item.fileName = items[$scope.item.itemSource].mainDnt.replace('.lzjson', '').replace('.optimised', '');
+          }
         }
       }
       
