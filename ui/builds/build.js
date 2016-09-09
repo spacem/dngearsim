@@ -122,6 +122,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
   }
   
   this.handleChange = function() {
+    vm.stats = statHelper.getBuildStats(vm.build);
     vm.onChange();
   }
   
@@ -135,9 +136,8 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
     });
 
     vm.build.items = newItemList;
-    vm.stats = statHelper.getBuildStats(vm.build);
     saveHelper.updatedSavedItems(vm.buildName, newItemList);
-    vm.onChange();
+    vm.handleChange();
   }
   
 }])

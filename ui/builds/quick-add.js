@@ -53,6 +53,7 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
           vm.cancel();
           var newItem = exportLinkHelper.reloadItem(item);
           saveHelper.saveItem(vm.buildName, newItem);
+          vm.build.items.push(newItem);
           vm.onChange();
         }
       }
