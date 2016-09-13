@@ -5,7 +5,7 @@ angular.module('dnsim').factory('translations', ['$routeParams', '$rootScope', t
 function translations($routeParams, $rootScope) {
 
   var dnTranslations = new DnTranslations();
-  var tFile = 'uistring.lzjson';
+  var tFile = 'uistring.optimised.lzjson';
 
   var completeCallback = [];
   var progressCallback = [];
