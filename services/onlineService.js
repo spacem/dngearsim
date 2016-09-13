@@ -150,11 +150,11 @@ function onlineService($window, $q, hCodeValues) {
       _.each(build.items, function(item) {
         item.fullStats = item.stats;
         
-        if(item.enchantmentStats != null && item.enchantmentStats.length > 0) {
+        if(item.enchantmentStats && item.enchantmentStats.length) {
           item.fullStats = hCodeValues.mergeStats(item.enchantmentStats, item.fullStats);
         }
         
-        if(item.sparkStats != null && item.sparkStats.length > 0) {
+        if(item.sparkStats && item.sparkStats.length) {
           item.fullStats = hCodeValues.mergeStats(item.sparkStats, item.fullStats);
         }
       });

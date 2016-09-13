@@ -10,7 +10,7 @@ function groupHelper(exportLinkHelper) {
       var newItems = [];
       angular.forEach(group.items, function(item, key) {
         var newItem = exportLinkHelper.reloadItem(item);
-        if(newItem != null) {
+        if(newItem) {
           newItems.push(newItem);
         }
       });

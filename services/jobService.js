@@ -33,7 +33,7 @@ function jobs(dntData, translations, itemColumnsToLoad) {
     getFinalJobs : function () {
       var jobs = [];
       var alljobs = this.getAllJobs();
-      if(alljobs != null) {
+      if(alljobs) {
         var numRows = alljobs.length;
         for(var r=0;r<numRows;++r) {
           if(alljobs[r].d.JobNumber == 2 && alljobs[r].d.JobIcon > 0) {
@@ -120,7 +120,7 @@ function jobs(dntData, translations, itemColumnsToLoad) {
     getBaseJobName : function(job) {
       if(this.isLoaded()) {
         var alljobs = this.getAllJobs();
-        if(alljobs != null) {
+        if(alljobs) {
           var numRows = alljobs.length;
           for(var r=0;r<numRows;++r) {
             if(alljobs[r].id == (job.d.BaseClass+1) && alljobs[r].d.EnglishName) {

@@ -157,7 +157,7 @@ function items(translations,dntData,itemColumnsToLoad) {
       var itemSource = this;
       itemSource.loading = true;
   
-      if(itemSource.items != null) {
+      if(itemSource.items) {
         complete();
       }
       else {

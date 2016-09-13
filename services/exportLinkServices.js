@@ -4,12 +4,11 @@
 angular.module('dnsim').factory('exportLinkHelper', 
 ['$http','items','dntData','itemFactory','hCodeValues','itemColumnsToLoad','statHelper','translations','itemCategory','region',exportLinkHelper]);
 function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations,itemCategory,region) {
-  'use strict';
-  
+
   return {
     
     encodeItem: function(item, small) {
-      if(item != null) {
+      if(item) {
         var itemString;
 
         if(item.typeName == 'custom')  {
@@ -19,7 +18,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               itemString += '|';
             }
             else {
-              itemString += ':C'
+              itemString += ':C';
             }
             itemString += stat.id.toString(36) + '=' + stat.max;
           });
@@ -70,7 +69,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
     decodeItem: function(itemStr) {
       var item = {};
       
-      if(itemStr != null) {
+      if(itemStr) {
         angular.forEach(itemStr.split(':'), function(itemBit, bitIndex) {
           if(itemBit.charAt(0) == 'I') {
             item.id = parseInt(itemBit.substr(1), 36);
@@ -135,7 +134,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       
       angular.forEach(group.items, function(item, key) {
         var itemString = self.encodeItem(item, true);  
-        if(itemString != null && itemString.length > 0) {
+        if(itemString && itemString.length) {
           itemStrings.push(itemString);
         }
       });
@@ -165,7 +164,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         retVal += '&s=' + group.secondaryElement.id;
       }
       retVal += '&g=' + encodeURI(groupName) + '&i=' + itemStrings.join(',');
-      return retVal
+      return retVal;
     },
 
     createShortUrl: function(groupName, group) {
@@ -203,7 +202,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       // console.log('checking ' + item.itemSource)
       if(item.itemSource == 'rbTech') {
         item.itemSource = 'tech';
-        console.log('changed to ' + item.itemSource)
+        // console.log('changed to ' + item.itemSource)
       }
       
       if(item.itemSource == 'custom' || item.typeName == 'custom') {
@@ -255,7 +254,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         
         var itemType = items[item.itemSource];
         var ds = dntData.find(itemType.mainDnt, 'id', item.id);
-        if(ds.length == 0) {
+        if(!ds.length) {
           console.log('item ' + item.id + ' not found in ' + itemType.mainDnt);
         }
         else {
@@ -265,13 +264,13 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           var p = null;
           
           var ps = dntData.find(itemType.potentialDnt, 'id', item.pid);
-          if(ps.length == 0) {
+          if(!ps.length) {
             ps = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
           }
           
-          if(ps.length == 0) {
+          if(!ps.length) {
             var ps = dntData.find(itemType.potentialDntEx, 'id', item.pid);
-            if(ps.length == 0) {
+            if(!ps.length) {
               ps = dntData.find(itemType.potentialDntEx, 'PotentialID', d.TypeParam1);
             }
           }

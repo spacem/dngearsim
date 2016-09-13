@@ -67,7 +67,7 @@ function saveHelper(itemCategory) {
     updatedSavedItems: function(groupName, updatedItems) {
       var items = this.getSavedItems();
       if(groupName in items) {
-        if(updatedItems.length == 0) {
+        if(!updatedItems.length) {
           delete items[groupName];
           this.setCurrentBuild(null);
           // console.log('no items to update');

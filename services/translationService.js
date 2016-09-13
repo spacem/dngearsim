@@ -41,7 +41,7 @@ function translations($routeParams, $rootScope) {
           var t = this;
           
           var fileName = null;
-          if(this.location != null && this.location != '') {
+          if(this.location && this.location != '') {
             fileName = this.location + '/' + tFile;
             
             if(fileName != localStorage.getItem("UIStrings_file")) {

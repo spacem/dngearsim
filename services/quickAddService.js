@@ -168,7 +168,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
               item.name.indexOf('High Grade'));
               
             if(id == 999) {
-              return index == 0;
+              return index === 0;
             }
             else {
               return item.rank.id == id && index != 0;
@@ -194,10 +194,10 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
               item.name.indexOf('Quality'),
               item.name.indexOf('High Grade'));
             if(id == 999) {
-              return item.rank.id == 3 && index == 0;
+              return item.rank.id == 3 && index >= 0;
             }
             else {
-              return item.rank.id == id && index != 0;
+              return item.rank.id == id && index < 0;
             }
           }
           return false;

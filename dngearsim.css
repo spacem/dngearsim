@@ -9,7 +9,7 @@ border-color: #8d8578;
 border-style: solid;
 border-width: 5px;
 border-radius: 10px;
-border-top-width: 0px;
+border-top-width: 0;
 }
 
 .list-group-item {
@@ -90,7 +90,7 @@ word-wrap:break-word;
 word-break: normal;
 }
 .btn-link {
-padding: 0px;
+padding: 0;
 }
 .toggle-box button {
 float: left;
@@ -171,8 +171,8 @@ border-top-style: solid;
 border-top-width: 5px;
 }
 .header-title {
-margin-top: 0px;
-margin-bottom: 0px;
+margin-top: 0;
+margin-bottom: 0;
 }
 .search-active {
 color: #555;
@@ -205,7 +205,7 @@ border-color: #DDD #DDD #DDD #DDD;
 }
 .selected-link {
 color: #555;
-padding: 0px;
+padding: 0;
 }
 .item-icon {
 display: inline-block;
@@ -237,16 +237,16 @@ background: transparent url(images/classes.png);
 float: left;
 }
 .class-WARRIOR {
-background-position: -5px -0px;
+background-position: -5px 0;
 }
 .class-ARCHER {
-background-position: -80px -0px;
+background-position: -80px 0;
 }
 .class-CLERIC {
 background-position: -160px -10px;
 }
 .class-SOCERESS {
-background-position: -230px -0px;
+background-position: -230px 0;
 }
 .class-ACADEMIC {
 background-position: -310px -10px;
@@ -255,10 +255,10 @@ background-position: -310px -10px;
 background-position: -380px -10px;
 }
 .class-ASSASSIN {
-background-position: -460px 0px;
+background-position: -460px 0;
 }
 .class-LENCEA {
-background-position: -530px 0px;
+background-position: -530px 0;
 }
 .class-MACHINA {
 background-position: -610px -10px;

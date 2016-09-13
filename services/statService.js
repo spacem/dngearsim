@@ -11,7 +11,7 @@ function statHelper(hCodeValues) {
       var sets = {};
       
       angular.forEach(groupItems, function(value, key) {
-        if(value != null && value.setStats != null) {
+        if(value !== null && value.setStats != null) {
           if(value.setId in sets) {
             sets[value.setId].numItems++;
           }
@@ -22,7 +22,6 @@ function statHelper(hCodeValues) {
       });
       
       angular.forEach(sets, function(value, key) {
-        var setStats = [];
         angular.forEach(value.stats, function(stat, index) {
           if(stat.needSetNum <= value.numItems) {
             stats.push(stat);
@@ -37,12 +36,12 @@ function statHelper(hCodeValues) {
       var stats = [];
       
       angular.forEach(groupItems, function(value, key) {
-        if(value != null) {
+        if(value) {
           
-          if(value.fullStats != null) {
+          if(value.fullStats) {
             stats = stats.concat(value.fullStats);
           }
-          else {
+          else if(value.stats) {
             stats = stats.concat(value.stats);
           }
         }
@@ -224,7 +223,7 @@ function statHelper(hCodeValues) {
       var itemCrit = dupeStat(1012);
       
       var critChance = Math.min(0.89, (crit.max / Number(group.enemyStatCaps.Ccritical)) + itemCrit.max);
-      retVal.push({id: 1012, max: critChance})
+      retVal.push({id: 1012, max: critChance});
 
       // crit damage %
       var cDmg = dupeStat(103);
@@ -424,7 +423,7 @@ function statHelper(hCodeValues) {
       stats.combinedStats = this.getCombinedStats(build.items);
       stats.setStats = this.getSetStats(build.items);
       stats.allStats = stats.nakedStats.concat(stats.combinedStats).concat(stats.setStats);
-      if(build.heroStats != null && build.heroStats.length > 0) {
+      if(build.heroStats && build.heroStats.length) {
         stats.heroStats = build.heroStats;
         stats.allStats = stats.allStats.concat(build.heroStats);
       }

@@ -51,12 +51,12 @@ function itemCategory(itemFactory,items,dntData) {
       if(cat && 'sourceType' in cat) {
         var retVal = [];
         angular.forEach(items, function(source, sourceName) {
-          if(source.type == cat.sourceType && retVal != null) {
+          if(source.type == cat.sourceType && retVal) {
             if(source.items == null && !source.loading) {
               itemFactory.loadItems(source);
             }
             
-            if(source.items != null) {
+            if(source.items) {
               retVal = retVal.concat(source.items);
             }
             else {
@@ -159,10 +159,10 @@ function itemCategory(itemFactory,items,dntData) {
     
     getItemsByCategory: function(items) {
       var itemMap = {};
-      if(items != null) {
+      if(items) {
         var types = {};
         angular.forEach(items, function(item, index) {
-          if(item != null) {
+          if(item) {
             if(!(item.typeName in types)) {
               types[item.typeName] = [];
             }
@@ -203,7 +203,7 @@ function itemCategory(itemFactory,items,dntData) {
         });
         
         angular.forEach(items, function(item, index) {
-          if(item != null && !(item.typeName in itemMap)) {
+          if(item && !(item.typeName in itemMap)) {
             console.log('we dont know ' + item.typeName + ' anymore')
             itemMap.typeError = true;
           }

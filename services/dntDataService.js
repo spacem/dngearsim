@@ -34,9 +34,9 @@ function dntData($rootScope,$timeout) {
             
             this.reader.colsToLoad = colsToLoad;
             
-            if(this.dntLocation != null && 
-              this.dntLocation.url != null &&
-              this.dntLocation.url.length > 0) {
+            if(this.dntLocation && 
+              this.dntLocation.url &&
+              this.dntLocation.url.length) {
 
               $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
 

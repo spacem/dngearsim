@@ -16,7 +16,7 @@ function region(translations,dntReset,dntData,$route) {
   
   var dntLocationRegion = localStorage.getItem('lastDNTRegion');
   var dntLocation = hostedFiles[0];
-  if(dntLocationRegion != null) {
+  if(dntLocationRegion) {
     angular.forEach(hostedFiles, function(hostedFile, index) {
       if(hostedFile.region == dntLocationRegion) {
         dntLocation = hostedFile;
@@ -26,7 +26,7 @@ function region(translations,dntReset,dntData,$route) {
 
   var lastTFile = localStorage.getItem('UIStrings_file');
   var tlocation = null;
-  if(lastTFile != null) {
+  if(lastTFile) {
     angular.forEach(hostedFiles, function(hostedFile, index) {
       if(hostedFile.region != alternativeFiles.region && lastTFile.indexOf(hostedFile.url) > -1) {
         tlocation = hostedFile;
@@ -111,7 +111,7 @@ function region(translations,dntReset,dntData,$route) {
     },
     
     init: function() {
-      if(this.tlocation != null) {
+      if(this.tlocation) {
         translations.location = this.tlocation.url;
       }
       dntData.setLocation(this.dntLocation);

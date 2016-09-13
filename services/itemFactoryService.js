@@ -111,7 +111,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
           if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
             potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
             
-            if(potentials.length == 0 && 'potentialDntEx' in itemType) {
+            if(!potentials.length && 'potentialDntEx' in itemType) {
               potentials = dntData.find(itemType.potentialDntEx, 'PotentialID', dTypeParam1);
             }
           }
@@ -122,7 +122,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
           });
           
           var numPotentials = potentials.length;
-          if(numPotentials == 0) {
+          if(!numPotentials) {
             itemType.items.push(this.createItem(itemType.name, d, null, totalRatio));
           }
           else {
@@ -222,7 +222,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       
       if(item.stats == null) {
         var stats = hCodeValues.getStats(d);
-        if(p != null) {
+        if(p) {
           var potentialStats = hCodeValues.getStats(p);
           stats = hCodeValues.mergeStats(stats, potentialStats);
         }
@@ -245,10 +245,10 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         item.enchantmentId = d.EnchantID;
       }
       
-      if(p != null) {
+      if(p) {
         item.pid = p.id;
       
-        if(item.potentialRatio == null) {
+        if(item.potentialRatio === null) {
           item.potentialRatio = getPotentialRatio(p, item.totalRatio);
         }
       }
@@ -260,7 +260,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   
   function getPotentialRatio(p, totalRatio) {
     
-    if(p != null && p.PotentialRatio > 0 && totalRatio != 0) {
+    if(p && p.PotentialRatio > 0 && totalRatio != 0) {
       var ratio = Math.round(p.PotentialRatio/totalRatio*100*100)/100;
       if(ratio != 100) {
         return ratio + '%';

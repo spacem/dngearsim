@@ -9,7 +9,7 @@
     "lite": "lite-server",
     "postinstall": "bower install"
   },
-  "dependencies": {
+  "devDependencies": {
     "bower": "^1.7.9",
     "gulp-plumber": "^1.1.0",
     "browser-sync": "^2.13.0",
@@ -29,7 +29,5 @@
     "lite-server": "^2.2.2",
     "phantomjs": "1.9.19",
     "socket.io": "1.4.5"
-  },
-  "devDependencies": {
   }
 }

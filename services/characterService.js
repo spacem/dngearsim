@@ -31,11 +31,11 @@ function character(dntData,itemColumnsToLoad,jobs,hCodeValues) {
         var index = dntData.findFast(heroLevels, 'id', heroLevel);
         if(index.length == 1) {
           var h = dntData.getRow(heroLevels, index[0]);
-          if(h != null) {
+          if(h) {
             var pIndex = dntData.findFast(heroLevelPotentials, 'PotentialID', h.HeroLevelAbilityID);
             if(pIndex.length == 1) {
               var p = dntData.getRow(heroLevelPotentials, pIndex[0]);
-              if(p != null) {
+              if(p) {
                 heroStats = hCodeValues.getStats(p);
               }
             }
