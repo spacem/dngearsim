@@ -54,7 +54,7 @@ function statHelper(hCodeValues) {
       
       var retVal = [];
       var statLookup = {};
-      if(!group.conversions || !group.enemyStatCaps) {
+      if(!group.conversions || !group.enemyStatCaps || !group.playerStatCaps) {
         return [];
       }
       
@@ -231,7 +231,7 @@ function statHelper(hCodeValues) {
       applyPc(cDmg);
       addStat(cDmg);
 
-      var critDamagePc = cDmg.max / group.enemyStatCaps.CcriticalDamage;
+      var critDamagePc = cDmg.max / group.playerStatCaps.CcriticalDamage;
       addStat({id: 1103, max: critDamagePc + 2});
 
       // fd
