@@ -59,7 +59,7 @@ function config($routeProvider) {
     
     when('/search/:itemType?', {
       templateUrl: 'ui/search/item-search.html',
-      controller: 'ItemSearchCtrl'
+      controller: 'ItemSearchCtrl as ctrl'
     }).
     
     when('/item/:region?/:i*', {

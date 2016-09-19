@@ -49,6 +49,7 @@ gulp.task('libs', function() {
       'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
       'bower_components/firebase/firebase.js',
       'bower_components/underscore/underscore-min.js',
+      'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js'
     ])
     .pipe(uglify())
     .pipe(concat('libs.min.js'))

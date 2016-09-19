@@ -9,6 +9,7 @@ function dnsimLoading(dntData, translations, $timeout) {
     restrict: 'E',
     transclude: true,
     scope: {
+      alsoShowFor: '=alsoShowFor',
     },
     templateUrl: 'ui/widgets/dnsim-loading.html',
     link: function($scope, element, attrs) {

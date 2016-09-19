@@ -18,95 +18,90 @@ function(
   saveHelper) {
   'use strict';
   
-  $scope.itemCategory = itemCategory.byPath('search/' + $routeParams.itemType);
-  if(!$scope.itemCategory) {
+  var vm = this;
+  
+  vm.itemCategory = itemCategory.byPath('search/' + $routeParams.itemType);
+  if(!vm.itemCategory) {
      var catName = localStorage.getItem('selectedItemCategory');
      if(!catName) {
        catName = 'titles';
      }
      
-     $scope.itemCategory = itemCategory.byName(catName);
-     if($scope.itemCategory) {
+     vm.itemCategory = itemCategory.byName(catName);
+     if(vm.itemCategory) {
        // console.log('moving');
-       $location.path($scope.itemCategory.path);
+       $location.path(vm.itemCategory.path);
      }
      return;
   }
   
-  $window.document.title = 'DN Gear Sim | ' + $scope.itemCategory.name.toUpperCase();
+  $window.document.title = 'DN Gear Sim | ' + vm.itemCategory.name.toUpperCase();
   
-  $scope.job = {id: -1, name: ''};
-  $scope.jobs = [$scope.job];
-  $scope.allJobs = [];
-  $scope.minLevel = 1;
-  $scope.maxLevel = 99;
-  $scope.maxDisplay = 10;
-  $scope.totalNumResults = 0;
-  $scope.grades = hCodeValues.rankNames;
-  $scope.stat = {id:-1, name:''};
-  $scope.stats = [$scope.stat];
+  vm.job = {id: -1, name: ''};
+  vm.jobs = [vm.job];
+  vm.allJobs = [];
+  vm.minLevel = 1;
+  vm.maxLevel = 99;
+  vm.maxDisplay = 10;
+  vm.totalNumResults = 0;
+  vm.grades = hCodeValues.rankNames;
+  vm.stat = {id:-1, name:''};
+  vm.stats = [vm.stat];
+  vm.results = null;
   
   angular.forEach(hCodeValues.stats, function(stat, statId) {
     if(stat.searchable) {
-      $scope.stats.push(stat);
+      vm.stats.push(stat);
     }
   });
   
   var minLevel = Number(localStorage.getItem('minLevel'));
   if(minLevel > 0 && minLevel < 100) {
-    $scope.minLevel = minLevel;
+    vm.minLevel = minLevel;
   }
   var maxLevel = Number(localStorage.getItem('maxLevel'));
   if(maxLevel > 0 && maxLevel < 100) {
-    $scope.maxLevel = maxLevel;
+    vm.maxLevel = maxLevel;
   }
   
-  $scope.nameSearch = localStorage.getItem('nameSearch');
-  if($scope.nameSearch == null) {
-    $scope.nameSearch = '';
+  vm.nameSearch = localStorage.getItem('nameSearch');
+  if(vm.nameSearch == null) {
+    vm.nameSearch = '';
   }
   
   var savedSearchStatId = localStorage.getItem('searchStat');
   if(savedSearchStatId > -1 && savedSearchStatId in hCodeValues.stats) {
-    $scope.stat = hCodeValues.stats[savedSearchStatId];
-  }
-  
-  region.init();
-  if(translations.isLoaded()) {
-    init();
-  }
-  else {
-    translations.init(reportProgress, function() { $timeout(init); } );
+    vm.stat = hCodeValues.stats[savedSearchStatId];
   }
 
-  $scope.navigate = function() {
+  vm.navigate = function() {
     var catName = localStorage.getItem('selectedItemCategory');
     if(catName) {
-      $scope.itemCategory = itemCategory.byName(catName);
-      if($scope.itemCategory) {
-        // console.log('navigating to ', $scope.itemCategory.path);
-        $location.path($scope.itemCategory.path);
+      vm.itemCategory = itemCategory.byName(catName);
+      if(vm.itemCategory) {
+        // console.log('navigating to ', vm.itemCategory.path);
+        $location.path(vm.itemCategory.path);
       }
     }
   }
 
-  $scope.save = function() {
-    if(!$scope.itemCategory.hideLevel) {
-      localStorage.setItem('minLevel', $scope.minLevel);
-      localStorage.setItem('maxLevel', $scope.maxLevel);
+  vm.save = function() {
+    if(!vm.itemCategory.hideLevel) {
+      localStorage.setItem('minLevel', vm.minLevel);
+      localStorage.setItem('maxLevel', vm.maxLevel);
     }
     
-    if(!$scope.itemCategory.hideJob) {
-      if($scope.job != null) {
-        localStorage.setItem('jobNumber', $scope.job.id);
+    if(!vm.itemCategory.hideJob) {
+      if(vm.job != null) {
+        localStorage.setItem('jobNumber', vm.job.id);
       }
     }
   
-    if($scope.stat != null) {
-      localStorage.setItem('searchStat', $scope.stat.id);
+    if(vm.stat != null) {
+      localStorage.setItem('searchStat', vm.stat.id);
     }
 
-    localStorage.setItem('nameSearch', $scope.nameSearch);
+    localStorage.setItem('nameSearch', vm.nameSearch);
   };
   
   function init() {
@@ -118,7 +113,7 @@ function(
       jobs.init(reportProgress, function() { $timeout(jobInit); } );
     }
 
-    itemCategory.init($scope.itemCategory.name, $timeout);
+    itemCategory.init(vm.itemCategory.name, loadResults);
   }
   
   function reportProgress(msg) {
@@ -132,15 +127,15 @@ function(
       // console.log('job dropdown should be set');
       var newJobs = jobs.getFinalJobs();
 
-      newJobs.splice(0, 0, $scope.jobs[0]);
-      $scope.jobs = newJobs;
-      $scope.allJobs = jobs.getAllJobs();
+      newJobs.splice(0, 0, vm.jobs[0]);
+      vm.jobs = newJobs;
+      vm.allJobs = jobs.getAllJobs();
       
       var lastJobNumber = Number(localStorage.getItem('jobNumber'));
       if(lastJobNumber != null) {
         angular.forEach(newJobs, function(value, key) {
           if(value.id == lastJobNumber) {
-            $scope.job = value;
+            vm.job = value;
             return;
           }
         });
@@ -148,11 +143,23 @@ function(
     }
   }
   
-  $scope.rankChecked = hCodeValues.checkedRank;
+  vm.rankChecked = hCodeValues.checkedRank;
+    
+  vm.changeSearch = function() {
+    vm.save();
+    loadResults();
+  }
   
-  $scope.getResults = function() {
+  function loadResults() {
+    $timeout(function() {
+      vm.maxDisplay = 12;
+      vm.results = getResults();
+    });
+  }
+  
+  function getResults() {
     // console.log('getting items');
-    var allItems = itemCategory.getItems($scope.itemCategory.name);
+    var allItems = itemCategory.getItems(vm.itemCategory.name);
     if(allItems == null) {
       // console.log('no items');
       return null;
@@ -163,54 +170,52 @@ function(
       });
     // console.log('got ', allItems);
     
-    $scope.save();
-    
     var start = new Date().getTime();
           
     var pcStatId = -1;
-    if('pc' in $scope.stat) {
-      pcStatId = $scope.stat.pc;
+    if('pc' in vm.stat) {
+      pcStatId = vm.stat.pc;
     }
   
     var statVals = [];
     var newResults = [];
     var numEquip = allItems.length;
     var curDisplay = 0;
-    for(var i=0;i<numEquip && (curDisplay<$scope.maxDisplay || $scope.stat.id >= 0);++i) {
+    for(var i=0;i<numEquip && (curDisplay<vm.maxDisplay || vm.stat.id >= 0);++i) {
       var e = allItems[i];
       if(e != null) {
         
-        if(!$scope.itemCategory.hideLevel) {
-          if(e.levelLimit < $scope.minLevel || e.levelLimit > $scope.maxLevel) {
+        if(!vm.itemCategory.hideLevel) {
+          if(e.levelLimit < vm.minLevel || e.levelLimit > vm.maxLevel) {
             continue;
           }
         }
           
-        if(!$scope.itemCategory.hideRank) {
-          if(e.rank != null && !$scope.rankChecked[e.rank.id]) {
+        if(!vm.itemCategory.hideRank) {
+          if(e.rank != null && !vm.rankChecked[e.rank.id]) {
             continue;
           }
         }
           
-        if(!$scope.itemCategory.hideJob) {
-          if($scope.job != null && $scope.job.id > 0) {
-            if(!$scope.job.isClassJob(e.needJobClass)) {
+        if(!vm.itemCategory.hideJob) {
+          if(vm.job != null && vm.job.id > 0) {
+            if(!vm.job.isClassJob(e.needJobClass)) {
               continue;
             }
           }
         }
         
         itemFactory.initItem(e);
-        if(e.typeName != $scope.itemCategory.name) {
+        if(e.typeName != vm.itemCategory.name) {
           continue;
         }
-        // console.log('name filter', $scope.nameSearch); 
+        // console.log('name filter', vm.nameSearch); 
         
-        if($scope.nameSearch != '') {
+        if(vm.nameSearch != '') {
           // console.log('filtering on name');
-          var nameSearches = $scope.nameSearch.split(' ');
+          var nameSearches = vm.nameSearch.split(' ');
           if(nameSearches.length == 0) {
-            nameSearches = [$scope.nameSearch];
+            nameSearches = [vm.nameSearch];
           }
           var allMatch = true;
           for(var ns=0;ns<nameSearches.length;++ns) {
@@ -225,13 +230,13 @@ function(
           }
         }
         
-        if($scope.stat.id >= 0) {
+        if(vm.stat.id >= 0) {
           var statFound = false;
           
           var statVal = {};
           for(var s=0;s<e.stats.length;++s) {
             var stat = e.stats[s]
-            if(stat.id == $scope.stat.id) {
+            if(stat.id == vm.stat.id) {
               statFound = true;
               statVal.i = curDisplay;
               statVal.s = Number(stat.max);
@@ -257,9 +262,9 @@ function(
       }
     }
     
-    if($scope.stat.id >= 0) {
+    if(vm.stat.id >= 0) {
       
-      var currentResults = Math.min(curDisplay, $scope.maxDisplay);
+      var currentResults = Math.min(curDisplay, vm.maxDisplay);
       
       statVals = statVals.sort(function(value1, value2) {
         return value2.s - value1.s;
@@ -272,17 +277,29 @@ function(
       newResults = statResults;
     }
     
-    $scope.totalNumResults = newResults.length;
+    vm.totalNumResults = newResults.length;
             
     var end = new Date().getTime();
     var time = end - start;
     
     return newResults;
   };
+
+  vm.showMoreResults = function() {
+    $timeout(function() {
+      vm.maxDisplay += 18;
+      vm.results = getResults();
+    });
+  }
   
-  $scope.showMoreResults = function(extra) {
-    $scope.maxDisplay = $scope.totalNumResults + extra;
-    $scope.totalNumResults = 0;
+  
+  
+  region.init();
+  if(translations.isLoaded()) {
+    init();
+  }
+  else {
+    translations.init(reportProgress, function() { $timeout(init); } );
   }
   
 }]);

@@ -38,39 +38,36 @@
         </div>
     
         <div class="col-xs-12 col-sm-8 col-md-9">
-          <div class="row">
-            <table class="table">
-              
-              <tr><th>{{buildCtrl.getItemCount()}}</th></tr>
-              
-              <tr ng-if="::!buildCtrl.server"><th>
-                <dngearsim-quick-add build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
-                <span ng-if="buildCtrl.category.name == 'talisman'">&nbsp;|&nbsp;
-                  <a class="btn btn-link" href="#talismans">
-                    <span class="glyphicon glyphicon-move" aria-hidden="true"></span>&nbsp;position
-                  </a>
-                </span>
-              </th></tr>
-              
-              <tr ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
-                <td>
-                  <dngearsim-build-item build="buildCtrl.build" build-name="::buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item>
-                  <div ng-if="!buildCtrl.server">
-                    <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);">
-                      remove
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              
-              <tr ng-if="::!buildCtrl.server"><th>
-                  <a href="#/{{buildCtrl.category.path}}">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    search {{buildCtrl.category.name}}
-                  </a>
-              </th></tr>
-              
-            </table>
+          <div class="row table-look">
+            <div class="col-xs-12" ng-if="::!buildCtrl.server">
+              <dngearsim-quick-add build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
+              <span ng-if="buildCtrl.category.name == 'talisman'">&nbsp;|&nbsp;
+                <a class="btn btn-link" href="#talismans">
+                  <span class="glyphicon glyphicon-move" aria-hidden="true"></span>&nbsp;position
+                </a>
+              </span>
+              <span style="float:right">
+              <strong>{{buildCtrl.getItemCount()}}</strong>
+              </span>
+            </div>
+          </div>
+          <div class="row table-look">
+            <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
+              <dngearsim-build-item build="buildCtrl.build" build-name="::buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item>
+              <div ng-if="!buildCtrl.server" style="float:right">
+                <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);">
+                  remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row table-look">
+            <div class="col-xs-12" ng-if="::!buildCtrl.server">
+              <a href="#/{{buildCtrl.category.path}}">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                search {{buildCtrl.category.name}}
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
-<div>
-  <dnsim-item-link item="ctrl.item" />
+<div style="float:clear">
+  <dnsim-item-link item="ctrl.item"></dnsim-item-link>
 </div>
-<div>
-  <span dnsim-stats stats="ctrl.item.fullStats" alt-stats="ctrl.item.stats" separator="'|'" />
+<div style="float:left;width: 140px">
+  <span dnsim-stats stats="ctrl.item.fullStats" alt-stats="ctrl.item.stats" filter="'dps'" separator="'<br />'" />
+</div>
+<div style="float:left">
+  <span dnsim-stats stats="ctrl.item.fullStats" alt-stats="ctrl.item.stats" filter="'def'" separator="'<br />'" />
 </div>

@@ -20,8 +20,6 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
   var vm = this;
   
   this.allJobs = [];
-  this.maxDisplay = 60;
-  this.currentResults = 0;
   this.dntName = '';
   this.skills = [];
   this.loadedJobId = -1;
@@ -56,7 +54,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     if(!translations.isLoaded()) {
       // console.log('transations not loaded');
       if(!translations.startedLoading) {
-        translations.init(reportProgress, function() { $timeout(translationsInit); } );
+        translations.init(reportProgress, function() { } );
       }
 
       return true;
@@ -173,8 +171,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
       return [];
     }
     
-    
-    if(vm.job != null) {
+    if(vm.job != null && vm.job.id >= 0) {
       localStorage.setItem('jobNumber', vm.job.id);
     }
     localStorage.setItem('nameSearch', vm.nameSearch);
@@ -182,7 +179,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     var newResults = [];
     var numSkills = skills.length;
     var curDisplay = 0;
-    for(var i=0;i<numSkills && (curDisplay<vm.maxDisplay);++i) {
+    for(var i=0;i<numSkills;++i) {
       var e = skills[i];
       
       if(vm.nameSearch != '') {
@@ -208,9 +205,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
       }
       
       newResults.push(e);
-      curDisplay++;
     }
-    vm.currentResults = Math.min(curDisplay, vm.maxDisplay);
     return newResults;
   }
   
@@ -227,10 +222,12 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
       vm.allJobs = jobs.getAllJobs();
       
       var lastJobNumber = Number(localStorage.getItem('jobNumber'));
+      console.log('using job', lastJobNumber);
       if(lastJobNumber != null) {
         angular.forEach(newJobs, function(value, key) {
           if(value.id == lastJobNumber) {
             vm.job = value;
+            console.log('using job', value);
             return;
           }
         });

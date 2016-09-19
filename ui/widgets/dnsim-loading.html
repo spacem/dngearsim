@@ -2,11 +2,11 @@
   <br />
   data files cannot be loaded
 </div>
-<div class="col-xs-12 loading" ng-if="!loadError && numLoading">
+<div class="col-xs-12 loading" ng-if="!loadError && (numLoading || alsoShowFor)">
 </div>
 <div class="col-xs-12 text-center" ng-if="!loadError && numLoading">
   loading ({{(1+totalToLoad-numLoading) + '/' + totalToLoad}})
   <br /><br /><br />
 </div>
 
-<ng-transclude ng-show="!numLoading" />
+<ng-transclude ng-show="!numLoading && !alsoShowFor" />

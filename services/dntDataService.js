@@ -95,6 +95,9 @@ function dntData($rootScope,$timeout) {
     },
     
     init : function (fileName, colsToLoad, progress, complete) {
+      if(!progress) {
+        progress = function() {};
+      }
       if(!(fileName in this.loaders)) {
         if(fileName.length > 0) {
           this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);

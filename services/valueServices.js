@@ -97,6 +97,7 @@ function hCodeValues() {
       103: {id: 103, name: 'crit dmg', display: toNoDec, dps: true, pc: 104 },
       104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true, dps: true },
       105: {id: 104, name: 'pvp dmg', display: inThousands, noCustom: true, dps: true },
+      106: {id: 106, name: 'pvp def', display: inThousands, noCustom: true, def: true },
       107: {id: 107, name: 'mp?', display: toNoDec, noCustom: true, hide: true, def: true },
       
       // stats below here are ones I made up
@@ -118,19 +119,19 @@ function hCodeValues() {
       2008: {id: 2008, name: 'pdef eqhp', display: inThousands, noCustom: true },
       2009: {id: 2009, name: 'mdef eqhp', display: inThousands, noCustom: true },
       
-      3000: {id: 3000, name: 'skDmg%', display: toPercent },
-      3001: {id: 3001, name: 'skPDmg%', display: toPercent },
-      3002: {id: 3002, name: 'skMDmg%', display: toPercent },
+      3000: {id: 3000, name: 'skDmg%', display: toPercent, dps: true },
+      3001: {id: 3001, name: 'skPDmg%', display: toPercent, dps: true },
+      3002: {id: 3002, name: 'skMDmg%', display: toPercent, dps: true },
       
       3008: {id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
       
-      4012: {id: 4012, name: 'skCrit', display: inThousands },
-      4050: {id: 4050, name: 'skStr%', display: toPercent },
-      4051: {id: 4051, name: 'skAgi%', display: toPercent },
-      4052: {id: 4052, name: 'skInt%', display: toPercent },
-      4053: {id: 4053, name: 'skVit%', display: toPercent },
-      4075: {id: 4075, name: 'skHp%', display: toPercent },
-      4076: {id: 4076, name: 'skMp%', display: toPercent },
+      4012: {id: 4012, name: 'skCrit', display: inThousands, dps: true },
+      4050: {id: 4050, name: 'skStr%', display: toPercent, dps: true },
+      4051: {id: 4051, name: 'skAgi%', display: toPercent, dps: true },
+      4052: {id: 4052, name: 'skInt%', display: toPercent, dps: true },
+      4053: {id: 4053, name: 'skVit%', display: toPercent, def: true },
+      4075: {id: 4075, name: 'skHp%', display: toPercent, def: true },
+      4076: {id: 4076, name: 'skMp%', display: toPercent, def: true },
       
       // special cases for skills
       10164: {id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true },

@@ -7,17 +7,16 @@ angular.module('dnsim')
     
     var vm = this;
     
-    this.boxes = null;
-    this.boxeContents = [];
-    this.maxDisplay = 10;
-    this.currentResults = 0;
+    vm.boxes = null;
+    vm.maxDisplay = 32;
+    vm.currentResults = 0;
+    vm.results = null;
 
-    this.nameSearch = localStorage.getItem('itemNameSearch');
-    if(this.nameSearch == null) {
-      this.nameSearch = '';
+    vm.nameSearch = localStorage.getItem('itemNameSearch');
+    if(vm.nameSearch == null) {
+      vm.nameSearch = '';
     }
     
-    document.body.className = 'default-back';
     $window.document.title = 'DN Gear Sim | ITEM SEARCH';
     
     var fileName = 'all-items.lzjson';
@@ -28,8 +27,7 @@ angular.module('dnsim')
       });
     });
     
-    this.initBoxes = function() {
-      // console.log('init boxes');
+    vm.initBoxes = function() {
       if(dntData.isLoaded(fileName) && translations.isLoaded()) {
         vm.boxes = [];
         
@@ -40,7 +38,7 @@ angular.module('dnsim')
           if(data.NameID > 0) {
             var box = {
               id: data.id,
-              name: vm.translate(data.NameID, data.NameIDParam),
+              name: translations.translate(data.NameID, data.NameIDParam),
               rank: hCodeValues.rankNames[data.Rank],
               icon: data.IconImageIndex,
               levelLimit: data.LevelLimit,
@@ -49,17 +47,22 @@ angular.module('dnsim')
             vm.boxes.push(box);
           }
         }
+        
+        vm.boxes = _.sortBy(vm.boxes, 'name');
+        
+        $timeout(function() {
+          vm.showMoreResults();
+        });
       }
     }
     
-    this.getResults = function() {
-      localStorage.setItem('itemNameSearch', vm.nameSearch);
+    vm.getResults = function() {
       if(vm.boxes == null) {
         vm.initBoxes();
       }
       
       if(vm.boxes == null) {
-        return;
+        return [];
       }
   
       var newResults = [];
@@ -93,14 +96,20 @@ angular.module('dnsim')
       vm.totalNumResults = newResults.length;
       return newResults;
     }
-  
-    this.showMoreResults = function(extra) {
-      vm.maxDisplay = vm.totalNumResults + extra;
-      vm.totalNumResults = 0;
-    }
     
-    this.translate = function(nameId, nameParam) {
-      return translations.translate(nameId, nameParam);
+    vm.changeSearch = function() {
+      localStorage.setItem('itemNameSearch', vm.nameSearch);
+      
+      vm.maxDisplay = 64;
+      vm.results = vm.getResults();
+    }
+  
+    vm.showMoreResults = function() {
+      $timeout(function() {
+        console.log('show more', vm.maxDisplay);
+        vm.maxDisplay += 18;
+        vm.results = vm.getResults();
+      });
     }
   }]
 );
