@@ -53,7 +53,7 @@
           </div>
           <div class="row table-look">
             <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
-              <dngearsim-build-item build="buildCtrl.build" build-name="::buildCtrl.buildName" item="result" on-change="buildCtrl.handleChange()"></dngearsim-build-item>
+              <dngearsim-build-item item="result"></dngearsim-build-item>
               <div ng-if="!buildCtrl.server" style="float:right">
                 <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);">
                   remove

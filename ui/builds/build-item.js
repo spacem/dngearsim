@@ -11,10 +11,7 @@ function($timeout,statHelper,saveHelper) {
   return {
     scope: true,
     bindToController: {
-      item: '=item',
-      buildName: '=buildName',
-      build: '=build',
-      onChange: '&onChange'
+      item: '=item'
     },
     controller: 'buildItemCtrl',
     controllerAs: 'ctrl',

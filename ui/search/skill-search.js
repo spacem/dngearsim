@@ -15,23 +15,20 @@ angular.module('dnsim').directive('dngearsimSkillSearch', function() {
 });
 
 function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues,itemCategory,$location) {
-  'use strict';
-  
+
   var vm = this;
   
-  this.allJobs = [];
-  this.dntName = '';
-  this.skills = [];
-  this.loadedJobId = -1;
+  vm.allJobs = [];
+  vm.dntName = '';
+  vm.skills = [];
+  vm.loadedJobId = -1;
 
-  this.itemCategory = itemCategory.byName('skills');
+  vm.itemCategory = itemCategory.byName('skills');
 
-  this.nameSearch = localStorage.getItem('nameSearch');
-  if(this.nameSearch == null) {
-    this.nameSearch = '';
+  vm.nameSearch = localStorage.getItem('nameSearch');
+  if(!vm.nameSearch) {
+    vm.nameSearch = '';
   }
-
-  var classFactories = [];
   
   region.init();
   if(translations.isLoaded()) {
@@ -41,7 +38,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     translations.init(reportProgress, function() { $timeout(init); } );
   }
 
-  this.navigate = function() {
+  vm.navigate = function() {
     $timeout(function() {
       if(vm.itemCategory) {
         $location.path(vm.itemCategory.path);
@@ -49,7 +46,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     });
   }
   
-  this.isLoading = function() {
+  vm.isLoading = function() {
     
     if(!translations.isLoaded()) {
       // console.log('transations not loaded');
@@ -62,7 +59,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     
     var baseName = jobs.getBaseJobName(vm.job);
     var dntName = getDntName(baseName);
-    if(dntName != null) {
+    if(dntName) {
       if(!dntData.isLoaded(dntName)) {
         return true;
       }
@@ -99,7 +96,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
         if(dntName) {
           if(!dntData.isLoaded(dntName)) {
             // console.log('loading skills for ' + baseName);
-            dntData.init(dntName, null, reportProgress, function() { $timeout(function() {setupSkills(baseJobNames, vm.job);} ) });
+            dntData.init(dntName, null, reportProgress, function() { $timeout(function() { setupSkills(baseJobNames, vm.job);} ); });
           }
           else {
             setupSkills(baseJobNames, vm.job);
@@ -117,7 +114,6 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
       var dntName = getDntName(baseName);
       if(!dntData.isLoaded(dntName)) {
         allReady = false;
-        return;
       }
     });
     
@@ -159,19 +155,19 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     }
   }
   
-  this.itemLinkClosed = function() {
+  vm.itemLinkClosed = function() {
     saveHelper.saveCustomItems(vm.customItems);
     vm.customItems = saveHelper.getCustomItems();
   }
   
-  this.getResults = function() {
+  vm.getResults = function() {
     
     var skills = getSkills();
     if(skills == null) {
       return [];
     }
     
-    if(vm.job != null && vm.job.id >= 0) {
+    if(vm.job && vm.job.id >= 0) {
       localStorage.setItem('jobNumber', vm.job.id);
     }
     localStorage.setItem('nameSearch', vm.nameSearch);
@@ -184,7 +180,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
       
       if(vm.nameSearch != '') {
         var nameSearches = vm.nameSearch.split(' ');
-        if(nameSearches.length == 0) {
+        if(!nameSearches.length) {
           nameSearches = [vm.nameSearch];
         }
         var allMatch = true;
@@ -217,17 +213,19 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     if(translations.isLoaded() && jobs.isLoaded()) {
       var newJobs = jobs.getFinalJobs();
 
-      newJobs.splice(0, 0, vm.jobs[0]);
+      if(vm.jobs && vm.jobs.length) {
+        newJobs.splice(0, 0, vm.jobs[0]);
+      }
       vm.jobs = newJobs;
       vm.allJobs = jobs.getAllJobs();
       
       var lastJobNumber = Number(localStorage.getItem('jobNumber'));
-      console.log('using job', lastJobNumber);
+      // console.log('using job', lastJobNumber);
       if(lastJobNumber != null) {
         angular.forEach(newJobs, function(value, key) {
           if(value.id == lastJobNumber) {
             vm.job = value;
-            console.log('using job', value);
+            // console.log('using job', value);
             return;
           }
         });

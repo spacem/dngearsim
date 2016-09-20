@@ -61,7 +61,7 @@
 </div>
 
 <div class="col-xs-12 col-sm-8 col-md-9" ng-if="::ctrl.itemCategory.searchType == 'skills'">
-  <dngearsim-skill-search jobs="::ctrl.jobs" job="ctrl.job"></dngearsim-skill-search>
+  <dngearsim-skill-search jobs="ctrl.jobs" job="ctrl.job"></dngearsim-skill-search>
 </div>
 <div class="col-xs-12 col-sm-8 col-md-9" ng-if="::ctrl.itemCategory.searchType == 'custom'">
   <dngearsim-custom-items></dngearsim-custom-items>
@@ -71,15 +71,9 @@
 <dnsim-loading also-show-for="!ctrl.results">
 <div class="row" 
     infinite-scroll="ctrl.showMoreResults()">
-  <div class="col-xs-12 dnsim-card" ng-repeat="result in ctrl.results track by $index">
-    <div style="float:clear">
-      <dnsim-item-link item="result"></dnsim-item-link>
-    </div>
-    <div style="float:left;width: 140px">
-      <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" filter="'dps'" separator="'<br />'" />
-    </div>
-    <div style="float:left">
-      <span dnsim-stats stats="result.fullStats" alt-stats="result.stats" filter="'def'" separator="'<br />'" />
+  <div class="col-xs-12" ng-repeat="result in ctrl.results track by $index">
+    <div class="dnsim-card">
+      <dngearsim-build-item item="result"></dngearsim-build-item>
     </div>
   </div>
 </div>

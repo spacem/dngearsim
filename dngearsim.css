@@ -168,7 +168,7 @@ margin-left: -36px;
 .item-type-grouping {
 border-top-color: #8d8578;
 border-top-style: solid;
-border-top-width: 5px;
+border-top-width: 2px;
 }
 .header-title {
 margin-top: 0;
@@ -338,10 +338,11 @@ filter: grayscale(50%) invert(100%) blur(5px);
   border-top: 1px solid #ddd;
 }
 .dnsim-card {
+  overflow: auto;
+  min-height: 50px;
   margin: 8px;
   margin-left: 0;
-  margin-right: 0px;
-  margin-right: 15px;
+  margin-right: 0;
   padding: 5px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
   border-radius: 4px;

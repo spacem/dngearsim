@@ -106,7 +106,7 @@ angular.module('dnsim')
   
     vm.showMoreResults = function() {
       $timeout(function() {
-        console.log('show more', vm.maxDisplay);
+        // console.log('show more', vm.maxDisplay);
         vm.maxDisplay += 18;
         vm.results = vm.getResults();
       });
