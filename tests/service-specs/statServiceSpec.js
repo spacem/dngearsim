@@ -20,6 +20,10 @@ describe('statHelper', function () {
     enemyStatCaps: {
       Cdefense: 8000,
       Ccritical: 1234,
+    },
+    playerStatCaps: {
+      Cdefense: 8000,
+      Ccritical: 1234,
     }
   }
   
@@ -28,6 +32,7 @@ describe('statHelper', function () {
     var strStat = {id: 0, max: 12};
     var strPcStat = {id: 50, max: 0.7};
     var cStats = statHelper.getCalculatedStats(group, [strStat, strPcStat]);
+
     expect(cStats.length > 0).toBe(true);
     
     var cStrStat = null;

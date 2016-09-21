@@ -65,7 +65,7 @@ function(
   }
   
   vm.nameSearch = localStorage.getItem('nameSearch');
-  if(vm.nameSearch == null) {
+  if(!vm.nameSearch) {
     vm.nameSearch = '';
   }
   
@@ -97,7 +97,7 @@ function(
       }
     }
   
-    if(vm.stat != null) {
+    if(vm.stat) {
       localStorage.setItem('searchStat', vm.stat.id);
     }
 
@@ -168,9 +168,6 @@ function(
     allItems = allItems.sort(function(item1, item2) {
         return (item2.levelLimit - item1.levelLimit);
       });
-    // console.log('got ', allItems);
-    
-    var start = new Date().getTime();
           
     var pcStatId = -1;
     if('pc' in vm.stat) {
@@ -183,7 +180,7 @@ function(
     var curDisplay = 0;
     for(var i=0;i<numEquip && (curDisplay<vm.maxDisplay || vm.stat.id >= 0);++i) {
       var e = allItems[i];
-      if(e != null) {
+      if(e) {
         
         if(!vm.itemCategory.hideLevel) {
           if(e.levelLimit < vm.minLevel || e.levelLimit > vm.maxLevel) {
@@ -192,13 +189,13 @@ function(
         }
           
         if(!vm.itemCategory.hideRank) {
-          if(e.rank != null && !vm.rankChecked[e.rank.id]) {
+          if(e.rank && !vm.rankChecked[e.rank.id]) {
             continue;
           }
         }
           
         if(!vm.itemCategory.hideJob) {
-          if(vm.job != null && vm.job.id > 0) {
+          if(vm.job && vm.job.id) {
             if(!vm.job.isClassJob(e.needJobClass)) {
               continue;
             }
@@ -214,7 +211,7 @@ function(
         if(vm.nameSearch != '') {
           // console.log('filtering on name');
           var nameSearches = vm.nameSearch.split(' ');
-          if(nameSearches.length == 0) {
+          if(!nameSearches.length) {
             nameSearches = [vm.nameSearch];
           }
           var allMatch = true;
@@ -235,7 +232,7 @@ function(
           
           var statVal = {};
           for(var s=0;s<e.stats.length;++s) {
-            var stat = e.stats[s]
+            var stat = e.stats[s];
             if(stat.id == vm.stat.id) {
               statFound = true;
               statVal.i = curDisplay;
@@ -278,12 +275,9 @@ function(
     }
     
     vm.totalNumResults = newResults.length;
-            
-    var end = new Date().getTime();
-    var time = end - start;
     
     return newResults;
-  };
+  }
 
   vm.showMoreResults = function() {
     $timeout(function() {
@@ -291,8 +285,6 @@ function(
       vm.results = getResults();
     });
   }
-  
-  
   
   region.init();
   if(translations.isLoaded()) {

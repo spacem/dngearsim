@@ -65,17 +65,6 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
     this.heroLevel = 1;
   }
   
-  this.getFinalJobs = function() {
-    var allJobs = jobs.getFinalJobs();
-    var finalJobs = [];
-    for(var j=0;j<allJobs.length;++j) {
-      if(jobs.getBaseJobName(allJobs[j]) == this.bJob) {
-        finalJobs.push(allJobs[j]);
-      }
-    }
-    return finalJobs;
-  }
-  
   this.init = function(vm) {
     var newJobs = jobs.getFinalJobs();
     if(newJobs.length > 0) {

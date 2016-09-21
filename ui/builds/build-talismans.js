@@ -6,7 +6,6 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   
   var vm = this;
   
-  document.body.className = 'default-back';
   $window.document.title = 'DN Gear Sim | TALISMANS';
   $window.scrollTo(0, 0);
   
@@ -68,57 +67,6 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     allStats = hCodeValues.mergeStats(allStats);
     
     return statHelper.getCalculatedStats(group, allStats);
-  }
-  
-  this.nextGroup = function() {
-    
-    var uptoItem = false;
-    var nextGroup = null;
-    angular.forEach(vm.groupNames, function(groupName, index) {
-      if(uptoItem) {
-        if(nextGroup == null) {
-          nextGroup = groupName;
-        }
-      }
-      if(groupName == vm.groupName) {
-        uptoItem = true;
-      }
-    });
-    
-    if(nextGroup == null) {
-      nextGroup = vm.groupNames[0];
-    }
-    
-    vm.groupName = nextGroup;
-    vm.groupCalcStats = null;
-    saveGroup();
-    vm.savedItems = saveHelper.getSavedItems();
-    vm.updateRows();
-  }
-  
-  this.prevGroup = function() {
-    
-    var foundGroup = false;
-    var prevGroup = null;
-    angular.forEach(vm.groupNames, function(groupName, index) {
-      if(groupName == vm.groupName) {
-        foundGroup = true;
-      }
-      
-      if(!foundGroup) {
-        prevGroup = groupName;
-      }
-    });
-    
-    if(prevGroup == null) {
-      prevGroup = vm.groupNames[vm.groupNames.length-1];
-    }
-    
-    vm.groupName = prevGroup;
-    vm.groupCalcStats = null;
-    saveGroup();
-    vm.savedItems = saveHelper.getSavedItems();
-    vm.updateRows();
   }
   
   function saveGroup() {

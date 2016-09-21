@@ -31,18 +31,19 @@
      </label>
      <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" dnsim-select-all-on-click />
   </div>
-  <div class="col-xs-6 col-sm-2" ng-hide="::itemCategory.hideLevel">
+  <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
      <label>max&nbsp;lvl:
      </label>
      <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" dnsim-select-all-on-click />
   </div>
-  <div class="col-xs-12 col-sm-2">
+  <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
     <label>stat:</label>
     <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
     </select>
   </div>
   
-  <div class="col-xs-12 col-sm-3">
+  <div
+    ng-class="['col-xs-12',{'col-sm-3': !ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-6': !ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob},{'col-sm-6': ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-9': ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob}]">
      <label>name:</label>
      <input ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 200 }" dnsim-select-all-on-click />
   </div>

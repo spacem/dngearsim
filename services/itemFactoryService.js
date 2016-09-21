@@ -116,16 +116,16 @@ function itemFactory(translations,dntData,hCodeValues,items) {
             }
           }
           
-          var totalRatio = 0;
-          angular.forEach(potentials, function(value, key) {
-            totalRatio += value.PotentialRatio;
-          });
-          
           var numPotentials = potentials.length;
           if(!numPotentials) {
-            itemType.items.push(this.createItem(itemType.name, d, null, totalRatio));
+            itemType.items.push(createItem(itemType.name, d, null, 0));
           }
           else {
+            var totalRatio = 0;
+            for(var p=0;p<numPotentials;++p) {
+              totalRatio += potentials[p].PotentialRatio;
+            }
+            
             for(var p=0;p<numPotentials;++p) {
               
               var found = false;
@@ -143,7 +143,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
                   }
                 }
                 
-                itemType.items.push(this.createItem(itemType.name, d, potentials[p], totalRatio));
+                itemType.items.push(createItem(itemType.name, d, potentials[p], totalRatio));
               }
             }
           }

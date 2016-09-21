@@ -17,9 +17,9 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'search/enhancement-plates', name:'enhancement plates', sourceType: 'plates', hideJob: true, numItemText: '8+3', maxCat: 11, maxExchange: 15, limitExchange: [33]},
       {path: 'search/expedition-plates', name:'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, numItemText: '4', maxCat: 4, maxExchange: 15, limitExchange: [33]},
       {path: 'search/talisman', name:'talisman', sourceType: 'talisman', hideJob: true, numItemText: '8+4', maxCat: 12, maxExchange: 12, limitExchange: [52,53]},
-      {path: 'search/costume', name:'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, limitExchange: [16,17,18,19,20,21,22]},
-      {path: 'search/cash', name:'cash', sourceType: 'cash', numItemText: '8', maxCat: 8, maxExchange: 2, hideJob: true, limitExchange: [23,24,25,26,27,28,29]},
-      {path: 'search/extras', name:'extras', sourceType: 'xtras', limitExchange: [47], hideJob: true,},
+      {path: 'search/costume', name:'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, hideLevel: true, limitExchange: [16,17,18,19,20,21,22]},
+      {path: 'search/cash', name:'cash', sourceType: 'cash', numItemText: '8', maxCat: 8, maxExchange: 2, hideJob: true, hideLevel: true, limitExchange: [23,24,25,26,27,28,29]},
+      {path: 'search/extras', name:'extras', sourceType: 'xtras', limitExchange: [47], hideJob: true, hideLevel: true,},
       {path: 'search/skills', name:'skills', searchType: 'skills'},
       {path: 'search/custom', name:'custom', searchType: 'custom'},
       ],
@@ -52,7 +52,7 @@ function itemCategory(itemFactory,items,dntData) {
         var retVal = [];
         angular.forEach(items, function(source, sourceName) {
           if(source.type == cat.sourceType && retVal) {
-            if(source.items == null && !source.loading) {
+            if(!source.items && !source.loading) {
               itemFactory.loadItems(source);
             }
             
@@ -90,10 +90,12 @@ function itemCategory(itemFactory,items,dntData) {
       if(item.itemSource in items && items[item.itemSource].type != cat.sourceType) {
         return false;
       }
-      else if(item.itemType == cat.name) {
+      
+      if(item.itemType == cat.name) {
         return true;
       }
-      else if(cat.limitExchange) {
+      
+      if(cat.limitExchange) {
         
         for(var i=0;i<cat.limitExchange.length;++i) {
           if(cat.limitExchange[i] == item.exchangeType || (rawData && cat.limitExchange[i] == rawData.ExchangeType)) {
@@ -125,15 +127,12 @@ function itemCategory(itemFactory,items,dntData) {
             return true;
           }
         }
-        
-        return false;
       }
       else if(item.itemSource in items) {
         return items[item.itemSource].type == cat.sourceType;
       }
-      else {
-        return false;
-      }
+
+      return false;
     },
     
     init: function(name, complete) {
@@ -204,7 +203,7 @@ function itemCategory(itemFactory,items,dntData) {
         
         angular.forEach(items, function(item, index) {
           if(item && !(item.typeName in itemMap)) {
-            console.log('we dont know ' + item.typeName + ' anymore')
+            // console.log('we dont know ' + item.typeName + ' anymore')
             itemMap.typeError = true;
           }
         });
