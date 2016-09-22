@@ -178,7 +178,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         $scope.isPlate = true;
       }
       
-      if($scope.item.typeName != null) {
+      if($scope.item.typeName != null && $scope.item.typeId != 112) {
         $scope.canUse = true;
         $scope.detail = 'use';
       }
