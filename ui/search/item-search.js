@@ -195,7 +195,7 @@ function(
         }
           
         if(!vm.itemCategory.hideJob) {
-          if(vm.job && vm.job.id) {
+          if(vm.job && vm.job.id > -1) {
             if(!vm.job.isClassJob(e.needJobClass)) {
               continue;
             }
