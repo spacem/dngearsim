@@ -139,7 +139,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
       });
   
-      var retVal = '#/view-group/' + region.dntLocation.region + '/?';
+      var retVal = 'view-group/' + region.dntLocation.region + '/?';
       
       
       if(group.enemyLevel) {

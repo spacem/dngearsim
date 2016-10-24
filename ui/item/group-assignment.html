@@ -2,7 +2,7 @@
   <br />
   <div ng-if="::editCtrl.groupNames.length == 0">
   <p>
-    If you <a href="../new-build">create a build</a> you can add this item and see combined stats.
+    If you <a ng-href="new-build">create a build</a> you can add this item and see combined stats.
   </p>
   </div>
 
@@ -13,7 +13,7 @@
   <div class="row" ng-if="::editCtrl.groupName">
     <div class="col-xs-12 col-md-3">
       <h4>
-        <a href="../build/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a>
+        <a ng-href="build/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a>
         <br />
         <small>
           <span dnsim-stats build="editCtrl.getBuild()" stats="editCtrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" />

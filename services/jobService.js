@@ -77,11 +77,12 @@ function jobs(dntData, translations, itemColumnsToLoad) {
     
     getById: function(id) {
       var data = this.getAllJobs();
-      
-      var numRows = data.length;
-      for(var r=0;r<numRows;++r) {
-        if(data[r].id == id) {
-          return data[r];
+      if(data) {
+        var numRows = data.length;
+        for(var r=0;r<numRows;++r) {
+          if(data[r].id == id) {
+            return data[r];
+          }
         }
       }
     },

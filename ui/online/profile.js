@@ -2,7 +2,7 @@
 'use strict';
 angular.module('dnsim').controller('ProfileCtrl', ['$location', '$routeParams', 'onlineService', profile]);
 
-function profile($location, $routeParams, onlineService) {
+function profile($location, $routeParams, onlineService, saveHelper) {
   'use strict';
   
   var vm = this;

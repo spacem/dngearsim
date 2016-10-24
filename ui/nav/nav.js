@@ -24,6 +24,8 @@ angular.module('dnsim').controller('NavCtrl',
       aboutAction,
       ];
       
+    //var basePath = angular.element(document.querySelector('base')).attr('href');
+      
     region.init();
   
     $scope.isSearch = function() {
@@ -46,14 +48,14 @@ angular.module('dnsim').controller('NavCtrl',
       if(action.name == 'search') {
         var cat = localStorage.getItem('selectedItemCategory', action.name);
         if(cat) {
-          return '/dngearsim/' + action.path + '/' + cat;
+          return action.path + '/' + cat;
         }
         else {
-          return '/dngearsim/' + action.path;
+          return action.path;
         }
       }
       else {
-          return '/dngearsim/' + action.path;
+          return action.path;
       }
     }
       

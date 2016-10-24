@@ -12,4 +12,4 @@ delete
 </button>
 <span>&nbsp;</span>
 <button style="margin-top:12px" class="btn btn-link" ng-click="buildActions.createShortUrl()" ng-hide="buildActions.build.shortUrl != null">create permalink</button>
-<a style="margin-top:12px" class="btn btn-link" href="{{buildActions.build.shortUrl}}" ng-if="buildActions.build.shortUrl != null">{{buildActions.build.shortUrl}}</a>
+<a style="margin-top:12px" class="btn btn-link" ng-href="{{buildActions.build.shortUrl}}" ng-if="buildActions.build.shortUrl != null">{{buildActions.build.shortUrl}}</a>
