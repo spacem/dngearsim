@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
   <li class="{{action.extraCss}} nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
-    <a href="#/{{action.path}}" ng-click="$parent.fireAction(action)">
+    <a ng-href="{{getActionUrl(action)}}">
       <span class="glyphicon glyphicon-{{::action.icon}}" aria-hidden="true"></span> {{action.name}}
     </a>
   </li>

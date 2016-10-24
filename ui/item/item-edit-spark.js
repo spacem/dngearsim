@@ -51,7 +51,7 @@ function(dntData,hCodeValues,items) {
   }
   
   this.getSparks = function() {
-    if(vm.item == null) return null;
+    if(vm.item == null || vm.itemType == null) return null;
     if(vm.sparks == null) {
       var sid = vm.item.sparkTypeId;
       if(sid) {

@@ -42,18 +42,18 @@ angular.module('dnsim').controller('NavCtrl',
       return region.dntLocation == null;
     }
     
-    $scope.fireAction = function(action) {
+    $scope.getActionUrl = function(action) {
       if(action.name == 'search') {
         var cat = localStorage.getItem('selectedItemCategory', action.name);
         if(cat) {
-          $location.path('/' + action.path + '/' + cat);
+          return '/dngearsim/' + action.path + '/' + cat;
         }
         else {
-          $location.path('/' + action.path);
+          return '/dngearsim/' + action.path;
         }
       }
       else {
-          $location.path('/' + action.path);
+          return '/dngearsim/' + action.path;
       }
     }
       

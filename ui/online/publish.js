@@ -89,11 +89,11 @@ function publish($location, saveHelper, onlineService, $routeParams, region) {
   }
   
   this.openLocal = function(buildName) {
-    $location.path('/build/' + buildName);
+    $location.path('../build/' + buildName);
   }
   
   this.openServer = function(buildName) {
-    $location.path('/published/' + vm.getUser().uid + '/' + buildName);
+    $location.path('../published/' + vm.getUser().uid + '/' + buildName);
   }
   
   this.getBuildLimit = function() {

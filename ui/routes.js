@@ -21,7 +21,7 @@ function config($routeProvider) {
       controller: 'TestCtrl'
     }).
     
-    when('/items/', {
+    when('/items', {
       templateUrl: 'ui/secrets/items.html',
       controller: 'ItemsCtrl as items'
     }).
