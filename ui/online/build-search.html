@@ -19,7 +19,7 @@
     <td>
     {{build.data.region}}
     lv{{build.data.lev}}
-    <a ng-href="published/{{build.uid}}/{{build.name}}">{{build.name}}</a>
+    <a ng-href="published/?uid={{build.uid}}&buildName={{build.name}}">{{build.name}}</a>
     <span ng-if="build.data.guild">
     [{{build.data.guild}}]
     </span>

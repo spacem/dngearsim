@@ -33,7 +33,7 @@ function config($routeProvider) {
       templateUrl: 'ui/builds/build-list.html',
       controller: 'BuildListCtrl as buildList'
     }).
-    when('/build/:groupName*', {
+    when('/build/:buildName*', {
       templateUrl: 'ui/builds/build-list.html',
       controller: 'BuildListCtrl as buildList'
     }).
@@ -41,7 +41,7 @@ function config($routeProvider) {
       templateUrl: 'ui/builds/view-group.html',
       controller: 'ViewGroupCtrl'
     }).
-    when('/edit-build/:groupName*', {
+    when('/edit-build/:buildName*', {
       templateUrl: 'ui/builds/edit-build.html',
       controller: 'EditBuildCtrl as editGroup',
       reloadOnSearch: false,

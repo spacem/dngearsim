@@ -19,7 +19,7 @@ function buildSearch($routeParams,$location,$timeout,onlineService,jobs) {
   
   this.setJob = function() {
     $timeout(function() {
-      $location.path('/build-search/' + vm.job.id);
+      $location.path('/build-search/?jobId=' + vm.job.id);
     });
   }
   

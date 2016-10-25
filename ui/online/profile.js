@@ -34,7 +34,7 @@ function profile($location, $routeParams, onlineService, saveHelper) {
   }
   
   this.openServer = function(buildName) {
-    $location.path('/published/' + vm.uid + '/' + buildName);
+    $location.path('/published/&uid=' + vm.uid + '&buildName=' + buildName);
   }
   
   this.load = function(buildName, build) {

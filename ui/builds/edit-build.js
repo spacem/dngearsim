@@ -8,8 +8,8 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
   this.savedItems = saveHelper.getSavedItems();
   this.group = {};
   this.newGroup = true;
-  if('groupName' in $routeParams) {
-      this.groupName = $routeParams.groupName;
+  if('buildName' in $routeParams) {
+      this.groupName = $routeParams.buildName;
       if(this.groupName in this.savedItems) {
         this.group = this.savedItems[this.groupName];
         this.newGroup = false;
