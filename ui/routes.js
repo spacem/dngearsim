@@ -57,11 +57,16 @@ function config($routeProvider) {
       reloadOnSearch: false,
     }).
     
-    when('/search/:itemType?', {
+    when('/search/:cat?', {
       templateUrl: 'ui/search/item-search.html',
       controller: 'ItemSearchCtrl as ctrl'
     }).
     
+    when('/item', {
+      templateUrl: 'ui/item/item.html',
+      controller: 'ItemCtrl',
+      reloadOnSearch: false,
+    }).
     when('/item/:region?/:i*', {
       templateUrl: 'ui/item/item.html',
       controller: 'ItemCtrl',
@@ -83,14 +88,14 @@ function config($routeProvider) {
       controller: 'PublishCtrl as ctrl',
     }).
     
-    when('/publish', {
-      templateUrl: 'ui/online/publish.html',
-      controller: 'PublishCtrl as ctrl',
-    }).
-    
-    when('/profile/:uid', {
+    when('/profile/:uid?', {
       templateUrl: 'ui/online/profile.html',
       controller: 'ProfileCtrl as ctrl',
+    }).
+    
+    when('/published', {
+      templateUrl: 'ui/online/published.html',
+      controller: 'PublishedCtrl as ctrl',
     }).
     
     when('/published/:uid/:buildName*', {

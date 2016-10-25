@@ -82,7 +82,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   $scope.handleChange = function() {
     // console.log('changes');
     if($scope.item.itemSource != 'custom') {
-      $location.path('/item/' + region.dntLocation.region + '/' + exportLinkHelper.encodeItem($scope.item));
+      $location.search('i', exportLinkHelper.encodeItem($scope.item));
     }
     else {
       setFullStats();

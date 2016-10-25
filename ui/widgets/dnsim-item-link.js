@@ -12,7 +12,7 @@ function dnsimItemLink(exportLinkHelper,$location,region) {
     },
     templateUrl: 'ui/widgets/dnsim-item-link.html',
     link: function($scope, element, attrs) {
-      $scope.itemLink = '/dngearsim/item/?region=' + region.dntLocation.region + '&i=' + exportLinkHelper.encodeItem($scope.item);
+      $scope.itemLink = 'item/?region=' + region.dntLocation.region + '&i=' + exportLinkHelper.encodeItem($scope.item);
       // var basePath = angular.element(document.querySelector('base')).attr('href');
       
       $scope.$watch('item', function(newValue, oldValue) {

@@ -48,7 +48,7 @@ angular.module('dnsim').controller('NavCtrl',
       if(action.name == 'search') {
         var cat = localStorage.getItem('selectedItemCategory', action.name);
         if(cat) {
-          return action.path + '/' + cat;
+          return action.path + '?cat=' + cat;
         }
         else {
           return action.path;

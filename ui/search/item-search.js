@@ -20,7 +20,7 @@ function(
   
   var vm = this;
   
-  vm.itemCategory = itemCategory.byPath('search/' + $routeParams.itemType);
+  vm.itemCategory = itemCategory.byPath($routeParams.cat);
   if(!vm.itemCategory) {
      var catName = localStorage.getItem('selectedItemCategory');
      if(!catName) {
@@ -30,7 +30,7 @@ function(
      vm.itemCategory = itemCategory.byName(catName);
      if(vm.itemCategory) {
        // console.log('moving');
-       $location.path(vm.itemCategory.path);
+       $location.search('cat', vm.itemCategory.path);
      }
      return;
   }
@@ -80,7 +80,7 @@ function(
       vm.itemCategory = itemCategory.byName(catName);
       if(vm.itemCategory) {
         // console.log('navigating to ', vm.itemCategory.path);
-        $location.path(vm.itemCategory.path);
+        $location.search('cat', vm.itemCategory.path);
       }
     }
   }
