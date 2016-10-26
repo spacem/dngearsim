@@ -37,7 +37,7 @@ function config($routeProvider) {
       templateUrl: 'ui/builds/build-list.html',
       controller: 'BuildListCtrl as buildList'
     }).
-    when('/view-group/:region?/:', {
+    when('/view-group/:region?', {
       templateUrl: 'ui/builds/view-group.html',
       controller: 'ViewGroupCtrl'
     }).
