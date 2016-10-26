@@ -139,7 +139,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
       });
   
-      var retVal = 'view-group/' + region.dntLocation.region + '/?';
+      var retVal = 'view-group?region=' + region.dntLocation.region;
       
       
       if(group.enemyLevel) {
@@ -170,7 +170,8 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
     createShortUrl: function(groupName, group) {
       
       var path = this.createGroupLink(groupName, group);
-      var longUrl = window.location.href.split("#")[0] + path;
+      var basePath = angular.element(document.querySelector('base')).attr('href');
+      var longUrl = window.location.href.split("/")[0] + basePath + path;
       var data = { longUrl: longUrl };
       
     	$http.post(

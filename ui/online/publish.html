@@ -65,10 +65,10 @@
       </div>
 
       <div class="col-xs-6" ng-if="ctrl.builds[buildName]">
-        <button class="btn btn-link btn-block group-header-btn" ng-click="ctrl.openLocal(buildName)">
+        <a class="btn btn-link btn-block group-header-btn" ng-href="build/{{buildName}}">
           <dngearsim-build-summary build-name="buildName" build="ctrl.builds[buildName]">
           </dngearsim-build-summary>
-        </button>
+        </a>
         <button ng-disabled="ctrl.getNumStoredBuilds() >= ctrl.getBuildLimit()" ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.startPublish(buildName)">save online</button>
         <button ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.deleteLocal(buildName)">delete</button>
         <button class="btn btn-default" ng-if="ctrl.localToDelete == buildName" ng-click="ctrl.reallyDeleteLocal(buildName)">press to actually delete</button>
@@ -117,10 +117,10 @@
       </div>
       
       <div class="col-xs-6" ng-if="ctrl.storedBuilds && ctrl.storedBuilds[buildName] && ctrl.publishBuild != buildName">
-        <button class="btn btn-link btn-block group-header-btn" ng-click="ctrl.openServer(buildName)">
+        <a class="btn btn-link btn-block group-header-btn" ng-href="published?uid={{ctrl.getUser().uid}}&buildName={{buildName}}">
           <dngearsim-build-summary build-name="buildName" build="ctrl.storedBuilds[buildName]">
           </dngearsim-build-summary>
-        </button>
+        </a>
         <p>
           {{ctrl.storedBuilds[buildName].region}} <span ng-if="ctrl.storedBuilds[buildName].guild">[{{ctrl.storedBuilds[buildName].guild}}]</span>
           <em>{{ctrl.storedBuilds[buildName].about}}</em>

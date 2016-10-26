@@ -95,10 +95,6 @@ function region(translations,dntReset,dntData,$route) {
       
       if(location != this.tlocation) {
         
-        angular.forEach(this.translationResettingEvents, function(event, index) {
-          event();
-        });
-        
         this.tlocation = location;
         sessionStorage.removeItem('UIStrings');
         localStorage.removeItem('UIStrings_file');

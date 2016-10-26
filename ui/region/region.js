@@ -44,6 +44,7 @@ angular.module('dnsim').controller('RegionCtrl',
       if($routeParams.region) {
         $routeParams.region = location.region;
         $route.updateParams($routeParams);
+        $route.reload();
       }
       else {
         region.setLocation(location);

@@ -93,7 +93,7 @@ function publish($location, saveHelper, onlineService, $routeParams, region) {
   }
   
   this.openServer = function(buildName) {
-    $location.path('../published/?uid=' + vm.getUser().uid + '&buildName=' + buildName);
+    $location.path('../published/').search({uid: vm.getUser().uid, buildName: buildName});
   }
   
   this.getBuildLimit = function() {
