@@ -88,14 +88,6 @@ function publish($location, saveHelper, onlineService, $routeParams, region) {
     onlineService.deleteAccount(vm.storedBuilds);
   }
   
-  this.openLocal = function(buildName) {
-    $location.path('../build/' + buildName);
-  }
-  
-  this.openServer = function(buildName) {
-    $location.path('../published/').search({uid: vm.getUser().uid, buildName: buildName});
-  }
-  
   this.getBuildLimit = function() {
     if(vm.profile && vm.profile.maxBuilds) {
       return vm.profile.maxBuilds;

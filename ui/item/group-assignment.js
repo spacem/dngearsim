@@ -44,7 +44,6 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
   }
 
   $scope.$watch('editCtrl.item', function() {
-    // console.log('item changed');
     vm.clearGroup();
   });
   

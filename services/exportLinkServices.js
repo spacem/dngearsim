@@ -32,6 +32,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
             // this is to support groups saved with the old property name
             itemString += item.itemTypeName;
           }
+          else if(item.fileName) {
+            itemString += ':F' + item.fileName;
+          }
         
           if(item.enchantmentNum || item.enchantmentNum == 0) {
             itemString += ':E' + item.enchantmentNum.toString(36);
@@ -50,9 +53,6 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           }
           if(item.pve) {
             itemString += ':V' + item.pve;
-          }
-          if(item.fileName) {
-            itemString += ':F' + item.fileName;
           }
         }
         

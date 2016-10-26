@@ -33,10 +33,6 @@ function profile($location, $routeParams, onlineService, saveHelper) {
     });
   }
   
-  this.openServer = function(buildName) {
-    $location.path('/published/&uid=' + vm.uid + '&buildName=' + buildName);
-  }
-  
   this.load = function(buildName, build) {
 
     var newGroupName = saveHelper.importGroup(buildName, build.items);

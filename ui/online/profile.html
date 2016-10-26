@@ -10,10 +10,10 @@
     </div>
     
     <div class="col-xs-12" ng-if="ctrl.storedBuilds" ng-repeat="(buildName, build) in ctrl.storedBuilds">
-      <button class="btn btn-link btn-block group-header-btn" ng-click="ctrl.openServer(buildName)">
+      <a class="btn btn-link btn-block group-header-btn" ng-href="published?uid={{ctrl.uid}}&buildName={{buildName}}">
         <dngearsim-build-summary build-name="buildName" build="ctrl.storedBuilds[buildName]">
         </dngearsim-build-summary>
-      </button>
+      </a>
       <button ng-hide="ctrl.reallyDelete == buildName" class="btn btn-default" ng-click="ctrl.load(buildName, ctrl.storedBuilds[buildName])">load to browser</button>
     </div>
   </div>

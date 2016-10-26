@@ -44,17 +44,17 @@ function config($routeProvider) {
     when('/edit-build/:buildName*', {
       templateUrl: 'ui/builds/edit-build.html',
       controller: 'EditBuildCtrl as editGroup',
-      reloadOnSearch: false,
+      // reloadOnSearch: false,
     }).
     when('/new-build', {
       templateUrl: 'ui/builds/edit-build.html',
       controller: 'EditBuildCtrl as editGroup',
-      reloadOnSearch: false,
+      // reloadOnSearch: false,
     }).
     when('/delete-build/:name*', {
       templateUrl: 'ui/builds/delete-build.html',
       controller: 'DeleteBuildCtrl as deleteBuild',
-      reloadOnSearch: false,
+      // reloadOnSearch: false,
     }).
     
     when('/search/:cat?', {
@@ -65,12 +65,12 @@ function config($routeProvider) {
     when('/item', {
       templateUrl: 'ui/item/item.html',
       controller: 'ItemCtrl',
-      reloadOnSearch: false,
+      // reloadOnSearch: false,
     }).
     when('/item/:region?/:i*', {
       templateUrl: 'ui/item/item.html',
       controller: 'ItemCtrl',
-      reloadOnSearch: false,
+      // reloadOnSearch: false,
     }).
     
     when('/export', {
