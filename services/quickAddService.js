@@ -262,6 +262,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
               // case 1280: // Dragon Tamer
               case 1313: // Jakard's Demise
               case 2032: // Sharing Goddess's Grief
+              case 2033: // Grief-stricken
                 usefulTitles.push(allTitles[i]);
             }
           }
@@ -280,6 +281,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           var item = getItem(datas);
           if(item && item.enchantmentId) {
             return [
+            { id: 15, name: 'enhance to +15' },
             { id: 14, name: 'enhance to +14' },
             { id: 13, name: 'enhance to +13' },
             { id: 12, name: 'enhance to +12' },
@@ -446,7 +448,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       'offensive gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
       'increasing gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
       'enhancement plates': ['allLevelStep','otherRankStep','distinctItemNameStep','numStatsStep','itemStep'],
-      'unique plates': ['sixtyLevelStep','distinctItemNameStep','numStatsStep','itemStep'],
+      'expedition plates': ['sixtyLevelStep','distinctItemNameStep','numStatsStep','itemStep'],
       talisman: ['sixtyLevelStep','talismanRankStep','distinctItemNameStep','numStatsStep','itemStep','enhanceTalismanStep'],
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
       cash: ['accExchangeStep','cashRankStep','itemNameStep','itemStep'],
