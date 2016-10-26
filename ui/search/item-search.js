@@ -152,7 +152,7 @@ function(
   
   function loadResults() {
     $timeout(function() {
-      vm.maxDisplay = 12;
+      vm.maxDisplay = 24;
       vm.results = getResults();
     });
   }
