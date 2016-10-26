@@ -171,8 +171,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       
       var path = this.createGroupLink(groupName, group);
       var basePath = angular.element(document.querySelector('base')).attr('href');
-      var longUrl = window.location.href.split("/")[0] + basePath + path;
+      var longUrl = window.location.href.split(basePath)[0] + basePath + path;
       var data = { longUrl: longUrl };
+      console.log('getting short url for ', longUrl);
       
     	$http.post(
     	  'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyD5t5o7ZcSAvM-xMwc14ft2BA-MKQA7LMo', data).success(
