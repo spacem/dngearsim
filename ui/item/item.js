@@ -178,13 +178,13 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         $scope.isPlate = true;
       }
       
-      if($scope.item.typeName != null && $scope.item.typeId != 112) {
-        $scope.canUse = true;
-        $scope.detail = 'use';
-      }
-      else if($scope.item.typeId == 46 || $scope.item.typeId == 8 || $scope.item.typeId == 112) {
+      if($scope.item.typeId == 46 || $scope.item.typeId == 8 || $scope.item.typeId == 112 || $scope.item.typeId == 122) {
         $scope.hasContents = true;
         $scope.detail = 'contents';
+      }
+      else if($scope.item.typeName != null) {
+        $scope.canUse = true;
+        $scope.detail = 'use';
       }
       else if($scope.canExtract) {
         $scope.detail = 'extract';

@@ -5,7 +5,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   'use strict';
   
   if(this.item == null) return;
-  if(this.item.typeId != 46 && this.item.typeId != 8 && this.item.typeId != 112) {
+  if(this.item.typeId != 46 && this.item.typeId != 8 && this.item.typeId != 112 && this.item.typeId != 122) {
     console.log('not box item type ' + this.item.typeId);
     return;
   }
@@ -39,7 +39,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   var commonCharmItemtable = 'charmitemtable_common.lzjson';
   
   var files;
-  if(this.item.typeId == 46 || this.item.typeId == 112) {
+  if(this.item.typeId == 46 || this.item.typeId == 112 || this.item.typeId == 122) {
     files = [allItemFileName, charmItemtable, commonCharmItemtable];
   }
   else if (this.item.typeId == 8) {
@@ -69,7 +69,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
       vm.items = [];
       
       
-      if(vm.item.typeId == 46 || vm.item.typeId == 112) {
+      if(vm.item.typeId == 46 || vm.item.typeId == 112 || vm.item.typeId == 122) {
         vm.getCharmItems(d.TypeParam1);
       }
       else if (vm.item.typeId == 8) {
