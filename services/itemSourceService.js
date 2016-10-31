@@ -135,6 +135,11 @@ function items(translations,dntData,itemColumnsToLoad) {
         type: 'xtras',
         minLevel: 0,
         minRank: 0 },
+      imprint: {
+        mainDnt: 'itemtable_imprinting.lzjson',
+        type: 'imprint',
+        minLevel: 0,
+        minRank: 0 },
     };
     
     // now that the sources are set up add some methods on them for initialisation
