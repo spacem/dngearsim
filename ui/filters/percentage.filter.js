@@ -1,3 +1,5 @@
+(function () {
+'use strict';
 angular.module('dnsim').filter('percentage', [function() {
   'use strict';
 
@@ -12,4 +14,6 @@ angular.module('dnsim').filter('percentage', [function() {
   percentageFilter.$stateful = false;
 
   return percentageFilter;
-}])
+}]);
+
+})();

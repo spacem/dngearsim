@@ -173,6 +173,11 @@ function(
     if('pc' in vm.stat) {
       pcStatId = vm.stat.pc;
     }
+          
+    var altStatId = -1;
+    if('altStat' in vm.stat) {
+      altStatId = vm.stat.altStat;
+    }
   
     var statVals = [];
     var newResults = [];
@@ -240,6 +245,11 @@ function(
               break;
             }
             else if(stat.id == pcStatId) {
+              statFound = true;
+              statVal.i = curDisplay;
+              statVal.s = Number(stat.max);
+            }
+            else if(stat.id == altStatId) {
               statFound = true;
               statVal.i = curDisplay;
               statVal.s = Number(stat.max);
