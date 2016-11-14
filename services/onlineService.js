@@ -72,7 +72,7 @@ function onlineService($window, $q, hCodeValues) {
   function getBuild(uid, buildName) {
     console.log('get build');
     return $q(function(resolve, reject) {
-      firebase.database().ref('builds/' + uid + '/' + buildName).once('value', function(storedProfile) {
+      firebase.database().ref('builds/' + uid + '/' + stripBuildName(buildName)).once('value', function(storedProfile) {
         if(storedProfile) {
           resolve(decompressBuild(storedProfile.val()));
         }
@@ -171,7 +171,7 @@ function onlineService($window, $q, hCodeValues) {
       deleteNullProperties(build, true);
       // console.log('saving', build);
       actions.push(
-        firebase.database().ref('builds/' + user.uid + '/' + buildName).set(compressBuild(build))
+        firebase.database().ref('builds/' + user.uid + '/' + stripBuildName(buildName)).set(compressBuild(build))
       );
       
       if(build.job && build.job.id) {
@@ -194,7 +194,7 @@ function onlineService($window, $q, hCodeValues) {
         deleteNullProperties(data, true);
           
         actions.push(
-          firebase.database().ref('job-builds/' + build.job.id + '/' + user.uid + '/' + buildName).set(data)
+          firebase.database().ref('job-builds/' + build.job.id + '/' + user.uid + '/' + stripBuildName(buildName)).set(data)
         );
       }
     }
@@ -236,7 +236,7 @@ function onlineService($window, $q, hCodeValues) {
       var jobIds = [];
       for(var buildName in builds) {
         if(builds[buildName].job) {
-          jobIds.push(builds[buildName].job.id)
+          jobIds.push(builds[buildName].job.id);
         }
       }
       
@@ -268,15 +268,19 @@ function onlineService($window, $q, hCodeValues) {
     var user = service.getUser();
     if(user) {
       pList.push(
-        firebase.database().ref('builds/' + user.uid + '/' + buildName).remove());
+        firebase.database().ref('builds/' + user.uid + '/' + stripBuildName(buildName)).remove());
       
       if(build.job) {
         pList.push(
-          firebase.database().ref('job-builds/' + build.job.id + '/' + user.uid).remove());
+          firebase.database().ref('job-builds/' + build.job.id + '/' + user.uid + '/' + stripBuildName(buildName)).remove());
       }
     }
     
     return $q.all(pList);
+  }
+  
+  function stripBuildName(buildName) {
+    return buildName.replace('.', '').replace('#', '').replace('$', '').replace('[', '').replace(']', '').replace('/', '');
   }
 }
 

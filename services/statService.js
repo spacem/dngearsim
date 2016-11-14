@@ -240,7 +240,7 @@ function statHelper(hCodeValues) {
       var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
       
       var fdPc = dupeStat(1029);
-      fdPc.max = Math.min(Math.max(0.35*Number(fd.max)/maxFd,Math.pow(Number(fd.max)/maxFd,2.2)),1);
+      fdPc.max += Math.min(Math.max(0.35*Number(fd.max)/maxFd,Math.pow(Number(fd.max)/maxFd,2.2)),1);
       addStat(fdPc);
       
       // elements

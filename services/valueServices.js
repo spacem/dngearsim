@@ -247,6 +247,7 @@ function hCodeValues() {
           }
         }
       },
+      389: { id: 389, name: 'fd buf', mapTo: 1029 },
     },
     
     customItems: 
