@@ -22,6 +22,8 @@ function onlineService($window, $q, hCodeValues) {
     
     getProfile: getProfile,
     saveProfile: saveProfile,
+    
+    stripBuildName: stripBuildName
   };
   
   init();
@@ -280,7 +282,7 @@ function onlineService($window, $q, hCodeValues) {
   }
   
   function stripBuildName(buildName) {
-    return buildName.replace('.', '').replace('#', '').replace('$', '').replace('[', '').replace(']', '').replace('/', '');
+    return buildName.replace(/[.$\[\]#\/]/g, '');
   }
 }
 
