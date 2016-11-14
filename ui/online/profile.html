@@ -10,7 +10,7 @@
     </div>
     
     <div class="col-xs-12" ng-if="ctrl.storedBuilds" ng-repeat="(buildName, build) in ctrl.storedBuilds">
-      <a class="btn btn-link btn-block group-header-btn" ng-href="published?uid={{ctrl.uid}}&buildName={{buildName}}">
+      <a class="btn btn-link btn-block group-header-btn" ng-href="published?uid={{ctrl.uid}}&buildName={{buildName | escape}}">
         <dngearsim-build-summary build-name="buildName" build="ctrl.storedBuilds[buildName]">
         </dngearsim-build-summary>
       </a>

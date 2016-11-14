@@ -1,7 +1,7 @@
 angular.module('dnsim').filter('percentage', [function() {
   'use strict';
 
-  function filter(input) {
+  function percentageFilter(input) {
     if(typeof input == 'number') {
       return (Math.round(input * 100 * 100) / 100) + '%';
     }
@@ -9,7 +9,7 @@ angular.module('dnsim').filter('percentage', [function() {
       return input;
     }
   }
-  filter.$stateful = false;
+  percentageFilter.$stateful = false;
 
-  return filter;
+  return percentageFilter;
 }])

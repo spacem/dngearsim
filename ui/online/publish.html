@@ -117,7 +117,7 @@
       </div>
       
       <div class="col-xs-6" ng-if="ctrl.storedBuilds && ctrl.storedBuilds[buildName] && ctrl.publishBuild != buildName">
-        <a class="btn btn-link btn-block group-header-btn" ng-href="published?uid={{ctrl.getUser().uid}}&buildName={{buildName}}">
+        <a class="btn btn-link btn-block group-header-btn" ng-href="published?uid={{ctrl.getUser().uid}}&buildName={{buildName | escape}}">
           <dngearsim-build-summary build-name="buildName" build="ctrl.storedBuilds[buildName]">
           </dngearsim-build-summary>
         </a>
