@@ -225,6 +225,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + pv + '.lzjson';
         
         var skillData = dntData.find(skillDnt, 'id', item.id)[0];
+        if(!skillData) {
+          console.log('cannot get skill data from ', skillDnt);
+        }
         var skillLevelDatas = dntData.getData(skillLevelDnt);
 
         var skillLevelVals = {};

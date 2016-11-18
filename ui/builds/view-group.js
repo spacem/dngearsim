@@ -56,7 +56,14 @@ angular.module('dnsim').controller('ViewGroupCtrl',
     
     function tryInit() {
       
-      if(dntData.anyLoading() || !translations.isLoaded() || !jobs.isLoaded()) {
+      var allInit = true;
+      angular.forEach(groupHelper.getDntFiles($scope.build), function(columns, fileName) {
+        if(!dntData.isLoaded(fileName)) {
+          allInit = false;
+        }
+      });
+      
+      if(!allInit || dntData.anyLoading() || !translations.isLoaded() || !jobs.isLoaded()) {
         return;
       }
       
@@ -75,7 +82,6 @@ angular.module('dnsim').controller('ViewGroupCtrl',
         $scope.heroStats = character.getHeroStats($scope.heroLevel);
         
         var newItems = groupHelper.reloadGroup(groupName, group);
-        dntReset();
       
         $scope.savedItems = {};
         $scope.build = {
