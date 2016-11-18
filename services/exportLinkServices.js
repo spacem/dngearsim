@@ -458,7 +458,8 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
             dntFiles[itemType.sparkDnt] = itemColumnsToLoad.sparkDnt;
           }
         }
-        else if(item.itemSource == 'skills' || item.typeName == 'skills') {
+        
+        if(item.itemSource == 'skills' || item.typeName == 'skills') {
             var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
             dntFiles[skillDnt] = null;
             var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.lzjson';
@@ -466,8 +467,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
             skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pvp' + '.lzjson';
             dntFiles[skillLevelDnt] = null;
         }
-        else if(item.typeName == 'custom') {
-        }
+        
         
         if(item.fileName) {
           dntFiles[item.fileName + '.lzjson'] = null;
