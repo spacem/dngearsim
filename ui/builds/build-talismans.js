@@ -36,7 +36,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     if(this.groupCalcStats == null) {
       var group = vm.savedItems[vm.groupName];
       if(group) {
-        this.groupCalcStats = this.getCalculatedStats(group, group.items);
+        this.groupCalcStats = statHelper.getCalculatedStatsFromItems(group, group.items);
       }
     }
     
@@ -54,19 +54,6 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     vm.replaceMDmgAffectAmount = [];
     vm.replacePDmgAffectAmount = [];
     vm.replaceAvgDmgAffectAmount = [];
-  }
-  
-  this.getCalculatedStats = function(group, items) {
-    var nakedStats = statHelper.getNakedStats(group);
-    var combinedStats = statHelper.getCombinedStats(items);
-    var setStats = statHelper.getSetStats(items);
-    var allStats = nakedStats.concat(combinedStats).concat(setStats);
-    if(group.heroStats != null && group.heroStats.length > 0) {
-      allStats = allStats.concat(group.heroStats);
-    }
-    allStats = hCodeValues.mergeStats(allStats);
-    
-    return statHelper.getCalculatedStats(group, allStats);
   }
   
   function saveGroup() {
@@ -133,15 +120,15 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     if(vm.rows.length < 3) {
       vm.rows[vm.rows.length+1] = vm.makeFakeCells();
     }
-  }
+  };
   
   this.makeFakeCells = function(num) {
     return [vm.makeCell({enchantmentNum:100},-1),vm.makeCell({enchantmentNum:75},-2),vm.makeCell({enchantmentNum:25},-3),vm.makeCell({enchantmentNum:0},-4)];
-  }
+  };
   
   this.makeCell = function(item, index) {
     return { item: item, index: index };
-  }
+  };
   
   this.click = function(col) {
     if(vm.selectedIndex == -1) {
@@ -152,7 +139,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     else {
       vm.move(col);
     }
-  }
+  };
   
   this.move = function(col) {
     
@@ -177,7 +164,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     vm.updateRows();
     vm.replaceAffectAmount = {};
     $timeout();
-  }
+  };
   
   this.setTalisman = function(item, newEnhancementNum) {
     var extraStats = [];
@@ -191,7 +178,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     item.enchantmentNum = newEnhancementNum;
     
     item.fullStats = hCodeValues.mergeStats(item.enchantmentStats, item.stats);
-  }
+  };
   
     
   this.replaceAffectAmount = {};
@@ -200,7 +187,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     if(this.replaceAffectAmount[itemIndex]) {
       return this.replaceAffectAmount[itemIndex][statId];
     }
-  }
+  };
   
   this.initReplaceAffects = function(itemIndex, item) {
     if(vm.replaceAffectAmount[itemIndex] || vm.selectedIndex == -1) {
@@ -233,7 +220,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
       }
     });
     
-    var newStats = vm.getCalculatedStats(group, newItems);
+    var newStats = statHelper.getCalculatedStatsFromItems(group, newItems);
     var origStats = vm.getGroupCalcStats();
     
     for(var id in hCodeValues.stats) {
@@ -241,7 +228,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
         vm.replaceAffectAmount[itemIndex][id] = calcStatPercent(vm.getStat(id, newStats).max, vm.getStat(id, origStats).max);
       }
     }
-  }
+  };
   
   this.getStatName = function(id) {
     var retVal = '';
@@ -260,7 +247,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
       retVal += hCodeValues.elements[eleId].name;
     }
     return retVal + ' ' + hCodeValues.stats[id].name;
-  }
+  };
   
   this.getStat = function(id, stats) {
     var len = stats.length;
@@ -270,7 +257,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
       }
     }
     return {id: id, max:0};
-  }
+  };
   
   function calcStatPercent(newVal, origVal) {
     if(newVal && origVal) {
@@ -284,7 +271,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   this.save = function() {
     saveHelper.updatedSavedItems(vm.groupName, vm.savedItems[vm.groupName].items);
     $location.path('/build/' + vm.groupName);
-  }
+  };
   
   this.updateRows();
   

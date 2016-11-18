@@ -50,6 +50,19 @@ function statHelper(hCodeValues) {
       return hCodeValues.mergeStats(stats);
     },
     
+    getCalculatedStatsFromItems: function(group, items) {
+      var nakedStats = this.getNakedStats(group);
+      var combinedStats = this.getCombinedStats(items);
+      var setStats = this.getSetStats(items);
+      var allStats = nakedStats.concat(combinedStats).concat(setStats);
+      if(group.heroStats != null && group.heroStats.length > 0) {
+        allStats = allStats.concat(group.heroStats);
+      }
+      allStats = hCodeValues.mergeStats(allStats);
+      
+      return this.getCalculatedStats(group, allStats);
+    },
+    
     getCalculatedStats: function(group, combinedStats) {
       
       var retVal = [];
@@ -152,6 +165,9 @@ function statHelper(hCodeValues) {
       // this shows as blue damage
       // i think there are magic and phis variants of this but doesnt matter
       var aPwr = dupeStat(3000);
+      
+      var minPdmg = dupeStat(4);
+      var maxPdmg = dupeStat(5);
 
       // physical damage
       if(!group.damageType || group.damageType.id != 2) {
@@ -162,7 +178,6 @@ function statHelper(hCodeValues) {
         // special stats for zeal
         var intToPdmg = dupeStat(10164);
         
-        var minPdmg = dupeStat(4);
         minPdmg.max += extraPdmg.max;
         minPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
         minPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
@@ -172,7 +187,6 @@ function statHelper(hCodeValues) {
         minPdmg.max += Math.floor(intToPdmg.max * int.max);
         addStat(minPdmg);
   
-        var maxPdmg = dupeStat(5);
         maxPdmg.max += extraPdmg.max;
         maxPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
         maxPdmg.max += Math.floor(agi.max*Number(group.conversions.AgilityAttack));
@@ -183,6 +197,9 @@ function statHelper(hCodeValues) {
         addStat(maxPdmg);
       }
       
+      var minMdmg = dupeStat(6);
+      var maxMdmg = dupeStat(7);
+      
       // magic damage
       if(!group.damageType || group.damageType.id != 1) {
         var extraMdmg = dupeStat(33);
@@ -192,7 +209,6 @@ function statHelper(hCodeValues) {
         // special stats for zeal
         var strToMdmg = dupeStat(10165);
         
-        var minMdmg = dupeStat(6);
         minMdmg.max += extraMdmg.max;
         minMdmg.max += Math.floor(int.max*Number(group.conversions.IntelligenceAttack));
 
@@ -201,7 +217,6 @@ function statHelper(hCodeValues) {
         minMdmg.max += Math.floor(strToMdmg.max * str.max);
         addStat(minMdmg);
         
-        var maxMdmg = dupeStat(7);
         maxMdmg.max += extraMdmg.max;
         maxMdmg.max += (int.max*Number(group.conversions.IntelligenceAttack));
         
@@ -432,7 +447,7 @@ function statHelper(hCodeValues) {
       stats.calculatedStats = this.getCalculatedStats(build, stats.allStats);
       return stats;
     }
-  }
+  };
 }
 
 })();

@@ -6,16 +6,18 @@ function region(translations,dntReset,dntData,$route) {
   
   var alternativeFiles = {region: 'ALT', name: 'Alternative user specified files', url : ''};
   var hostedFiles =[
-      {region: 'na', name: 'english files from nexon north america', url : 'https://dnna.firebaseapp.com'},
-      {region: 'kdn', name: 'korean files from pupu', url : 'https://kdnfiles.firebaseapp.com'},
-      {region: 'cdn', name: 'chinese files from shanda', url : 'https://cdnfiles.firebaseapp.com'},
-      {region: 'sea', name: 'south east asia - english files from cherry credits', url : 'https://seadnfiles.firebaseapp.com'},
-      {region: 'eu', name: 'europe - english files from cherry credits', url : 'https://eufiles.firebaseapp.com'},
-      {region: 'ina', name: 'indonesian files from gemscool', url : 'https://inafiles-da491.firebaseapp.com'},
+      {region: 'sea', name: 'south east asia', url : 'https://seadnfiles.firebaseapp.com'},
+      {region: 'na', name: 'north america', url : 'https://dnna.firebaseapp.com'},
+      {region: 'eu', name: 'europe', url : 'https://eufiles.firebaseapp.com'},
+      {region: 'ina', name: 'indonesia ', url : 'https://inafiles-da491.firebaseapp.com'},
+      {region: 'th', name: 'thailand', url : 'https://thdnfiles.firebaseapp.com'},
+      {region: 'tw', name: 'taiwan 臺灣', url : 'https://twdnfiles.firebaseapp.com'},
+      {region: 'cdn', name: 'china 中國', url : 'https://cdnfiles.firebaseapp.com'},
+      {region: 'kdn', name: 'korea 대한민국', url : 'https://kdnfiles.firebaseapp.com'},
     ];
   
   var dntLocationRegion = localStorage.getItem('lastDNTRegion');
-  var dntLocation = hostedFiles[0];
+  var dntLocation = null;
   if(dntLocationRegion) {
     angular.forEach(hostedFiles, function(hostedFile, index) {
       if(hostedFile.region == dntLocationRegion) {
@@ -100,13 +102,43 @@ function region(translations,dntReset,dntData,$route) {
         localStorage.removeItem('UIStrings_file');
         dntReset();
         translations.reset();
-        translations.location = this.tlocation.url;
-        translations.init(function() {}, function() { $route.reload(); });
-        // $route.reload();
+        if(location) {
+          var override = this.getOverride();
+          translations.small = !override;
+          translations.location = this.tlocation.url;
+          translations.init(function() {}, function() { $route.reload(); });
+        }
       }
     },
     
+    getOverride: function() {
+      if(localStorage.getItem('tOverride')) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    },
+    
+    setOverride: function(value) {
+      if(!value) {
+        localStorage.removeItem('tOverride');
+      }
+      else {
+        localStorage.setItem('tOverride', '1');
+      }
+      this.setTLocation(this.dntLocation);
+    },
+    
     init: function() {
+      if(this.getOverride()) {
+        translations.small = false;
+      }
+      else {
+        this.tLocation = this.dntLocation;
+        translations.small = true;
+      }
+      
       if(this.tlocation) {
         translations.location = this.tlocation.url;
       }

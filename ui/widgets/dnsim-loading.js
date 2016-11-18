@@ -1,9 +1,9 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').directive('dnsimLoading', ['dntData','translations','$timeout', dnsimLoading]);
+angular.module('dnsim').directive('dnsimLoading', ['dntData','translations','$timeout', 'region', dnsimLoading]);
 
-function dnsimLoading(dntData, translations, $timeout) {
+function dnsimLoading(dntData, translations, $timeout, region) {
   'use strict';
   return {
     restrict: 'E',
@@ -35,6 +35,8 @@ function dnsimLoading(dntData, translations, $timeout) {
 
       $scope.numLoading = 0;
       $scope.setLoadCount = function() {
+        $scope.noRegion = !region.dntLocation;
+        
         var n = dntData.anyLoading();
         if(!translations.isLoaded())
         {
@@ -47,10 +49,10 @@ function dnsimLoading(dntData, translations, $timeout) {
           }
           $scope.numLoading = n;
         });
-      }
+      };
       
-      $scope.setLoadCount();
       $scope.loadError = false;
+      $scope.setLoadCount();
     },
   };
 }

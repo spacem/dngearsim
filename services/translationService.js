@@ -5,7 +5,8 @@ angular.module('dnsim').factory('translations', ['$routeParams', '$rootScope', t
 function translations($routeParams, $rootScope) {
 
   var dnTranslations = new DnTranslations();
-  var tFile = 'uistring.optimised.lzjson';
+  var smallFile = 'uistring.optimised.lzjson';
+  var bigFile = 'uistring.lzjson';
 
   var completeCallback = [];
   var progressCallback = [];
@@ -21,8 +22,20 @@ function translations($routeParams, $rootScope) {
       progressCallback = [];
     },
     
+    getFileName: function() {
+      if(this.small) {
+        // console.log('loading optimised translations');
+        return smallFile;
+      }
+      else {
+        // console.log('loading full translations');
+        return bigFile;
+      }
+    },
+    
     loaded : false,
     startedLoading : false,
+    small: false,
     
     location : null,
   
@@ -33,8 +46,12 @@ function translations($routeParams, $rootScope) {
       }
       else {
         progressCallback = [];
-        progressCallback.push(progress);
-        completeCallback.push(complete);
+        if(progress) {
+          progressCallback.push(progress);
+        }
+        if(complete) {
+          completeCallback.push(complete);
+        }
   
         if(!this.startedLoading) {
           this.startedLoading = true;
@@ -42,7 +59,7 @@ function translations($routeParams, $rootScope) {
           
           var fileName = null;
           if(this.location && this.location != '') {
-            fileName = this.location + '/' + tFile;
+            fileName = this.location + '/' + this.getFileName();
             
             if(fileName != localStorage.getItem("UIStrings_file")) {
               sessionStorage.removeItem('UIStrings');
@@ -75,7 +92,7 @@ function translations($routeParams, $rootScope) {
     
     isLoaded : function() {
       if(!this.loaded) {
-        var fileName = this.location + '/' + tFile;
+        var fileName = this.location + '/' + this.getFileName();
         
         if(fileName != localStorage.getItem("UIStrings_file")) {
           sessionStorage.removeItem('UIStrings');

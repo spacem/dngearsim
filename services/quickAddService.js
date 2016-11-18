@@ -31,7 +31,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
             var exchange = dntData.find('exchange.lzjson','ExchangeType',exId);
             var exName = '';
             if(exchange && exchange.length > 0 && exchange[0].NameID > 0) {
-              var exName = translations.translate(exchange[0].NameID).toLowerCase();
+              exName = translations.translate(exchange[0].NameID).toLowerCase();
             }
             exchanges.push({id: exId, name: exName.toLowerCase()});
           }
@@ -297,7 +297,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
             { id: 2, name: 'enhance to +2' },
             { id: 1, name: 'enhance to +1' },
             { id: 0, name: 'not enhanced' },
-            ]
+            ];
           }
           else {
             return [{ id: 0, name: 'not enhanced' }];
@@ -498,7 +498,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
     getStepName: function(category, stepNumber) {
       return this.categorySteps[category.name][stepNumber];
     }
-  }
+  };
   
   function getItem(datas) {
     var item = null;

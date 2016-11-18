@@ -1,8 +1,11 @@
 angular.module('dnsim').controller('RegionCtrl', 
-  ['$scope','$timeout','$route','$routeParams','$location','translations','region',
-  function($scope,$timeout,$route,$routeParams,$location,translations,region) {
+  ['$timeout','$route','$routeParams','$location','translations','region',
+  function($timeout,$route,$routeParams,$location,translations,region) {
     'use strict';
+    
+    var vm = this;
 
+    vm.override = region.getOverride();
     region.init();
     translations.init(
       function(msg) { 
@@ -12,35 +15,42 @@ angular.module('dnsim').controller('RegionCtrl',
         $timeout();
       });
       
-    $scope.region = region;
+    vm.region = region;
+    vm.tHoverLocation = region.tlocation;
+    vm.hoverLocation = region.dntLocation;
+    vm.edit = (region.dntLocation == null);
     
-    $scope.getDntLocation = function() {
+    vm.getDntLocation = function() {
       return region.dntLocation;
-    }
-    $scope.getTlocation = function() {
+    };
+    vm.getTlocation = function() {
       return region.tlocation;
-    }
+    };
      
-    $scope.getHostedFiles = function() {
+    vm.getHostedFiles = function() {
       // console.log('getting hosted files');
       return region.hostedFiles;
-    }
+    };
     
-    $scope.getWorldName = function() {
+    vm.getWorldName = function() {
       if(translations.isLoaded()) {
         return translations.translate(10169);
       }
       else {
         return '';
       }
-    }
+    };
     
-    $scope.setTLocation = function(location) {
+    vm.setTLocation = function(location) {
       region.setTLocation(location);
-      $scope.edit = false;
-    }
+      vm.edit = false;
+    };
     
-    $scope.setLocation = function(location) {
+    vm.setLocation = function(location) {
+      if(!vm.override) {
+        vm.setTLocation(null);
+      }
+      
       if($routeParams.region) {
         $routeParams.region = location.region;
         $route.updateParams($routeParams);
@@ -49,12 +59,19 @@ angular.module('dnsim').controller('RegionCtrl',
       else {
         region.setLocation(location);
       }
-      $scope.edit = !$scope.edit;
-    }
+      vm.edit = false;
+    };
+    
+    vm.setOverride = function(value) {
+      region.setOverride(value);
+      vm.override = value;
+      vm.edit = value;
+    };
   }
 ])
 .directive('dngearsimRegion', function() {
   return {
-    templateUrl: 'ui/region/region.html'
+    templateUrl: 'ui/region/region.html',
+    controllerAs: 'ctrl',
   };
 });

@@ -40,7 +40,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     vm.replaceAffectAmount = {};
 
     vm.groupItems = null;
-    vm.groupCalcStats = null
+    vm.groupCalcStats = null;
   }
 
   $scope.$watch('editCtrl.item', function() {
@@ -51,12 +51,12 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     this.initAddAffects();
     // console.log('add affect: ', this.addAffectAmount[stat], this.item);
     return this.addAffectAmount[stat];
-  }
+  };
   
   this.getReplaceAffectAmount = function(statId, itemIndex, item) {
     this.initReplaceAffects(itemIndex, item);
     return this.replaceAffectAmount[itemIndex][statId];
-  }
+  };
   
   this.getGroupCalcStats = function() {
     
@@ -64,29 +64,16 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
       
       var group = vm.savedItems[vm.groupName];
       if(group) {
-        this.groupCalcStats = this.getCalculatedStats(group, group.items);
+        this.groupCalcStats = statHelper.getCalculatedStatsFromItems(group, group.items);
       }
     }
     
     return this.groupCalcStats;
-  }
+  };
   
   this.getBuild = function() {
     return vm.savedItems[vm.groupName];
-  }
-  
-  this.getCalculatedStats = function(group, items) {
-    var nakedStats = statHelper.getNakedStats(group);
-    var combinedStats = statHelper.getCombinedStats(items);
-    var setStats = statHelper.getSetStats(items);
-    var allStats = nakedStats.concat(combinedStats).concat(setStats);
-    if(group.heroStats != null && group.heroStats.length > 0) {
-      allStats = allStats.concat(group.heroStats);
-    }
-    allStats = hCodeValues.mergeStats(allStats);
-    
-    return statHelper.getCalculatedStats(group, allStats);
-  }
+  };
   
   this.initAddAffects = function() {
     
@@ -102,7 +89,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     if(group.items) {
       newItems = group.items.concat([vm.item]);
     }
-    var newStats = vm.getCalculatedStats(group, newItems);
+    var newStats = statHelper.getCalculatedStatsFromItems(group, newItems);
     
     this.addAffectAmount = {};
     for(var id in hCodeValues.stats) {
@@ -110,7 +97,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
         vm.addAffectAmount[id] = calcStatPercent(vm.getStat(id, newStats).max, vm.getStat(id, origStats).max);
       }
     }
-  }
+  };
   
   this.initReplaceAffects = function(itemIndex, item) {
     if(vm.replaceAffectAmount[itemIndex]) {
@@ -125,7 +112,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
       }
     });
     
-    var newStats = vm.getCalculatedStats(group, newItems);
+    var newStats = statHelper.getCalculatedStatsFromItems(group, newItems);
     var origStats = vm.getGroupCalcStats();
     
     this.replaceAffectAmount[itemIndex] = {};
@@ -134,7 +121,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
         vm.replaceAffectAmount[itemIndex][id] = calcStatPercent(vm.getStat(id, newStats).max, vm.getStat(id, origStats).max);
       }
     }
-  }
+  };
   
   function calcStatPercent(newVal, origVal) {
     if(newVal && origVal) {
@@ -154,7 +141,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
       }
     }
     return {id: id, max:0};
-  }
+  };
   
   this.getStatName = function(id) {
     var retVal = '';
@@ -173,7 +160,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
       retVal += hCodeValues.elements[eleId].name;
     }
     return retVal + ' ' + hCodeValues.stats[id].name;
-  }
+  };
   
   this.getGroupItems = function() {
 
@@ -228,7 +215,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
       });
     }
     return vm.groupItems;
-  }
+  };
   
   this.hasMaxExchangable = function() {
     var cat = itemCategory.byName(this.item.typeName);
@@ -252,7 +239,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
       }
     }
     return false;
-  }
+  };
   
   this.nextGroup = function() {
     
@@ -276,7 +263,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     vm.groupName = nextGroup;
     saveGroup();
     vm.clearGroup();
-  }
+  };
   
   this.prevGroup = function() {
     
@@ -299,13 +286,13 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     vm.groupName = prevGroup;
     saveGroup();
     vm.clearGroup();
-  }
+  };
   
   this.addToGroup = function() {
     saveHelper.saveItem(vm.groupName, vm.item);
     this.savedItems = saveHelper.getSavedItems();
     vm.clearGroup();
-  }
+  };
   
   this.replace = function(item) {
     item.replaceItem = true;
@@ -323,7 +310,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     saveHelper.updatedSavedItems(vm.groupName, newItemList);
     this.savedItems = saveHelper.getSavedItems();
     vm.clearGroup();
-  }
+  };
   
   function saveGroup() {
     saveHelper.saveBuildSelection(vm.groupName, vm.savedItems);

@@ -271,7 +271,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           }
           
           if(!ps.length) {
-            var ps = dntData.find(itemType.potentialDntEx, 'id', item.pid);
+            ps = dntData.find(itemType.potentialDntEx, 'id', item.pid);
             if(!ps.length) {
               ps = dntData.find(itemType.potentialDntEx, 'PotentialID', d.TypeParam1);
             }
@@ -284,7 +284,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               // this happened one time
               // not sure how but it corrupted the stats
               p = null;
-            console.log('bad potential');
+              console.log('bad potential');
             }
             else {
               var potentials = dntData.find(itemType.potentialDnt, 'PotentialID', p.PotentialID);
@@ -476,7 +476,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       
       return dntFiles;
     }
-  }
+  };
 }
 
 })();

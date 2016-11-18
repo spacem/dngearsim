@@ -31,7 +31,7 @@ gulp.task('js', function() {
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(concat('app.min.js'))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('min'))
 })
