@@ -23,15 +23,15 @@ angular.module('dnsim').controller('RegionCtrl',
     setDntVersion();
     
     function setDntVersion() {
-      console.log('setting version for ', vm.region.dntLocation);
+      // console.log('setting version for ', vm.region.dntLocation);
       if(vm.region.dntLocation && vm.region.dntLocation.url) {
         $http.get(vm.region.dntLocation.url + '/Version.cfg').then(function(res) {
           if(res && res.data) {
-            var details = res.data.split('\r\n');
-            if(details.length) {
-              var details = details[0].split(' ');
-              if(details.length > 1) {
-                vm.dntVersion = 'v' + details[1];
+            var newLineDetails = res.data.split('\r\n');
+            if(newLineDetails.length) {
+              var spaceDetails = newLineDetails[0].split(' ');
+              if(spaceDetails.length > 1) {
+                vm.dntVersion = 'v' + spaceDetails[1];
               }
             }
           }
