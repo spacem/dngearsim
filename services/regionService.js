@@ -81,7 +81,7 @@ function region(translations,dntReset,dntData,$route) {
         dntReset();
         localStorage.setItem('lastDNTRegion', location.region);
         dntReset();
-        $route.reload();
+        // $route.reload();
       }
 
       if(this.tlocation == null) {
@@ -106,7 +106,9 @@ function region(translations,dntReset,dntData,$route) {
           var override = this.getOverride();
           translations.small = !override;
           translations.location = this.tlocation.url;
-          translations.init(function() {}, function() { $route.reload(); });
+          translations.init(function() {}, function() { 
+            //$route.reload();
+          });
         }
       }
     },
