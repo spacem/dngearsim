@@ -351,3 +351,10 @@ filter: grayscale(50%) invert(100%) blur(5px);
 a.region-hover:hover {
   background-color: #eee;
 }
+.sim-error a {
+  color: rgb(196,189,173);
+}
+.sim-error {
+  background-color: #cc0000;
+  color: rgb(196,189,173);
+}

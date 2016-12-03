@@ -23,8 +23,8 @@ function(hCodeValues,$scope) {
     $scope.$watch('editCtrl.statMap[' + statId + ']', function(newValue, oldValue) { 
 
       if(newValue != oldValue) {
-        console.log(statId);
-        console.log('watch got stat value', newValue);
+        // console.log(statId);
+        // console.log('watch got stat value', newValue);
 
         var anyChange = false;
         var newStats = [];

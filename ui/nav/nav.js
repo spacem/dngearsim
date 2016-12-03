@@ -44,6 +44,10 @@ angular.module('dnsim').controller('NavCtrl',
       return region.dntLocation == null;
     }
     
+    $scope.isHttpOnly = function() {
+      return location.protocol != 'https:';
+    }
+    
     $scope.getActionUrl = function(action) {
       if(action.name == 'search') {
         var cat = localStorage.getItem('selectedItemCategory', action.name);
