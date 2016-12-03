@@ -12,6 +12,7 @@ function region(translations,dntReset,dntData,$route) {
       {region: 'ina', name: 'indonesia ', url : 'https://inafiles-da491.firebaseapp.com'},
       {region: 'th', name: 'thailand', url : 'https://thdnfiles.firebaseapp.com'},
       {region: 'tw', name: 'taiwan 臺灣', url : 'https://twdnfiles.firebaseapp.com'},
+      // {region: 'jdn', name: 'japan 日本', url : 'https://jdnfiles.firebaseapp.com'},
       {region: 'cdn', name: 'china 中國', url : 'https://cdnfiles.firebaseapp.com'},
       {region: 'kdn', name: 'korea 대한민국', url : 'https://kdnfiles.firebaseapp.com'},
     ];

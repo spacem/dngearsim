@@ -14,6 +14,9 @@
   <button ng-disabled="editCtrl.customView=='stats'" class="btn btn-link" ng-click="editCtrl.customView='stats'">
     overview
   </button> |
+  <button ng-disabled="editCtrl.customView=='name'" class="btn btn-link" ng-click="editCtrl.customView='name'">
+    name
+  </button>
 </div>
 <div class="col-xs-12" ng-switch="editCtrl.customView">
   <div class="row" ng-switch-when="stats">
@@ -164,6 +167,7 @@
     </div>
 
   </div>
+
   <div class="row" ng-switch-when="special">
 
     <div class="col-xs-3">
@@ -195,6 +199,12 @@
       <label>fd</label>
       <input ng-model="editCtrl.statMap[29]" type="number" dnsim-string-to-number class="form-control" step="any" />
     </div>
-
+  </div>
+  
+  <div class="row" ng-switch-when="name">
+    <div class="col-xs-12">
+      <label>name</label>
+      <input ng-model="editCtrl.item.name" type="text" class="form-control" />
+    </div>
   </div>
 </div>

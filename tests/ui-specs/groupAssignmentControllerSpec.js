@@ -60,12 +60,6 @@ describe('GroupAssignmentController', function() {
   };
   
   var statHelperMock = {
-    getSetStats: function(groupItems) {
-      return [];
-    },
-    getCombinedStats: function(groupItems) {
-      return [];
-    },
     getCalculatedStats: function(group, combinedStats) {
       return [
         { id: 3008, max: 100 },
@@ -73,9 +67,6 @@ describe('GroupAssignmentController', function() {
         { id: 1006, max: 100 },
         { id: 1001, max: 100 },
         ];
-    },
-    getNakedStats: function(group) {
-      return [];
     },
   }
 /* TODO: fix up injection for this test

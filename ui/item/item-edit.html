@@ -1,0 +1,21 @@
+<div class="row">
+  <dngearsim-item-edit-enchantment item="ctrl.item" on-change="ctrl.onUpdateItem()">
+  </dngearsim-item-edit-enchantment>
+</div>
+<div class="row" ng-if="ctrl.item.typeName == 'talisman'">
+  <dngearsim-item-edit-talisman item="ctrl.item" on-change="ctrl.onUpdateItem()">
+  </dngearsim-item-edit-talisman>
+</div>
+<div class="row" ng-if="ctrl.item.typeName == 'custom'">
+  <dngearsim-item-edit-custom item="ctrl.item" on-change="ctrl.onUpdateItem()">
+  </dngearsim-item-edit-custom>
+</div>
+<div class="row" ng-if="ctrl.item.typeName == 'skills'">
+  <dngearsim-item-edit-skill item="ctrl.item" on-change="ctrl.onUpdateItem()">
+  </dngearsim-item-edit-skill>
+</div>
+<div class="row">
+  <dngearsim-item-edit-spark item="ctrl.item" on-change="ctrl.onUpdateItem()">
+  </dngearsim-item-edit-spark>
+</div>
+      

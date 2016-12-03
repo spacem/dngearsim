@@ -59,8 +59,6 @@
             </div>
             <br />
           </div>
-          <dngearsim-item-edit-enchantment item="::item" on-change="handleChange()">
-          </dngearsim-item-edit-enchantment>
         </div>
       </div>
       
@@ -80,27 +78,11 @@
         </span>
         <br />
       </div>
-      <dngearsim-item-edit-enchantment item="::item" on-change="handleChange()" class="visible-xs-block">
-      </dngearsim-item-edit-enchantment>
       <!-- -->
       
     </div>
-    <div class="row" ng-if="::item.typeName == 'talisman'">
-      <dngearsim-item-edit-talisman item="::item" on-change="handleChange()">
-      </dngearsim-item-edit-talisman>
-    </div>
-    <div class="row" ng-if="::item.typeName == 'custom'">
-      <dngearsim-item-edit-custom item="item" on-change="handleChange()">
-      </dngearsim-item-edit-custom>
-    </div>
-    <div class="row" ng-if="::item.typeName == 'skills'">
-      <dngearsim-item-edit-skill item="item" on-change="handleChange()">
-      </dngearsim-item-edit-skill>
-    </div>
-    <div class="row">
-      <dngearsim-item-edit-spark item="::item" on-change="handleChange()">
-      </dngearsim-item-edit-spark>
-    </div>
+    <dngearsim-item-edit item="item" on-change="handleChange()" update-item="handleChange()">
+    </dngearsim-item-edit>
   </div>
 </div>
 <div class="row" ng-if="item != null">

@@ -1,16 +1,25 @@
 angular.module('dnsim').controller('itemEditSparkCtrl',
 
-['dntData','hCodeValues','items',
-function(dntData,hCodeValues,items) {
+['dntData','hCodeValues','items','itemColumnsToLoad',
+function(dntData,hCodeValues,items,itemColumnsToLoad) {
   'use strict';
+  
+  var vm = this;
   
   if(this.item == null) return;
   if('itemSource' in this.item) {
     this.itemType = items[this.item.itemSource];
   }
   
+  if(!vm.itemType || !vm.itemType.sparkDnt) {
+    return
+  }
+  
+  if(vm.itemType.sparkDnt) {
+    dntData.init(vm.itemType.sparkDnt, itemColumnsToLoad.sparkDnt, null, vm.getSparks);
+  }
+  
   this.sparks = null;
-  var vm = this;
 
   this.nextSpark = function() {
     var index = getPotentialIndex();

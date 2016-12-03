@@ -121,9 +121,30 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
     return itemCountText + ' ' + vm.category.name;
   }
   
+  this.newCustom = function() {
+    var newCustom = 
+    {id: 0, typeName:'custom', name: 'new custom item', stats: []};
+    vm.build.items = vm.build.items.concat(newCustom);
+    saveHelper.updatedSavedItems(vm.buildName, vm.build.items);
+    vm.handleChange();
+  }
+  
   this.handleChange = function() {
     vm.stats = statHelper.getBuildStats(vm.build);
     vm.onChange();
+  }
+  
+  this.handleItemEdit = function() {
+    saveHelper.updatedSavedItems(vm.buildName, vm.build.items);
+    vm.handleChange();
+  }
+  
+  this.cancelEdit = function() {
+    vm.onChange();
+  }
+  
+  this.canEdit = function(item) {
+    return item.typeName == 'custom' || item.typeName == 'weapons' || item.typeName == 'armour' || item.typeName == 'offensive gems' || item.typeName == 'increasing gems';
   }
   
   this.removeItem = function(item) {

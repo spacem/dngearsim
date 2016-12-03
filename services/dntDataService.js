@@ -22,11 +22,15 @@ function dntData($rootScope,$timeout) {
       init: function(progress, complete) {
         
         if(this.loaded) {
-          complete();
+          if(complete) {
+            complete();
+          }
         }
         else {
           this.progressCallback = progress;
-          this.completeCallbacks.push(complete);
+          if(complete) {
+            this.completeCallbacks.push(complete);
+          }
           
           if(!this.startedLoading) {
             this.startedLoading = true;
@@ -43,13 +47,15 @@ function dntData($rootScope,$timeout) {
               $timeout(function() {
                 t.reader.loadDntFromServerFile(
                   t.dntLocation.url + '/' + file,
-                  function(msg) { if(t.progressCallback != null) t.progressCallback(msg) }, 
+                  function(msg) { if(t.progressCallback) t.progressCallback(msg) }, 
                   function(result, fileName) {
                     // console.info('dnt loading complete : ' + file);
                     t.loaded = true;
                     
                     angular.forEach(t.completeCallbacks, function(value, key) {
-                      value();
+                      if(value) {
+                        value();
+                      }
                     });
                     t.completeCallbacks = [];
                     $rootScope.$broadcast('DNTDATA_LOAD_EVENT');

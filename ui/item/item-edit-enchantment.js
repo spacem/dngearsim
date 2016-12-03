@@ -1,19 +1,23 @@
 angular.module('dnsim').controller('itemEditEnchantmentCtrl',
 
-['dntData','hCodeValues','items','$timeout','translations',
-function(dntData,hCodeValues,items,$timeout,translations) {
+['dntData','hCodeValues','items','$timeout','translations','itemColumnsToLoad',
+function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
   'use strict';
   
-  if(this.item == null) return;
+  var vm = this;
+  
+  if(vm.item == null) return;
   if('itemSource' in this.item) {
-    this.itemType = items[this.item.itemSource];
+    vm.itemType = items[vm.item.itemSource];
   }
   
-  if(!this.itemType || !('enchantDnt' in this.itemType)) {
+  if(!vm.itemType || !('enchantDnt' in vm.itemType)) {
     return;
   }
   
-  var vm = this;
+  if(vm.itemType.enchantDnt) {
+    dntData.init(vm.itemType.enchantDnt, itemColumnsToLoad.enchantDnt, null, vm.getEnchantments);
+  }
   
   vm.enchantments = null;
   vm.enchantment = null;

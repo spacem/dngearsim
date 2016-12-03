@@ -15,8 +15,12 @@ function($timeout,dntData,statHelper) {
   
   var vm = this;
   
+  function getDntFile() {
+    return 'skillleveltable_character' + vm.item.baseJobName + vm.item.pve + '.lzjson';
+  }
+  
   this.initSkills = function() {
-    var dntFile = 'skillleveltable_character' + vm.item.baseJobName + vm.item.pve + '.lzjson';
+    var dntFile = getDntFile();
     dntData.init(dntFile, null, reportProgress, function() { $timeout(function() {
       vm.skillData = dntData.find(dntFile, 'SkillIndex', vm.item.id);
     })});
@@ -44,11 +48,11 @@ function($timeout,dntData,statHelper) {
     vm.onChange();
   }
   
-  this.initSkills();
-  
   function reportProgress(msg) {
     // console.log('progress: ' + msg);
   }
+  
+  dntData.init(getDntFile(), null, null, vm.initSkills);
 
 }])
 .directive('dngearsimItemEditSkill', function() {

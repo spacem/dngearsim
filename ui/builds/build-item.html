@@ -7,3 +7,15 @@
 <div style="float:left">
   <span dnsim-stats stats="ctrl.item.fullStats" alt-stats="ctrl.item.stats" filter="'def'" separator="'<br />'" />
 </div>
+<div style="clear: both" ng-if="ctrl.editMode" class="container-fluid">
+  <dngearsim-item-edit item="ctrl.item" on-change="ctrl.onChange()" update-item="ctrl.updateItem()"></dngearsim-item-edit>
+  <br />
+</div>
+<div ng-if="ctrl.editMode" style="float:right">
+  <button class="btn btn-default" ng-click="ctrl.onChange()">
+    apply
+  </button>
+  <button class="btn btn-default" ng-click="ctrl.cancelEdit()">
+    cancel
+  </button>
+</div>

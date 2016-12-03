@@ -1,8 +1,10 @@
 angular.module('dnsim').controller('itemEditPotentialCtrl',
 
-['dntData','items','hCodeValues',
-function(dntData,items,hCodeValues) {
+['dntData','items','hCodeValues','itemColumnsToLoad',
+function(dntData,items,hCodeValues,itemColumnsToLoad) {
   'use strict';
+  
+  var vm = this;
   
   this.potentials = null;
   this.potential = null;
@@ -19,7 +21,9 @@ function(dntData,items,hCodeValues) {
     return;
   }
   
-  var vm = this;
+  if(vm.itemType.potentialDnt) {
+    dntData.init(vm.itemType.potentialDnt, itemColumnsToLoad.potentialDnt, null, vm.getPotentials);
+  }
   
   this.getPotentials = function() {
     if(!vm.potentials) {
