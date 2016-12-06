@@ -250,6 +250,19 @@ function hCodeValues() {
       389: { id: 389, name: 'fd buf', mapTo: 1029 },
     },
     
+    gemExchanges: [
+      {id: 2, name: 'Weapon'},
+      {id: 3, name: 'Off-Hand Weapon'},
+      {id: 4, name: 'Headgear'},
+      {id: 5, name: 'Body Armor'},
+      {id: 6, name: 'Leg Armor'},
+      {id: 7, name: 'Gloves'},
+      {id: 8, name: 'Shoes'},
+      {id: 101, name: 'Necklace'},
+      {id: 102, name: 'Earrings'},
+      {id: 103, name: 'Ring'},
+    ],
+    
     customItems: 
     [
     {id: 0, typeName:'custom', name: 'wise plate fix', stats: [{id: 52, max:-0.001}]},

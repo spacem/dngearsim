@@ -7,6 +7,18 @@ function($timeout,statHelper,saveHelper,hCodeValues) {
   var vm = this;
   
   vm.updateItem = setFullStats;
+  vm.gemSlots = hCodeValues.gemExchanges;
+  vm.getGemSlotName = getGemSlotName;
+  
+  function getGemSlotName(item) {
+    if(item.gemSlot) {
+      for(var i=0;i<vm.gemSlots.length;++i) {
+        if(vm.gemSlots[i].id == item.gemSlot) {
+          return vm.gemSlots[i].name;
+        }
+      }
+    }
+  }
   
   function setFullStats() {
     // full stats are cleared when publishing builds

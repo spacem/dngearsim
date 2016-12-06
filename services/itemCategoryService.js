@@ -187,7 +187,18 @@ function itemCategory(itemFactory,items,dntData) {
                 }
               }
               else if(item1.itemSource == 'gem' || item1.itemSource == 'plate') {
-                return item2.levelLimit - item1.levelLimit;
+                if(item1.gemSlot || item2.gemSlot) {
+                  if(!item1.gemSlot) {
+                    return 1;
+                  }
+                  else if(!item2.gemSlot) {
+                    return -1;
+                  }
+                  return item1.gemSlot - item2.gemSlot;
+                }
+                else {
+                  return item2.levelLimit - item1.levelLimit;
+                }
               }
               else if('exchangeType' in item1 && 'exchangeType' in item2) {
                 return item1.exchangeType - item2.exchangeType;
