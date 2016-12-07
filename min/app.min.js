@@ -27,7 +27,7 @@ function config($routeProvider) {
     }).
     
     when('/', {
-      redirectTo: '/builds'
+      templateUrl: 'ui/welcome.html',
     }).
     when('/builds', {
       templateUrl: 'ui/builds/build-list.html',
@@ -109,7 +109,7 @@ function config($routeProvider) {
     }).
     
     otherwise({
-      redirectTo: '/builds'
+      redirectTo: '/'
     });
 }
 
