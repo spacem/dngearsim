@@ -10,9 +10,12 @@ reload
 <button class="btn btn-default" ng-click="buildActions.deleteGroup()">
 delete
 </button>
+<button dngearsim-build-export-action class="btn btn-default" build="buildActions.build" build-name="buildActions.buildName">
+</button>
 <a class="btn btn-default" ng-href="publish">
 publish
 </a>
+
 <span>&nbsp;</span>
 <button style="margin-top:12px" class="btn btn-link" ng-click="buildActions.createShortUrl()" ng-hide="buildActions.build.shortUrl != null">create permalink</button>
 <a style="margin-top:12px" class="btn btn-link" ng-href="{{buildActions.build.shortUrl}}" ng-if="buildActions.build.shortUrl != null">{{buildActions.build.shortUrl}}</a>

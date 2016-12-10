@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-xs-12">
+    <h3>
+        import build
+        <small>choose a file containing dngearsim build data</small>
+    </h3>
+    <br />
+    <input type="file" file-change="ctrl.onFileChange($event, files)" accept=".json">
+    </div>
+</div>
+<div class="row" ng-if="ctrl.build">
+  <div class="col-xs-12" ng-if="ctrl.build">
+    <h3>
+      <dnsim-job-icon item="::ctrl.build.job"></dnsim-job-icon>
+      {{ctrl.buildName}} 
+      <span ng-if="ctrl.build.guild">[{{ctrl.build.guild}}]</span>
+      <small>
+        <span ng-if="ctrl.build.region">in {{ctrl.build.region}}</span>
+        <span ng-if="ctrl.build.about">
+          <br />
+          <em>
+            {{ctrl.build.about}}
+          </em>
+        </span>
+        <br />
+        <span dnsim-stats build="ctrl.build" stats="ctrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'" />
+      </small>
+    </h3>
+    
+    <button class="btn btn-default" ng-click="ctrl.copyLocally()">
+      copy into local builds
+    </button>
+
+    <dngearsim-build server="true" build-name="ctrl.buildName" build="ctrl.build">
+    </dngearsim-build>
+  </div>
+</div>

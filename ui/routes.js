@@ -98,6 +98,11 @@ function config($routeProvider) {
       controller: 'PublishedCtrl as ctrl',
     }).
     
+    when('/import', {
+      templateUrl: 'ui/builds/build-import.html',
+      controller: 'BuildImportCtrl as ctrl',
+    }).
+    
     when('/published/:uid/:buildName*', {
       templateUrl: 'ui/online/published.html',
       controller: 'PublishedCtrl as ctrl',

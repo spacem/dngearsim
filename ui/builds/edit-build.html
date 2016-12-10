@@ -1,6 +1,6 @@
 <dnsim-loading>
   
-<dnsim-choose-class ng-show="!editGroup.job" job="editGroup.job" on-set-job="setJob()"></dnsim-choose-class>
+<dnsim-choose-class ng-if="!editGroup.job" job="editGroup.job" on-set-job="setJob()"></dnsim-choose-class>
 <div class="row" ng-show="editGroup.job">
   <div class="col-xs-12">
     <h2>

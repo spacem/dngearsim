@@ -43,12 +43,13 @@ function dnsimLoading(dntData, translations, $timeout, region) {
           n++;
         }
         
-        $timeout(function() {
+        // $timeout(function() {
           if($scope.numLoading < n || !$scope.totalToLoad) {
             $scope.totalToLoad = n;
           }
           $scope.numLoading = n;
-        });
+        // });
+        $timeout();
       };
       
       $scope.loadError = false;
