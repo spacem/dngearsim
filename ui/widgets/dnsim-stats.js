@@ -12,6 +12,7 @@ function dnsimStats(hCodeValues) {
       altStats: '=altStats',
       separator: '=separator',
       filter: '=filter',
+      numInSet: '=numInSet'
     },
     link: function($scope, element, attrs) {
       
@@ -70,6 +71,9 @@ function dnsimStats(hCodeValues) {
             first = false;
           
             if('needSetNum' in stat) {
+              if(stat.needSetNum <= $scope.numInSet) {
+                output += '*';
+              }
               output += stat.needSetNum + '&nbsp;';
             }
             
@@ -127,6 +131,12 @@ function dnsimStats(hCodeValues) {
       
       $scope.$watch('altStats', function(newValue, oldValue) {
         if (newValue) {
+          showStats();
+        }
+      });
+      
+      $scope.$watch('numInSet', function(newValue, oldValue) {
+        if (newValue >= 0) {
           showStats();
         }
       });

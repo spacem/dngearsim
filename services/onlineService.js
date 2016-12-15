@@ -4,7 +4,7 @@
 angular.module('dnsim').factory('onlineService', ['$window','$q','hCodeValues',onlineService]);
 
 function onlineService($window, $q, hCodeValues) {
-  console.log('setup online service');
+  // console.log('setup online service');
   
   var service = {
     login: login,
@@ -31,12 +31,12 @@ function onlineService($window, $q, hCodeValues) {
   return service;
   
   function init() {
-    console.log('init');
+    // console.log('init');
     firebase.initializeApp({
-      apiKey: "AIzaSyC-Mckgho1xAI2SQzsKnpsr2ObDKOhdSrE",
-      authDomain: "dngearsim.firebaseapp.com",
-      databaseURL: "https://dngearsim.firebaseio.com",
-      storageBucket: "dngearsim.appspot.com",
+      apiKey: 'AIzaSyC-Mckgho1xAI2SQzsKnpsr2ObDKOhdSrE',
+      authDomain: 'dngearsim.firebaseapp.com',
+      databaseURL: 'https://dngearsim.firebaseio.com',
+      storageBucket: 'dngearsim.appspot.com',
     });
   }
   
@@ -46,11 +46,11 @@ function onlineService($window, $q, hCodeValues) {
         
       auth.onAuthStateChanged(function(user) {
         if(user == null) {
-          console.log('redirecting');
+          // console.log('redirecting');
           $window.location.href = 'login.html';
         }
         else {
-          console.log('logged in');
+          // console.log('logged in');
           resolve(user);
         }
       });
@@ -58,7 +58,7 @@ function onlineService($window, $q, hCodeValues) {
   }
   
   function getProfile(uid) {
-    console.log('get profile');
+    // console.log('get profile');
     return $q(function(resolve, reject) {
       firebase.database().ref('profile/' + uid).once('value', function(storedProfile) {
         if(storedProfile) {
@@ -72,7 +72,7 @@ function onlineService($window, $q, hCodeValues) {
   }
   
   function getBuild(uid, buildName) {
-    console.log('get build');
+    // console.log('get build');
     return $q(function(resolve, reject) {
       firebase.database().ref('builds/' + uid + '/' + stripBuildName(buildName)).once('value', function(storedProfile) {
         if(storedProfile) {
@@ -97,9 +97,9 @@ function onlineService($window, $q, hCodeValues) {
   }
   
   function getUserBuilds(uid) {
-    console.log('get builds');
+    // console.log('get builds');
     return $q(function(resolve, reject) {
-      console.log('getting builds');
+      // console.log('getting builds');
       firebase.database().ref('builds/' + uid).once('value', function(storedBuilds) {
         if(storedBuilds) {
           var retVal = {};
@@ -117,11 +117,11 @@ function onlineService($window, $q, hCodeValues) {
   }
   
   function getClassBuilds(job) {
-    console.log('get class builds');
+    // console.log('get class builds');
     return $q(function(resolve, reject) {
-      console.log('getting builds', job.id);
+      // console.log('getting builds', job.id);
       firebase.database().ref('job-builds/' + job.id).once('value', function(jobBuilds) {
-        console.log('ok');
+        // console.log('ok');
         if(jobBuilds) {
           resolve(jobBuilds.val());
         }
@@ -177,7 +177,7 @@ function onlineService($window, $q, hCodeValues) {
       );
       
       if(build.job && build.job.id) {
-        console.log('saving build');
+        // console.log('saving build');
           
         var data = {};
         if(build.playerLevel) {
@@ -250,11 +250,11 @@ function onlineService($window, $q, hCodeValues) {
       });
         
       $q.all(pList).then(function() {
-        console.log('deleted data');
+        // console.log('deleted data');
         user.delete().then(function() {
-          console.log('deleted user');
+          // console.log('deleted user');
           auth.signOut().then(function() {
-            console.log('signed out');
+            // console.log('signed out');
             resolve();
           }, function(error) {
             reject();

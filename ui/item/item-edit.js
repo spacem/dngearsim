@@ -6,7 +6,9 @@ function(hCodeValues) {
   
   var vm = this;
   
-  if(vm.item == null) return;
+  if(!vm.item) {
+    return;
+  }
   
   vm.onUpdateItem = function() {
     vm.updateItem();

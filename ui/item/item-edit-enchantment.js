@@ -6,7 +6,10 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
   
   var vm = this;
   
-  if(vm.item == null) return;
+  if(!vm.item) {
+    return;
+  }
+  
   if('itemSource' in this.item) {
     vm.itemType = items[vm.item.itemSource];
   }

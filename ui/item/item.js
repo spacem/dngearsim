@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('ItemCtrl',
-['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region','itemFactory','$timeout',
-function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region,itemFactory,$timeout) {
+['$scope','$window','dntData','hCodeValues','items','jobs','exportLinkHelper','$routeParams','translations','$location','region','itemFactory','$timeout','statHelper','saveHelper',
+function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routeParams,translations,$location,region,itemFactory,$timeout,statHelper,saveHelper) {
   'use strict';
   
   region.setLocationByName($routeParams.region);
@@ -66,6 +66,28 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     $scope.detail = detail;
   }
   
+  $scope.getNumInSet = function() {
+    
+    var buildName = $scope.getBuildName();
+    if(buildName && $scope.item && $scope.item.setId) {
+      return statHelper.getNumItemsForSet($scope.builds[buildName].items, $scope.item.setId);
+    }
+    
+    return 0;
+  }
+  
+  $scope.getBuildName = function() {
+    var buildName = saveHelper.getCurrentBuild();
+    if(!buildName || !(buildName in $scope.builds)) {
+      var allBuildNames = Object.keys(this.savedItems);
+      if(allBuildNames.length) {
+        buildName = allBuildNames[0];
+      }
+    }
+    
+    return buildName;
+  }
+  
   $scope.getServerStorage = function() {
     var itemData = itemFactory.getItemData($scope.item);
     if(itemData && 'AbleWStorage' in itemData && 'IsCash' in itemData && itemData.IsCash == 0) {
@@ -88,6 +110,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       setFullStats();
       $scope.item = angular.copy($scope.item);
     }
+    getBuilds();
   }
   
   function getJobName() {
@@ -102,6 +125,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   function init() {
+    getBuilds();
     $scope.preInitItem = $scope.item;
     $scope.item = null;
   
@@ -149,9 +173,10 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
             $scope.item.pve = 'pvp';
           }
         }
-    
-        if($scope.item.needJobClass > 0) {
-          getJobName();
+        else {
+          if($scope.item.needJobClass > 0) {
+            getJobName();
+          }
         }
         
         if(!$scope.item.fileName) {
@@ -200,7 +225,6 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       }
     }
   }
-
   
   function setFullStats() {
     // full stats are cleared when publishing builds
@@ -218,5 +242,10 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   function reportProgress(msg) {
     // $scope.progress += '|' + msg;
     // console.log('progress: ' + msg);
+  }
+  
+  function getBuilds() {
+    var builds = saveHelper.getSavedItems();
+    $scope.builds = builds;
   }
 }]);

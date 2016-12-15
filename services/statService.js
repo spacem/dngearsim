@@ -32,6 +32,17 @@ function statHelper(hCodeValues) {
       return hCodeValues.mergeStats(stats);
     },
     
+    getNumItemsForSet: function(items, setId) {
+      var numItems = 0;
+      angular.forEach(items, function(value, key) {
+        if(value && value.setId && value.setId == setId) {
+          numItems++;
+        }
+      });
+      
+      return numItems;
+    },
+    
     getCombinedStats: function(groupItems) {
       var stats = [];
       

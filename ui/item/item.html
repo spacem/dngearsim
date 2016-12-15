@@ -48,7 +48,7 @@
       </div>
       <div class="col-xs-3 hidden-xs" ng-if="::item.setStats != null && item.setStats.length > 0">
         <br /><label>set stats</label><br />
-        <div dnsim-stats stats="::item.setStats"></div>
+        <div dnsim-stats stats="::item.setStats" num-in-set="getNumInSet()"></div>
       </div>
       <div class="col-xs-6 hidden-xs">
         <div class="row">
@@ -131,7 +131,7 @@
   </dngearsim-item-view-box>
 </div>
 <div class="row" ng-if="detail == 'use'">
-    <dngearsim-group-assignment item="item" ng-if="item != null">
+    <dngearsim-group-assignment item="item" ng-if="item != null && getBuildName()" group-name="getBuildName()" on-change="handleChange()">
     </dngearsim-group-assignment>
 </div>
 <div class="row" ng-if="detail == 'transfer'" ng-if="item != null">

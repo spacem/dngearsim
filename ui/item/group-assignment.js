@@ -8,22 +8,6 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
   
   this.savedItems = saveHelper.getSavedItems();
   this.groupNames = Object.keys(this.savedItems);
-  if(!this.groupNames) {
-    this.groupNames = [];
-  }
-  if(this.groupNames.length > 0) {
-    this.groupName = saveHelper.getCurrentBuild();
-  }
-  else {
-    this.groupName = null;
-  }
-  
-  if(!this.groupName || !(this.groupName in this.savedItems)) {
-    if(this.groupNames.length > 0) {
-      this.groupName = this.groupNames[0];
-    }
-  }
-  
   if(!this.groupName) {
     return;
   }
@@ -292,6 +276,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     saveHelper.saveItem(vm.groupName, vm.item);
     this.savedItems = saveHelper.getSavedItems();
     vm.clearGroup();
+    vm.onChange();
   };
   
   this.replace = function(item) {
@@ -310,6 +295,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     saveHelper.updatedSavedItems(vm.groupName, newItemList);
     this.savedItems = saveHelper.getSavedItems();
     vm.clearGroup();
+    vm.onChange();
   };
   
   function saveGroup() {
@@ -322,6 +308,8 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     scope: true,
     bindToController: {
       item: '=item',
+      groupName: '=groupName',
+      onChange: '&onChange'
     },
     controller: 'groupAssignmentCtrl',
     controllerAs: 'editCtrl',

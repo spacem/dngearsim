@@ -47,7 +47,11 @@ function dntData($rootScope,$timeout) {
               $timeout(function() {
                 t.reader.loadDntFromServerFile(
                   t.dntLocation.url + '/' + file,
-                  function(msg) { if(t.progressCallback) t.progressCallback(msg) }, 
+                  function(msg) {
+                    if(t.progressCallback) {
+                      t.progressCallback(msg);
+                    }
+                  }, 
                   function(result, fileName) {
                     // console.info('dnt loading complete : ' + file);
                     t.loaded = true;
