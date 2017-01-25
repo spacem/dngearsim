@@ -1,207 +1,61 @@
-<h3>dngearsim</h3>
 <div class="row">
   <div class="col-xs-12 col-sm-8">
-    <p>
-      Builds are not saved to the server so may be lost if your browser is reset.
-      If you want to keep any builds you can export them as links that can be shared and imported into another browser.
-    </p>
-    <p>
-      Use the toggles in the top right to change regions.
-      Language and data are controlled separatly.
-    </p>
+    <h3>contact</h3>
     <p>
       If you have any problems or want to make a suggestion come to my <a href="https://discord.gg/011C92KwJWoCfRcEY">discord server</a><br />
       or<br />
       * use the <a href="https://github.com/spacem/dngearsim/issues">github issue tracker</a><br />
       * use the <a href="http://feathub.com/spacem/dngearsim">feathub feature voting</a><br />
     </p>
-    
+    <h3>faq</h3>
+    <h4>How is average damage calculated and what is eqhp?</h4>
+    <p>
+      <pre>damage = element% x skill% x fd% x (avg(dmg) + (crit dmg x crit chance x 0.75 x avg(dmg)))</pre>
+      I assume enemies have a flat 25% crit resist (which is where 0.75 comes from).
+      I assume no element resistance since usually you will have resist reduction debuffers in your party.
+      If you want to see the full calculations in the code these are in statService.js
+      <pre>eqhp = ( (hp / (1-pdef%)) + (hp / (1-mdef%)) ) / 2</pre>
+      eqhp is equivalent hp.
+      This is essentially the amount of damage you will take before you die.
+      It takes both hp and defence into acount.
+      There is magic and phisical defence so I work out both magic and physical eqhp and show the average.
+    </p>
+    <h4>Some skills do not work correctly?</h4>
+    <p>
+      I have implemented many skills now however there numerous classes I do not play.
+      Feel free to get in touch if you want to work with me to implement any extra skill for your class.
+    </p>
+    <h4>What is with all these items that do not exist in-game?</h4>
+    <p>
+      I show almost everything I can from the data files.
+      Many items may not exist also some items have duplicates.
+      This is useful to see what is coming but keep in mind that the stats of items can change with future updates.
+    </p>
+    <h4>How is the data stored?</h4>
+    <p>
+      Unless published builds are not saved to the server so may be lost if your browser is reset.
+      If you want to keep any builds without logging in you can export them as links or json files that can be shared and imported into another browser.
+      When you log in your log in to publish your build your details are stored with google firebase.
+    </p>
+    <h4>Growth spirits cannot be enhanced?</h4>
+    <p>
+      Stats for this are random so please create a custom item with the stats you get.
+    </p>
+    <h4>Why are the calcuations not accurate?</h4>
+    <p>
+      I believe they are - or at least out only by a tiny bit.
+      If your stats are marginally different most likely you are missing some item or passive skill, etc.
+      Feel free to ask if things do not look right.
+      If you publish your build I can have a look to see if there is a glitch that needs fixing.
+    </p>
+
     <h3>advanced</h3>
     <p>
       For advanced configuration settings use <a ng-href="setup">this link</a>
     </p>
-    
-    <h3>known issues</h3>
-    <pre>
-* some icons are missing - like coma greatsword
-* skills are still in developmet
-* no support for growing growth spirits
-* no support for unified skills
-* no support for pets
-* no support for guild rewards
-* no support for welsprings
-* calculted stats are not 100%
-* wise plates with 8% int instead of 7.9%
-* may need to refresh the page after a new release
-* groups can contain multiples of each plate
-* many gems are difficult to manage
-* many items listed are not available in-game
-    </pre>
   </div>
+    
   <div class="col-sm-4 hidden-xs">
     <img src="images/tink.png" />
   </div>
 </div>
-
-<h3>history</h3>
-<pre>
-Jun 15 2016
-* added npc shops
-
-Jun 14 2016
-* added extraction
-  
-Jun 7 2016
-* Minor ui tweaks
-
-Jun 4 2016
-* skill and job icons
-* new build job selection change
-
-May 31 2016
-* talisman positioning screen
-
-May 29 2016
-* change to stat layout
-
-May 27 2016
-* support for secondary element
-
-May 26 2016
-* fix to guild gem
-
-May 23 2016
-* support for pyro skill hellfire
-
-May 20 2016
-* added kdn data
-* enhancements to build permalinks
-
-May 18 2016
-* fix icons for internet explorer
-* dont prompt for enhance of low level gems
-
-May 16 2016
-* new every item search
-* support for boxes/eggs/pouches
-
-May 13 2016
-* initial pet and mount support
-
-May 12 2016
-* fix set bonus on event items
-
-May 11 2016
-* fix to skills so they can go to max level
-* remove KDN region (had wrong data)
-
-May 10 2016
-* update quick add to 93cap
-* allow gem enhancement in quick add
-
-May 5 2016
-* fix to calulation of hp/etc skill %
-* tweak to custom item screen
-
-May 3 2016
-* Fix to unexpected selected build changes
-
-Apr 25 2016
-* show items required for enhancing
-
-Apr 20 2016
-* fix to items missing from quick add
-* show enemey level and change default to 90
-* make copy copy level, class, etc.
-
-Apr 15 2016
-* show load progress and errors
-
-Apr 3 2016
-* quick add function on builds
-
-Mar 28 2016
-* fix to search path bug
-
-Mar 18 2016
-* fix to remove item bug
-
-Mar 12 2016
-* show stats, etc when editing a build
-
-Mar 12 2016
-* split cash items to costume/cash
-* remove some invalid items
-
-Mar 10 2016
-* show gem slots
-* prevent adding of multiple of certain items
-* only replace same for same (users need to reload build to support)
-* show counts of items
-  
-Mar 7 2016
-* support for lv90 techs
-* split plate category
-* expandable raw stats
-* change item potential selection
-
-Mar 2 2016
-* change layout of build screen
-
-Feb 28 2016
-* remove popup for edit of builds
-* support delete of builds
-
-Feb 26 2016
-* changes to the way items are viewed
-* support for item urls
-* change tab layouts (again)
-* added eu and kdn region
-
-Feb 3 2016
-* split gem types
-
-Jan 31 2016
-* partial skills implementation
-* change to calculations
-* fix to talisman slots
-
-Jan 26 2016
-* sparkable items
-* hero level, damage type and element selection
-
-Jan 25 2016
-* talisman slot % increases
-
-Jan 24 2016
-* dragon gem enchantments
-
-Jan 18 2016
-* added missing items including machina rdn gear
-
-Jan 16 2016
-* custom items/stats
-  
-Jan 14 2016
-* equivalent hp and some other calculated stats
-* average damage calc now assumes enemy has 25% crit resist
-
-Jan 13 2016
-* split equipment into weapons/armour/accessories
-* added stat as search filter
-* edit of groups allows rename and class/level assignment
-* show calculated stats and naked stats
-* average damage = element x atk pwr x fd x (avg(dmg) + (cdmg x cChance x avg(dmg)))
-* language selection changes
-* about page
-
-Jan 9, 2016
-* added missing stats
-* removed mp from enchantments
-
-Jan 8, 2016
-* prevent load of some low level equipment
-* load translations at start
-* change location of na files
-
-</pre>
