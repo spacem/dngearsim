@@ -88,6 +88,13 @@ function items(translations,dntData,itemColumnsToLoad) {
         minLevel: 24,
         minRank: 3 },
 
+      cClone: {
+        mainDnt: 'itemtable_cashclone.lzjson',
+        partsDnt: 'partstable_cashclone.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        ignoreErrors: true,
+        minRank: 4 },
       c2016: { 
         mainDnt: 'itemtable_common2016.optimised.lzjson', 
         partsDnt: 'partstable_common2016.optimised.lzjson', 
@@ -168,15 +175,15 @@ function items(translations,dntData,itemColumnsToLoad) {
       else {
         
         translations.init(progress, function() { doComplete(itemSource, complete) });
-        dntData.init(itemSource.mainDnt, itemColumnsToLoad.mainDnt, progress, function() { doComplete(itemSource, complete) });
+        dntData.init(itemSource.mainDnt, itemColumnsToLoad.mainDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
         if('potentialDnt' in itemSource) {
-          dntData.init(itemSource.potentialDnt, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) });
+          dntData.init(itemSource.potentialDnt, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
         }
         if('potentialDntEx' in itemSource) {
-          dntData.init(itemSource.potentialDntEx, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) });
+          dntData.init(itemSource.potentialDntEx, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
         }
         if('gemDnt' in itemSource) {
-          dntData.init(itemSource.gemDnt, itemColumnsToLoad.gemDnt, progress, function() { doComplete(itemSource, complete) });
+          dntData.init(itemSource.gemDnt, itemColumnsToLoad.gemDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
         }
   
         doComplete(itemSource, complete);
@@ -186,9 +193,9 @@ function items(translations,dntData,itemColumnsToLoad) {
     function doComplete(itemSource, complete) {
       if(translations.isLoaded() && 
       dntData.isLoaded(itemSource.mainDnt) && 
-      (!('potentialDnt' in itemSource) || dntData.isLoaded(itemSource.potentialDnt)) &&
-      (!('potentialDntEx' in itemSource) || dntData.isLoaded(itemSource.potentialDntEx)) &&
-      (!('gemDnt' in itemSource) || dntData.isLoaded(itemSource.gemDnt))
+      (!('potentialDnt' in itemSource) || dntData.isLoaded(itemSource.potentialDnt) || dntData.hasFailed(itemSource.potentialDnt)) &&
+      (!('potentialDntEx' in itemSource) || dntData.isLoaded(itemSource.potentialDntEx) || dntData.hasFailed(itemSource.potentialDntEx)) &&
+      (!('gemDnt' in itemSource) || dntData.isLoaded(itemSource.gemDnt) || dntData.hasFailed(itemSource.gemDnt))
       ) {
         complete();
         itemSource.loading = false;

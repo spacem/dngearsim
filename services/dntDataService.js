@@ -19,7 +19,7 @@ function dntData($rootScope,$timeout) {
       progressCallback: null,
       completeCallbacks : [],
       
-      init: function(progress, complete) {
+      init: function(progress, complete, ignoreErrors) {
         
         if(this.loaded) {
           if(complete) {
@@ -65,9 +65,23 @@ function dntData($rootScope,$timeout) {
                     $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
                   },
                   function(msg) {
-                    $rootScope.$broadcast('DNTDATA_LOAD_ERROR');
-                    t.startedLoading = false;
-                    t.loaded = false;
+                    t.failed = true;
+                    if(ignoreErrors) {
+                      t.loaded = true;
+                      console.log('ignoring the error - this file may not exist yet for the region');
+                      angular.forEach(t.completeCallbacks, function(value, key) {
+                        if(value) {
+                          value();
+                        }
+                      });
+                      t.completeCallbacks = [];
+                      $rootScope.$broadcast('DNTDATA_LOAD_EVENT');
+                    }
+                    else {
+                      t.startedLoading = false;
+                      t.loaded = false;
+                      $rootScope.$broadcast('DNTDATA_LOAD_ERROR');
+                    }
                   }  );
               });
             }
@@ -104,7 +118,7 @@ function dntData($rootScope,$timeout) {
       });
     },
     
-    init : function (fileName, colsToLoad, progress, complete) {
+    init : function (fileName, colsToLoad, progress, complete, ignoreErrors) {
       if(!progress) {
         progress = function() {};
       }
@@ -113,7 +127,7 @@ function dntData($rootScope,$timeout) {
           this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);
         }
       }
-      this.loaders[fileName].init(progress, complete);
+      this.loaders[fileName].init(progress, complete, ignoreErrors);
     },
     getData : function (fileName) {
       if(this.isLoaded(fileName)) {
@@ -184,6 +198,9 @@ function dntData($rootScope,$timeout) {
     },
     isLoaded : function(fileName) {
       return fileName in this.loaders && this.loaders[fileName].loaded;
+    },
+    hasFailed : function(fileName) {
+      return fileName in this.loaders && this.loaders[fileName].failed;
     },
     hasStartedLoading : function(fileName) {
       return this.isLoaded(fileName) || (fileName in this.loaders && this.loaders[fileName].startedLoading);

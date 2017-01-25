@@ -5,7 +5,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   'use strict';
   
   if(this.item == null) return;
-  if(this.item.typeId != 46 && this.item.typeId != 8 && this.item.typeId != 112 && this.item.typeId != 122) {
+  if(this.item.typeId != 46 && this.item.typeId != 8 && this.item.typeId != 112 && this.item.typeId != 122 && this.item.typeId != 142) {
     console.log('not box item type ' + this.item.typeId);
     return;
   }
@@ -39,7 +39,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   var commonCharmItemtable = 'charmitemtable_common.lzjson';
   
   var files;
-  if(this.item.typeId == 46 || this.item.typeId == 112 || this.item.typeId == 122) {
+  if(this.item.typeId == 46 || this.item.typeId == 112 || this.item.typeId == 122 || this.item.typeId == 142) {
     files = [allItemFileName, charmItemtable, commonCharmItemtable];
   }
   else if (this.item.typeId == 8) {
@@ -69,7 +69,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
       vm.items = [];
       
       
-      if(vm.item.typeId == 46 || vm.item.typeId == 112 || vm.item.typeId == 122) {
+      if(vm.item.typeId == 46 || vm.item.typeId == 112 || vm.item.typeId == 122 || vm.item.typeId == 142) {
         vm.getCharmItems(d.TypeParam1);
       }
       else if (vm.item.typeId == 8) {
@@ -134,13 +134,18 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
         var cd = charmData[c];
         if(cd.CharmNum == boxType && cd.Look) {
           
-          var itemds = dntData.find(allItemFileName, 'id', cd.ItemID);
-          if(itemds.length > 0) {
-            vm.items.push({
-              count: cd.Count,
-              gold: cd.Gold,
-              item: itemFactory.createBasicItem(itemds[0])
-            });
+          if(cd.CharmType) {
+            this.getCharmItems(cd.ItemID);
+          }
+          else {
+            var itemds = dntData.find(allItemFileName, 'id', cd.ItemID);
+            if(itemds.length > 0) {
+              vm.items.push({
+                count: cd.Count,
+                gold: cd.Gold,
+                item: itemFactory.createBasicItem(itemds[0])
+              });
+            }
           }
         }
       }
