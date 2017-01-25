@@ -78,10 +78,12 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   $scope.getBuildName = function() {
     var buildName = saveHelper.getCurrentBuild();
-    if(!buildName || !(buildName in $scope.builds)) {
-      var allBuildNames = Object.keys(this.savedItems);
-      if(allBuildNames.length) {
-        buildName = allBuildNames[0];
+    if($scope.builds) {
+      if(!buildName || !(buildName in $scope.builds)) {
+        var allBuildNames = Object.keys($scope.builds);
+        if(allBuildNames.length) {
+          buildName = allBuildNames[0];
+        }
       }
     }
     

@@ -1,5 +1,5 @@
 angular.module('dnsim').controller('ItemSearchCtrl',
-['$scope','$window','$routeParams','$timeout','$location',
+['$scope','$window','$routeParams','$timeout','$location','$route',
 'translations',
 'itemCategory',
 'jobs',
@@ -8,7 +8,7 @@ angular.module('dnsim').controller('ItemSearchCtrl',
 'region',
 'saveHelper',
 function(
-  $scope,$window,$routeParams,$timeout,$location,
+  $scope,$window,$routeParams,$timeout,$location,$route,
   translations,
   itemCategory,
   jobs,
@@ -31,6 +31,7 @@ function(
      if(vm.itemCategory) {
        // console.log('moving');
        $location.search('cat', vm.itemCategory.path);
+       $route.reload();
      }
      return;
   }
@@ -56,20 +57,32 @@ function(
   });
   
   var minLevel = Number(localStorage.getItem('minLevel'));
+  if($routeParams.minLevel) {
+    minLevel = Number($routeParams.minLevel);
+  }
   if(minLevel > 0 && minLevel < 100) {
     vm.minLevel = minLevel;
   }
   var maxLevel = Number(localStorage.getItem('maxLevel'));
+  if($routeParams.maxLevel) {
+    minLevel = Number($routeParams.maxLevel);
+  }
   if(maxLevel > 0 && maxLevel < 100) {
     vm.maxLevel = maxLevel;
   }
   
-  vm.nameSearch = localStorage.getItem('nameSearch');
+  vm.nameSearch = localStorage.getItem('name');
+  if($routeParams.name) {
+    vm.nameSearch = $routeParams.name;
+  }
   if(!vm.nameSearch) {
     vm.nameSearch = '';
   }
   
   var savedSearchStatId = localStorage.getItem('searchStat');
+  if($routeParams.stat) {
+    savedSearchStatId = $routeParams.stat;
+  }
   if(savedSearchStatId > -1 && savedSearchStatId in hCodeValues.stats) {
     vm.stat = hCodeValues.stats[savedSearchStatId];
   }
@@ -81,6 +94,8 @@ function(
       if(vm.itemCategory) {
         // console.log('navigating to ', vm.itemCategory.path);
         $location.search('cat', vm.itemCategory.path);
+        vm.save();
+        $route.reload();
       }
     }
   }
@@ -89,19 +104,42 @@ function(
     if(!vm.itemCategory.hideLevel) {
       localStorage.setItem('minLevel', vm.minLevel);
       localStorage.setItem('maxLevel', vm.maxLevel);
+      
+      $location.search('minLevel', vm.minLevel);
+      $location.search('maxLevel', vm.maxLevel);
+    }
+    else {
+      $location.search('minLevel', null);
+      $location.search('maxLevel', null);
     }
     
     if(!vm.itemCategory.hideJob) {
       if(vm.job != null) {
         localStorage.setItem('jobNumber', vm.job.id);
+        if(vm.job.id > -1) {
+          $location.search('job', vm.job.id);
+        }
+        else {
+          $location.search('job', null);
+        }
       }
+    }
+    else {
+      $location.search('job', null);
     }
   
     if(vm.stat) {
       localStorage.setItem('searchStat', vm.stat.id);
+      if(vm.stat.id > -1) {
+        $location.search('stat', vm.stat.id);
+      }
+      else {
+        $location.search('stat', null);
+      }
     }
 
     localStorage.setItem('nameSearch', vm.nameSearch);
+    $location.search('name', vm.nameSearch);
   };
   
   function init() {
@@ -132,6 +170,9 @@ function(
       vm.allJobs = jobs.getAllJobs();
       
       var lastJobNumber = Number(localStorage.getItem('jobNumber'));
+      if($routeParams.job && $routeParams.job) {
+        lastJobNumber = Number($routeParams.job);
+      }
       if(lastJobNumber != null) {
         angular.forEach(newJobs, function(value, key) {
           if(value.id == lastJobNumber) {

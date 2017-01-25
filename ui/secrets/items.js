@@ -1,7 +1,7 @@
 angular.module('dnsim')
 .controller('ItemsCtrl', 
-  ['$window','$timeout','hCodeValues','region','translations','dntData',
-  function($window, $timeout, hCodeValues, region, translations, dntData) {
+  ['$window','$timeout','$routeParams','$location','hCodeValues','region','translations','dntData',
+  function($window, $timeout, $routeParams, $location, hCodeValues, region, translations, dntData) {
     
     'use strict';
     
@@ -13,6 +13,9 @@ angular.module('dnsim')
     vm.results = null;
 
     vm.nameSearch = localStorage.getItem('itemNameSearch');
+    if($routeParams.name) {
+      vm.nameSearch = $routeParams.name;
+    }
     if(vm.nameSearch == null) {
       vm.nameSearch = '';
     }
@@ -99,6 +102,7 @@ angular.module('dnsim')
     
     vm.changeSearch = function() {
       localStorage.setItem('itemNameSearch', vm.nameSearch);
+      $location.search('name', vm.nameSearch);
       
       vm.maxDisplay = 64;
       vm.results = vm.getResults();
