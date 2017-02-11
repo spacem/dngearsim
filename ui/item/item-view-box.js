@@ -135,7 +135,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
         if(cd.CharmNum == boxType && cd.Look) {
           
           if(cd.CharmType) {
-            this.getCharmItems(cd.ItemID);
+            this.getCharmItems(cd.ItemID)
           }
           else {
             var itemds = dntData.find(allItemFileName, 'id', cd.ItemID);

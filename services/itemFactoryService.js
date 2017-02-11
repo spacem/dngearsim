@@ -289,19 +289,33 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   
   function getItemData(item) {
     
-    var fileName = null;
     var itemType = items[item.itemSource];
     
     if(item.fileName && dntData.isLoaded(item.fileName + '.optimised.lzjson')) {
-      fileName = item.fileName + '.optimised.lzjson';
+      var result = getItemDataFromFile(item.fileName + '.optimised.lzjson', item);
+      if(result) {
+        return result;
+      }
     }
-    else if(item.fileName && dntData.isLoaded(item.fileName + '.lzjson')) {
-      fileName = item.fileName + '.lzjson';
+    
+    if(item.fileName && dntData.isLoaded(item.fileName + '.lzjson')) {
+      var result = getItemDataFromFile(item.fileName + '.lzjson', item);
+      if(result) {
+        return result;
+      }
     }
-    else if(itemType && dntData.isLoaded(itemType.mainDnt)) {
-      fileName = itemType.mainDnt
+    
+    if(itemType && dntData.isLoaded(itemType.mainDnt)) {
+      var result = getItemDataFromFile(itemType.mainDnt, item);
+      if(result) {
+        return result;
+      }
     }
-
+    
+    return [];
+  }
+  
+  function getItemDataFromFile(fileName, item) {
     if(fileName) {
       var itemData = dntData.find(fileName, 'id', item.id);
       if(itemData && itemData.length > 0) {
@@ -309,7 +323,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       }
     }
     
-    return [];
+    return null;
   }
   
   function createBasicItem(d) {

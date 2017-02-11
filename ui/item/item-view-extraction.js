@@ -65,9 +65,8 @@ angular.module('dnsim').controller('itemViewExtractionCtrl',
     else {
       var gold = pouchData[0].GoldMin;
 
-      var itemIndex = 0;
-      do {
-        itemIndex++;
+      var itemIndex = 1;
+      while('Item' + itemIndex + 'Index' in pouchData[0]) {
         var isGroup = pouchData[0]['IsGroup' + itemIndex];
         var pouchItem = pouchData[0]['Item' + itemIndex + 'Index'];
         var pouchItemCount = pouchData[0]['Item' + itemIndex + 'Info'];
@@ -89,7 +88,8 @@ angular.module('dnsim').controller('itemViewExtractionCtrl',
             }
           }
         }
-      } while(pouchItem);
+        itemIndex++;
+      }
     }
   }
 
