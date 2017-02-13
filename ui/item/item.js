@@ -92,15 +92,28 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   $scope.getServerStorage = function() {
     var itemData = itemFactory.getItemData($scope.item);
+    var retVal = '';
     if(itemData && 'AbleWStorage' in itemData && 'IsCash' in itemData && itemData.IsCash == 0) {
       if(itemData.AbleWStorage == 1) {
-        return 'can put in server storage';
+        retVal = 'can server storage';
       }
       else if(itemData.AbleWStorage == 0) {
-        return 'not transferable';
+        retVal = 'not transferable';
       }
     }
-    return '';
+    if(itemData && 'Reversion' in itemData) {
+      if(retVal.length) {
+        retVal += ', ';
+      }
+      
+      if(itemData.Reversion == 0) {
+        retVal += 'can sell';
+      }
+      else if(itemData.Reversion == 1) {
+        retVal += 'not sellable ';
+      }
+    }
+    return retVal;
   }
   
   $scope.handleChange = function() {

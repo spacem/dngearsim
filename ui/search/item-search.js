@@ -65,13 +65,13 @@ function(
   }
   var maxLevel = Number(localStorage.getItem('maxLevel'));
   if($routeParams.maxLevel) {
-    minLevel = Number($routeParams.maxLevel);
+    maxLevel = Number($routeParams.maxLevel);
   }
   if(maxLevel > 0 && maxLevel < 100) {
     vm.maxLevel = maxLevel;
   }
   
-  vm.nameSearch = localStorage.getItem('name');
+  vm.nameSearch = localStorage.getItem('nameSearch');
   if($routeParams.name) {
     vm.nameSearch = $routeParams.name;
   }
