@@ -3,9 +3,8 @@
   <div class="col-xs-12 col-md-4">
     <h3>
       <dnsim-item-link item="::item"></dnsim-item-link><br />
+
       <small>
-      {{::getServerStorage()}}
-      <br />
       <span ng-if="::item.rank && item.rank.id > 0" class="{{::item.rank.name}}-grade">
       {{::item.rank.name}}
       </span>
@@ -13,17 +12,29 @@
       {{::jobName.toLowerCase()}}
       </span>
       {{::getExchangeType()}}
-      <span ng-if="::item.levelLimit > 1">
-      req lvl{{::item.levelLimit}}
+      <br />
+
+      <span ng-if="getServerStorage().length">
+      {{getServerStorage()}}
+      <br />
+      </span>
+      <span ng-if="getMoreInfo().length">
+      {{getMoreInfo()}}
+      <br />
+      </span>
+      <span ng-if="!moreInfoLoaded()">
+        <button class="btn btn-link" ng-click="loadMoreInfo()">
+          more info
+        </button>
+        <br />
       </span>
       <span ng-if="::item.offensiveGemSlots > 0 || item.increasingGemSlots > 0">
-        <br />
         gem slots:
         <span ng-if="::item.offensiveGemSlots > 0">
-          {{::item.offensiveGemSlots}}x offensive
+          {{::item.offensiveGemSlots}} offensive
           <span ng-if="::item.increasingGemSlots > 0"> | </span>
         </span>
-        <span ng-if="::item.increasingGemSlots > 0">{{::item.increasingGemSlots}}x increasing</span>
+        <span ng-if="::item.increasingGemSlots > 0">{{::item.increasingGemSlots}} increasing</span>
       </span>
       </small>
     </h3>

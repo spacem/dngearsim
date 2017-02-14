@@ -93,27 +93,91 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   $scope.getServerStorage = function() {
     var itemData = itemFactory.getItemData($scope.item);
     var retVal = '';
-    if(itemData && 'AbleWStorage' in itemData && 'IsCash' in itemData && itemData.IsCash == 0) {
-      if(itemData.AbleWStorage == 1) {
-        retVal = 'can server storage';
+    
+    if(itemData && 'IsCash' in itemData && itemData.IsCash == 0) {
+      if(itemData && 'AbleWStorage' in itemData) {
+        if(itemData.AbleWStorage == 1) {
+          retVal = 'can server storage';
+        }
+        else if(itemData.AbleWStorage == 0) {
+          retVal = 'not transferable';
+        }
       }
-      else if(itemData.AbleWStorage == 0) {
-        retVal = 'not transferable';
-      }
-    }
-    if(itemData && 'Reversion' in itemData) {
-      if(retVal.length) {
-        retVal += ', ';
-      }
-      
-      if(itemData.Reversion == 0) {
-        retVal += 'can sell';
-      }
-      else if(itemData.Reversion == 1) {
-        retVal += 'not sellable ';
+      if(itemData && 'Reversion' in itemData) {
+        if(retVal.length) {
+          retVal += ', ';
+        }
+        
+        if(itemData.Reversion == 0) {
+          retVal += 'can sell';
+        }
+        else if(itemData.Reversion == 1) {
+          retVal += 'not sellable ';
+        }
       }
     }
     return retVal;
+  }
+  
+  $scope.getMoreInfo = function() {
+    var sealTimes = 0;
+    var numStamps = 0;
+    
+    if($scope.moreInfoLoaded()) {
+      var itemData = itemFactory.getItemData($scope.item);
+      
+      if(itemData && 'IsCash' in itemData && itemData.IsCash == 0) {
+        if(itemData && 'SealID' in itemData && 'SealCount' in itemData) {
+          sealTimes = itemData.SealCount;
+            
+          var sealData = dntData.find('sealcounttable.lzjson', 'Type2', itemData.SealID);
+          if(sealData && sealData.length > 0 && sealData[0].Type1 == 0) {
+            
+            var colName = 'Count0';
+            if($scope.item.enchantmentNum) {
+              colName = 'Count' + $scope.item.enchantmentNum;
+            }
+            
+            if(colName in sealData[0]) {
+              numStamps = sealData[0][colName];
+            }
+          }
+        }
+      }
+      else if(itemData && 'IsCash' in itemData && 'CashTradeCount' in itemData && 'Reversion' in itemData && 'AbleWStorage' in itemData) {
+        if(itemData.Reversion == 2) {
+          if(itemData.CashTradeCount) {
+            return 'cash trade count: ' + itemData.CashTradeCount;
+          }
+          else {
+            return 'can use warranty';
+          }
+        }
+        else if(itemData.AbleWStorage) {
+          return 'can server storage';
+        }
+        else {
+          return 'not tradable';
+        }
+      }
+    }
+    
+    if(sealTimes && numStamps) {
+      return 'can stamp ' + sealTimes + ' times using ' + numStamps + '  stamps';
+    }
+    else {
+      return '';
+    }
+  }
+  
+  $scope.moreInfoLoaded = function() {
+    return dntData.isLoaded($scope.item.fileName + '.lzjson') &&
+      dntData.isLoaded('sealcounttable.lzjson');
+  }
+  
+  $scope.loadMoreInfo = function() {
+    dntData.init($scope.item.fileName + '.lzjson', null, $timeout);
+    dntData.init('sealcounttable.lzjson', null, $timeout);
   }
   
   $scope.handleChange = function() {
@@ -194,11 +258,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
           }
         }
         
-        if(!$scope.item.fileName) {
-          if($scope.item.itemSource in items && items[$scope.item.itemSource].mainDnt) {
-            $scope.item.fileName = items[$scope.item.itemSource].mainDnt.replace('.lzjson', '').replace('.optimised', '');
-          }
-        }
+        setFileName();
       }
       
       var itemData = itemFactory.getItemData($scope.item);
@@ -237,6 +297,14 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       }
       else {
         $scope.detail = 'shops';
+      }
+    }
+  }
+  
+  function setFileName() {
+    if(!$scope.item.fileName) {
+      if($scope.item.itemSource in items && items[$scope.item.itemSource].mainDnt) {
+        $scope.item.fileName = items[$scope.item.itemSource].mainDnt.replace('.lzjson', '').replace('.optimised', '');
       }
     }
   }

@@ -291,15 +291,15 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     
     var itemType = items[item.itemSource];
     
-    if(item.fileName && dntData.isLoaded(item.fileName + '.optimised.lzjson')) {
-      var result = getItemDataFromFile(item.fileName + '.optimised.lzjson', item);
+    if(item.fileName && dntData.isLoaded(item.fileName + '.lzjson')) {
+      var result = getItemDataFromFile(item.fileName + '.lzjson', item);
       if(result) {
         return result;
       }
     }
     
-    if(item.fileName && dntData.isLoaded(item.fileName + '.lzjson')) {
-      var result = getItemDataFromFile(item.fileName + '.lzjson', item);
+    if(item.fileName && dntData.isLoaded(item.fileName + '.optimised.lzjson')) {
+      var result = getItemDataFromFile(item.fileName + '.optimised.lzjson', item);
       if(result) {
         return result;
       }
