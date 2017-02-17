@@ -7,9 +7,6 @@ angular.module('dnsim')
     'use strict';
     document.body.className = 'default-back';
     $window.document.title = 'dngearsim | ABOUT/FAQ';
-    $(document).ready(function($) { 
-        $('meta[name=description]').attr('content', 'Information about the simulator');
-    });
   }]
 );
 })();

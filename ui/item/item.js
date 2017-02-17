@@ -242,9 +242,6 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       
       setFullStats();
       $window.document.title = 'dngearsim | ' + $scope.item.name;
-      $(document).ready(function($) { 
-          $('meta[name=description]').attr('content', $scope.item.name);
-      });
       if($scope.item.itemSource != 'custom') {
       
         if($scope.item.typeName == 'skills') {

@@ -37,9 +37,6 @@ function(
   }
   
   $window.document.title = 'dngearsim | SEARCH ' + vm.itemCategory.name.toUpperCase();
-  $(document).ready(function($) { 
-      $('meta[name=description]').attr('content', 'Search in-game equipment');
-  });
   
   vm.job = {id: -1, name: ''};
   vm.jobs = [vm.job];

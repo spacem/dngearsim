@@ -5,9 +5,6 @@ angular.module('dnsim').controller('ExportCtrl',
      
   document.body.className = 'default-back';
   $window.document.title = 'dngearsim | EXPORT';
-    $(document).ready(function($) { 
-        $('meta[name=description]').attr('content', 'Export your build');
-    });
   
   var rawSavedData = saveHelper.getSavedItems();
   $scope.exportData = JSON.stringify(rawSavedData, null, 1);

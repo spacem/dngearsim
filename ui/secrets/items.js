@@ -21,9 +21,6 @@ angular.module('dnsim')
     }
     
     $window.document.title = 'dngearsim | ALL ITEM SEARCH';
-    $(document).ready(function($) { 
-        $('meta[name=description]').attr('content', 'Search for any in-game item from Dragon Nest');
-    });
     
     var fileName = 'all-items.lzjson';
     
