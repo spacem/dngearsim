@@ -4,7 +4,10 @@ angular.module('dnsim').controller('SetupCtrl',
   'use strict';
      
   document.body.className = 'default-back';
-  $window.document.title = 'DN Gear Sim | SETUP';
+  $window.document.title = 'dngearsim | SETUP';
+    $(document).ready(function($) { 
+        $('meta[name=description]').attr('content', 'Advanced settings');
+    });
   
   $scope.advancedSetup = false;
   $scope.isLoading = translations.startedLoading && !translations.isLoaded();

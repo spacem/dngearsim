@@ -6,7 +6,10 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   
   var vm = this;
   
-  $window.document.title = 'DN Gear Sim | TALISMANS';
+  $window.document.title = 'dngearsim | TALISMANS';
+  $(document).ready(function($) { 
+      $('meta[name=description]').attr('content', 'Optimise talisman positioning');
+  });
   $window.scrollTo(0, 0);
   
   this.savedItems = saveHelper.getSavedItems();

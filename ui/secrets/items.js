@@ -20,7 +20,10 @@ angular.module('dnsim')
       vm.nameSearch = '';
     }
     
-    $window.document.title = 'DN Gear Sim | ITEM SEARCH';
+    $window.document.title = 'dngearsim | ALL ITEM SEARCH';
+    $(document).ready(function($) { 
+        $('meta[name=description]').attr('content', 'Search for any in-game item from Dragon Nest');
+    });
     
     var fileName = 'all-items.lzjson';
     

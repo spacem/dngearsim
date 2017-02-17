@@ -32,10 +32,16 @@ angular.module('dnsim').controller('BuildListCtrl',
     }
     
     if(this.currentGroup) {
-      $window.document.title = 'DN Gear Sim | ' + this.currentGroup;
+      $window.document.title = 'dngearsim | ' + this.currentGroup;
+      $(document).ready(function($) { 
+          $('meta[name=description]').attr('content', this.currentGroup);
+      });
     }
     else {
-      $window.document.title = 'DN Gear Sim | BUILDS';
+      $window.document.title = 'dngearsim | BUILDS';
+      $(document).ready(function($) { 
+          $('meta[name=description]').attr('content', 'Build your character to see how you can make it stronger');
+      });
     }
 
     this.anyItems = function() {

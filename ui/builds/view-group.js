@@ -4,7 +4,6 @@ angular.module('dnsim').controller('ViewGroupCtrl',
     'use strict';
   
     document.body.className = 'saved-back';
-    $window.document.title = 'DN Gear Sim';
     
     region.setLocationByName($routeParams.region);
     
@@ -14,6 +13,7 @@ angular.module('dnsim').controller('ViewGroupCtrl',
 
     if('g' in $routeParams && 'i' in $routeParams) {
       $scope.buildName = $routeParams.g;
+      $window.document.title = 'dngearsim | ' + $routeParams.g;
       
       $scope.enemyLevel = $routeParams.e;
       $scope.playerLevel = $routeParams.p;

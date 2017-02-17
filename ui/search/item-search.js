@@ -36,7 +36,10 @@ function(
      return;
   }
   
-  $window.document.title = 'DN Gear Sim | ' + vm.itemCategory.name.toUpperCase();
+  $window.document.title = 'dngearsim | SEARCH ' + vm.itemCategory.name.toUpperCase();
+  $(document).ready(function($) { 
+      $('meta[name=description]').attr('content', 'Search in-game equipment');
+  });
   
   vm.job = {id: -1, name: ''};
   vm.jobs = [vm.job];
