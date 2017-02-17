@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('buildActionsCtrl',
 
-['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper','exportLinkHelper','groupHelper','translations','dntData','dntReset',
-function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,exportLinkHelper,groupHelper,translations,dntData,dntReset) {
+['$location','saveHelper','exportLinkHelper',
+function($location,saveHelper,exportLinkHelper) {
   'use strict';
   
   var vm = this;
@@ -38,41 +38,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
   
   this.reloaded = false;
   this.reloadGroup = function() {
-    dntReset();
-    vm.reloaded = false;
-    
-    translations.init(progress, tryInit);
-
-    var files = groupHelper.getDntFiles(vm.build);
-    angular.forEach(files, function(columns, fileName) {
-      dntData.init(fileName, columns, progress, tryInit);
-    });
-    
-    vm.onChange();
-  }
-
-  function tryInit() {
-    if(vm.reloaded) {
-      return;
-    }
-    
-    var allLoaded = true;
-    var files = groupHelper.getDntFiles(vm.build);
-    angular.forEach(files, function(columns, fileName) {
-      if(!dntData.isLoaded(fileName)) {
-        allLoaded = false;
-        return;
-      }
-    });
-    
-    if(allLoaded && translations.isLoaded()) {
-      var newItems = groupHelper.reloadGroup(vm.buildName, vm.build);
-      saveHelper.updatedSavedItems(vm.buildName, newItems);
-      vm.build.items = newItems;
-      
-      vm.reloaded = true;
-      $timeout(vm.onChange);
-    }
+    $location.path('/reload-build/' + vm.buildName);
   }
   
   function progress() {

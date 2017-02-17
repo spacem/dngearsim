@@ -57,6 +57,11 @@ function config($routeProvider) {
       controller: 'DeleteBuildCtrl as deleteBuild',
       // reloadOnSearch: false,
     }).
+    when('/reload-build/:name*', {
+      templateUrl: 'ui/builds/reload-build.html',
+      controller: 'ReloadBuildCtrl as ctrl',
+      // reloadOnSearch: false,
+    }).
     
     when('/search/:cat?', {
       templateUrl: 'ui/search/item-search.html',

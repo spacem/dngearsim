@@ -10,7 +10,8 @@
     <h3>faq</h3>
     <h4>How is average damage calculated and what is eqhp?</h4>
     <p>
-      <pre>damage = element% x skill% x fd% x (avg(dmg) + (crit dmg x crit chance x 0.75 x avg(dmg)))</pre>
+      Something like:
+      <pre>damage = element% x skill% x fd% x (avg(dmg) + ((crit dmg-100%) x crit chance x 0.75 x avg(dmg)))</pre>
       I assume enemies have a flat 25% crit resist (which is where 0.75 comes from).
       I assume no element resistance since usually you will have resist reduction debuffers in your party.
       If you want to see the full calculations in the code these are in statService.js
