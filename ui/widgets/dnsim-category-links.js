@@ -26,16 +26,19 @@ function dnsimCategoryLinksController(itemCategory) {
   vm.collapsed = true;
 
   vm.setCategory = function(action) {
-    // console.log('setting cat', action);
-    vm.cat = action;
-    localStorage.setItem('selectedItemCategory', action.name);
+    console.log('setting cat', action);
+    if(vm.cat != action) {
+      vm.cat = action;
+      localStorage.setItem('selectedItemCategory', action.name);
+
+      if(vm.onChange) {
+        vm.onChange();
+      }
+    }
     
     if(vm.collapse) {
+      console.log('collapsing cat', action);
       vm.collapsed = !vm.collapsed;
-    }
-
-    if(vm.onChange) {
-      vm.onChange();
     }
   }
 }
