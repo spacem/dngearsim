@@ -64,13 +64,16 @@ angular.module('dnsim').controller('NavCtrl',
     }
       
     $scope.getActions = function() {
-      // console.log('getting actions');
       var menu = null;
       
       var currentBuild = saveHelper.getCurrentBuild();
       if(currentBuild) {
-        var savedItems = saveHelper.getSavedItems();
-        if(!(currentBuild in savedItems)) {
+        if(!$scope.savedItems || !(currentBuild in $scope.savedItems)) {
+          console.log('loading saved items');
+          $scope.savedItems = saveHelper.getSavedItems();
+        }
+        
+        if(!(currentBuild in $scope.savedItems)) {
           currentBuild = null;
         }
       }

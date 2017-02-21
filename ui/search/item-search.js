@@ -63,6 +63,8 @@ function(
   if(minLevel > 0 && minLevel < 100) {
     vm.minLevel = minLevel;
   }
+  vm.origMinLevel = minLevel;
+  
   var maxLevel = Number(localStorage.getItem('maxLevel'));
   if($routeParams.maxLevel) {
     maxLevel = Number($routeParams.maxLevel);
@@ -70,6 +72,7 @@ function(
   if(maxLevel > 0 && maxLevel < 100) {
     vm.maxLevel = maxLevel;
   }
+  vm.origMaxLevel = maxLevel;
   
   vm.nameSearch = localStorage.getItem('nameSearch');
   if($routeParams.name) {
@@ -79,12 +82,12 @@ function(
     vm.nameSearch = '';
   }
   
-  var savedSearchStatId = localStorage.getItem('searchStat');
+  vm.origSavedSearchStatId = localStorage.getItem('searchStat');
   if($routeParams.stat) {
-    savedSearchStatId = $routeParams.stat;
+    vm.origSavedSearchStatId = $routeParams.stat;
   }
-  if(savedSearchStatId > -1 && savedSearchStatId in hCodeValues.stats) {
-    vm.stat = hCodeValues.stats[savedSearchStatId];
+  if(vm.origSavedSearchStatId > -1 && vm.origSavedSearchStatId in hCodeValues.stats) {
+    vm.stat = hCodeValues.stats[vm.origSavedSearchStatId];
   }
 
   vm.navigate = function() {
@@ -102,11 +105,17 @@ function(
 
   vm.save = function() {
     if(!vm.itemCategory.hideLevel) {
-      localStorage.setItem('minLevel', vm.minLevel);
-      localStorage.setItem('maxLevel', vm.maxLevel);
+      if(vm.minLevel != vm.origMinLevel) {
+        localStorage.setItem('minLevel', vm.minLevel);
+        $location.search('minLevel', vm.minLevel);
+        vm.origMinLevel = vm.minLevel;
+      }
       
-      $location.search('minLevel', vm.minLevel);
-      $location.search('maxLevel', vm.maxLevel);
+      if(vm.maxLevel != vm.origMaxLevel) {
+        localStorage.setItem('maxLevel', vm.maxLevel);
+        $location.search('maxLevel', vm.maxLevel);
+        vm.origMaxLevel = vm.maxLevel;
+      }
     }
     else {
       $location.search('minLevel', null);
@@ -115,12 +124,15 @@ function(
     
     if(!vm.itemCategory.hideJob) {
       if(vm.job != null) {
-        localStorage.setItem('jobNumber', vm.job.id);
-        if(vm.job.id > -1) {
-          $location.search('job', vm.job.id);
-        }
-        else {
-          $location.search('job', null);
+        if(vm.origJobNumber != vm.job.id) {
+          localStorage.setItem('jobNumber', vm.job.id);
+          if(vm.job.id > -1) {
+            $location.search('job', vm.job.id);
+          }
+          else {
+            $location.search('job', null);
+          }
+          vm.origJobNumber = vm.job.id;
         }
       }
     }
@@ -129,12 +141,16 @@ function(
     }
   
     if(vm.stat) {
-      localStorage.setItem('searchStat', vm.stat.id);
-      if(vm.stat.id > -1) {
-        $location.search('stat', vm.stat.id);
-      }
-      else {
-        $location.search('stat', null);
+      if(vm.origSavedSearchStatId != vm.stat.id) {
+        localStorage.setItem('searchStat', vm.stat.id);
+        if(vm.stat.id > -1) {
+          $location.search('stat', vm.stat.id);
+        }
+        else {
+          $location.search('stat', null);
+        }
+        
+        vm.origSavedSearchStatId = vm.stat.id;
       }
     }
 
@@ -170,6 +186,7 @@ function(
       vm.allJobs = jobs.getAllJobs();
       
       var lastJobNumber = Number(localStorage.getItem('jobNumber'));
+      vm.origJobNumber != lastJobNumber;
       if($routeParams.job && $routeParams.job) {
         lastJobNumber = Number($routeParams.job);
       }
