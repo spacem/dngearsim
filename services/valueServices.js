@@ -29,7 +29,7 @@ function hCodeValues() {
     }
   }
   function toPercent(stat) {
-    return (Math.floor(stat.max*100000)/1000) + '%';
+    return (Math.floor(stat.max*10000)/100) + '%';
   }
   
   return {

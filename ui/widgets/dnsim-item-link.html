@@ -3,5 +3,5 @@
   <span ng-if="item.enchantmentNum > 0">
     +{{item.enchantmentNum}}<span ng-if="item.typeName == 'talisman'">%</span>
   </span>
-  {{getJobName(item.needJobClass)}} <span ng-if="item.levelLimit > 1">lv{{item.levelLimit}}</span> {{item.name}}
+  <span ng-if="item.levelLimit > 1">lv{{item.levelLimit}}</span> {{item.name}}
 </a>
