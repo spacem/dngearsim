@@ -108,9 +108,9 @@ function hCodeValues() {
       1008: {id: 1008, name: 'pdef', display: toPercent, noCustom: true },
       1009: {id: 1009, name: 'mdef', display: toPercent, noCustom: true },
       
-      1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true },
-      1029: {id: 1029, name: 'fd', display: toPercent, noCustom: true },
-      1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true },
+      1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true, dps: true },
+      1029: {id: 1029, name: 'fd', display: toPercent, noCustom: true, dps: true },
+      1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true, dps: true },
       
       2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
       2004: {id: 2004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
@@ -134,8 +134,8 @@ function hCodeValues() {
       4076: {id: 4076, name: 'skMp%', display: toPercent, def: true },
       
       // special cases for skills
-      10164: {id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true },
-      10165: {id: 10165, name: 'strToMdmg', display: toPercent, noCustom: true },
+      10164: {id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true, dps: true },
+      10165: {id: 10165, name: 'strToMdmg', display: toPercent, noCustom: true, dps: true },
       
       // items over 10000 are unknown skill effects
     },
@@ -248,6 +248,7 @@ function hCodeValues() {
         }
       },
       389: { id: 389, name: 'fd buf', mapTo: 1029 },
+      404: { id: 404, name: 'critical damage%', mapTo: 1103 },
     },
     
     gemExchanges: [

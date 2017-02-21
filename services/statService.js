@@ -257,7 +257,8 @@ function statHelper(hCodeValues) {
       applyPc(cDmg);
       addStat(cDmg);
 
-      var critDamagePc = cDmg.max / group.playerStatCaps.CcriticalDamage;
+      var itemCtriDmg = dupeStat(1103);
+      var critDamagePc = (cDmg.max / group.playerStatCaps.CcriticalDamage) + itemCtriDmg.max;
       addStat({id: 1103, max: critDamagePc + 2});
 
       // fd
