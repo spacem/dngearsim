@@ -34,13 +34,13 @@ function hCodeValues() {
   
   return {
     stats : {
-      0  : {id: 0, name: 'str', display: toNoDec, dps: true, pc: 50, skPc: 4050, searchable: true },
-      1  : {id: 1, name: 'agi', display: toNoDec, dps: true, pc: 51, skPc: 4051, searchable: true },
-      2  : {id: 2, name: 'int', display: toNoDec, dps: true, pc: 52, skPc: 4052, searchable: true },
-      3  : {id: 3, name: 'vit', display: toNoDec, def: true, pc: 53, skPc: 4053, searchable: true },
-      4  : {id: 4, name: 'pdmg', display: toNoDec, combineWith: 5, dps: true, pc: 54, searchable: true, altStat: 32 },
+      0  : {id: 0, name: 'str', display: toNoDec, dps: true, pc: 50, skPc: 4050, searchable: true, quickHigh: true },
+      1  : {id: 1, name: 'agi', display: toNoDec, dps: true, pc: 51, skPc: 4051, searchable: true, quickHigh: true },
+      2  : {id: 2, name: 'int', display: toNoDec, dps: true, pc: 52, skPc: 4052, searchable: true, quickHigh: true },
+      3  : {id: 3, name: 'vit', display: toNoDec, def: true, pc: 53, skPc: 4053, searchable: true, quickHigh: true },
+      4  : {id: 4, name: 'pdmg', display: toNoDec, combineWith: 5, dps: true, pc: 54, searchable: true, altStat: 32, quickHigh: true },
       5  : {id: 5, name: 'maxPdmg', display: toNoDec, hide: true, pc: 55 },
-      6  : {id: 6, name: 'mdmg', display: toNoDec, combineWith: 7, dps: true, pc: 56, searchable: true, altStat: 33 },
+      6  : {id: 6, name: 'mdmg', display: toNoDec, combineWith: 7, dps: true, pc: 56, searchable: true, altStat: 33, quickHigh: true },
       7  : {id: 7, name: 'maxMdmg', display: toNoDec, hide: true, pc: 57 },
       8  : {id: 8, name: 'pdef', display: inThousands, def: true, pc: 58, searchable: true },
       9  : {id: 9, name: 'mdef', display: inThousands, def: true, pc: 59, searchable: true },
@@ -94,7 +94,7 @@ function hCodeValues() {
       101 : {id: 101, name: 'pdmg%', display: toPercent, noCustom: true, dps: true },
       102 : {id: 102, name: 'mdmg%', display: toPercent, noCustom: true, dps: true },
 
-      103: {id: 103, name: 'crit dmg', display: toNoDec, dps: true, pc: 104 },
+      103: {id: 103, name: 'crit dmg', display: toNoDec, dps: true, pc: 104, searchable: true },
       104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true, dps: true },
       105: {id: 104, name: 'pvp dmg', display: inThousands, noCustom: true, dps: true },
       106: {id: 106, name: 'pvp def', display: inThousands, noCustom: true, def: true },

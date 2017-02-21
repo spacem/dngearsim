@@ -431,6 +431,68 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         },
         isItemStep: true,
       },
+      highStatStep: {
+        name: 'High Stat',
+        getOptions: function(category, build, datas) {
+          var items = findData(category, build, datas);
+          var allStats = {};
+          
+          for(var i=0;i<items.length;++i) {
+            var len = 0;
+            for(var j=0;j<items[i].stats.length;++j) {
+              var stat = hCodeValues.stats[items[i].stats[j].id];
+              if(stat && stat.quickHigh) {
+                allStats['high ' + stat.name] = stat.id;
+              }
+            }
+          }
+          
+          var allItem = { id: -1, name: 'all' };
+          var retVal = [allItem];
+          for(var val in allStats) {
+            retVal.push({
+              id: allStats[val],
+              name: val,
+            });
+          }
+          
+          if(retVal.length <= 2) {
+            retVal = [allItem];
+          }
+          else {
+            retVal = retVal.sort(function(a, b) {
+                return a.id - b.id;
+              });
+          }
+          
+          return retVal;
+        },
+        matchesItem: function(id, item) {
+          if(id == -1) {
+            return true;
+          }
+          
+          var largest = 0;
+          var selected = 0;
+          
+          for(var j=0;j<item.stats.length;++j) {
+            var val = item.stats[j];
+            var stat = hCodeValues.stats[val.id];
+            if(stat && stat.quickHigh) {
+              
+              if(val.id == id) {
+                selected = val.max;
+              }
+              else if(val.max > largest) {
+                largest = val.max;
+              }
+            }
+          }
+          
+          return selected >= largest;
+        },
+        isItemStep: false,
+      },
       customStep: {
         name: 'misc',
         getOptions: function(category, build, datas) {
@@ -449,7 +511,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       'offensive gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
       'increasing gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
       'enhancement plates': ['allLevelStep','otherRankStep','distinctItemNameStep','numStatsStep','itemStep'],
-      'expedition plates': ['sixtyLevelStep','distinctItemNameStep','numStatsStep','itemStep'],
+      'expedition plates': ['sixtyLevelStep','distinctItemNameStep','numStatsStep','highStatStep','itemStep'],
       talisman: ['sixtyLevelStep','talismanRankStep','distinctItemNameStep','numStatsStep','itemStep','enhanceTalismanStep'],
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
       cash: ['accExchangeStep','cashRankStep','itemNameStep','itemStep'],
