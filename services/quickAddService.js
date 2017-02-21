@@ -516,7 +516,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
       cash: ['accExchangeStep','cashRankStep','itemNameStep','itemStep'],
       techs: ['exchangeStep','allLevelStep','techRankStep','techSkillStep','itemStep'],
-      custom: ['customStep'],
+      // custom: ['customStep'],
     },
     getOptions: function(category, build, datas) {
       if(category.name in this.categorySteps) {

@@ -122,8 +122,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
   }
   
   this.newCustom = function() {
-    var newCustom = 
-    {id: 0, typeName:'custom', name: 'new custom item', stats: []};
+    var newCustom = {id: 0, typeName:'custom', name: 'new custom item', stats: []};
     vm.build.items = vm.build.items.concat(newCustom);
     saveHelper.updatedSavedItems(vm.buildName, vm.build.items);
     vm.handleChange();

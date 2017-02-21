@@ -22,7 +22,7 @@
       {{getMoreInfo()}}
       <br />
       </span>
-      <span ng-if="!moreInfoLoaded()">
+      <span ng-if="::item.typeName != 'custom' && !moreInfoLoaded()">
         <button class="btn btn-link" ng-click="loadMoreInfo()">
           more info
         </button>
@@ -38,7 +38,7 @@
       </span>
       </small>
     </h4>
-    <small class="hidden-xs">
+    <small class="hidden-xs" ng-if="::item.typeName != 'custom'">
       {{::item.fileName}} {{::item.typeName}}: {{::item.itemSource}} / {{::item.id}} / {{::item.pid}}
       <span ng-if="::item.potentialRatio != null">
         <br />
