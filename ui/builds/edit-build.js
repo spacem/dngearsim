@@ -55,7 +55,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
     this.playerLevel = this.group.playerLevel;
   }
   else {
-    this.playerLevel = 90;
+    this.playerLevel = 93;
   }
   
   if(this.group.heroLevel && this.group.heroLevel > 0) {

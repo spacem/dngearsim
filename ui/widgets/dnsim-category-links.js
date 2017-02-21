@@ -26,7 +26,7 @@ function dnsimCategoryLinksController(itemCategory) {
   vm.collapsed = true;
 
   vm.setCategory = function(action) {
-    console.log('setting cat', action);
+    // console.log('setting cat', action);
     if(vm.cat != action) {
       vm.cat = action;
       localStorage.setItem('selectedItemCategory', action.name);
@@ -37,7 +37,7 @@ function dnsimCategoryLinksController(itemCategory) {
     }
     
     if(vm.collapse) {
-      console.log('collapsing cat', action);
+      // console.log('collapsing cat', action);
       vm.collapsed = !vm.collapsed;
     }
   }

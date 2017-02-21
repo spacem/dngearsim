@@ -153,6 +153,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         getOptions: function(category, build, datas) {
           
           return [
+          { id: 3, name: 'epic' },
           { id: 2, name: 'rare' },
           { id: 999, name: 'quality high grade' },
           { id: 1, name: 'magic' },

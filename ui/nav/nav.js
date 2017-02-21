@@ -69,7 +69,7 @@ angular.module('dnsim').controller('NavCtrl',
       var currentBuild = saveHelper.getCurrentBuild();
       if(currentBuild) {
         if(!$scope.savedItems || !(currentBuild in $scope.savedItems)) {
-          console.log('loading saved items');
+          // console.log('loading saved items');
           $scope.savedItems = saveHelper.getSavedItems();
         }
         
