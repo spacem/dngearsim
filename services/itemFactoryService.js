@@ -105,7 +105,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         var dTypeParam1 = dntData.getValue(itemType.mainDnt, r, 'TypeParam1');
           
         // skip items with no data
-        if(dState1_GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0) {
+        if(dState1_GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35) {
           var d = dntData.getRow(itemType.mainDnt, r);
           
           if(itemType.type == 'techs') {
@@ -260,6 +260,21 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       
       if(d.EnchantID && !item.enchantmentId) {
         item.enchantmentId = d.EnchantID;
+      }
+      
+      if(d.EnchantID && !item.enchantmentId) {
+        item.enchantmentId = d.EnchantID;
+      }
+      else if(d.Type == 35) {
+        item.itemSource = 'xtras';
+        var itemType = items[item.itemSource];
+        if(itemType) {
+          // item.fileName = itemType.mainDnt;
+          var petData = dntData.find(itemType.petDnt, 'id', d.id);
+          if(petData && petData.length) {
+            item.enchantmentId = petData[0].PetLevelTypeID;
+          }
+        }
       }
       
       if(p) {

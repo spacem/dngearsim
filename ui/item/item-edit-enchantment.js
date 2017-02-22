@@ -14,12 +14,20 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
     vm.itemType = items[vm.item.itemSource];
   }
   
-  if(!vm.itemType || !('enchantDnt' in vm.itemType)) {
+  if(!vm.itemType) {
+    return;
+  }
+  if(!('enchantDnt' in vm.itemType) && !('petLevelDnt' in vm.itemType)) {
     return;
   }
   
   if(vm.itemType.enchantDnt) {
     dntData.init(vm.itemType.enchantDnt, itemColumnsToLoad.enchantDnt, null, vm.getEnchantments);
+  }
+  
+  if(vm.itemType.petLevelDnt) {
+    dntData.init(vm.itemType.petDnt, itemColumnsToLoad.petDnt, null, vm.getEnchantments);
+    dntData.init(vm.itemType.petLevelDnt, itemColumnsToLoad.petLevelDnt, null, vm.getEnchantments);
   }
   
   vm.enchantments = null;
@@ -37,17 +45,17 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
     if(vm.enchantments && vm.enchantments.length > 0) {
 
       if(typeof vm.item.enchantmentNum != 'number') {
-        vm.item.enchantmentNum = 6;
+        vm.item.enchantmentNum = 0;
         vm.onChange();
       }
       
       for(var i=0;i<vm.enchantments.length;++i) {
-        if(vm.item.enchantmentNum == vm.enchantments[i].EnchantLevel) {
+        if(vm.item.enchantmentNum == getEnchantLevel(i)) {
           vm.enchantment = vm.enchantments[i];
           
           vm.item.enchantmentStats = hCodeValues.getStats(vm.enchantment);
         }
-        else if(vm.item.enchantmentNum + 1 == vm.enchantments[i].EnchantLevel) {
+        else if(vm.item.enchantmentNum + 1 == getEnchantLevel(i)) {
           vm.enchantmentAfter = vm.enchantments[i];
           if(vm.enchantmentAfter.NeedCoin < 10000) {
             vm.enchantmentCost = Math.round(vm.enchantmentAfter.NeedCoin / 1000)/10 + 'g';
@@ -60,6 +68,35 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
     }
   }
   
+  function getEnchantLevel(num) {
+    if('petLevelDnt' in vm.itemType) {
+      return vm.enchantments[num].PetLevel;
+    }
+    else {
+      return vm.enchantments[num].EnchantLevel;
+    }
+  }
+  
+  this.setPetLevel = function() {
+    vm.item.enchantmentStats = [];
+
+    if(vm.enchantments && vm.enchantments.length > 0) {
+
+      if(typeof vm.item.enchantmentNum != 'number') {
+        vm.item.enchantmentNum = 6;
+        vm.onChange();
+      }
+      
+      for(var i=0;i<vm.enchantments.length;++i) {
+        if(vm.item.enchantmentNum == vm.enchantments[i].PetLevel) {
+          vm.enchantment = vm.enchantments[i];
+          
+          vm.item.enchantmentStats = hCodeValues.getStats(vm.enchantment);
+        }
+      }
+    }
+  }
+  
   this.isMaxEnchantLevel = function() {
 
     if(vm.enchantments != null &&
@@ -67,7 +104,7 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
       typeof vm.item.enchantmentNum == 'number') {
 
       for(var i=0;i<vm.enchantments.length;++i) {
-        if(vm.item.enchantmentNum + 1 == vm.enchantments[i].EnchantLevel) {
+        if(vm.item.enchantmentNum + 1 == getEnchantLevel(i)) {
           return false;
         }
       }
@@ -81,7 +118,12 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
   this.setEnchantmentNum = function(enhancementOption) {
     vm.item.enchantmentNum = enhancementOption;
     vm.enhancementOptions = [];
-    vm.setEnchantment();
+    if('petLevelDnt' in vm.itemType) {
+      vm.setPetLevel();
+    }
+    else {
+      vm.setEnchantment();
+    }
     vm.onChange();
   }
   
@@ -91,7 +133,7 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
         vm.enhancementOptions.push({number: 0});
       }
       else {
-        vm.enhancementOptions.push(vm.getOption(vm.enchantments[i-1]));
+        vm.enhancementOptions.push(vm.getOption(i-1));
       }
     }
   }
@@ -99,25 +141,28 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
   this.prevEnchantment = function() {
     vm.enhancementOptions = [];
     for(var i=vm.item.enchantmentNum;i>0;--i) {
-      vm.enhancementOptions.push(vm.getOption(vm.enchantments[i-1]));
+      vm.enhancementOptions.push(vm.getOption(i-1));
     }
     
     vm.enhancementOptions.push({number: 0});
   }
   
-  this.getOption = function(enchantment) {
+  this.getOption = function(enchantmentNum) {
     return {
-      number: enchantment.EnchantLevel,
-      stats: hCodeValues.getStats(enchantment)
+      number: getEnchantLevel(enchantmentNum),
+      stats: hCodeValues.getStats(vm.enchantments[enchantmentNum])
     };
   }
   
   this.getEnchantments = function() {
     if(!vm.enchantments && vm.item && vm.item.enchantmentId) {
-      if(dntData.isLoaded(vm.itemType.enchantDnt)) {
-        var eid = vm.item.enchantmentId;
-        vm.enchantments = dntData.find(vm.itemType.enchantDnt, 'EnchantID', eid);
+      if(vm.itemType.enchantDnt && dntData.isLoaded(vm.itemType.enchantDnt)) {
+        vm.enchantments = dntData.find(vm.itemType.enchantDnt, 'EnchantID', vm.item.enchantmentId);
         vm.setEnchantment();
+      }
+      if(vm.itemType.petLevelDnt && dntData.isLoaded(vm.itemType.petLevelDnt)) {
+        vm.enchantments = dntData.find(vm.itemType.petLevelDnt, 'PetLevelTypeID', vm.item.enchantmentId);
+        vm.setPetLevel();
       }
     }
     

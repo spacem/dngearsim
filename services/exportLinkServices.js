@@ -339,10 +339,20 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               newItem.enchantmentStats = extraStats;
               newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
             }
-            else {
+            else if(itemType.enchantDnt) {
               var enchantments = dntData.find(itemType.enchantDnt, 'EnchantID', newItem.enchantmentId);
               angular.forEach(enchantments, function(enchantment, index) {
                 if(enchantment.EnchantLevel == newItem.enchantmentNum) {
+                  newItem.enchantmentStats = hCodeValues.getStats(enchantment);
+                  newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
+                  return;
+                }
+              });
+            }
+            else if(itemType.petLevelDnt) {
+              var enchantments = dntData.find(itemType.petLevelDnt, 'PetLevelTypeID', newItem.enchantmentId);
+              angular.forEach(enchantments, function(enchantment, index) {
+                if(enchantment.PetLevel == newItem.enchantmentNum) {
                   newItem.enchantmentStats = hCodeValues.getStats(enchantment);
                   newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
                   return;
@@ -427,38 +437,12 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           var itemType = items[item.itemSource];
           
           dntFiles['exchange.lzjson'] = null;
-          dntFiles['dragonjewelslottable.lzjson'] = null;
-  
           dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
-          if('potentialDnt' in itemType) {
-            dntFiles[itemType.potentialDnt] = itemColumnsToLoad.potentialDnt;
-          }
-          if('potentialDntEx' in itemType) {
-            dntFiles[itemType.potentialDntEx] = itemColumnsToLoad.potentialDnt;
-          }
           
-          if('enchantDnt' in itemType) {
-            dntFiles[itemType.enchantDnt] = itemColumnsToLoad.enchantDnt;
-          }
-          
-          if('weaponDnt' in itemType) {
-            dntFiles[itemType.weaponDnt] = itemColumnsToLoad.weaponDnt;
-          }
-          
-          if('partsDnt' in itemType) {
-            dntFiles[itemType.partsDnt] = itemColumnsToLoad.partsDnt;
-          }
-          
-          if('setDnt' in itemType) {
-            dntFiles[itemType.setDnt] = itemColumnsToLoad.setDnt;
-          }
-          
-          if('gemDnt' in itemType) {
-            dntFiles[itemType.gemDnt] = itemColumnsToLoad.gemDnt;
-          }
-          
-          if('sparkDnt' in itemType) {
-            dntFiles[itemType.sparkDnt] = itemColumnsToLoad.sparkDnt;
+          for(var fileType in itemType) {
+            if(fileType.indexOf('Dnt') > 0) {
+              dntFiles[itemType[fileType]] = itemColumnsToLoad[fileType];
+            }
           }
         }
         

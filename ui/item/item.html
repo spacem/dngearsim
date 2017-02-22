@@ -65,7 +65,7 @@
         <div class="row">
           <br />
           <div class="col-xs-12" ng-if="item.enchantmentStats && item.enchantmentStats.length > 0">
-            <label>+{{item.enchantmentNum}} enchantment stats:</label><br />
+            <label>+{{item.enchantmentNum}} stats</label><br />
             <div dnsim-stats stats="item.enchantmentStats">
             </div>
             <br />
@@ -84,7 +84,7 @@
         <span dnsim-stats stats="::item.setStats" separator="'|'"></span>
       </div>
       <div class="col-xs-12 visible-xs-block" ng-if="item.enchantmentStats && item.enchantmentStats.length > 0">
-        <br /><label>+{{item.enchantmentNum}} enchantment stats:</label><br />
+        <br /><label>+{{item.enchantmentNum}} stats</label><br />
         <span dnsim-stats stats="item.enchantmentStats" separator="'|'">
         </span>
         <br />
