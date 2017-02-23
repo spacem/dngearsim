@@ -10,7 +10,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
   
   var selectedCategory = localStorage.getItem('selectedItemCategory');
   this.category = itemCategory.byName(selectedCategory);
-  if(!this.category) {
+  if(!this.category || this.category.hideInBuild) {
     selectedCategory = 'titles';
     this.category = itemCategory.byName('titles');
   }

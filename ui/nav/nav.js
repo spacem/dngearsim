@@ -8,19 +8,17 @@ angular.module('dnsim').controller('NavCtrl',
     var noMenu = [];
     var noLocationMenu = [aboutAction];
     var normalMenu = [
-      {path: 'builds', name:'builds', icon: 'wrench'},
-      {path: 'search', name:'gear', icon: 'search'},
-      {path: 'items', name:'items', icon: 'search'},
+      {path: 'builds', name:'builds', icon: 'menu-hamburger'},
+      {path: 'search', name:'search', icon: 'search'},
       aboutAction,
       ];
     
     var buildAction = {path: 'build', name:'build', icon: 'wrench'};
     
     var withBuildMenu = [
-      {path: 'builds', name:'builds', icon: 'wrench'},
+      {path: 'builds', name:'builds', icon: 'menu-hamburger'},
       buildAction,
-      {path: 'search', name:'gear', icon: 'search'},
-      {path: 'items', name:'items', icon: 'search'},
+      {path: 'search', name:'search', icon: 'search'},
       aboutAction,
       ];
       

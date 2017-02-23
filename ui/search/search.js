@@ -1,13 +1,18 @@
-angular.module('dnsim').controller('ItemSearchCtrl',
-['$scope','$window','$routeParams','$timeout','$location','$route',
+(function () {
+'use strict';
+
+var controllerParams = ['$scope','$window','$routeParams','$timeout','$location','$route',
 'translations',
 'itemCategory',
 'jobs',
 'hCodeValues',
 'itemFactory',
 'region',
-'saveHelper',
-function(
+'saveHelper', itemSearchCtrl];
+
+angular.module('dnsim').controller('ItemSearchCtrl', controllerParams);
+
+function itemSearchCtrl(
   $scope,$window,$routeParams,$timeout,$location,$route,
   translations,
   itemCategory,
@@ -361,5 +366,6 @@ function(
   else {
     translations.init(reportProgress, function() { $timeout(init); } );
   }
-  
-}]);
+}
+
+})();

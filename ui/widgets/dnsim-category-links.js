@@ -10,6 +10,7 @@ function dnsimCategoryLinks(itemCategory,$location) {
     bindToController: {
       collapse: '=collapse',
       cat: '=cat',
+      buildScreen: '=buildScreen',
       onChange: '&onChange'
     },
     templateUrl: 'ui/widgets/dnsim-category-links.html',

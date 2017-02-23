@@ -22,7 +22,7 @@ function config($routeProvider) {
     }).
     
     when('/items', {
-      templateUrl: 'ui/secrets/items.html',
+      templateUrl: 'ui/search/everything-search.html',
       controller: 'ItemsCtrl as items',
       reloadOnSearch: false,
     }).
@@ -64,7 +64,7 @@ function config($routeProvider) {
     }).
     
     when('/search/:cat?', {
-      templateUrl: 'ui/search/item-search.html',
+      templateUrl: 'ui/search/search.html',
       controller: 'ItemSearchCtrl as ctrl',
       reloadOnSearch: false,
     }).

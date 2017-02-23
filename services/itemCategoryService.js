@@ -7,6 +7,7 @@ function itemCategory(itemFactory,items,dntData) {
 
   return {
     categories: [
+      {path: 'everything', name:'everything', searchType: 'everything', hideInBuild: true},
       {path: 'titles', name:'titles', sourceType: 'titles', hideRank: true, hideJob: true, hideLevel: true, numItemText: '1', maxCat: 1},
       {path: 'weapons', name:'weapons', sourceType: 'equipment', numItemText: '2', maxExchange: 1, maxCat: 2, limitExchange: [1,2]},
       {path: 'armour', name:'armour', sourceType: 'equipment', numItemText: '5', maxExchange: 1, maxCat: 5, limitExchange: [3,4,5,6,7]},

@@ -315,6 +315,9 @@ background-position: -610px -10px;
 .cat-icon-custom {
   background: url("images/icons/skillicon07.png") -205px -44px;
 }
+.cat-icon-everything {
+  background: url("images/icons/itemicon62.png") -85px -404px;
+}
 
 .cat-icon {
 display: inline-block;
