@@ -22,7 +22,7 @@
       {{getMoreInfo()}}
       <br />
       </span>
-      <span ng-if="::item.typeName != 'custom' && !moreInfoLoaded()">
+      <span ng-if="item.typeName != 'custom' && !moreInfoLoaded() && item.fileName">
         <button class="btn btn-link" ng-click="loadMoreInfo()">
           more info
         </button>
