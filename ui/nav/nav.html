@@ -1,7 +1,18 @@
 <ul class="nav nav-tabs" ng-if="!noRegion()">
-  <li class="{{action.extraCss}} nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
-    <a ng-href="{{getActionUrl(action)}}">
-      <span class="glyphicon glyphicon-{{::action.icon}}" aria-hidden="true"></span> {{action.name}}
+  <li class="nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
+    <a class="list-group-item {{action.extraCss}}" ng-href="{{getActionUrl(action)}}">
+      <span class="glyphicon glyphicon-{{::action.icon}}" aria-hidden="true"></span>
+      <span class="hidden-xs">
+      {{action.name}}
+      </span>
+    </a>
+  </li>
+  <li class="nav-tab nav-about pull-right">
+    <a class="list-group-item" ng-href="about">
+      <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+      <span class="hidden-xs">
+      about
+      </span>
     </a>
   </li>
 </ul>

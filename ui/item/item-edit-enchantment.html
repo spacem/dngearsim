@@ -21,8 +21,8 @@
   enchant ratio: {{editCtrl.enchantmentAfter.EnchantRatio | percentage}} | break ratio: {{editCtrl.enchantmentAfter.BreakRatio | percentage}}<br />
   <span ng-if="editCtrl.enchantmentAfter && editCtrl.enchantmentAfter.ProtectItemCount > 0">
   {{editCtrl.enchantmentAfter.ProtectItemCount}} Jellies required for protection
-  </span>
-  <button ng-if="editCtrl.materials == null" ng-click="editCtrl.showMaterials()" class="btn btn-link">show materials</button>
+  </span><br />
+  <button ng-if="editCtrl.materials == null" ng-click="editCtrl.showMaterials()" class="btn btn-link">&raquo;show materials</button>
   <div ng-repeat="material in editCtrl.materials">
     {{material.num}}x {{material.name}}
   </div>

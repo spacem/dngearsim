@@ -32,7 +32,7 @@
   </div>
   <div id="saved-group" class="row" ng-if="::buildList.builds" ng-repeat="b in ::buildList.builds track by $index">
     
-    <div class="col-xs-12 group-header">
+    <div class="col-xs-12">
     <button class="btn btn-link btn-block group-header-btn" ng-click="buildList.toggleGroup(b.name)">
       <dngearsim-build-summary build-name="::b.name" build="::b.build">
       </dngearsim-build-summary>

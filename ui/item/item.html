@@ -14,21 +14,21 @@
       {{::getExchangeType()}}
       <br />
 
-      <span ng-if="getServerStorage().length">
+      <span ng-if="getServerStorage().length && moreInfoLoaded()">
       {{getServerStorage()}}
       <br />
       </span>
-      <span ng-if="getMoreInfo().length">
+      <span ng-if="getMoreInfo().length && moreInfoLoaded()">
       {{getMoreInfo()}}
       <br />
       </span>
       <span ng-if="item.typeName != 'custom' && !moreInfoLoaded() && item.fileName">
         <button class="btn btn-link" ng-click="loadMoreInfo()">
-          more info
+          &raquo;more info
         </button>
         <br />
       </span>
-      <span ng-if="::item.offensiveGemSlots > 0 || item.increasingGemSlots > 0">
+      <span ng-if="(item.offensiveGemSlots > 0 || item.increasingGemSlots > 0) && moreInfoLoaded()">
         gem slots:
         <span ng-if="::item.offensiveGemSlots > 0">
           {{::item.offensiveGemSlots}} offensive

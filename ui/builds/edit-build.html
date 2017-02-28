@@ -5,7 +5,12 @@
   <div class="col-xs-12">
     <h2>
       <dnsim-job-icon item="::editGroup.job"></dnsim-job-icon>
-      {{editGroup.job.name}} <small><button class="btn btn-link" ng-click="editGroup.job=null">change class/specialisation</button></small>
+      {{editGroup.job.name}}
+      <small>
+        <button class="btn btn-link" ng-click="editGroup.job=null">
+        &raquo;change class/specialisation
+        </button>
+      </small>
     </h2>
   </div>
   <div class="col-xs-12 col-md-3 ng-class: {'bg-danger' : editGroup.invalidGroupName()};">

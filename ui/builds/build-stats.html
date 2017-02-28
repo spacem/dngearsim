@@ -5,23 +5,23 @@
 
 <div class="col-xs-6 col-md-12" ng-show="statsCtrl.stats.setStats.length > 0">
   <h4>set&nbsp;stats</h4>
-  <button class="btn btn-link" ng-show="!statsCtrl.showSetStats" ng-click="statsCtrl.showSetStats = true">show&nbsp;set&nbsp;stats</button>
+  <button class="btn btn-link" ng-show="!statsCtrl.showSetStats" ng-click="statsCtrl.showSetStats = true">&raquo;show&nbsp;set&nbsp;stats</button>
   <div ng-if="statsCtrl.showSetStats" dnsim-stats stats="statsCtrl.stats.setStats"></div>
 </div>
 
 <div class="col-xs-6 col-md-12">
   <h4>item&nbsp;stats</h4>
-  <button class="btn btn-link" ng-show="!statsCtrl.showItemStats" ng-click="statsCtrl.showItemStats = true">show&nbsp;item&nbsp;stats</button>
+  <button class="btn btn-link" ng-show="!statsCtrl.showItemStats" ng-click="statsCtrl.showItemStats = true">&raquo;show&nbsp;item&nbsp;stats</button>
   <div ng-if="statsCtrl.showItemStats" dnsim-stats stats="statsCtrl.stats.combinedStats"></div>
 </div>
 
 <div class="col-xs-6 col-md-12" ng-show="statsCtrl.stats.heroStats != null && statsCtrl.stats.heroStats.length > 0">
   <h4>hero&nbsp;stats</h4>
-  <button class="btn btn-link" ng-show="!statsCtrl.showHeroStats" ng-click="statsCtrl.showHeroStats = true">show&nbsp;hero&nbsp;stats</button>
+  <button class="btn btn-link" ng-show="!statsCtrl.showHeroStats" ng-click="statsCtrl.showHeroStats = true">&raquo;show&nbsp;hero&nbsp;stats</button>
   <div ng-if="statsCtrl.showHeroStats" dnsim-stats stats="statsCtrl.stats.heroStats"></div>
 </div>
 <div class="col-xs-6 col-md-12" ng-show="statsCtrl.stats.nakedStats.length > 0">
   <h4>naked&nbsp;stats</h4>
-  <button class="btn btn-link" ng-show="!statsCtrl.showNakedStats" ng-click="statsCtrl.showNakedStats = true">show&nbsp;naked&nbsp;stats</button>
+  <button class="btn btn-link" ng-show="!statsCtrl.showNakedStats" ng-click="statsCtrl.showNakedStats = true">&raquo;show&nbsp;naked&nbsp;stats</button>
   <div  ng-if="statsCtrl.showNakedStats" dnsim-stats stats="statsCtrl.stats.nakedStats"></div>
 </div>
