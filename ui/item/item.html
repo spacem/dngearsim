@@ -51,17 +51,17 @@
   <div class="col-xs-12 col-md-7">
     <div class="row" ng-if="::item.typeName != 'custom' && item.typeName != 'skills' && item.typeName != 'talisman'">
       <!-- virtical layout -->
-      <div class="col-xs-3 hidden-xs" ng-if="::item.stats != null && item.stats.length > 0">
+      <div class="col-xs-4 hidden-xs" ng-if="::item.stats != null && item.stats.length > 0">
         <br />
         <label>stats</label><br />
         <div dnsim-stats stats="::item.stats">
         </div>
       </div>
-      <div class="col-xs-3 hidden-xs" ng-if="::item.setStats != null && item.setStats.length > 0">
+      <div class="col-xs-4 hidden-xs" ng-if="::item.setStats != null && item.setStats.length > 0">
         <br /><label>set stats</label><br />
         <div dnsim-stats stats="::item.setStats" num-in-set="getNumInSet()"></div>
       </div>
-      <div class="col-xs-6 hidden-xs">
+      <div class="col-xs-4 hidden-xs">
         <div class="row">
           <br />
           <div class="col-xs-12" ng-if="item.enchantmentStats && item.enchantmentStats.length > 0">
