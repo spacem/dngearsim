@@ -14,12 +14,12 @@ function dnsimCategoryLinks(itemCategory,$location) {
       onChange: '&onChange'
     },
     templateUrl: 'ui/widgets/dnsim-category-links.html',
-    controller: ['itemCategory', dnsimCategoryLinksController],
+    controller: ['itemCategory','$window', dnsimCategoryLinksController],
     controllerAs: 'ctrl',
   };
 };
 
-function dnsimCategoryLinksController(itemCategory) {
+function dnsimCategoryLinksController(itemCategory, $window) {
 
   var vm = this;
 
@@ -27,6 +27,13 @@ function dnsimCategoryLinksController(itemCategory) {
   vm.collapsed = true;
 
   vm.setCategory = function(action) {
+    
+    if(vm.collapse) {
+      // console.log('collapsing cat', action);
+      vm.collapsed = !vm.collapsed;
+      $window.scrollTo(0, 0);
+    }
+    
     // console.log('setting cat', action);
     if(vm.cat != action) {
       vm.cat = action;
@@ -35,11 +42,6 @@ function dnsimCategoryLinksController(itemCategory) {
       if(vm.onChange) {
         vm.onChange();
       }
-    }
-    
-    if(vm.collapse) {
-      // console.log('collapsing cat', action);
-      vm.collapsed = !vm.collapsed;
     }
   }
 }

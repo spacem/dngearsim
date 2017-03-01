@@ -118,7 +118,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
       }
     }
     
-    return itemCountText + ' ' + vm.category.name;
+    return itemCountText;
   }
   
   this.newCustom = function() {

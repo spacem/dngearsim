@@ -10,7 +10,49 @@
 <div class="hidden-xs col-xs-4 col-md-3">
 </div>
 <div class="col-xs-12 col-sm-8 col-md-9">
-<div class="row" ng-if="::!ctrl.itemCategory.searchType">
+<div class="row visible-xs" ng-if="::!ctrl.itemCategory.searchType">
+  <div
+    class="col-xs-12 input-group">
+     <input placeholder="Search" ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 300 }" />
+     <span class="input-group-btn">
+       <button class="btn btn-default" ng-click="ctrl.filters = !ctrl.filters">
+        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+      </button>
+     </span>
+  </div>
+</div>
+<div class="row visible-xs" ng-if="!ctrl.itemCategory.searchType && ctrl.filters">
+  <div class="col-xs-6 form-group" ng-if="::!ctrl.itemCategory.hideRank" ng-repeat="(id,value) in ctrl.grades track by $index">
+    <label class="checkbox-inline">
+      <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}"> {{value.name}}
+    </label>
+  </div>
+  
+  <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
+     <label>min&nbsp;lvl:
+     </label>
+     <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" ng-model-options="{ debounce: 300 }" />
+  </div>
+  <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
+     <label>max&nbsp;lvl:
+     </label>
+     <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" ng-model-options="{ debounce: 300 }" />
+  </div>
+  <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
+    <label>stat:</label>
+    <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
+    </select>
+  </div>
+  <div class="col-xs-12 col-sm-3" ng-hide="::ctrl.itemCategory.hideJob">
+    <label>class: 
+    </label>
+    <select ng-change="ctrl.changeSearch()" ng-model="ctrl.job" class="form-control"
+     ng-options="job.name for job in ctrl.jobs track by job.id">
+    </select>
+  </div>
+  
+</div>
+<div class="row hidden-xs" ng-if="::!ctrl.itemCategory.searchType">
   <div class="col-xs-0 col-md-2"></div>
   <div class="hidden-xs col-md-10 form-group">
     <br />
@@ -19,11 +61,6 @@
       <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
     </label>
     </span>
-  </div>
-  <div class="visible-xs col-xs-6 form-group" ng-if="::!ctrl.itemCategory.hideRank" ng-repeat="(id,value) in ctrl.grades track by $index">
-    <label class="checkbox-inline">
-      <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}"> {{value.name}}
-    </label>
   </div>
   
   <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
