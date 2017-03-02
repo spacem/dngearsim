@@ -4,6 +4,7 @@
   "description": "Dragon Nest Gear Simulator",
   "scripts": {
     "test": "gulp test",
+    "tdd": "gulp tdd",
     "build": "gulp",
     "watch": "gulp watch",
     "lite": "lite-server",
