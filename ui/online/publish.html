@@ -37,7 +37,7 @@
     <label>about you</label>
     <textarea ng-model="ctrl.profile.about" class="form-control" rows="5"></textarea>
     <br />
-    <button ng-click="ctrl.saveProfile()" class="btn btn-default">save</button>
+    <button ng-click="ctrl.saveProfile()" ng-disabled="!ctrl.profile.name" class="btn btn-default">save</button>
     
     <a class="btn btn-link" ng-href="profile/?uid={{ctrl.getUser().uid}}">view profile page</a>
     <br />
