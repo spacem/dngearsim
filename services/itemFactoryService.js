@@ -14,22 +14,22 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     createBasicItem: createBasicItem,
   };
   
-  function createItem(itemSourceName, d, p, totalRatio) {
+  function createItem(itemType, row, p, totalRatio) {
     
     // data and potential are used to initialise name and stats
     // this is only done when needed
     // they are then removed from the object
     return {
-      data : d,
+      row: row,
       potential : p,
-      id: d.id,
+      id: dntData.getValue(itemType.mainDnt, row, 'id'),
       totalRatio: totalRatio,
-      itemSource : itemSourceName,
-      levelLimit : d.LevelLimit,
-      needJobClass : d.NeedJobClass,
-      typeId : d.Type,
-      exchangeType: d.ExchangeType,
-      rank : hCodeValues.rankNames[d.Rank],
+      itemSource : itemType.name,
+      levelLimit : dntData.getValue(itemType.mainDnt, row, 'LevelLimit'),
+      needJobClass : dntData.getValue(itemType.mainDnt, row, 'NeedJobClass'),
+      typeId : dntData.getValue(itemType.mainDnt, row, 'Type'),
+      exchangeType: dntData.getValue(itemType.mainDnt, row, 'ExchangeType'),
+      rank : hCodeValues.rankNames[dntData.getValue(itemType.mainDnt, row, 'Rank')],
       pid: null,
       name : null,
       stats : null,
@@ -106,13 +106,15 @@ function itemFactory(translations,dntData,hCodeValues,items) {
           
         // skip items with no data
         if(dState1_GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35) {
-          var d = dntData.getRow(itemType.mainDnt, r);
           
           if(itemType.type == 'techs') {
+            var jobClass = dntData.getValue(itemType.mainDnt, r, 'NeedJobClass');
+            var levelLimit = dntData.getValue(itemType.mainDnt, r, 'LevelLimit');
+            
             var exists = false;
             for(var i=0;i<itemType.items.length;++i) {
-              if(itemType.items[i].needJobClass == d.NeedJobClass &&
-                itemType.items[i].levelLimit == d.LevelLimit &&
+              if(itemType.items[i].needJobClass == jobClass &&
+                itemType.items[i].levelLimit == levelLimit &&
                 itemType.items[i].potential && itemType.items[i].potential.PotentialID == dTypeParam1) {
                   exists = true;
                   break;
@@ -135,7 +137,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
           
           var numPotentials = potentials.length;
           if(!numPotentials) {
-            itemType.items.push(createItem(itemType.name, d, null, 0));
+            itemType.items.push(createItem(itemType, r, null, 0));
           }
           else {
             var totalRatio = 0;
@@ -160,7 +162,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
                   }
                 }
                 
-                itemType.items.push(createItem(itemType.name, d, potentials[p], totalRatio));
+                itemType.items.push(createItem(itemType, r, potentials[p], totalRatio));
               }
             }
           }
@@ -225,8 +227,10 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   
   function initItem(item) {
     
-    if(item.data) {
-      var d = item.data;
+    if(item.row >= 0) {
+      var d = dntData.getRow(items[item.itemSource].mainDnt, item.row);
+      delete item.row;
+
       var p = item.potential;
   
       if(item.name == null) {
@@ -258,6 +262,10 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         }
       }
       
+      if(d.dragonjeweltype >= 0) {
+        item.dragonjeweltype = d.dragonjeweltype;
+      }
+      
       if(d.EnchantID && !item.enchantmentId) {
         item.enchantmentId = d.EnchantID;
       }
@@ -285,7 +293,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         }
       }
       
-      delete item.data;
       delete item.potential;
     }
   }
@@ -303,7 +310,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   }
   
   function getItemData(item) {
-    
     var itemType = items[item.itemSource];
     
     if(item.fileName && dntData.isLoaded(item.fileName + '.lzjson')) {

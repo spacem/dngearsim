@@ -6,7 +6,7 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
   
   var vm = this;
   
-  if(!vm.item) {
+  if(!vm.item || !vm.item.enchantmentId) {
     return;
   }
   

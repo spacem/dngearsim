@@ -188,6 +188,7 @@ function statHelper(hCodeValues) {
         
         // special stats for zeal
         var intToPdmg = dupeStat(10164);
+        var defToPdmg = dupeStat(110373);
         
         minPdmg.max += extraPdmg.max;
         minPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
@@ -196,6 +197,7 @@ function statHelper(hCodeValues) {
         minPdmg.max = Math.floor(minPdmg.max*(1+(getPc(minPdmg) + extraPdmgMod.max)));
         minPdmg.max = Math.floor(minPdmg.max * (1+aPwr.max+paPwr.max));
         minPdmg.max += Math.floor(intToPdmg.max * int.max);
+        minPdmg.max += Math.floor(defToPdmg.max * def.max);
         addStat(minPdmg);
   
         maxPdmg.max += extraPdmg.max;
@@ -205,6 +207,7 @@ function statHelper(hCodeValues) {
         maxPdmg.max = Math.floor(maxPdmg.max*(1+(getPc(maxPdmg) + extraPdmgMod.max)));
         maxPdmg.max = Math.floor(maxPdmg.max * (1+aPwr.max+paPwr.max));
         maxPdmg.max += Math.floor(intToPdmg.max * int.max);
+        maxPdmg.max += Math.floor(defToPdmg.max * def.max);
         addStat(maxPdmg);
       }
       
@@ -219,6 +222,7 @@ function statHelper(hCodeValues) {
         
         // special stats for zeal
         var strToMdmg = dupeStat(10165);
+        var intToMdmg = dupeStat(10372);
         
         minMdmg.max += extraMdmg.max;
         minMdmg.max += Math.floor(int.max*Number(group.conversions.IntelligenceAttack));
@@ -226,6 +230,7 @@ function statHelper(hCodeValues) {
         minMdmg.max = Math.floor(minMdmg.max*(1+(getPc(minMdmg) + extraMdmgMod.max)));
         minMdmg.max = minMdmg.max * (1+aPwr.max+maPwr.max);
         minMdmg.max += Math.floor(strToMdmg.max * str.max);
+        minMdmg.max += Math.floor(intToMdmg.max * int.max);
         addStat(minMdmg);
         
         maxMdmg.max += extraMdmg.max;
@@ -234,6 +239,7 @@ function statHelper(hCodeValues) {
         maxMdmg.max = Math.floor(maxMdmg.max*(1+(getPc(maxMdmg) + extraMdmgMod.max)));
         maxMdmg.max = maxMdmg.max * (1+aPwr.max+maPwr.max);
         maxMdmg.max += Math.floor(strToMdmg.max * str.max);
+        maxMdmg.max += Math.floor(intToMdmg.max * int.max);
         addStat(maxMdmg);
       }
       

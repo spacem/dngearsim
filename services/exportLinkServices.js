@@ -258,32 +258,33 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       else if(item.itemSource in items) {
         
         var itemType = items[item.itemSource];
-        var ds = dntData.find(itemType.mainDnt, 'id', item.id);
+        var ds = dntData.findFast(itemType.mainDnt, 'id', item.id);
         if(!ds.length) {
           console.log('item ' + item.id + ' not found in ' + itemType.mainDnt);
         }
         else {
-          var d = ds[0];
+          var rowNum = ds[0];
+          var typeParam1 = dntData.getValue(itemType.mainDnt, rowNum, 'TypeParam1');
         
           var totalRatio = 0;
           var p = null;
           
           var ps = dntData.find(itemType.potentialDnt, 'id', item.pid);
           if(!ps.length) {
-            ps = dntData.find(itemType.potentialDnt, 'PotentialID', d.TypeParam1);
+            ps = dntData.find(itemType.potentialDnt, 'PotentialID', typeParam1);
           }
           
           if(!ps.length) {
             ps = dntData.find(itemType.potentialDntEx, 'id', item.pid);
             if(!ps.length) {
-              ps = dntData.find(itemType.potentialDntEx, 'PotentialID', d.TypeParam1);
+              ps = dntData.find(itemType.potentialDntEx, 'PotentialID', typeParam1);
             }
           }
           
           if(ps.length > 0) {
             p = ps[0];
             
-            if(p.PotentialID != d.TypeParam1) {
+            if(p.PotentialID != typeParam1) {
               // this happened one time
               // not sure how but it corrupted the stats
               p = null;
@@ -297,7 +298,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
             }
           }
           
-          var newItem = itemFactory.createItem(itemType.name, d, p, totalRatio);
+          var newItem = itemFactory.createItem(itemType, rowNum, p, totalRatio);
           itemFactory.initItem(newItem);
           itemCategory.setItemCategory(newItem, d);
 
@@ -369,10 +370,10 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               newItem.fullStats = hCodeValues.mergeStats(newItem.fullStats, newItem.sparkStats);
             }
           }
-          else if(d.dragonjeweltype) {
+          else if(newItem.dragonjeweltype) {
             newItem.offensiveGemSlots = 0;
             newItem.increasingGemSlots = 0;
-            var itemData = dntData.find('dragonjewelslottable.lzjson', 'DragonJewelID', d.dragonjeweltype);
+            var itemData = dntData.find('dragonjewelslottable.lzjson', 'DragonJewelID', newItem.dragonjeweltype);
             if(itemData && itemData.length > 0) {
               if(itemData[0].DragonJewelSlot1 == 1) newItem.offensiveGemSlots++;
               if(itemData[0].DragonJewelSlot2 == 1) newItem.offensiveGemSlots++;
@@ -441,6 +442,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           
           for(var fileType in itemType) {
             if(fileType.indexOf('Dnt') > 0) {
+              if(fileType == 'enchantDnt' && !item.enchantmentNum) {
+                continue;
+              }
               dntFiles[itemType[fileType]] = itemColumnsToLoad[fileType];
             }
           }
