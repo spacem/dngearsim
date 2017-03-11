@@ -15,8 +15,6 @@ function saveHelper(itemCategory) {
       else {
         this.updatedSavedItems(groupName, [item]);
       }
-      
-      localStorage.setItem('lastSavedGroup', groupName);
     },
     
     saveBuildSelection : function(buildName, builds) {
@@ -64,29 +62,31 @@ function saveHelper(itemCategory) {
       return groupName;
     },
     
+    deleteBuild(buildName) {
+      var builds = this.getSavedItems();
+      if(buildName in builds) {
+          delete builds[buildName];
+          this.setCurrentBuild(null);
+          this.saveBuilds(builds);
+      }
+    },
+    
     updatedSavedItems: function(groupName, updatedItems) {
       var items = this.getSavedItems();
       if(groupName in items) {
-        if(!updatedItems.length) {
-          delete items[groupName];
-          this.setCurrentBuild(null);
-          // console.log('no items to update');
-        }
-        else {
-          items[groupName].items = updatedItems;
-          items[groupName].lastUpdate = (new Date()).getTime();
-          localStorage.setItem('lastSavedGroup', groupName);
-          // console.log('set group');
-        }
+        items[groupName].items = updatedItems;
+        items[groupName].lastUpdate = (new Date()).getTime();
       }
       else {
         items[groupName] = {items : updatedItems, lastUpdate: (new Date()).getTime()};
-        localStorage.setItem('lastSavedGroup', groupName);
           // console.log('created group');
       }
       
-      var stringifiedData = JSON.stringify(items);
-      // console.log('saving: ' + stringifiedData);
+      this.saveBuilds(items);
+    },
+    
+    saveBuilds: function(builds) {
+      var stringifiedData = JSON.stringify(builds);
       localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
     },
     
@@ -119,8 +119,7 @@ function saveHelper(itemCategory) {
       savedItems[newGroupName].baseStats = baseStats;
       savedItems[newGroupName].heroStats = heroStats;
       
-      var stringifiedData = JSON.stringify(savedItems);
-      localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
+      this.saveBuilds(savedItems);
     },
     
     getSavedItems: function() {
@@ -133,42 +132,6 @@ function saveHelper(itemCategory) {
       }
       
       return {};
-    },
-    
-    getCustomItems: function() {
-      try {
-        var stringifiedData = LZString.decompressFromUTF16(localStorage.getItem('customItems'));
-        var savedItems = JSON.parse(stringifiedData);
-        return savedItems;
-      }
-      catch(ex) {
-      }
-      
-      return [];
-    },
-    
-    saveCustomItems: function(items) {
-      var stringifiedData = JSON.stringify(items);
-      // console.log('saving: ' + stringifiedData);
-      localStorage.setItem('customItems', LZString.compressToUTF16(stringifiedData));
-    },
-    
-    getHiddenTypes: function() {
-      try {
-        var stringifiedData = LZString.decompressFromUTF16(localStorage.getItem('hiddenTypes'));
-        var savedItems = JSON.parse(stringifiedData);
-        return savedItems;
-      }
-      catch(ex) {
-      }
-      
-      return {};
-    },
-    
-    saveHiddenTypes: function(items) {
-      var stringifiedData = JSON.stringify(items);
-      // console.log('saving: ' + stringifiedData);
-      localStorage.setItem('hiddenTypes', LZString.compressToUTF16(stringifiedData));
     },
     
     currentBuild: null,
@@ -189,7 +152,12 @@ function saveHelper(itemCategory) {
     
     setCurrentBuild: function(buildName) {
       this.currentBuild = buildName;
-      localStorage.setItem('currentGroup', buildName);
+      if(!buildName) {
+        localStorage.removeItem('currentGroup', buildName);
+      }
+      else {
+        localStorage.setItem('currentGroup', buildName);
+      }
     }
   };
 }

@@ -11,7 +11,7 @@ function($location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,ite
   }
   
   this.delete = function() {
-    saveHelper.updatedSavedItems(this.name, []);
+    saveHelper.deleteBuild(this.name);
     $location.path('/builds/');
   }
     

@@ -86,12 +86,13 @@ padding: 0;
 .toggle-box-button {
 float: left;
 display: block;
-height: 27px;
+height: 24px;
 width: 44px;
 margin-left: 1px;
 margin-right: 1px;
+padding-top: 0px;
 border-style: none;
-font-size: 50%;
+font-size: 75%;
 }
 .dark-toggle {
 background: url(images/dark_toggle.png) no-repeat center center;
@@ -108,17 +109,26 @@ display: block;
 height: 25px;
 color: white;
 border-style: none;
-font-size: 70%;
 border-color: #070506;
 border-style: solid;
-border-width: 3px;
+border-width: 0px;
 border-radius: 10px;
+margin-top:0px;
+margin-bottom: 3px;
 }
 .toggle-box {
 display: inline;
 float: right;
 clear: right;
 background-color: #070506;
+color: #777;
+font-size: 15.6px;
+font-weight: 400;
+}
+
+.region-heading {
+font-size: 24px;
+color: rgb(51, 51, 51);
 }
 
 .no-region {
@@ -162,8 +172,13 @@ border-top-style: solid;
 border-top-width: 2px;
 }
 .header-title {
-margin-top: 0;
-margin-bottom: 0;
+padding-top: 2px;
+margin-top: 0px;
+margin-bottom: 0px;
+color: #777;
+font-size: 15.6px;
+font-weight: 400;
+display: inline-block;
 }
 .search-active {
 color: #555;
@@ -219,6 +234,10 @@ float: left;
 h3 .job-icon {
 margin-top:5px;
 height: 40px;
+}
+.job-icon.job-icon-small {
+  height: 20px;
+  width: 20px;
 }
 .class-image {
 width:60px;
@@ -361,7 +380,6 @@ background-image: linear-gradient(120deg, rgb(196,189,173), rgb(233,231,224));
  
 .list-group-item.active:focus {
 background-color: rgb(196,189,173);
-border: 0px;
 text-shadow: 0 0 0 #ddd;
 color: #555;
 background-image: linear-gradient(120deg, rgb(196,189,173), rgb(233,231,224));

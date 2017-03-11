@@ -1,7 +1,9 @@
 <ul class="nav nav-tabs" ng-if="!noRegion()">
   <li class="nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
     <a class="list-group-item {{action.extraCss}}" ng-href="{{getActionUrl(action)}}">
-      <span class="glyphicon glyphicon-{{::action.icon}}" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-{{::action.icon}}" ng-if="::action.icon" aria-hidden="true"></span>
+      <dnsim-job-icon size="'50%'" item="action.build.job" small="true"></dnsim-job-icon>
+      &nbsp;
       <span class="hidden-xs">
       {{action.name}}
       </span>

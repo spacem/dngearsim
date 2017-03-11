@@ -12,7 +12,7 @@ angular.module('dnsim').controller('NavCtrl',
       {path: 'search', name:'search', icon: 'search'},
       ];
     
-    var buildAction = {path: 'build', name:'build', icon: 'wrench'};
+    var buildAction = {path: 'build', name:'build'};
     
     var withBuildMenu = [
       {path: 'builds', name:'builds', icon: 'menu-hamburger'},
@@ -84,6 +84,9 @@ angular.module('dnsim').controller('NavCtrl',
         menu = withBuildMenu;
         buildAction.path = 'build/' + currentBuild;
         buildAction.name = currentBuild;
+        if(currentBuild in $scope.savedItems) {
+          buildAction.build = $scope.savedItems[currentBuild];
+        }
       }
       else if($location.path() == '/view-group' || region.dntLocation == null) {
         menu = normalMenu;

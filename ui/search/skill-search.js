@@ -155,11 +155,6 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
     }
   }
   
-  vm.itemLinkClosed = function() {
-    saveHelper.saveCustomItems(vm.customItems);
-    vm.customItems = saveHelper.getCustomItems();
-  }
-  
   vm.getResults = function() {
     
     var skills = getSkills();

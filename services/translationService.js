@@ -109,37 +109,46 @@ function translations($routeParams, $rootScope) {
     
     translate : function(id,idParam) {
       if(this.loaded) {
-        
-        var name;
-        if(!id) {
-          return '';
-        }
-        else {
-          name = dnTranslations.translate(id);
-          
-          if(typeof name != 'string') {
-            return 'm' + name;
+        try {
+          var name;
+          if(!id) {
+            return '';
           }
-        }
-        
-        if(idParam) {
-          var params = idParam.split(',');
-          for(var p=0;p<params.length;++p) {
-            var pid = params[p];
-            if(pid.indexOf('{') == 0) {
-              pid = params[p].replace(/\{|\}/g,'');
-              pid = dnTranslations.translate(pid);
-            }
+          else {
+            name = dnTranslations.translate(id);
             
-            name = name.replace('{' + p + '}', pid);
+            if(typeof name != 'string') {
+              return 'm' + name;
+            }
           }
-        }
+          
+          if(idParam && name) {
+            
+            if(typeof idParam === 'string') {
+              var params = idParam.split(',');
+              for(var p=0;p<params.length;++p) {
+                var pid = params[p];
+                if(pid.indexOf('{') == 0) {
+                  pid = params[p].replace(/\{|\}/g,'');
+                  pid = dnTranslations.translate(pid);
+                }
+                
+                name = name.replace('{' + p + '}', pid);
+              }
+            }
+            else {
+              name = name.replace('{0}', idParam);
+            }
+          }
 
-        return name;
+          return name;
+        }
+        catch(ex) {
+          console.log('unable to translate', id, idParam, ex);
+        }
       }
-      else {
-        return 'm' + id;
-      }
+
+      return 'm' + id;
     }
   }
 }
