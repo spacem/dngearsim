@@ -19,9 +19,14 @@ angular.module('dnsim').controller('BuildListCtrl',
     this.setupBuilds();
     
     if('buildName' in $routeParams) {
-      if($routeParams.buildName != this.currentGroup) {
-        this.currentGroup = $routeParams.buildName;
-        saveHelper.saveBuildSelection(this.currentGroup, this.savedItems);
+      if($routeParams.buildName in vm.savedItems) {
+        if($routeParams.buildName != this.currentGroup) {
+          this.currentGroup = $routeParams.buildName;
+          saveHelper.saveBuildSelection(this.currentGroup, this.savedItems);
+        }
+      }
+      else {
+        $location.path('/builds/');
       }
     }
     else if(this.currentGroup && this.currentGroup in this.savedItems) {

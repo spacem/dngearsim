@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs" ng-if="!noRegion()">
-  <li class="nav-tab nav-{{action.name}}" ng-repeat="action in getActions()"> 
-    <a class="list-group-item {{action.extraCss}}" ng-href="{{getActionUrl(action)}}">
+  <li class="nav-tab nav-{{::action.name}}" ng-repeat="action in getActions()"> 
+    <a class="list-group-item {{action.extraCss}}" ng-href="{{action.path}}">
       <span class="glyphicon glyphicon-{{::action.icon}}" ng-if="::action.icon" aria-hidden="true"></span>
       <dnsim-job-icon size="'50%'" item="action.build.job" small="true"></dnsim-job-icon>
       &nbsp;
@@ -18,6 +18,9 @@
     </a>
   </li>
 </ul>
+<div class="container-fluid sim-error" ng-if="simError">
+  {{simError}}
+</div>
 <div class="container-fluid sim-error" ng-if="isHttpOnly()">
   <div class="container">
     <div class="col-xs-12 text-right">
