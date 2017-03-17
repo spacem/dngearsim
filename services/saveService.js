@@ -62,7 +62,7 @@ function saveHelper(itemCategory) {
       return groupName;
     },
     
-    deleteBuild(buildName) {
+    deleteBuild: function(buildName) {
       var builds = this.getSavedItems();
       if(buildName in builds) {
           delete builds[buildName];
