@@ -169,7 +169,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
       
       var items = [];
       angular.forEach(vm.savedItems[vm.groupName].items, function(item, index) {
-        if(item.exchangeType && item.itemSource != 'gem' && item.itemSource != 'plate') {
+        if(item.exchangeType && item.itemSource != 'gem' && item.itemSource != 'plate' && item.itemSource != 'tman') {
           if(item.exchangeType == vm.item.exchangeType) {
             items.push(item);
           }

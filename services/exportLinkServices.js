@@ -392,21 +392,16 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       }
       
       if(item.fileName) {
-        var datas = dntData.find(item.fileName + '.lzjson', 'id', item.id);
+        var datas = dntData.findFast(item.fileName + '.lzjson', 'id', item.id);
         if(datas.length > 0) {
-          var d = datas[0];
-          var newItem = {
-            id: item.id,
-            data: d,
-            levelLimit : d.LevelLimit,
-            needJobClass : d.NeedJobClass,
-            typeId : d.Type,
-            exchangeType: d.ExchangeType,
-            rank : hCodeValues.rankNames[d.Rank],
-            fileName: item.fileName,
-            description: translations.translate(d.DescriptionID, d.DescriptionIDParam),
-          };
-          
+          var row = datas[0];
+          var d = dntData.getRow(item.fileName + '.lzjson', row);
+          newItem = itemFactory.createBasicItem(d);
+          newItem.row = row;
+          newItem.needJobClass = d.NeedJobClass,
+          newItem.exchangeType = d.ExchangeType,
+          newItem.fileName = item.fileName,
+          newItem.description = translations.translate(d.DescriptionID, d.DescriptionIDParam);
           itemFactory.initItem(newItem);
           return newItem;
         }

@@ -228,7 +228,13 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   function initItem(item) {
     
     if(item.row >= 0) {
-      var d = dntData.getRow(items[item.itemSource].mainDnt, item.row);
+      var d;
+      if(item.itemSource && item.itemSource in items) {
+        d = dntData.getRow(items[item.itemSource].mainDnt, item.row);
+      }
+      else if(item.fileName) {
+        d = dntData.getRow(item.fileName + '.lzjson', item.row);
+      }
       delete item.row;
 
       var p = item.potential;
@@ -358,6 +364,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       icon: d.IconImageIndex,
       levelLimit : d.LevelLimit,
       fileName: d.fileName,
+      typeId: d.Type
     };
   }
 }
