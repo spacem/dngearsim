@@ -18,7 +18,6 @@ My idea was to use static html/javascript pages which could be hosted on free ho
 * Install node.js, git (make sure you enable sym-links) and an editor (eg. visual studio code)
 * Open node.js command prompt
 * git clone https://github.com/spacem/dngearsim.git
-* git clone https://github.com/spacem/dntviewer.git
 * cd dngearsim
 * npm install
 
@@ -65,9 +64,6 @@ This encoding (and the decoding) is done through ItemLinkService.
 ## Saving a Build
 SaveService has most of the code used to save, load and update builds, etc.
 This service stringifies javascript objects to json and then compresses them before saving to the browser localStorage.
-
-## Deploying dngearsim
-Deployment should be as simple as checking out dngearsim and dntviewer in two directories next to each other (dngearsim reference the dntviewer libraries via ../dntviewer).
 
 ## Deploying Data Files
 Data files for each region are uploaded to separate firebase hosting sites each with CORS enabled.

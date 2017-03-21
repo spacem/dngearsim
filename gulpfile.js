@@ -38,7 +38,7 @@ gulp.task('html', function () {
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
-            baseDir: "../",
+            baseDir: '../',
             middleware: [
               historyApiFallback({ index: '/dngearsim/index/index.html' })
             ]
@@ -92,13 +92,16 @@ gulp.task('libs', function() {
 
 gulp.task('dntviewer', function() {
   return gulp.src([
-      '../dntviewer/simplerreader.js',
-      '../dntviewer/dntreader.js',
-      '../dntviewer/dntranslations.js',
+      'bower_components/dntviewer/simplerreader.js',
+      'bower_components/dntviewer/dntreader.js',
+      'bower_components/dntviewer/dntranslations.js',
     ])
     .pipe(sourcemaps.init())
-    .pipe(concat('dntviewer.min.js'))
+    .pipe(babel({
+       presets: ['es2015']
+    }))
     .pipe(uglify())
+    .pipe(concat('dntviewer.min.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('min'))
 })
