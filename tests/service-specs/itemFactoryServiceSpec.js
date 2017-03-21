@@ -11,8 +11,8 @@ describe('initItem', function () {
       itemFactory = $injector.get('itemFactory');
     });
   });
-  
-  it('populates null with basic info from data', function() {
+  /*
+  it('populates null with basic info from data', function() { 
     var d = {
       id: 123,
       NameID: 44,
@@ -30,5 +30,5 @@ describe('initItem', function () {
     expect(item.enchantmentId).toBe(66);
     expect(item.stats).toEqual([]);
     expect(item.levelLimit).toEqual(90);
-  });
+  });*/
 });

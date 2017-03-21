@@ -18,13 +18,13 @@ describe('itemCategory', function () {
   });
   
   it('gets category by path', function() {
-    var cat = itemCategory.byPath('search/titles');
-    expect(cat.name).toEqual('titles');
+    var cat = itemCategory.byPath('offensive-gems');
+    expect(cat.name).toEqual('offensive gems');
   });
   
   it('gets category by name', function() {
-    var cat = itemCategory.byName('titles');
-    expect(cat.path).toEqual('search/titles');
+    var cat = itemCategory.byName('offensive gems');
+    expect(cat.path).toEqual('offensive-gems');
   });
   
   describe('getItemsByCategory', function () {

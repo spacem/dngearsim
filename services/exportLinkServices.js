@@ -1,8 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('exportLinkHelper', 
-['$http','items','dntData','itemFactory','hCodeValues','itemColumnsToLoad','statHelper','translations','itemCategory','region',exportLinkHelper]);
+angular.module('dnsim').factory('exportLinkHelper', exportLinkHelper);
 function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations,itemCategory,region) {
 
   return {
@@ -139,8 +138,10 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
       });
   
-      var retVal = 'view-group?region=' + region.dntLocation.region;
-      
+      var retVal = 'view-group?region=';
+      if(region.dntLocation && region.dntLocation.region) {
+        retVal += region.dntLocation.region;
+      }
       
       if(group.enemyLevel) {
         retVal += '&e=' + group.enemyLevel;

@@ -1,11 +1,22 @@
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
+var browserSync = require('browser-sync').create();
+var remember = require('gulp-remember');
+var cached = require('gulp-cached');
+var babel   = require('gulp-babel');
+var ngAnnotate = require('gulp-ng-annotate');
+var historyApiFallback = require('connect-history-api-fallback');
 
-gulp.task('default', function() {
-    gulp.start('html');
-    gulp.start('libs');
-    gulp.start('dntviewer');
-    gulp.start('js');
+var onError = function (err) {
+  console.log(err);
+  console.log('  ----------------------------------------------------------------------');
+  console.log('\x1b[36m%s\x1b[0m', err);
+  console.log('  ----------------------------------------------------------------------');
+  process.stdout.write('\x07');
+};
+
+gulp.task('default', ['html', 'libs', 'dntviewer', 'js', 'watch', 'test'], function() {
+  return gulp.start('browser-sync');
 });
 
 // html templates
@@ -14,12 +25,27 @@ var htmlmin = require('gulp-htmlmin');
 
 gulp.task('html', function () {
   return gulp.src('ui/**/*.html')
-    .pipe(plumber())
+    .pipe(plumber(onError))
+    .pipe(cached('dngearsim html'))
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(templateCache({root: 'ui/', filename: 'templates.min.js'}))
+    .pipe(remember('dngearsim html')) 
     .pipe(gulp.dest('min'));
 });
 
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "../",
+            middleware: [
+              historyApiFallback({ index: '/dngearsim/index/index.html' })
+            ]
+        },
+        open: false,
+        port: 8080,
+        injectChanges: false,
+    });
+});
 
 // js files
 var concat = require('gulp-concat');
@@ -28,14 +54,19 @@ var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('js', function() {
   return gulp.src(['ui/**/*.js', 'services/**/*.js'])
-    .pipe(plumber())
     .pipe(sourcemaps.init())
+    .pipe(plumber(onError))
+    .pipe(cached('dngearsim js'))
+    .pipe(ngAnnotate())
+    .pipe(babel({
+       presets: ['es2015']
+    }))
+    .pipe(uglify())
+    .pipe(remember('dngearsim js')) 
     .pipe(concat('app.min.js'))
-    //.pipe(uglify())
-    .pipe(sourcemaps.write('.'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('min'))
 })
-
 
 // libs
 gulp.task('libs', function() {
@@ -73,7 +104,7 @@ gulp.task('dntviewer', function() {
 
 // test
 var Karma = require('karma').Server;
-gulp.task('test', ['libs','default'], function (done) {
+gulp.task('test', ['html', 'libs', 'dntviewer', 'js'], function (done) {
   process.env.LC_ALL='C'; // prevent invalid language tag errors
   
   return new Karma({
@@ -85,23 +116,31 @@ gulp.task('test', ['libs','default'], function (done) {
 
 // test coverage
 var Karma = require('karma').Server;
-gulp.task('cover', ['default'], function (done) {
+gulp.task('cover', ['html', 'libs', 'dntviewer', 'js'], function (done) {
   return new Karma({
     configFile: __dirname + '/tests/karma.cover.conf.js',
     singleRun: true
   }, done).start();
 });
 
-// test on change
-gulp.task('tdd', function (done) {
-  new Karma({
+gulp.task('reload-js', ['js'], function(done) {
+  browserSync.reload();
+
+  return new Karma({
     configFile: __dirname + '/tests/karma.conf.js',
+    singleRun: true
   }, done).start();
+});
+gulp.task('reload-html', ['html'], function() {
+  browserSync.reload();
 });
 
 // watcher
-gulp.task('watch', ['default'], function() {
-  var watcher = gulp.watch(['services/**/*.js', 'ui/**/*.js', 'ui/**/*.html', 'tests/**/*.js'], ['html','js','dntviewer']);
+gulp.task('watch', function() {
+  var watcher = gulp.watch(['services/**/*.js', 'ui/**/*.js', 'tests/**/*.js', 'app.js'], ['reload-js']);
+  watcher.on('change', logChange);
+
+  watcher = gulp.watch(['index/index.html', 'ui/**/*.html'], ['reload-html']);
   watcher.on('change', logChange);
 })
 

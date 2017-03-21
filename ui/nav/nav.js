@@ -37,7 +37,7 @@ angular.module('dnsim').controller('NavCtrl',
       }
       
       $scope.isHttpOnly = function() {
-        return location.protocol != 'https:';
+        return location.protocol != 'https:' && location.hostname != 'localhost';
       }
         
       $scope.getActions = function() {
@@ -77,15 +77,16 @@ angular.module('dnsim').controller('NavCtrl',
             menu = normalMenu;
           }
           
+          var path = $location.path;
           angular.forEach(menu, function(value, key) {
             delete value.extraCss;
-            if($location.path().length == 1) {
+            if(path && path.length == 1) {
               if(value.path.length == 1) {
                 value.extraCss = 'active';
               }
             }
-            else if(value.path.length > 1 && $location.path().indexOf('/' + value.path) == 0) {
-              if(value.path != 'builds' || $location.path() == '/builds') {
+            else if(value.path && value.path.length > 1 && path.indexOf('/' + value.path) == 0) {
+              if(value.path != 'builds' || path == '/builds') {
                 value.extraCss = 'active';
               }
             }

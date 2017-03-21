@@ -2,9 +2,15 @@ describe('exportLinkHelper', function () {
   dnsimTestSetup();
   
   var exportLinkHelper;
-  beforeEach(inject(function($injector) {
-    exportLinkHelper = $injector.get('exportLinkHelper');
-  }));
+  beforeEach(function() {
+    module(function($provide) {
+      $provide.value('region', {dntLocation: {region: 'na'}});
+    });
+  
+    inject(function($injector) {
+      exportLinkHelper = $injector.get('exportLinkHelper');
+    });
+  });
   
   var testItem = {
     id: 4,
@@ -43,6 +49,6 @@ describe('exportLinkHelper', function () {
     var testGroup = { items: [testItem]}
     
     var groupString = exportLinkHelper.createGroupLink('groupname', testGroup);
-    expect(groupString).toBe('#/view-group/na/?&g=groupname&i=I4:_source:E6:P2:H1');
+    expect(groupString).toBe('view-group?region=na&g=groupname&i=I4:_source:E6:P2:H1');
   });
 });
