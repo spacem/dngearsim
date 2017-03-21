@@ -15,9 +15,11 @@ var onError = function (err) {
   process.stdout.write('\x07');
 };
 
-gulp.task('default', ['html', 'libs', 'dntviewer', 'js', 'watch', 'test'], function() {
+gulp.task('default', ['build', 'watch', 'test'], function() {
   return gulp.start('browser-sync');
 });
+
+gulp.task('build', ['html', 'libs', 'dntviewer', 'js']);
 
 // html templates
 var templateCache = require('gulp-angular-templatecache');
@@ -104,7 +106,7 @@ gulp.task('dntviewer', function() {
 
 // test
 var Karma = require('karma').Server;
-gulp.task('test', ['html', 'libs', 'dntviewer', 'js'], function (done) {
+gulp.task('test', ['build'], function (done) {
   process.env.LC_ALL='C'; // prevent invalid language tag errors
   
   return new Karma({
