@@ -8,15 +8,11 @@ module.exports = function(config) {
       '../min/libs.min.js',
       '../bower_components/angular-mocks/angular-mocks.js',
       
-      '../../dntviewer/simplerreader.js',
-      '../../dntviewer/dntreader.js',
-      '../../dntviewer/dntranslations.js',
+      '../min/dntviewer.min.js',
       
       '../app.js',
-      
-      '../min/app.min.js',
-      // '../ui/**/*.js',
-      // '../services/*.js',
+      '../ui/**/*.js',
+      '../services/*.js',
       
       'spec-setup.js',
       'service-specs/**/*.js',
