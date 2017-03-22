@@ -1,3 +1,4 @@
+<span class="hidden-xs">
 <button class="btn btn-default" ng-click="buildActions.copyGroup()">
     <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
     <span class="hidden-xs">
@@ -30,9 +31,30 @@
     publish
     </span>
 </a>
+</span>
 
-<!--
-<span>&nbsp;</span>
-<button style="margin-top:12px" class="btn btn-link" ng-click="buildActions.createShortUrl()" ng-hide="buildActions.build.shortUrl != null">&raquo;create permalink</button>
-<a style="margin-top:12px" class="btn btn-link" ng-href="{{buildActions.build.shortUrl}}" ng-if="buildActions.build.shortUrl != null">{{buildActions.build.shortUrl}}</a>
--->
+<span class="visible-xs-block">
+<br />
+<button class="btn btn-default btn-block" ng-click="buildActions.copyGroup()">
+    <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+    copy
+</button>
+<button class="btn btn-default btn-block" ng-click="buildActions.editGroup()">
+    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+    edit
+</button>
+<button class="btn btn-default btn-block" ng-click="buildActions.reloadGroup()">
+    <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+    reload
+</button> 
+<button class="btn btn-default btn-block" ng-click="buildActions.deleteGroup()">
+    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    delete
+</button>
+<dngearsim-build-export-action build="buildActions.build" build-name="buildActions.buildName">
+</dngearsim-build-export-action>
+<a class="btn btn-default btn-block" ng-href="publish">
+    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+    publish
+</a>
+</span>
