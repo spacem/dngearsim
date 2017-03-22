@@ -64,8 +64,8 @@ function hCodeValues() {
       
       // these are both min and max
       // shows with the same name but these are used really just for set bonus I think
-      32 : {id: 32, name: 'pdmg', display: toNoDec, dps: true, pc: 54 },
-      33 : {id: 33, name: 'mdmg', display: toNoDec, dps: true, pc: 56 },
+      32 : {id: 32, name: 'pdmg', display: toNoDec, dps: true, pc: 54, quickHigh: true },
+      33 : {id: 33, name: 'mdmg', display: toNoDec, dps: true, pc: 56, quickHigh: true },
       
       50 : {id: 50, name: 'str%', display: toPercent, dps: true },
       51 : {id: 51, name: 'agi%', display: toPercent, dps: true },
@@ -91,8 +91,8 @@ function hCodeValues() {
 
       // these are both min and max
       // shows with the same name but these are used really just for set bonus I think
-      101 : {id: 101, name: 'pdmg%', display: toPercent, noCustom: true, dps: true },
-      102 : {id: 102, name: 'mdmg%', display: toPercent, noCustom: true, dps: true },
+      101 : {id: 101, name: 'pdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true },
+      102 : {id: 102, name: 'mdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true },
 
       103: {id: 103, name: 'crit dmg', display: toNoDec, dps: true, pc: 104, searchable: true },
       104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true, dps: true },
@@ -285,7 +285,6 @@ function hCodeValues() {
     
     customItems: 
     [
-    {id: 0, typeName:'custom', name: 'wise plate fix', stats: [{id: 52, max:-0.001}]},
     {id: 0, typeName:'custom', name: 'hp unified', stats: [{id: 4075, max:0.05}]},
     ],
   

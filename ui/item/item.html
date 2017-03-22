@@ -49,7 +49,7 @@
     </dngearsim-item-edit-potential>
   </div>
   <div class="col-xs-12 col-md-7">
-    <div class="row" ng-if="::item.typeName != 'custom' && item.typeName != 'skills' && item.typeName != 'talisman'">
+    <div class="row" ng-if="item.typeName != 'custom' && item.typeName != 'skills' && item.typeName != 'talisman'">
       <!-- virtical layout -->
       <div class="col-xs-12 col-md-5" ng-if="::item.stats != null && item.stats.length > 0">
         <label>stats</label><br />

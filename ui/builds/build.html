@@ -41,12 +41,13 @@
           <div class="row table-look">
             <div class="col-xs-12" ng-if="::!buildCtrl.server">
               <dngearsim-quick-add build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
-              <span ng-if="buildCtrl.category.name == 'talisman'">&nbsp;|&nbsp;
+              <span ng-if="buildCtrl.category.name == 'talisman'">&nbsp;
                 <a class="btn btn-link" ng-href="talismans">
                   <span class="glyphicon glyphicon-move" aria-hidden="true"></span>&nbsp;position
                 </a>
               </span>
               <span ng-if="buildCtrl.category.name == 'custom'">
+                &nbsp;
                 <button class="btn btn-link" ng-click="buildCtrl.newCustom()">
                   <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;new custom item
                 </button>
@@ -69,7 +70,7 @@
               </div>
             </div>
           </div>
-          <div class="row table-look">
+          <div class="row table-look" ng-if="buildCtrl.category.name != 'custom'">
             <div class="col-xs-12" ng-if="::!buildCtrl.server">
               <a ng-href="search?cat={{buildCtrl.category.path}}">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>

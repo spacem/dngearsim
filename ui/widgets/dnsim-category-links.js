@@ -26,6 +26,15 @@ function dnsimCategoryLinksController(itemCategory, $window) {
   vm.categories = itemCategory.categories;
   vm.collapsed = true;
 
+  vm.shouldShow = function(action) {
+    if(vm.buildScreen) {
+      return !action.hideInBuild;
+    }
+    else {
+      return !action.hideInSearch;
+    }
+  }
+
   vm.setCategory = function(action) {
     
     if(vm.collapse) {

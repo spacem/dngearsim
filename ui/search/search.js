@@ -33,6 +33,10 @@ function itemSearchCtrl(
      }
      
      vm.itemCategory = itemCategory.byName(catName);
+     if(!vm.itemCategory || vm.itemCategory.hideInSearch) {
+       catName = 'titles';
+       vm.itemCategory = itemCategory.byName('titles');
+     }
      if(vm.itemCategory) {
        // console.log('moving');
        $location.search('cat', vm.itemCategory.path);
@@ -40,6 +44,7 @@ function itemSearchCtrl(
      }
      return;
   }
+  
   
   $window.document.title = 'dngearsim | SEARCH ' + vm.itemCategory.name.toUpperCase();
   

@@ -135,6 +135,20 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return item.rank.id == id;
         }
       },
+      imprintRankStep: {
+        name: 'rank',
+        getOptions: function(category, build, datas) {
+          
+          return [
+          { id: 4, name: 'unique' },
+          { id: 3, name: 'epic' },
+          { id: 2, name: 'rare' },
+          ];
+        },
+        matchesItem: function(id, item) {
+          return item.rank.id == id;
+        }
+      },
       techRankStep: {
         name: 'rank',
         getOptions: function(category, build, datas) {
@@ -314,6 +328,14 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
           return findData(category, build, datas);
         },
         isItemStep: true,
+        hideName: true,
+      },
+      namedItemStep: {
+        name: 'select',
+        getOptions: function(category, build, datas) {
+          return findData(category, build, datas);
+        },
+        isItemStep: true,
       },
       techSkillStep: {
         name: 'skill',
@@ -435,34 +457,36 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         name: 'High Stat',
         getOptions: function(category, build, datas) {
           var items = findData(category, build, datas);
-          var allStats = {};
-          
-          for(var i=0;i<items.length;++i) {
-            var len = 0;
-            for(var j=0;j<items[i].stats.length;++j) {
-              var stat = hCodeValues.stats[items[i].stats[j].id];
-              if(stat && stat.quickHigh) {
-                allStats['high ' + stat.name] = stat.id;
-              }
-            }
-          }
-          
+            
           var allItem = { id: -1, name: 'all' };
           var retVal = [allItem];
-          for(var val in allStats) {
-            retVal.push({
-              id: allStats[val],
-              name: val,
-            });
-          }
-          
-          if(retVal.length <= 2) {
-            retVal = [allItem];
-          }
-          else {
-            retVal = retVal.sort(function(a, b) {
-                return a.id - b.id;
+          if(items.length > 1) {
+            var allStats = {};
+            
+            for(var i=0;i<items.length;++i) {
+              for(var j=0;j<items[i].stats.length;++j) {
+                var stat = hCodeValues.stats[items[i].stats[j].id];
+                if(stat && stat.quickHigh && !('high ' + stat.name in allStats)) {
+                  allStats['high ' + stat.name] = stat.id;
+                }
+              }
+            }
+
+            for(var val in allStats) {
+              retVal.push({
+                id: allStats[val],
+                name: val,
               });
+            }
+            
+            if(retVal.length <= 2) {
+              retVal = [allItem];
+            }
+            else {
+              retVal = retVal.sort(function(a, b) {
+                  return a.id - b.id;
+                });
+            }
           }
           
           return retVal;
@@ -472,26 +496,120 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
             return true;
           }
           
-          var largest = 0;
-          var selected = 0;
+          var largestVal = 0;
+          var selectedVal = 0;
           
           for(var j=0;j<item.stats.length;++j) {
             var val = item.stats[j];
             var stat = hCodeValues.stats[val.id];
-            if(stat && stat.quickHigh) {
-              
+            if(stat.quickHigh) {
               if(val.id == id) {
-                selected = val.max;
+                selectedVal += val.max;
               }
-              else if(val.max > largest) {
-                largest = val.max;
+              else if(val.max > largestVal) {
+                largestVal = val.max;
               }
             }
           }
           
-          return selected >= largest;
+          return selectedVal > largestVal;
+        },
+        sortFunc: function(id, item1, item2) {
+          var val1 = 0;
+          var val2 = 0;
+          
+          for(var i=0;i<item1.stats.length;++i) {
+            if(item1.stats[i].id == id) {
+              val1 = item1.stats[i].max;
+              break;
+            }
+          }
+          for(var j=0;j<item2.stats.length;++j) {
+            if(item2.stats[j].id == id) {
+              val2 = item2.stats[j].max;
+              break;
+            }
+          }
+          return val2 - val1;
         },
         isItemStep: false,
+        minOptions: 3,
+      },
+      hasStatStep: {
+        name: 'Has Stat',
+        getOptions: function(category, build, datas) {
+          var items = findData(category, build, datas);
+            
+          var allItem = { id: -1, name: 'all' };
+          var retVal = [allItem];
+          if(items.length > 1) {
+            var allStats = {};
+            
+            for(var i=0;i<items.length;++i) {
+              for(var j=0;j<items[i].stats.length;++j) {
+                var stat = hCodeValues.stats[items[i].stats[j].id];
+                if(stat && stat.searchable && !('high ' + stat.name in allStats)) {
+                  allStats['has ' + stat.name] = stat.id;
+                }
+              }
+            }
+
+            for(var val in allStats) {
+              retVal.push({
+                id: allStats[val],
+                name: val,
+              });
+            }
+            
+            if(retVal.length <= 2) {
+              retVal = [allItem];
+            }
+            else {
+              retVal = retVal.sort(function(a, b) {
+                  return a.id - b.id;
+                });
+            }
+          }
+          
+          return retVal;
+        },
+        matchesItem: function(id, item) {
+          if(id == -1) {
+            return true;
+          }
+          
+          for(var j=0;j<item.stats.length;++j) {
+            var val = item.stats[j];
+            var stat = hCodeValues.stats[val.id];
+            if(stat.searchable) {
+              if(val.id == id) {
+                return true;
+              }
+            }
+          }
+          
+          return false;
+        },
+        sortFunc: function(id, item1, item2) {
+          var val1 = 0;
+          var val2 = 0;
+          
+          for(var i=0;i<item1.stats.length;++i) {
+            if(item1.stats[i].id == id) {
+              val1 = item1.stats[i].max;
+              break;
+            }
+          }
+          for(var j=0;j<item2.stats.length;++j) {
+            if(item2.stats[j].id == id) {
+              val2 = item2.stats[j].max;
+              break;
+            }
+          }
+          return val2 - val1;
+        },
+        isItemStep: false,
+        minOptions: 3,
       },
       customStep: {
         name: 'misc',
@@ -505,23 +623,62 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
     
     categorySteps: {
       titles: ['titleStep'],
-      weapons: ['exchangeStep','sixtyLevelStep','equipRankStep','itemStep','enhanceStep'],
-      armour: ['exchangeStep','sixtyLevelStep','equipRankStep','itemStep','enhanceStep'],
-      accessories: ['accExchangeStep','allLevelStep','equipRankStep','itemNameStep','itemStep'],
-      'offensive gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
-      'increasing gems': ['sixtyLevelStep','gemRankStep','itemNameStep','numStatsStep','itemStep','enhanceStep'],
-      'enhancement plates': ['allLevelStep','otherRankStep','distinctItemNameStep','numStatsStep','itemStep'],
-      'expedition plates': ['sixtyLevelStep','distinctItemNameStep','numStatsStep','highStatStep','itemStep'],
-      talisman: ['sixtyLevelStep','talismanRankStep','distinctItemNameStep','numStatsStep','itemStep','enhanceTalismanStep'],
-      costume: ['exchangeStep','otherRankStep','itemNameStep','itemStep'],
-      cash: ['accExchangeStep','cashRankStep','itemNameStep','itemStep'],
-      techs: ['exchangeStep','allLevelStep','techRankStep','techSkillStep','itemStep'],
-      // custom: ['customStep'],
+      weapons: ['exchangeStep','sixtyLevelStep','equipRankStep','distinctItemNameStep','hasStatStep','itemStep','enhanceStep'],
+      armour: ['exchangeStep','sixtyLevelStep','equipRankStep','distinctItemNameStep','hasStatStep','itemStep','enhanceStep'],
+      accessories: ['accExchangeStep','allLevelStep','equipRankStep','distinctItemNameStep','hasStatStep','itemStep'],
+      techs: ['exchangeStep','allLevelStep','techRankStep','techSkillStep','distinctItemNameStep','highStatStep','itemStep'],
+      'offensive gems': ['sixtyLevelStep','gemRankStep','distinctItemNameStep','hasStatStep','numStatsStep','itemStep','enhanceStep'],
+      'increasing gems': ['sixtyLevelStep','gemRankStep','distinctItemNameStep','hasStatStep','numStatsStep','itemStep','enhanceStep'],
+      'enhancement plates': ['allLevelStep','otherRankStep','distinctItemNameStep','numStatsStep','hasStatStep','itemStep'],
+      'expedition plates': ['sixtyLevelStep','distinctItemNameStep','numStatsStep','highStatStep','hasStatStep','itemStep'],
+      talisman: ['sixtyLevelStep','talismanRankStep','distinctItemNameStep','numStatsStep','hasStatStep','itemStep','enhanceTalismanStep'],
+      costume: ['exchangeStep','otherRankStep','distinctItemNameStep','itemStep'],
+      imprint: ['imprintRankStep','distinctItemNameStep','highStatStep','itemStep'],
+      cash: ['accExchangeStep','cashRankStep','distinctItemNameStep','itemStep'],
+      custom: ['customStep'],
     },
     getOptions: function(category, build, datas) {
+      var t = this;
       if(category.name in this.categorySteps) {
         var stepName = this.getStepName(category, datas.length);
-        return this.stepDefs[stepName].getOptions(category, build, datas);
+        var stepDef = this.stepDefs[stepName];
+        var allOptions = stepDef.getOptions(category, build, datas);
+        if(stepDef.isItemStep) {
+          return allOptions;
+        }
+        else {
+          if(stepDef.minOptions) {
+              var unfilteredItems = findData(category, build, datas, 50);
+          }
+
+          var newOptions = _.filter(allOptions, function(option) {
+            var tempDatas = datas.concat([
+              t.createData(option, category, datas.length)
+            ]);
+
+            var items;
+            if(stepDef.minOptions) {
+              if(allOptions[0] == option) {
+                return true;
+              }
+
+              items = findData(category, build, tempDatas, 50);
+              if(items.length > 0 && items.length < 50) {
+                return items.length < unfilteredItems.length;
+              }
+            }
+            else {
+              items = findData(category, build, tempDatas, 1);
+            }
+            return items.length;
+          });
+
+          if(stepDef.minOptions && newOptions.length < stepDef.minOptions) {
+            return [allOptions[0]];
+          }
+
+          return newOptions;
+        }
       }
       else {
         return [];
@@ -552,9 +709,6 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         step: stepName,
         value: value,
         def: def,
-        matchesItem: function(item) {
-          return def.matchesItem(value.id, item);
-        }
       };
     },
     getItem: getItem,
@@ -587,8 +741,10 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
     
     var allItems = itemCategory.getItems(category.name);
     var retVal = [];
-    // console.log('looking at ' + allItems.length + ' items');
     var numItems = allItems.length;
+
+    var sortFunc = null;
+    var sortId = null;
     
     for(var i=0;i<numItems;++i) {
       
@@ -601,7 +757,13 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       
       var addItem = true;
       for(var d=0;d<datas.length;++d) {
-        if(datas[d].matchesItem && !datas[d].matchesItem(item)) {
+        if(!datas[d].def.matchesItem || datas[d].def.matchesItem(datas[d].value.id, item)) {
+          if('sortFunc' in datas[d].def) {
+            sortFunc = datas[d].def.sortFunc;
+            sortId = datas[d].value.id;
+          }
+        }
+        else {
           addItem = false;
           break;
         }
@@ -615,9 +777,14 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
         break;
       }
     }
-    
+
     retVal = retVal.sort(function(item1, item2) {
-      return item1.name.localeCompare(item2.name);
+      if(sortFunc) {
+        return sortFunc(sortId, item1, item2);
+      }
+      else {
+        return item1.name.localeCompare(item2.name);
+      }
     });
     
     // console.log('found ' + retVal.length + ' items');

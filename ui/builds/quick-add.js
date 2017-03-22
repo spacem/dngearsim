@@ -76,7 +76,6 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
     vm.startedForCat = vm.category.name;
     
     jobs.init(function() {}, vm.reset);
-    dntData.init('exchange.lzjson', null, function() {}, vm.reset);
     itemCategory.init(vm.category.name, vm.reset);
   }
   
@@ -104,6 +103,7 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
       vm.setOptions();
     }
   }
+  dntData.init('exchange.lzjson', null, function() {}, vm.reset);
   
 }])
 .directive('dngearsimQuickAdd', function() {

@@ -20,15 +20,21 @@ quick add
       no matching items found...
     </span>
       
-    </span>
-    <button class="btn btn-default btn-block" ng-click="quickAdd.selectOption(option)" ng-repeat="option in quickAdd.options track by $index">
+    <button class="btn btn-default btn-block dnsim-card" ng-click="quickAdd.selectOption(option)" ng-repeat="option in quickAdd.options track by $index">
       <span ng-if="option.name">
         {{option.name}}
       </span>
-      <span ng-if="option.stats != null">
-        <br />
-        <span dnsim-stats stats="option.stats" separator="'|'"></span>
-      </span>
+      <div ng-if="option.stats != null" style="margin: auto" class="text-left">
+        <div style="width: 100px;float: left;min-height:10px" class="hidden-xs">
+          &nbsp;
+        </div>
+        <div style="width: 140px;float: left;min-height:10px">
+          <span dnsim-stats stats="option.stats" filter="'dps'" separator="'<br />'" />
+        </div>
+        <div style="float: left">
+          <span dnsim-stats stats="option.stats" filter="'def'" separator="'<br />'" />
+        </div>
+      </div>
     </button>
   </div>
 </div>

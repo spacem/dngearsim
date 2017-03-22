@@ -23,7 +23,7 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'cash', name:'cash', sourceType: 'cash', numItemText: '8', maxCat: 8, maxExchange: 2, hideJob: true, hideLevel: true, limitExchange: [23,24,25,26,27,28,29]},
       {path: 'extras', name:'extras', sourceType: 'xtras', limitExchange: [47], hideJob: true, hideLevel: true,},
       {path: 'skills', name:'skills', searchType: 'skills'},
-      {path: 'custom', name:'custom', searchType: 'custom'},
+      {path: 'custom', name:'custom', searchType: 'custom', hideInSearch: true},
       ],
       
     byName: function(name) {

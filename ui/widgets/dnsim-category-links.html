@@ -4,7 +4,7 @@
     ng-repeat="action in ::ctrl.categories track by $index"
     ng-class="{'active': action == ctrl.cat}"
     ng-show="!ctrl.collapse || !ctrl.collapsed || action == ctrl.cat"
-    ng-if="!action.hideInBuild || !ctrl.buildScreen">
+    ng-if="ctrl.shouldShow(action)">
       <span class="cat-icon-{{action.name}} cat-icon">
       </span>
         {{::action.name}}
