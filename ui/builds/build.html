@@ -68,7 +68,20 @@
               </span>
             </div>
           </div>
-          <div class="row table-look">
+          <div class="row table-look" ng-if="buildCtrl.category.name != 'offensive gems' && buildCtrl.category.name != 'increasing gems'">
+            <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
+              <dngearsim-build-item item="result" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()" edit-mode="buildCtrl.editItem == result"></dngearsim-build-item>
+              <div ng-if="!buildCtrl.server && buildCtrl.editItem != result" style="float:right">
+                <button class="btn btn-default" ng-click="buildCtrl.editItem = result" ng-if="buildCtrl.canEdit(result)">
+                  edit
+                </button>
+                <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);">
+                  remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row table-look" ng-if="buildCtrl.category.name == 'offensive gems' || buildCtrl.category.name == 'increasing gems'">
             <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
               <dngearsim-build-item item="result" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()" edit-mode="buildCtrl.editItem == result"></dngearsim-build-item>
               <div ng-if="!buildCtrl.server && buildCtrl.editItem != result" style="float:right">
