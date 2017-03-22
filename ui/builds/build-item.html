@@ -1,6 +1,8 @@
 <div style="float:right;clear: right" ng-if="ctrl.item.itemSource == 'gem'" class="container-fluid">
-  <small ng-if="!ctrl.editMode && ctrl.getGemSlotName(ctrl.item)">On {{ctrl.getGemSlotName(ctrl.item)}}</small>
-  <button class="btn btn-default" ng-click="ctrl.changingGemSlot = true" ng-show="!ctrl.changingGemSlot" ng-if="ctrl.editMode">set gem slot</button>
+  <!--  <small ng-if="!ctrl.editMode && ctrl.getGemSlotName(ctrl.item)">On {{ctrl.getGemSlotName(ctrl.item)}}</small>
+
+    <button class="btn btn-default" ng-click="ctrl.changingGemSlot = true" ng-show="!ctrl.changingGemSlot" ng-if="ctrl.editMode">set gem slot</button>
+    -->
   <div ng-show="ctrl.changingGemSlot" class="btn-group-vertical" ng-if="ctrl.editMode">
     <button  ng-class="{'btn': true, 'btn-default': true, 'disabled': ctrl.item.gemSlot == gemSlot.id}" ng-click="ctrl.item.gemSlot = gemSlot.id;ctrl.onChange()" ng-repeat="gemSlot in ctrl.gemSlots track by $index">
       <span>

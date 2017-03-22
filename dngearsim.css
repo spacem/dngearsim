@@ -1,7 +1,11 @@
 body {
 background-color: rgb(196,189,173);
+min-width: 305px;
 }
 
+.group-header > h3 {
+  margin-top: 5px;
+}
 
 #nav {
 background-color: rgb(233,231,224);
@@ -220,6 +224,11 @@ height: 35px;
 border: solid 2px;
 border-radius: 10px;
 margin-right: 4px;
+}
+.item-icon.item-icon-small {
+  height: 17px;
+  width: 18px;
+  border-radius: 5px;
 }
 .talisman-toggle {
 padding-left: 0;

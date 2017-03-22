@@ -24,6 +24,111 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
       return [];
     }
   }
+
+
+  var subCats = {};
+  var subCatCatName = '';
+  this.getSubCategories = function() {
+    if(subCatCatName != vm.category.name) {
+      subCats = {};
+      subCatCatName = vm.category.name;
+      var subCatList = [];
+
+      var items = vm.build.items.sort(function(item1, item2) {
+        return item1.exchangeType - item2.exchangeType;
+      });
+      if(vm.category.name == 'increasing gems') {
+        subCatList = _.filter(items, function(item) {
+          return item.increasingGemSlots > 0;
+        });
+      }
+      else if(vm.category.name == 'offensive gems') {
+        subCatList = _.filter(items, function(item) {
+          return item.offensiveGemSlots > 0;
+        });
+      }
+      _.each(subCatList, function(item) {
+        if(!(item.exchangeType in subCats)) {
+          subCats[item.exchangeType] = {
+            names: [],
+            slots: 0,
+            exchangeType: item.exchangeType
+          };
+        }
+
+        subCats[item.exchangeType].names.push(item.name);
+        if(vm.category.name == 'increasing gems') {
+          subCats[item.exchangeType].slots += item.increasingGemSlots;
+        }
+        if(vm.category.name == 'offensive gems') {
+          subCats[item.exchangeType].slots += item.offensiveGemSlots;
+        }
+      });
+      subCats[0] = null;
+    }
+    
+    return subCats;
+  }
+
+  this.getNumTaken = function(subCat) {
+    var retVal = 0;
+    var gemExchange = _.find(hCodeValues.gemExchanges, function(e) {
+      return e.exchange == subCat.exchangeType;
+    });
+
+    if(gemExchange) {
+      var items = this.getCategoryItems();
+      _.each(items, function(item) {
+        if(item.gemSlot == gemExchange.id) {
+          ++retVal;
+        }
+      });
+    }
+    return retVal;
+  }
+
+  this.isInSubCat = function(item, subCat) {
+    if(!subCat && !item.gemSlot) {
+      return true;
+    }
+    else {
+      var gemExchange = _.find(hCodeValues.gemExchanges, function(e) {
+        return e.id == item.gemSlot;
+      });
+
+      if(!subCat && gemExchange) {
+        // check for invalid slot
+        var allSubCatItems = this.getSubCategories();
+        var foundSubCatItem = _.find(allSubCatItems, function(subCatItem) {
+          return subCatItem != null && gemExchange.exchange == subCatItem.exchangeType;
+        });
+
+        if(!foundSubCatItem) {
+          return true;
+        }
+      }
+      else if(subCat && gemExchange) {
+        return gemExchange.exchange == subCat.exchangeType;
+      }
+      else {
+        return false;
+      }
+    }
+  }
+
+  this.canMove = function() {
+    return vm.category.name == 'increasing gems' || vm.category.name == 'offensive gems';
+  }
+
+  this.move = function(moveItem, destination) {
+    subCatCatName = '';
+    var gemExchange = _.find(hCodeValues.gemExchanges, function(e) {
+      return e.exchange == destination.exchangeType;
+    });
+    moveItem.gemSlot = gemExchange.id;
+    saveHelper.updatedSavedItems(vm.buildName, vm.build.items);
+    vm.handleChange();
+  }
   
   this.getCategories = function() {
     return itemCategory.categories;
@@ -147,6 +252,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
   }
   
   this.removeItem = function(item) {
+    subCatCatName = '';
     item.removeItem = true;
     var newItemList = [];
     angular.forEach(vm.build.items, function(gItem, index) {

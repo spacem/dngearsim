@@ -5,9 +5,9 @@
         <dnsim-job-icon item="::buildCtrl.build.job"></dnsim-job-icon>
         {{::buildCtrl.buildName}}
         <small>
-          <span ng-show="::buildCtrl.build.playerLevel > 0">lv{{::buildCtrl.build.playerLevel}}&nbsp;</span>
-          <span ng-show="::buildCtrl.build.job && buildCtrl.build.job.id > 0">{{::buildCtrl.build.job.name}}&nbsp;</span>
-          <span ng-show="::buildCtrl.build.enemyLevel > 0">vs&nbsp;lv{{::buildCtrl.build.enemyLevel}}&nbsp;</span>
+          <span ng-show="::buildCtrl.build.playerLevel > 0 && buildCtrl.build.job && buildCtrl.build.job.id > 0 && buildCtrl.build.enemyLevel > 0">
+            lv{{::buildCtrl.build.playerLevel}}&nbsp;{{::buildCtrl.build.job.name}}&nbsp;vs&nbsp;lv{{::buildCtrl.build.enemyLevel}}&nbsp;
+          </span>
           <br />
           <span class="hidden-xs">{{::buildCtrl.getSaveDate()}} {{::buildCtrl.getSaveTime()}} <br /></span>
           <span dnsim-stats build="buildCtrl.build" stats="buildCtrl.stats.calculatedStats" separator="'|'" filter="'summaryDisplay'" />
@@ -63,32 +63,54 @@
                   <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;new custom item
                 </button>
               </span>
-              <span style="float:right">
+              <span style="float:right" ng-if="!buildCtrl.canMove()">
               <strong>{{buildCtrl.getItemCount()}} <span class="hidden-xs">{{buildCtrl.category.name}}</span></strong>
               </span>
             </div>
           </div>
-          <div class="row table-look" ng-if="buildCtrl.category.name != 'offensive gems' && buildCtrl.category.name != 'increasing gems'">
-            <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
+          <div class="row table-look" ng-repeat="(exchange, subCat) in buildCtrl.getSubCategories()" ng-class="{'dnsim-card': subCat}">
+            <span style="float:right" ng-if="subCat && !buildCtrl.moveItem">
+                {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
+            </span>
+            <em ng-if="subCat && !buildCtrl.moveItem" ng-repeat="subCatName in subCat.names">
+              {{subCatName}}<br />
+            </em>
+            <button 
+              class="btn btn-defualt btn-block dnsim-card"
+              ng-if="subCat && buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)"
+              ng-click="buildCtrl.move(buildCtrl.moveItem, subCat);buildCtrl.moveItem = null;">
+              <span style="float:right">
+                {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
+              </span>
+              keep on<br />
+              <em ng-repeat="subCatName in subCat.names">
+                {{subCatName}}<br />
+              </em>
+            </button>
+            <button 
+              class="btn btn-defualt btn-block dnsim-card"
+              ng-if="subCat && buildCtrl.moveItem && !buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)"
+              ng-click="buildCtrl.move(buildCtrl.moveItem, subCat);buildCtrl.moveItem = null;">
+              <span style="float:right">
+                {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
+              </span>
+              move to<br />
+              <em ng-repeat="subCatName in subCat.names">
+                {{subCatName}}<br />
+              </em>
+            </button>
+            <span ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)">moving:</span>
+            <dngearsim-build-item item="buildCtrl.moveItem" ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()"></dngearsim-build-item>
+            <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index" ng-if="buildCtrl.isInSubCat(result, subCat) && !buildCtrl.moveItem">
               <dngearsim-build-item item="result" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()" edit-mode="buildCtrl.editItem == result"></dngearsim-build-item>
               <div ng-if="!buildCtrl.server && buildCtrl.editItem != result" style="float:right">
-                <button class="btn btn-default" ng-click="buildCtrl.editItem = result" ng-if="buildCtrl.canEdit(result)">
+                <button class="btn btn-default" ng-click="buildCtrl.moveItem = result" ng-if="buildCtrl.canEdit(result) && buildCtrl.canMove() && !buildCtrl.moveItem">
+                  move
+                </button>
+                <button class="btn btn-default" ng-click="buildCtrl.editItem = result" ng-if="buildCtrl.canEdit(result) && !buildCtrl.moveItem">
                   edit
                 </button>
-                <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);">
-                  remove
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="row table-look" ng-if="buildCtrl.category.name == 'offensive gems' || buildCtrl.category.name == 'increasing gems'">
-            <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index">
-              <dngearsim-build-item item="result" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()" edit-mode="buildCtrl.editItem == result"></dngearsim-build-item>
-              <div ng-if="!buildCtrl.server && buildCtrl.editItem != result" style="float:right">
-                <button class="btn btn-default" ng-click="buildCtrl.editItem = result" ng-if="buildCtrl.canEdit(result)">
-                  edit
-                </button>
-                <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);">
+                <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);" ng-if="!buildCtrl.moveItem">
                   remove
                 </button>
               </div>

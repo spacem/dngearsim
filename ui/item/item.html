@@ -113,11 +113,11 @@
     </span>
   </div>
 </div>
-<div class="row" ng-if="detail == 'extract'" ng-if="item != null">
+<div class="row" ng-if="detail == 'extract' && item != null">
   <dngearsim-item-view-extraction item="item">
   </dngearsim-item-view-extraction>
 </div>
-<div class="row" ng-if="detail == 'contents'" ng-if="item != null">
+<div class="row" ng-if="detail == 'contents' && item != null">
   <dngearsim-item-view-box item="item">
   </dngearsim-item-view-box>
 </div>
@@ -125,23 +125,23 @@
     <dngearsim-group-assignment item="item" ng-if="item != null && getBuildName()" group-name="getBuildName()" on-change="handleChange()">
     </dngearsim-group-assignment>
 </div>
-<div class="row" ng-if="detail == 'transfer'" ng-if="item != null">
+<div class="row" ng-if="detail == 'transfer' && item != null">
   <dngearsim-item-view-transfer item="item">
   </dngearsim-item-view-transfer>
 </div>
-<div class="row" ng-if="detail == 'shops'" ng-if="item != null">
+<div class="row" ng-if="detail == 'shops' && item != null">
   <dngearsim-item-view-shop item="item">
   </dngearsim-item-view-shop>
 </div>
-<div class="row" ng-if="detail == 'craft'" ng-if="item != null">
+<div class="row" ng-if="detail == 'craft' && item != null">
   <dngearsim-item-view-craft item="item">
   </dngearsim-item-view-craft>
 </div>
-<div class="row" ng-if="detail == 'set'" ng-if="item != null">
+<div class="row" ng-if="detail == 'set' && item != null">
   <dngearsim-item-view-set item="::item">
   </dngearsim-item-view-set>
 </div>
-<div class="row" ng-if="detail == 'plate'" ng-if="item != null">
+<div class="row" ng-if="detail == 'plate' && item != null">
   <dngearsim-item-view-plate item="item">
   </dngearsim-item-view-plate>
 </div>

@@ -151,7 +151,7 @@ function hCodeValues() {
     },
     
     shopNames : {
-      28001: 'lament',28002: 'lament',28003: 'lament',28004: 'lament',28005: 'lament',28006: 'lament',28007: 'lament',28008: 'lament',28009: 'lament',
+      28001: 'lament',28002: 'lament',28003: 'lament',28004: 'lament',28005: 'lament',28006: 'lament',28007: 'lament',28008: 'lament',28009: 'lament',28101: 'lament',
       29001: 'aura',29002: 'aura',29003: 'aura',29004: 'aura',29005: 'aura',29006: 'aura',29007: 'aura',29008: 'aura',29009: 'aura',
       5001: 'medal',5002: 'medal',5003: 'medal',5004: 'medal',5005: 'medal',5006: 'medal',5007: 'medal',5008: 'medal',5009: 'medal',
       5101: 'ladder',5102: 'ladder',5103: 'ladder',5104: 'ladder',5105: 'ladder',5106: 'ladder',5107: 'ladder',5108: 'ladder',5109: 'ladder',
@@ -164,9 +164,10 @@ function hCodeValues() {
       35006: 'plate',
       14051: 'abyss', 14052: 'abyss', 14053: 'abyss', 14054: 'abyss', 14055: 'abyss', 14056: 'abyss', 14057: 'abyss', 14058: 'abyss', 14059: 'abyss', 
       40011: 'daredevil faire', 40012: 'daredevil faire', 40013: 'daredevil faire', 40014: 'daredevil faire', 40015: 'daredevil faire', 40016: 'daredevil faire', 40017: 'daredevil faire', 40018: 'daredevil faire',
-      40001: 'daredevil faire', 40002: 'daredevil faire', 
+      40001: 'daredevil faire', 40002: 'daredevil faire', 40111: 'daredevil faire',
       91001: 'wrath',
       45001: 'farm',
+      100004: 'event'
     },
     
     checkedRank : {
@@ -271,16 +272,16 @@ function hCodeValues() {
     },
     
     gemExchanges: [
-      {id: 2, name: 'Weapon'},
-      {id: 3, name: 'Off-Hand Weapon'},
-      {id: 4, name: 'Headgear'},
-      {id: 5, name: 'Body Armor'},
-      {id: 6, name: 'Leg Armor'},
-      {id: 7, name: 'Gloves'},
-      {id: 8, name: 'Shoes'},
-      {id: 101, name: 'Necklace'},
-      {id: 102, name: 'Earrings'},
-      {id: 103, name: 'Ring'},
+      {id: 2, exchange: 1, name: 'Weapon'},
+      {id: 3, exchange: 2, name: 'Off-Hand Weapon'},
+      {id: 4, exchange: 3, name: 'Headgear'},
+      {id: 5, exchange: 4, name: 'Body Armor'},
+      {id: 6, exchange: 5, name: 'Leg Armor'},
+      {id: 7, exchange: 6, name: 'Gloves'},
+      {id: 8, exchange: 7, name: 'Shoes'},
+      {id: 101, exchange: 8, name: 'Necklace'},
+      {id: 102, exchange: 9, name: 'Earrings'},
+      {id: 103, exchange: 10, name: 'Ring'},
     ],
     
     customItems: 

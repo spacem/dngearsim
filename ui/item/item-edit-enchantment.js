@@ -1,7 +1,6 @@
 angular.module('dnsim').controller('itemEditEnchantmentCtrl',
 
-['dntData','hCodeValues','items','$timeout','translations','itemColumnsToLoad',
-function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
+function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemFactory) {
   'use strict';
   
   var vm = this;
@@ -190,16 +189,11 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
               vm.materials.push({num: itemCount, name: 'unknown (' + itemId + ')'});
             }
             else {
-              var item = items[0];
-              var name = translations.translate(item.NameID, item.NameIDParam);
-              
+              var item = items[0];              
               if(item) {
                 var material = {
+                  item: itemFactory.createBasicItem(item),
                   num: itemCount,
-                  icon: item.IconImageIndex,
-                  rank: item.Rank,
-                  levelLimit: item.LevelLimit,
-                  name: name
                 };
                 vm.materials.push(material);
               }
@@ -217,7 +211,7 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad) {
   function reportProgress(msg) {
     // console.log('progress: ' + msg);
   }
-}])
+})
 .directive('dngearsimItemEditEnchantment', function() {
   return {
     scope: true,
