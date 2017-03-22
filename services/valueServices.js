@@ -46,7 +46,7 @@ function hCodeValues() {
       9  : {id: 9, name: 'mdef', display: inThousands, def: true, pc: 59, searchable: true },
       10 : {id: 10, name: 'para', display: inThousands, pc: 60, noCustom: true },
       11 : {id: 11, name: 'para resist', display: inThousands, pc: 61, noCustom: true },
-      12 : {id: 12, name: 'crit', display: toNoDec, dps: true, pc: 62, searchable: true },
+      12 : {id: 12, name: 'crit', display: inThousands, dps: true, pc: 62, searchable: true },
       13 : {id: 13, name: 'crit resist', display: inThousands, pc: 63, noCustom: true },
       14 : {id: 14, name: 'stun', display: inThousands, pc: 64, noCustom: true },
       15 : {id: 15, name: 'stun resist', display: inThousands, pc: 65, noCustom: true },
@@ -94,7 +94,7 @@ function hCodeValues() {
       101 : {id: 101, name: 'pdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true },
       102 : {id: 102, name: 'mdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true },
 
-      103: {id: 103, name: 'crit dmg', display: toNoDec, dps: true, pc: 104, searchable: true },
+      103: {id: 103, name: 'cdmg', display: inThousands, dps: true, pc: 104, searchable: true },
       104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true, dps: true },
       105: {id: 104, name: 'pvp dmg', display: inThousands, noCustom: true, dps: true },
       106: {id: 106, name: 'pvp def', display: inThousands, noCustom: true, def: true },
@@ -105,12 +105,12 @@ function hCodeValues() {
       1004: {id: 1004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
       1006: {id: 1006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
       
-      1008: {id: 1008, name: 'pdef', display: toPercent, noCustom: true },
-      1009: {id: 1009, name: 'mdef', display: toPercent, noCustom: true },
+      1008: {id: 1008, name: 'pdef', display: toPercent, noCustom: true, summaryFor: 8 },
+      1009: {id: 1009, name: 'mdef', display: toPercent, noCustom: true, summaryFor: 9 },
       
-      1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true, dps: true },
-      1029: {id: 1029, name: 'fd', display: toPercent, noCustom: true, dps: true },
-      1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true, dps: true },
+      1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true, dps: true, summaryFor: 12 },
+      1029: {id: 1029, name: 'fd', display: toPercent, noCustom: true, dps: true, summaryFor: 29 },
+      1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true, dps: true, summaryFor: 103 },
       
       2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
       2004: {id: 2004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },

@@ -50,6 +50,15 @@ function dnsimStats(hCodeValues) {
           lastElement = newElement;
           addedElements.push(newElement);
         }
+
+        // get stats that are used to summarise
+        var summaryForStats = {};
+        angular.forEach(stats, function(stat, key) {
+          var def = hCodeValues.stats[stat.id];
+          if(def.summaryFor) {
+            summaryForStats[def.summaryFor] = stat;
+          }
+        });
         
         angular.forEach(stats, function(stat, key) {
           var output = '';
@@ -64,6 +73,10 @@ function dnsimStats(hCodeValues) {
             if($scope.filter && !def[$scope.filter]) {
               return;
             }
+
+            if(def.summaryFor) {
+              return;
+            }
             
             if(!first) {
               output += sep;
@@ -76,6 +89,8 @@ function dnsimStats(hCodeValues) {
               }
               output += stat.needSetNum + '&nbsp;';
             }
+
+            output += '<strong>';
             
             if($scope.build) {
               if(def.element == 'primary') {
@@ -94,17 +109,24 @@ function dnsimStats(hCodeValues) {
               }
             }
             
-            output += def.name+':&nbsp;'+def.display(stat);
+            output += def.name+':</strong>&nbsp;'+def.display(stat);
             if(def.combineWith > 0) {
               angular.forEach(stats, function(stat2, key2) {
                 if(stat2.id == def.combineWith) {
                   if(stat2.max != stat.max) {
                     output += '-' + def.display(stat2);
                   }
-                  return;
                 }
               });
             }
+
+            if(stat.id in summaryForStats) {
+              var sStat = summaryForStats[stat.id];
+              var sDef = hCodeValues.stats[sStat.id];
+              output += '&nbsp;|&nbsp;<em>' + sDef.display(sStat);
+              output += '</em>';
+            }
+
           }
           else {
             if(!first) {
