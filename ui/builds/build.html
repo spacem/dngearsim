@@ -16,7 +16,7 @@
     </div>
     <dnsim-loading>
     <div class="col-xs-12 visible-xs-block">
-      <dnsim-category-links collapse="true" cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.xsView = null" />
+      <dnsim-category-links collapse="true" cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.xsView = null;buildCtrl.moveItem=null" />
     </div>
     <div class="col-xs-12 visible-xs-block">
       <button ng-click="buildCtrl.xsView = null" class="btn btn-default" ng-disabled="!buildCtrl.xsView">
@@ -45,7 +45,7 @@
       <br />
       <div class="row">
         <div class="hidden-xs col-sm-4 col-md-4">
-          <dnsim-category-links cat="buildCtrl.category" build-screen="true" />
+          <dnsim-category-links cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.xsView = null;buildCtrl.moveItem=null" />
         </div>
     
         <div class="col-xs-12 col-sm-8 col-md-8">
