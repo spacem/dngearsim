@@ -15,8 +15,8 @@
     </button>
   </div>
 </div>
-<div class="col-xs-12">
-  <button ng-if="editCtrl.materials == null" ng-click="editCtrl.showMaterials()" class="btn btn-link">&raquo;show enhancement info</button>
+<div class="col-xs-12" ng-if="editCtrl.materials == null && !editCtrl.isMaxEnchantLevel() && editCtrl.enchantmentAfter != null">
+  <button ng-click="editCtrl.showMaterials()" class="btn btn-link">&raquo;show enhancement info</button>
 </div>
 <div
     class="col-xs-12" 
