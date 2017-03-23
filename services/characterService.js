@@ -1,12 +1,12 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('character',['dntData','itemColumnsToLoad','jobs','hCodeValues',character]);
+angular.module('dnsim').factory('character', character);
 function character(dntData,itemColumnsToLoad,jobs,hCodeValues) {
 
   var jobConversions = 'rebootplayerweighttable.lzjson';
   var statCaps = 'playercommonleveltable.lzjson';
-  var jobBaseStats = 'playerleveltable.lzjson';
+  var jobBaseStats = 'playerleveltable.optimised.lzjson';
 
   var heroLevels = 'heroleveltable.lzjson';
   var heroLevelPotentials = 'potentialtable_herolevel.lzjson';

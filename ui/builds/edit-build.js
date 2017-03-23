@@ -1,71 +1,135 @@
-angular.module('dnsim').controller('EditBuildCtrl',
+(function () {
+'use strict';
 
-['$window','$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad','character',
-function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad,character) {
+angular.module('dnsim').controller('EditBuildCtrl', editBuildCtrl);
+
+function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad,character,region) {
   'use strict';
   
   var vm = this;
-  this.savedItems = saveHelper.getSavedItems();
-  this.group = {};
-  this.newGroup = true;
+  vm.savedItems = saveHelper.getSavedItems();
+  vm.group = {};
+  vm.newGroup = true;
   if('buildName' in $routeParams) {
-      this.groupName = $routeParams.buildName;
-      if(this.groupName in this.savedItems) {
-        this.group = this.savedItems[this.groupName];
-        this.newGroup = false;
+      vm.groupName = $routeParams.buildName;
+      if(vm.groupName in vm.savedItems) {
+        vm.group = vm.savedItems[vm.groupName];
+        vm.newGroup = false;
       }
   }
   else {
-    this.groupName = '';
+    vm.groupName = '';
   }
-  this.oldGroupName = this.groupName;
-  this.heroStats = [];
-  this.elements = hCodeValues.elements;
-  this.damageTypes = hCodeValues.damageTypes;
+  vm.oldGroupName = vm.groupName;
+  vm.heroStats = [];
+  vm.elements = hCodeValues.elements;
+  vm.damageTypes = hCodeValues.damageTypes;
   
-  if(this.group.damageType) {
-    this.damageType = this.group.damageType;
-  }
-  else {
-    this.damageType = hCodeValues.damageTypes[0];
-  }
-    
-  if(this.group.element) {
-    this.element = this.group.element;
-  }
-  else {
-    this.element = hCodeValues.elements[0];
-  }
-    
-  if(this.group.secondaryElement) {
-    this.secondaryElement = this.group.secondaryElement;
-  }
-  else {
-    this.secondaryElement = hCodeValues.elements[0];
+  vm.initDamageType = function() {
+    if(vm.job) {
+      if(vm.group.damageType) {
+        vm.damageType = vm.group.damageType;
+      }
+      else if(vm.newGroup && 'DamageType' in vm.job.d) {
+        if(vm.job.d.DamageType) {
+          vm.damageType = hCodeValues.damageTypes[2];
+        }
+        else {
+          vm.damageType = hCodeValues.damageTypes[1];
+        }
+      }
+      else {
+        vm.damageType = hCodeValues.damageTypes[0];
+      }
+    }
   }
 
-  if(this.group.enemyLevel) {
-    this.enemyLevel = this.group.enemyLevel;
+  vm.initDefaultElement = function() {
+    var defaultElement = hCodeValues.elements[0];
+    var defaultSecondaryElement = hCodeValues.elements[0];
+
+    if(vm.job && vm.job.d) {
+      var jobName = vm.job.d.EnglishName;
+      if(jobName == 'CRUSADES' || jobName == 'INQUISITOR' || jobName == 'GUARDIAN' || jobName == 'SAINT' || jobName == 'SILVERHUNTER' || jobName == 'STINGBREEZER') {
+        defaultElement = hCodeValues.elements[3];
+        defaultSecondaryElement = hCodeValues.elements[3];
+      }
+      else if(jobName == 'RAVEN' || jobName == 'MAJESTY' || jobName == 'SOULEATER' || jobName == 'DARKSUMMONER' || jobName == 'ABYSSWALKER') {
+        defaultElement = hCodeValues.elements[4];
+        defaultSecondaryElement = hCodeValues.elements[4];
+      }
+      else if(jobName == 'SALEANA' || jobName == 'RIPPER' || jobName == 'DARKAVENGER') {
+        defaultElement = hCodeValues.elements[1];
+        defaultSecondaryElement = hCodeValues.elements[1];
+      }
+      else if(jobName == 'ELESTRA') {
+        defaultElement = hCodeValues.elements[2];
+        defaultSecondaryElement = hCodeValues.elements[2];
+      }
+      else if(jobName == 'ADEPT') {
+        defaultElement = hCodeValues.elements[1];
+        defaultSecondaryElement = hCodeValues.elements[2];
+      }
+      else if(jobName == 'PHYSICIAN') {
+        defaultElement = hCodeValues.elements[4];
+        defaultSecondaryElement = hCodeValues.elements[1];
+      }
+      else if(jobName == 'LIGHTFURY') {
+        defaultElement = hCodeValues.elements[3];
+        defaultSecondaryElement = hCodeValues.elements[4];
+      }
+    }
+
+    if(vm.newGroup) {
+      vm.element = defaultElement;
+      vm.secondaryElement = defaultSecondaryElement;
+    }
+    
+    if(!vm.element) {
+      vm.element = defaultElement;
+    }
+
+    if(!vm.secondaryElement) {
+      vm.secondaryElement = defaultElement;
+    }
+  }
+    
+  if(vm.group.element) {
+    vm.element = vm.group.element;
   }
   else {
-    this.enemyLevel = 90;
+    vm.element = hCodeValues.elements[0];
   }
-  
-  if(this.group.playerLevel) {
-    this.playerLevel = this.group.playerLevel;
-  }
-  else {
-    this.playerLevel = 93;
-  }
-  
-  if(this.group.heroLevel && this.group.heroLevel > 0) {
-    this.heroLevel = this.group.heroLevel;
+    
+  if(vm.group.secondaryElement) {
+    vm.secondaryElement = vm.group.secondaryElement;
   }
   else {
-    this.heroLevel = 1;
+    vm.secondaryElement = hCodeValues.elements[0];
+  }
+
+  if(vm.group.enemyLevel) {
+    vm.enemyLevel = vm.group.enemyLevel;
+  }
+  else {
+    vm.enemyLevel = 90;
   }
   
-  this.init = function(vm) {
+  if(vm.group.playerLevel) {
+    vm.playerLevel = vm.group.playerLevel;
+  }
+  else {
+    vm.playerLevel = 93;
+  }
+  
+  if(vm.group.heroLevel && vm.group.heroLevel > 0) {
+    vm.heroLevel = vm.group.heroLevel;
+  }
+  else {
+    vm.heroLevel = 1;
+  }
+  
+  vm.init = function() {
     var newJobs = jobs.getFinalJobs();
     if(newJobs.length > 0) {
       $timeout( function() {
@@ -77,39 +141,44 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
             }
           });
         }
-        
+
+        vm.initDamageType();
+        vm.initDefaultElement();
         vm.setHeroStats();
       });
     }
   }
   
-  this.setJob = function() {
+  vm.setJob = function() {
     $window.scrollTo(0, 0);
+    $timeout(function() {
+      vm.initDamageType();
+      vm.initDefaultElement();
+    });
   }
   
-  function reportProgress(msg) {
-    // console.log('progress: ' + msg);
-  }
+  region.init();
+  character.init(function() {
+    vm.init();
+  });
   
-  character.init(function() { vm.init(vm) });
-  
-  this.getStatCap = function(colName, useLevel) {
+  vm.getStatCap = function(colName, useLevel) {
     return character.getStatCaps(useLevel)[colName];
   }
-  this.getJobConversion = function(colName) {
-    return character.getConversions(this.job.id)[colName];
+  vm.getJobConversion = function(colName) {
+    return character.getConversions(vm.job.id)[colName];
   }
-  this.getJobBaseStat = function(colName) {
-    return character.getBaseStats(this.playerLevel, this.job.id)[colName];
+  vm.getJobBaseStat = function(colName) {
+    return character.getBaseStats(vm.playerLevel, vm.job.id)[colName];
   }
   
-  this.invalidGroupName = function() {
-    if(!this.groupName) {
+  vm.invalidGroupName = function() {
+    if(!vm.groupName) {
       return true;
     }
     
-    if(this.groupName in this.savedItems) {
-      if(this.newGroup || this.groupName != this.oldGroupName) {
+    if(vm.groupName in vm.savedItems) {
+      if(vm.newGroup || vm.groupName != vm.oldGroupName) {
         return true;
       }
     }
@@ -117,36 +186,36 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
     return false;
   }
   
-  this.ok = function() {
-    var enemyStatCaps = character.getStatCaps(this.enemyLevel);
-    var playerStatCaps = character.getStatCaps(this.playerLevel);
-    var conversions = character.getConversions(this.job.id);
-    var baseStats = character.getBaseStats(this.playerLevel, this.job.id);
-    var heroStats = character.getHeroStats(this.heroLevel);
+  vm.ok = function() {
+    var enemyStatCaps = character.getStatCaps(vm.enemyLevel);
+    var playerStatCaps = character.getStatCaps(vm.playerLevel);
+    var conversions = character.getConversions(vm.job.id);
+    var baseStats = character.getBaseStats(vm.playerLevel, vm.job.id);
+    var heroStats = character.getHeroStats(vm.heroLevel);
     
-    if(this.newGroup) {
-      this.oldGroupName = this.groupName;
-      saveHelper.importGroup(this.groupName, []);
+    if(vm.newGroup) {
+      vm.oldGroupName = vm.groupName;
+      saveHelper.importGroup(vm.groupName, []);
     }
     
     saveHelper.renameSavedGroup(
-      this.oldGroupName, 
-      this.groupName,
-      this.enemyLevel,
-      this.playerLevel,
-      this.heroLevel,
-      this.job,
-      this.damageType,
-      this.element,
-      this.secondaryElement,
+      vm.oldGroupName, 
+      vm.groupName,
+      vm.enemyLevel,
+      vm.playerLevel,
+      vm.heroLevel,
+      vm.job,
+      vm.damageType,
+      vm.element,
+      vm.secondaryElement,
       enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats);
     
-    $location.path('/build/' + this.groupName);
+    $location.path('/build/' + vm.groupName);
   }
   
-  this.setHeroStats = function() {
-    this.heroStats = character.getHeroStats(this.heroLevel);
-    // console.log('got ' + this.heroStats.length + ' hero stats');
+  vm.setHeroStats = function() {
+    vm.heroStats = character.getHeroStats(vm.heroLevel);
+    // console.log('got ' + vm.heroStats.length + ' hero stats');
   }
   
   $timeout(function() {
@@ -156,4 +225,6 @@ function($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeVa
       input.setSelectionRange(0, 9999);
     }
   });
-}]); 
+}
+
+})();

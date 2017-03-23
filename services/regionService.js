@@ -33,7 +33,6 @@ function region(translations,dntReset,dntData,$route) {
     angular.forEach(hostedFiles, function(hostedFile, index) {
       if(hostedFile.region != alternativeFiles.region && lastTFile.indexOf(hostedFile.url) > -1) {
         tlocation = hostedFile;
-        return;
       }
     });
   }
@@ -107,7 +106,9 @@ function region(translations,dntReset,dntData,$route) {
           var override = this.getOverride();
           translations.small = !override;
           translations.location = this.tlocation.url;
-          translations.init(function() {}, function() { $route.reload(); });
+          translations.init(function() {}, function() {
+            $route.reload();
+          });
         }
       }
     },

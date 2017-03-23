@@ -94,8 +94,8 @@ function items(translations,dntData,itemColumnsToLoad) {
         minRank: 3 },
 
       cClone: {
-        mainDnt: 'itemtable_cashclone.lzjson',
-        partsDnt: 'partstable_cashclone.lzjson',
+        mainDnt: 'itemtable_cashclone.optimised.lzjson',
+        partsDnt: 'partstable_cashclone.optimised.lzjson',
         type: 'cash',
         minLevel: 0,
         ignoreErrors: true,
@@ -141,16 +141,16 @@ function items(translations,dntData,itemColumnsToLoad) {
         minLevel: 0,
         minRank: 0 },
       xtras: {
-        mainDnt: 'itemtable_vehicle.lzjson',
-        partsDnt: 'vehiclepartstable.lzjson',
-        setDnt: 'setitemtable_cash.lzjson',
+        mainDnt: 'itemtable_vehicle.optimised.lzjson',
+        partsDnt: 'vehiclepartstable.optimised.lzjson',
+        setDnt: 'setitemtable_cash.optimised.lzjson',
         petDnt: 'vehicletable.lzjson',
         petLevelDnt: 'petleveltable.lzjson', 
         type: 'xtras',
         minLevel: 0,
         minRank: 0 },
       imprint: {
-        mainDnt: 'itemtable_imprinting.lzjson',
+        mainDnt: 'itemtable_imprinting.optimised.lzjson',
         type: 'imprint',
         minLevel: 0,
         minRank: 0 },
@@ -181,16 +181,26 @@ function items(translations,dntData,itemColumnsToLoad) {
       }
       else {
         
-        translations.init(progress, function() { doComplete(itemSource, complete) });
-        dntData.init(itemSource.mainDnt, itemColumnsToLoad.mainDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
+        translations.init(progress, function() {
+          doComplete(itemSource, complete)
+        });
+        dntData.init(itemSource.mainDnt, itemColumnsToLoad.mainDnt, progress, function() {
+          doComplete(itemSource, complete)
+        }, itemSource.ignoreErrors);
         if('potentialDnt' in itemSource) {
-          dntData.init(itemSource.potentialDnt, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
+          dntData.init(itemSource.potentialDnt, itemColumnsToLoad.potentialDnt, progress, function() {
+            doComplete(itemSource, complete)
+          }, itemSource.ignoreErrors);
         }
         if('potentialDntEx' in itemSource) {
-          dntData.init(itemSource.potentialDntEx, itemColumnsToLoad.potentialDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
+          dntData.init(itemSource.potentialDntEx, itemColumnsToLoad.potentialDnt, progress, function() {
+            doComplete(itemSource, complete)
+          }, itemSource.ignoreErrors);
         }
         if('gemDnt' in itemSource) {
-          dntData.init(itemSource.gemDnt, itemColumnsToLoad.gemDnt, progress, function() { doComplete(itemSource, complete) }, itemSource.ignoreErrors);
+          dntData.init(itemSource.gemDnt, itemColumnsToLoad.gemDnt, progress, function() {
+            doComplete(itemSource, complete)
+          }, itemSource.ignoreErrors);
         }
   
         doComplete(itemSource, complete);
