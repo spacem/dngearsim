@@ -14,8 +14,8 @@ Here is my discord server: https://discord.gg/011C92KwJWoCfRcEY
 I wanted an app that is usable on mobile but I didn’t want hosting costs.
 My idea was to use static html/javascript pages which could be hosted on free hosting (ie. github pages).
 
-## Developemnt enviroment
-* Install node.js, git (make sure you enable sym-links) and an editor (eg. visual studio code)
+## Development enviroment
+* Install node.js, gitand an editor (eg. visual studio code)
 * Open node.js command prompt
 * git clone https://github.com/spacem/dngearsim.git
 * cd dngearsim
