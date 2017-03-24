@@ -54,7 +54,7 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntDat
         defaultElement = hCodeValues.elements[3];
         defaultSecondaryElement = hCodeValues.elements[3];
       }
-      else if(jobName == 'RAVEN' || jobName == 'MAJESTY' || jobName == 'SOULEATER' || jobName == 'DARKSUMMONER' || jobName == 'ABYSSWALKER') {
+      else if(jobName == 'RAVEN' || jobName == 'MAJESTY' || jobName == 'SOULEATER' || jobName == 'DARKSUMMONER' || jobName == 'ABYSSWALKER' || jobName == 'BLACKMARA' || jobName == 'PHYSICIAN') {
         defaultElement = hCodeValues.elements[4];
         defaultSecondaryElement = hCodeValues.elements[4];
       }
@@ -69,10 +69,6 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntDat
       else if(jobName == 'ADEPT') {
         defaultElement = hCodeValues.elements[1];
         defaultSecondaryElement = hCodeValues.elements[2];
-      }
-      else if(jobName == 'PHYSICIAN') {
-        defaultElement = hCodeValues.elements[4];
-        defaultSecondaryElement = hCodeValues.elements[1];
       }
       else if(jobName == 'LIGHTFURY') {
         defaultElement = hCodeValues.elements[3];
