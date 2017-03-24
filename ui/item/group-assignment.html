@@ -1,35 +1,35 @@
 <div class="col-xs-12 item-type-grouping">
-  <br />
-  <div ng-if="::editCtrl.groupNames.length == 0">
+  <div ng-if="::!editCtrl.groupName">
   <p>
-    If you <a ng-href="new-build">create a build</a> you can add this item and see combined stats.
+    <a ng-href="new-build">Create a build to see how this item will affect your damage.</a>
   </p>
   </div>
-
-  <button class="btn btn-default" ng-show="::editCtrl.groupNames.length > 1" ng-dblclick="editCtrl.prevGroup()" ng-click="editCtrl.prevGroup()">&lt; prev build</button>
-  <button class="btn btn-default" ng-show="::editCtrl.groupNames.length > 1" ng-dblclick="editCtrl.nextGroup()" ng-click="editCtrl.nextGroup()">next build &gt;</button>
-  
-  
   <div class="row" ng-if="::editCtrl.groupName">
     <div class="col-xs-12 col-md-5">
       <h4>
         <dnsim-job-icon item="editCtrl.getBuild().job"></dnsim-job-icon>
         <a ng-href="build/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a>
-        <br />
-        <small>
+        <br ng-if="!editCtrl.compact" />
+        <small class="hidden-xs" ng-if="!editCtrl.compact">
           <span dnsim-stats build="editCtrl.getBuild()" stats="editCtrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" />
         </small>
       </h4>
+      <div>
+        <button class="btn btn-link" ng-show="::editCtrl.groupNames.length > 1" ng-dblclick="editCtrl.prevGroup()" ng-click="editCtrl.prevGroup()">&lt; prev build</button>
+        <span ng-if="::editCtrl.groupNames.length > 1"> | </span>
+        <button class="btn btn-link" ng-show="::editCtrl.groupNames.length > 1" ng-dblclick="editCtrl.nextGroup()" ng-click="editCtrl.nextGroup()">next build &gt;</button>
+      </div>
     </div>
-    <div class="col-xs-3 col-md-1 text-right" ng-if="!editCtrl.hasMaxExchangable()">
+    <div class="col-xs-12 col-md-7" ng-if="!editCtrl.hasMaxExchangable()" style="padding-top:8px">
+      <div style="float:left;height:85px;padding-right:10px">
       <button class="btn btn-default" ng-dblclick="editCtrl.addToGroup()" ng-click="editCtrl.addToGroup()">add</button>
-    </div>
-    <div class="col-xs-9 col-md-3" ng-if="!editCtrl.hasMaxExchangable()">
+      <br /><br /><br />
+      </div>
       
       <span ng-if="editCtrl.getAddAffectAmount(statId) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
         <b ng-if="editCtrl.getAddAffectAmount(statId) > 0">increase</b>
         <b ng-if="editCtrl.getAddAffectAmount(statId) < 0">decreases</b>
-        {{editCtrl.getStatName(statId)}} by {{editCtrl.getAddAffectAmount(statId)}}%
+        {{editCtrl.getStatName(statId)}} {{editCtrl.getAddAffectAmount(statId)}}%
         <br />
       </span>
 
@@ -46,19 +46,15 @@
         <dngearsim-build-item item="groupItem"></dngearsim-build-item>
       </div>
     </div>
-    <div class="col-xs-3 col-md-1 text-right">
-      <br />
+    <div class="col-xs-12 col-md-6" style="padding-top:8px">
       <button class="btn btn-default" ng-dblclick="editCtrl.replace(groupItem)" ng-click="editCtrl.replace(groupItem)">replace</button>
-      <br /><br />
-    </div>
-    <div class="col-xs-9 col-md-5">
-      <br />
-      <span ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
+      <div style="padding-top:8px">
+      <div ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
         <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">increase</b>
         <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">decreases</b>
         {{editCtrl.getStatName(statId)}} {{editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem)}}%
-        <br />
-      </span>
+      </div>
+      </div>
       
     </div>
   </div>

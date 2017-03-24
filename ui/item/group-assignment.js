@@ -9,6 +9,10 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
   this.savedItems = saveHelper.getSavedItems();
   this.groupNames = Object.keys(this.savedItems);
   if(!this.groupName) {
+    this.groupName = saveHelper.getCurrentBuild();
+  }
+
+  if(!this.groupName) {
     return;
   }
   
@@ -308,7 +312,7 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     scope: true,
     bindToController: {
       item: '=item',
-      groupName: '=groupName',
+      compact: '=compact',
       onChange: '&onChange'
     },
     controller: 'groupAssignmentCtrl',
