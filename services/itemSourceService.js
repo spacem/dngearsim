@@ -21,7 +21,7 @@ function items(translations,dntData,itemColumnsToLoad) {
         sparkDnt: 'potentialtable_potentialjewel.optimised.lzjson',
         gemSlotDnt: 'dragonjewelslottable.lzjson',
         type: 'techs', 
-        minLevel: 24,
+        minLevel: 60,
         minRank: 0},
       
       tman: { 

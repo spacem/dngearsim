@@ -1,8 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('itemFactory',
-['translations','dntData','hCodeValues','items',itemFactory]);
+angular.module('dnsim').factory('itemFactory',itemFactory);
 
 function itemFactory(translations,dntData,hCodeValues,items) {
   
@@ -38,22 +37,103 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       sparkId: null,
     };
   };
-  
-  function loadItems(itemType) {
+
+  function skipItemType(dType) {
+    return dType == 8 ||
+      dType == 9 ||
+      dType == 11 ||
+      dType == 12 ||
+      dType == 13 ||
+      dType == 18 ||
+      dType == 19 ||
+      dType == 20 ||
+      dType == 21 ||
+      dType == 24 ||
+      dType == 29 ||
+      dType == 46 ||
+      dType == 51 ||
+      dType == 74 ||
+      dType == 75 ||
+      dType == 76 ||
+      dType == 78 ||
+      dType == 79 ||
+      dType == 84 ||
+      dType == 100 ||
+      dType == 112 ||
+      dType == 114 ||
+      dType == 115 ||
+      dType == 116 ||
+      dType == 122 ||
+      dType == 142 ||
+      dType == 174 ||
+      dType == 130 ||
+      dType == 182;
+  }
+
+  function skipLevel(itemType, dLevelLimit) {
+    if(itemType.minLevel && dLevelLimit < itemType.minLevel) {
+      return true;
+    }
+
+    if(itemType.maxLevel && dLevelLimit > itemType.maxLevel) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function skipBadPlates(dType, sellAmount) {
+    if(dType == 38 && sellAmount === 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function skipRank(itemType, dRank) {
+    if(itemType.minRank && dRank < itemType.minRank) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function skipTechs(itemType, jobClass, dLevelLimit, dTypeParam1) {  
+    for(var i=0;i<itemType.items.length;++i) {
+      if(itemType.items[i].needJobClass == jobClass &&
+        itemType.items[i].levelLimit == dLevelLimit &&
+        itemType.items[i].potential && itemType.items[i].potential.PotentialID == dTypeParam1) {
+          return true;
+        }
+    }
+    return false;
+  }
+
+  function isDataLoaded(itemType) {
     
     if(!dntData.isLoaded(itemType.mainDnt)) {
-      return null;
+      return false;
     }
     
     if(!translations.isLoaded()) {
-      return null;
+      return false;
     }
     
     if('potentialDnt' in itemType && !dntData.isLoaded(itemType.potentialDnt)) {
-      return null;
+      return false;
     }
     
     if('potentialDntEx' in itemType && !dntData.isLoaded(itemType.potentialDntEx)) {
+      return false;
+    }
+
+    return true;
+
+  }
+  
+  function loadItems(itemType) {
+
+    if(!isDataLoaded) {
       return null;
     }
     
@@ -63,108 +143,60 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     var numRows = dntData.getNumRows(itemType.mainDnt);
     for(var r=0;r<numRows;++r) {
       var dType = dntData.getValue(itemType.mainDnt, r, 'Type');
-      var dLevelLimit = dntData.getValue(itemType.mainDnt, r, 'LevelLimit');
-      var dRank = dntData.getValue(itemType.mainDnt, r, 'Rank');
-      
-      // skip certain types like pouches, res scrolls, etc
-      if(dType != 8 &&
-        dType != 9 &&
-        dType != 11 &&
-        dType != 12 &&
-        dType != 13 &&
-        dType != 18 &&
-        dType != 19 &&
-        dType != 20 &&
-        dType != 21 &&
-        dType != 24 &&
-        dType != 29 &&
-        dType != 46 &&
-        dType != 51 &&
-        dType != 74 &&
-        dType != 75 &&
-        dType != 76 &&
-        dType != 78 &&
-        dType != 79 &&
-        dType != 84 &&
-        dType != 100 &&
-        dType != 112 &&
-        dType != 114 &&
-        dType != 115 &&
-        dType != 116 &&
-        dType != 122 &&
-        dType != 142 &&
-        dType != 174 &&
-        dType != 130 &&
-        dType != 182 &&
-        (!itemType.minLevel || dLevelLimit >= itemType.minLevel) &&
-        (!itemType.maxLevel || dLevelLimit <= itemType.maxLevel) &&
-        (!itemType.minRank || dRank >= itemType.minRank)) {
+      if(skipItemType(dType)) {
+        continue;
+      }
 
-        var dState1_GenProb = dntData.getValue(itemType.mainDnt, r, 'State1_GenProb');
-        var dStateValue1 = dntData.getValue(itemType.mainDnt, r, 'StateValue1');
-        var dTypeParam1 = dntData.getValue(itemType.mainDnt, r, 'TypeParam1');
+      var dLevelLimit = dntData.getValue(itemType.mainDnt, r, 'LevelLimit');
+      if(skipLevel(itemType, dLevelLimit)) {
+        continue;
+      }
+
+      var dRank = dntData.getValue(itemType.mainDnt, r, 'Rank');
+      if(skipRank(itemType, dRank)) {
+        continue;
+      }
+
+      var dState1GenProb = dntData.getValue(itemType.mainDnt, r, 'State1_GenProb');
+      var dStateValue1 = dntData.getValue(itemType.mainDnt, r, 'StateValue1');
+      var dTypeParam1 = dntData.getValue(itemType.mainDnt, r, 'TypeParam1');
+        
+      // skip items with no data
+      if(dState1GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35) {
+        
+        if(itemType.type == 'techs') {
+          var jobClass = dntData.getValue(itemType.mainDnt, r, 'NeedJobClass');
+          if(skipTechs(itemType, jobClass, dLevelLimit, dTypeParam1)) {
+            continue;
+          }
+        }
+        
+        var potentials = [];
+        if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
+          potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
           
-        // skip items with no data
-        if(dState1_GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35) {
-          
-          if(itemType.type == 'techs') {
-            var jobClass = dntData.getValue(itemType.mainDnt, r, 'NeedJobClass');
-            var levelLimit = dntData.getValue(itemType.mainDnt, r, 'LevelLimit');
-            
-            var exists = false;
-            for(var i=0;i<itemType.items.length;++i) {
-              if(itemType.items[i].needJobClass == jobClass &&
-                itemType.items[i].levelLimit == levelLimit &&
-                itemType.items[i].potential && itemType.items[i].potential.PotentialID == dTypeParam1) {
-                  exists = true;
-                  break;
-                }
-            }
-            
-            if(exists) {
-              continue;
+          if(!potentials.length && 'potentialDntEx' in itemType) {
+            potentials = dntData.find(itemType.potentialDntEx, 'PotentialID', dTypeParam1);
+          }
+        }
+        
+        var numPotentials = potentials.length;
+        if(!numPotentials) {
+          potentials = [null];
+          numPotentials = 1;
+        }
+
+        for(var p=0;p<numPotentials;++p) {
+          var found = false;
+          for(var q=0;q<p;++q) {
+            if(potentialsMatch(potentials[p], potentials[q])) {
+              found = true;
+              break;
             }
           }
           
-          var potentials = [];
-          if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
-            potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
-            
-            if(!potentials.length && 'potentialDntEx' in itemType) {
-              potentials = dntData.find(itemType.potentialDntEx, 'PotentialID', dTypeParam1);
-            }
-          }
-          
-          var numPotentials = potentials.length;
-          if(!numPotentials) {
-            itemType.items.push(createItem(itemType, r, null, 0));
-          }
-          else {
-            var totalRatio = 0;
-            for(var p=0;p<numPotentials;++p) {
-              totalRatio += potentials[p].PotentialRatio;
-            }
-            
-            for(var p=0;p<numPotentials;++p) {
-              
-              var found = false;
-              for(var q=0;q<p;++q) {
-                if(potentialsMatch(potentials[p], potentials[q])) {
-                  found = true;
-                  break;
-                }
-              }
-              
-              if(!found) {
-                for(var q=p+1;q<numPotentials;++q) {
-                  if(potentialsMatch(potentials[p], potentials[q])) {
-                    potentials[p].PotentialRatio += potentials[q].PotentialRatio;
-                  }
-                }
-                
-                itemType.items.push(createItem(itemType, r, potentials[p], totalRatio));
-              }
-            }
+          if(!found) {
+            itemType.items.push(createItem(itemType, r, potentials[p], 0));
           }
         }
       }
@@ -172,7 +204,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
             
     var end = new Date().getTime();
     var time = end - start;
-    console.log('item init time: ' + time/1000 + 's for ' + itemType.name);
+    console.log('item init time: ' + (time/1000) + 's for ' + itemType.name);
   }
   
   function potentialsMatch(p1, p2) {
@@ -183,11 +215,11 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       var state1Col = 'State' + i;
       var state2Col = 'State' + j;
       
-      if(p1[state1Col] == 107) {
+      if(p1[state1Col] == 107 || p1[state1Col] == 10 || p1[state1Col] == 11 || p1[state1Col] == 13 || p1[state1Col] == 14 || p1[state1Col] == 15) {
         i++;
         state1Col = 'State' + i;
       }
-      if(p2[state2Col] == 107) {
+      if(p2[state2Col] == 107 || p2[state2Col] == 10 || p2[state2Col] == 11 || p2[state2Col] == 13 || p2[state2Col] == 14 || p2[state2Col] == 15) {
         j++;
         state2Col = 'State' + j;
       }

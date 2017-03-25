@@ -12,6 +12,17 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     this.groupName = saveHelper.getCurrentBuild();
   }
 
+  if(!(this.groupName in this.savedItems)) {
+    this.groupName = null;
+  }
+
+  if(!this.groupName && this.savedItems) {
+    for(var groupName in this.savedItems) {
+      this.groupName = groupName;
+      break;
+    }
+  }
+
   if(!this.groupName) {
     return;
   }
