@@ -7,6 +7,6 @@
     ng-if="ctrl.shouldShow(action)">
       <span class="cat-icon-{{action.name}} cat-icon">
       </span>
-        {{::action.name}}
+        {{::ctrl.getName(action)}}
   </button>
 </div>

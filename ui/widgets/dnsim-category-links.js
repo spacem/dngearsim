@@ -1,9 +1,9 @@
 (function () {
 'use strict';
   
-angular.module('dnsim').directive('dnsimCategoryLinks', ['itemCategory','$location', dnsimCategoryLinks]);
+angular.module('dnsim').directive('dnsimCategoryLinks', dnsimCategoryLinks);
 
-function dnsimCategoryLinks(itemCategory,$location) {
+function dnsimCategoryLinks() {
   return {
     restrict: 'E',
     scope: {},
@@ -14,12 +14,12 @@ function dnsimCategoryLinks(itemCategory,$location) {
       onChange: '&onChange'
     },
     templateUrl: 'ui/widgets/dnsim-category-links.html',
-    controller: ['itemCategory','$window', dnsimCategoryLinksController],
+    controller: dnsimCategoryLinksController,
     controllerAs: 'ctrl',
   };
 };
 
-function dnsimCategoryLinksController(itemCategory, $window) {
+function dnsimCategoryLinksController(itemCategory, $window, translations) {
 
   var vm = this;
 
@@ -51,6 +51,15 @@ function dnsimCategoryLinksController(itemCategory, $window) {
       if(vm.onChange) {
         vm.onChange();
       }
+    }
+  }
+
+  vm.getName = function(action) {
+    if(action.tId) {
+      return translations.translate(action.tId).toLowerCase();
+    }
+    else {
+      return action.name;
     }
   }
 }
