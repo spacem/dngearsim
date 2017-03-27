@@ -42,7 +42,7 @@ function quickAddHelper(dntData, translations, itemColumnsToLoad, itemCategory,i
       
       var item = allItems[i];
       
-      if(build.job.id > 0 && item.needJobClass > 0 && !jobs.isClassJob(build.job.d, item.needJobClass)) {
+      if(!category.hideJob && build.job.id > 0 && item.needJobClass > 0 && !jobs.isClassJob(build.job.d, item.needJobClass)) {
         continue;
       }
       itemFactory.initItem(item);
