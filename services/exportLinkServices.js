@@ -267,7 +267,6 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           var rowNum = ds[0];
           var typeParam1 = dntData.getValue(itemType.mainDnt, rowNum, 'TypeParam1');
         
-          var totalRatio = 0;
           var p = null;
           
           var ps = dntData.find(itemType.potentialDnt, 'id', item.pid);
@@ -291,15 +290,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               p = null;
               console.log('bad potential');
             }
-            else {
-              var potentials = dntData.find(itemType.potentialDnt, 'PotentialID', p.PotentialID);
-              angular.forEach(potentials, function(value, key) {
-                totalRatio += value.PotentialRatio;
-              });
-            }
           }
           
-          var newItem = itemFactory.createItem(itemType, rowNum, p, totalRatio);
+          var newItem = itemFactory.createItem(itemType, rowNum, p);
           itemFactory.initItem(newItem);
           itemCategory.setItemCategory(newItem, d);
 
@@ -357,7 +350,6 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
                 if(enchantment.PetLevel == newItem.enchantmentNum) {
                   newItem.enchantmentStats = hCodeValues.getStats(enchantment);
                   newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
-                  return;
                 }
               });
             }
@@ -399,9 +391,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           var d = dntData.getRow(item.fileName + '.lzjson', row);
           newItem = itemFactory.createBasicItem(d);
           newItem.row = row;
-          newItem.needJobClass = d.NeedJobClass,
-          newItem.exchangeType = d.ExchangeType,
-          newItem.fileName = item.fileName,
+          newItem.needJobClass = d.NeedJobClass;
+          newItem.exchangeType = d.ExchangeType;
+          newItem.fileName = item.fileName;
           newItem.description = translations.translate(d.DescriptionID, d.DescriptionIDParam);
           itemFactory.initItem(newItem);
           return newItem;
@@ -441,6 +433,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
               if(fileType == 'enchantDnt' && !item.enchantmentNum) {
                 continue;
               }
+              
               dntFiles[itemType[fileType]] = itemColumnsToLoad[fileType];
             }
           }

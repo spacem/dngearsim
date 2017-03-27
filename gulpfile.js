@@ -92,15 +92,15 @@ gulp.task('libs', function() {
 
 gulp.task('dntviewer', function() {
   return gulp.src([
-      'bower_components/dntviewer/simplerreader.js',
-      'bower_components/dntviewer/dntreader.js',
-      'bower_components/dntviewer/dntranslations.js',
+      '../dntviewer/simplerreader.js',
+      '../dntviewer/dntreader.js',
+      '../dntviewer/dntranslations.js',
     ])
     .pipe(sourcemaps.init())
-    .pipe(babel({
-       presets: ['es2015']
-    }))
-    .pipe(uglify())
+    //.pipe(babel({
+    //   presets: ['es2015']
+    //}))
+    //.pipe(uglify())
     .pipe(concat('dntviewer.min.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('min'))

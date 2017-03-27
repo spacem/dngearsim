@@ -1,4 +1,4 @@
-<div class="list-group">
+<div class="list-group" ng-if="!ctrl.isLoading()">
   <button class="list-group-item"
     ng-click="ctrl.setCategory(action)"
     ng-repeat="action in ::ctrl.categories track by $index"

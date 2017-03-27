@@ -7,7 +7,7 @@ function itemColumnsToLoad() {
     mainDnt: {
       NameID: true, DescriptionID: true, NameIDParam: true, DescriptionIDParam: true,
       Type: true,TypeParam1: true,TypeParam2: true, TypeParam3: true, LevelLimit: true, NeedJobClass: true, Rank: true,
-      State1: true, StateValue1: true, State1_Max: true, State1_GenProb: true,
+      State1: true, StateValue1: true, State1_Max: true,
       State2: true, StateValue2: true, State2_Max: true,
       State3: true, StateValue3: true, State3_Max: true,
       State4: true, StateValue4: true, State4_Max: true,

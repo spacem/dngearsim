@@ -35,6 +35,10 @@ function dnsimCategoryLinksController(itemCategory, $window, translations) {
     }
   }
 
+  vm.isLoading = function() {
+    return !translations.loaded;
+  }
+
   vm.setCategory = function(action) {
     
     if(vm.collapse) {

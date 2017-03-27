@@ -69,7 +69,7 @@ function items(translations,dntData,itemColumnsToLoad) {
         setDnt: 'setitemtable.optimised.lzjson',
         gemSlotDnt: 'dragonjewelslottable.lzjson',
         type: 'equipment',
-        minLevel: 24,
+        minLevel: 21,
         minRank: 3 },
       rbeq: { 
         mainDnt: 'itemtable_reboot.optimised.lzjson', 

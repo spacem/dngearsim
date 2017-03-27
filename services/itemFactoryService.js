@@ -13,7 +13,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     createBasicItem: createBasicItem,
   };
   
-  function createItem(itemType, row, p, totalRatio) {
+  function createItem(itemType, row, p) {
     
     // data and potential are used to initialise name and stats
     // this is only done when needed
@@ -22,7 +22,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       row: row,
       potential : p,
       id: dntData.getValue(itemType.mainDnt, row, 'id'),
-      totalRatio: totalRatio,
       itemSource : itemType.name,
       levelLimit : dntData.getValue(itemType.mainDnt, row, 'LevelLimit'),
       needJobClass : dntData.getValue(itemType.mainDnt, row, 'NeedJobClass'),
@@ -36,77 +35,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       typeName : null,
       sparkId: null,
     };
-  };
-
-  function skipItemType(dType) {
-    return dType == 8 ||
-      dType == 9 ||
-      dType == 11 ||
-      dType == 12 ||
-      dType == 13 ||
-      dType == 18 ||
-      dType == 19 ||
-      dType == 20 ||
-      dType == 21 ||
-      dType == 24 ||
-      dType == 29 ||
-      dType == 46 ||
-      dType == 51 ||
-      dType == 74 ||
-      dType == 75 ||
-      dType == 76 ||
-      dType == 78 ||
-      dType == 79 ||
-      dType == 84 ||
-      dType == 100 ||
-      dType == 112 ||
-      dType == 114 ||
-      dType == 115 ||
-      dType == 116 ||
-      dType == 122 ||
-      dType == 142 ||
-      dType == 174 ||
-      dType == 130 ||
-      dType == 182;
-  }
-
-  function skipLevel(itemType, dLevelLimit) {
-    if(itemType.minLevel && dLevelLimit < itemType.minLevel) {
-      return true;
-    }
-
-    if(itemType.maxLevel && dLevelLimit > itemType.maxLevel) {
-      return true;
-    }
-
-    return false;
-  }
-
-  function skipBadPlates(dType, sellAmount) {
-    if(dType == 38 && sellAmount === 0) {
-      return true;
-    }
-
-    return false;
-  }
-
-  function skipRank(itemType, dRank) {
-    if(itemType.minRank && dRank < itemType.minRank) {
-      return true;
-    }
-
-    return false;
-  }
-
-  function skipTechs(itemType, jobClass, dLevelLimit, dTypeParam1) {  
-    for(var i=0;i<itemType.items.length;++i) {
-      if(itemType.items[i].needJobClass == jobClass &&
-        itemType.items[i].levelLimit == dLevelLimit &&
-        itemType.items[i].potential && itemType.items[i].potential.PotentialID == dTypeParam1) {
-          return true;
-        }
-    }
-    return false;
   }
 
   function isDataLoaded(itemType) {
@@ -133,7 +61,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   
   function loadItems(itemType) {
 
-    if(!isDataLoaded) {
+    if(!isDataLoaded(itemType)) {
       return null;
     }
     
@@ -143,34 +71,13 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     var numRows = dntData.getNumRows(itemType.mainDnt);
     for(var r=0;r<numRows;++r) {
       var dType = dntData.getValue(itemType.mainDnt, r, 'Type');
-      if(skipItemType(dType)) {
-        continue;
-      }
 
-      var dLevelLimit = dntData.getValue(itemType.mainDnt, r, 'LevelLimit');
-      if(skipLevel(itemType, dLevelLimit)) {
-        continue;
-      }
-
-      var dRank = dntData.getValue(itemType.mainDnt, r, 'Rank');
-      if(skipRank(itemType, dRank)) {
-        continue;
-      }
-
-      var dState1GenProb = dntData.getValue(itemType.mainDnt, r, 'State1_GenProb');
+      var state1Max = dntData.getValue(itemType.mainDnt, r, 'State1_Max');
       var dStateValue1 = dntData.getValue(itemType.mainDnt, r, 'StateValue1');
       var dTypeParam1 = dntData.getValue(itemType.mainDnt, r, 'TypeParam1');
         
       // skip items with no data
-      if(dState1GenProb > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35) {
-        
-        if(itemType.type == 'techs') {
-          var jobClass = dntData.getValue(itemType.mainDnt, r, 'NeedJobClass');
-          if(skipTechs(itemType, jobClass, dLevelLimit, dTypeParam1)) {
-            continue;
-          }
-        }
-        
+      if(state1Max > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35) {        
         var potentials = [];
         if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
           potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
@@ -187,14 +94,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         }
 
         for(var p=0;p<numPotentials;++p) {
-          var found = false;
-          for(var q=0;q<p;++q) {
-            if(potentialsMatch(potentials[p], potentials[q])) {
-              found = true;
-              break;
-            }
-          }
-          
+          var found = false;          
           if(!found) {
             itemType.items.push(createItem(itemType, r, potentials[p], 0));
           }
@@ -205,56 +105,6 @@ function itemFactory(translations,dntData,hCodeValues,items) {
     var end = new Date().getTime();
     var time = end - start;
     console.log('item init time: ' + (time/1000) + 's for ' + itemType.name);
-  }
-  
-  function potentialsMatch(p1, p2) {
-    
-    var i = 1;
-    var j = 1;
-    for(;;) {
-      var state1Col = 'State' + i;
-      var state2Col = 'State' + j;
-      
-      if(p1[state1Col] == 107 || p1[state1Col] == 10 || p1[state1Col] == 11 || p1[state1Col] == 13 || p1[state1Col] == 14 || p1[state1Col] == 15) {
-        i++;
-        state1Col = 'State' + i;
-      }
-      if(p2[state2Col] == 107 || p2[state2Col] == 10 || p2[state2Col] == 11 || p2[state2Col] == 13 || p2[state2Col] == 14 || p2[state2Col] == 15) {
-        j++;
-        state2Col = 'State' + j;
-      }
-      
-      if(!(state1Col in p1 || state2Col in p2)) {
-        return true;
-      }
-      
-      if(!(state1Col in p1)) {
-        return false;
-      }
-      if(!(state2Col in p2)) {
-        return false;
-      }
-      
-      if(p1[state1Col] == -1 && p2[state2Col] == -1) {
-        return true;
-      }
-      
-      if(!(p1[state1Col] >= 0 || p2[state2Col] >= 0)) {
-        return true;
-      }
-      
-      if(p1[state1Col] != p2[state2Col]) {
-        return false;
-      }
-      
-      var val1Col = 'State' + i + 'Value';
-      var val2Col = 'State' + j + 'Value';
-      if(p1[val1Col] != p2[val2Col]) {
-        return false;
-      }
-      
-      ++i;
-    }
   }
   
   function initItem(item) {
@@ -325,26 +175,10 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       
       if(p) {
         item.pid = p.id;
-      
-        if(item.potentialRatio === null) {
-          item.potentialRatio = getPotentialRatio(p, item.totalRatio);
-        }
       }
       
       delete item.potential;
     }
-  }
-  
-  function getPotentialRatio(p, totalRatio) {
-    
-    if(p && p.PotentialRatio > 0 && totalRatio != 0) {
-      var ratio = Math.round(p.PotentialRatio/totalRatio*100*100)/100;
-      if(ratio != 100) {
-        return ratio + '%';
-      }
-    }
-
-    return null;
   }
   
   function getItemData(item) {

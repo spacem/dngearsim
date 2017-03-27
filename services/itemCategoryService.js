@@ -12,7 +12,7 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'weapons', name:'weapons', sourceType: 'equipment', numItemText: '2', maxExchange: 1, maxCat: 2, limitExchange: [1,2]},
       {path: 'armour', name:'armour', sourceType: 'equipment', numItemText: '5', maxExchange: 1, maxCat: 5, limitExchange: [3,4,5,6,7]},
       {path: 'accessories', name:'accessories', sourceType: 'equipment', hideJob: true, maxCat: 4, maxExchange: 2, limitExchange: [8,9,10], tId: 7604},
-      {path: 'techs', name:'techs', sourceType: 'techs', maxCat: 4, maxExchange: 2, limitExchange: [8,9,10]},
+      {path: 'techs', name:'techs', sourceType: 'techs', maxCat: 4, maxExchange: 2, limitExchange: [8,9,10], hideJob: true},
       {path: 'offensive-gems', name:'offensive gems', sourceType: 'gems', hideJob: true, maxCat: 4, maxExchange: 4, limitExchange: [54]},
       {path: 'increasing-gems', name:'increasing gems', sourceType: 'gems', hideJob: true, maxCat: 14, maxExchange: 14, limitExchange: [54]},
       {path: 'enhancement-plates', name:'enhancement plates', sourceType: 'plates', hideJob: true, numItemText: '8+3', maxCat: 11, maxExchange: 15, limitExchange: [33]},

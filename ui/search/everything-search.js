@@ -27,6 +27,27 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
   vm.maxDisplay = 32;
   vm.currentResults = 0;
   vm.results = null;
+  vm.minLevel = 1;
+  vm.maxLevel = 99;
+
+  
+  var minLevel = Number(localStorage.getItem('minLevel'));
+  if($routeParams.minLevel) {
+    minLevel = Number($routeParams.minLevel);
+  }
+  if(minLevel > 0 && minLevel < 100) {
+    vm.minLevel = minLevel;
+  }
+  vm.origMinLevel = minLevel;
+  
+  var maxLevel = Number(localStorage.getItem('maxLevel'));
+  if($routeParams.maxLevel) {
+    maxLevel = Number($routeParams.maxLevel);
+  }
+  if(maxLevel > 0 && maxLevel < 100) {
+    vm.maxLevel = maxLevel;
+  }
+  vm.origMaxLevel = maxLevel;
 
   if(!vm.nameSearch) {
     vm.nameSearch = localStorage.getItem('nameSearch');
@@ -92,6 +113,10 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
     for(var i=0;i<numBoxes && (curDisplay<vm.maxDisplay);++i) {
       var e = vm.boxes[i];
 
+      if(e.levelLimit < vm.minLevel || e.levelLimit > vm.maxLevel || (!e.levelLimit)) {
+        continue;
+      }
+
       if(vm.nameSearch != '') {
         var nameSearches = vm.nameSearch.split(' ');
         if(nameSearches.length == 0) {
@@ -119,7 +144,18 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
   }
   
   vm.changeSearch = function() {
-    console.log('saving search name');
+    if(vm.minLevel != vm.origMinLevel) {
+      localStorage.setItem('minLevel', vm.minLevel);
+      $location.search('minLevel', vm.minLevel);
+      vm.origMinLevel = vm.minLevel;
+    }
+    
+    if(vm.maxLevel != vm.origMaxLevel) {
+      localStorage.setItem('maxLevel', vm.maxLevel);
+      $location.search('maxLevel', vm.maxLevel);
+      vm.origMaxLevel = vm.maxLevel;
+    }
+
     localStorage.setItem('nameSearch', vm.nameSearch);
     $location.search('name', vm.nameSearch);
     
