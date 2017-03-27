@@ -250,7 +250,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           name: translations.translate(skillData.NameID, skillData.NameIDParam),
           description: translations.translate(skillLevelVals.SkillExplanationID, skillLevelVals.SkillExplanationIDParam),
           icon: skillData.IconImageIndex,
-          pve: item.pve,
+          pve: item.pve
         };
         
         newItem.stats = statHelper.getSkillStats(newItem, skillData, skillLevelDatas);
@@ -295,6 +295,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           var newItem = itemFactory.createItem(itemType, rowNum, p);
           itemFactory.initItem(newItem);
           itemCategory.setItemCategory(newItem, d);
+          newItem.gemSlot = item.gemSlot;
 
           var usePartDnt = null;
           if(newItem.typeName != 'weapons' && newItem.typeId != 0) {
@@ -394,6 +395,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           newItem.needJobClass = d.NeedJobClass;
           newItem.exchangeType = d.ExchangeType;
           newItem.fileName = item.fileName;
+          newItem.gemSlot = item.gemSlot;
           newItem.description = translations.translate(d.DescriptionID, d.DescriptionIDParam);
           itemFactory.initItem(newItem);
           return newItem;

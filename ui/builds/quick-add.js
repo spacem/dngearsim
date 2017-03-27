@@ -52,6 +52,7 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
         if(vm.datas.length > 0) {
           vm.cancel();
           var newItem = exportLinkHelper.reloadItem(item);
+          newItem.gemSlot = vm.gemSlot;
           saveHelper.saveItem(vm.buildName, newItem);
           vm.build.items.push(newItem);
           vm.onChange();
@@ -113,6 +114,7 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
       category: '=category',
       build: '=build',
       buildName: '=buildName',
+      gemSlot: '=gemSlot',
       onChange: '&onChange',
     },
     controller: 'quickAddCtrl',

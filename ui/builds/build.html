@@ -99,6 +99,9 @@
                 {{subCatName}}<br />
               </em>
             </button>
+            <div ng-if="subCat && !buildCtrl.moveItem && buildCtrl.getNumTaken(subCat) < subCat.slots">
+                <dngearsim-quick-add gem-slot="buildCtrl.getGemSlot(subCat)" build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
+            </div>
             <span ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)">moving:</span>
             <dngearsim-build-item item="buildCtrl.moveItem" ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()"></dngearsim-build-item>
             <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index" ng-if="buildCtrl.isInSubCat(result, subCat) && !buildCtrl.moveItem">

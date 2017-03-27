@@ -275,6 +275,7 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
               case 2032: // Sharing Goddess's Grief
               case 2033: // Grief-stricken
               case 1313: // Jakard's Demise
+              case 2188: // Teary eyed
               // case 1280: // Dragon Tamer
               // case 339: // Cow Wrangler
                 usefulTitles.push(allTitles[i]);

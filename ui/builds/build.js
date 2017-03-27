@@ -120,12 +120,17 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
     return vm.category.name == 'increasing gems' || vm.category.name == 'offensive gems';
   }
 
+  this.getGemSlot = function(subCat) {
+    if(subCat) {
+      var gemExchange = _.find(hCodeValues.gemExchanges, function(e) {
+        return e.exchange == subCat.exchangeType;
+      });
+      return gemExchange.id;
+    }
+  }
+
   this.move = function(moveItem, destination) {
-    subCatCatName = '';
-    var gemExchange = _.find(hCodeValues.gemExchanges, function(e) {
-      return e.exchange == destination.exchangeType;
-    });
-    moveItem.gemSlot = gemExchange.id;
+    moveItem.gemSlot = vm.getGemSlot(destination);
     saveHelper.updatedSavedItems(vm.buildName, vm.build.items);
     vm.handleChange();
   }
@@ -235,6 +240,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
   
   this.handleChange = function() {
     vm.stats = statHelper.getBuildStats(vm.build);
+    subCatCatName = '';
     vm.onChange();
   }
   

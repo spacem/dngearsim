@@ -1,7 +1,7 @@
 <dnsim-loading>
 <button class="btn btn-link" ng-if="!quickAdd.hasStarted() && quickAdd.hasOptions()" ng-click="quickAdd.start()">
 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-quick add
+  quick add <span ng-if="quickAdd.gemSlot">here</span>
 </button>
 <div class="row" ng-if="quickAdd.hasStarted()">
   <div class="col-xs-12">
