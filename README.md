@@ -32,7 +32,7 @@ My idea was to use static html/javascript pages which could be hosted on free ho
 I don’t use a database - as such.
 Your data when you use the sim is simply compressed and stored in the browser local storage.
 The data from the game is read directly from optimised versions of the games data files.
-These are mostly the same files that are used by dntviewer however to speed up the sim a little I have a script that preprocesses some of them and saves them with the extension .optimised.lzjson.
+These are mostly the same files that are used by dntviewer however to speed up the sim a little I have a script that preprocesses some of them and saves them with the extension .optimised.json.
 
 ## Code Structure
 The ui folder contains subfolders for each screen and a folder called widgets which has controls shared between the screens.

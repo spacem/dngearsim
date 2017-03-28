@@ -191,8 +191,8 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       }
     }
     
-    if(item.fileName && dntData.isLoaded(item.fileName + '.optimised.lzjson')) {
-      var result = getItemDataFromFile(item.fileName + '.optimised.lzjson', item);
+    if(item.fileName && dntData.isLoaded(item.fileName + '.optimised.json')) {
+      var result = getItemDataFromFile(item.fileName + '.optimised.json', item);
       if(result) {
         return result;
       }

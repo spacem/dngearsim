@@ -42,13 +42,13 @@ describe('items', function () {
   });
   
   it('contains eq source with expected dnts', function() {
-    expect(items.eq.mainDnt).toBe('itemtable_equipment.optimised.lzjson');
-    expect(items.eq.partsDnt).toBe('partstable_equipment.optimised.lzjson');
-    expect(items.eq.weaponDnt).toBe('weapontable_equipment.optimised.lzjson');
-    expect(items.eq.enchantDnt).toBe('enchanttable.optimised.lzjson');
-    expect(items.eq.potentialDnt).toBe('potentialtable.optimised.lzjson');
-    expect(items.eq.sparkDnt).toBe('potentialtable_potentialjewel.optimised.lzjson');
-    expect(items.eq.setDnt).toBe('setitemtable.optimised.lzjson');
+    expect(items.eq.mainDnt).toBe('itemtable_equipment.optimised.json');
+    expect(items.eq.partsDnt).toBe('partstable_equipment.optimised.json');
+    expect(items.eq.weaponDnt).toBe('weapontable_equipment.optimised.json');
+    expect(items.eq.enchantDnt).toBe('enchanttable.optimised.json');
+    expect(items.eq.potentialDnt).toBe('potentialtable.optimised.json');
+    expect(items.eq.sparkDnt).toBe('potentialtable_potentialjewel.optimised.json');
+    expect(items.eq.setDnt).toBe('setitemtable.optimised.json');
   });
   
   it('initialises translations', function() {
@@ -58,15 +58,15 @@ describe('items', function () {
   
   it('initialises item dnts', function() {
     items.eq.init(function() {}, function() {});
-    expect(mockDntData.initCalled['itemtable_equipment.optimised.lzjson']).toBe(true);
-    expect(mockDntData.initCalled['potentialtable.optimised.lzjson']).toBe(true);
+    expect(mockDntData.initCalled['itemtable_equipment.optimised.json']).toBe(true);
+    expect(mockDntData.initCalled['potentialtable.optimised.json']).toBe(true);
   });
   
   it('does not initialise other dnts', function() {
-    expect('partstable_equipment.optimised.lzjson' in mockDntData.initCalled).toEqual(false);
-    expect('weapontable_equipment.optimised.lzjson' in mockDntData.initCalled).toEqual(false);
-    expect('enchanttable.optimised.lzjson' in mockDntData.initCalled).toEqual(false);
-    expect('potentialtable_potentialjewel.optimised.lzjson' in mockDntData.initCalled).toEqual(false);
-    expect('setitemtable.optimised.lzjson' in mockDntData.initCalled).toEqual(false);
+    expect('partstable_equipment.optimised.json' in mockDntData.initCalled).toEqual(false);
+    expect('weapontable_equipment.optimised.json' in mockDntData.initCalled).toEqual(false);
+    expect('enchanttable.optimised.json' in mockDntData.initCalled).toEqual(false);
+    expect('potentialtable_potentialjewel.optimised.json' in mockDntData.initCalled).toEqual(false);
+    expect('setitemtable.optimised.json' in mockDntData.initCalled).toEqual(false);
   });
 });

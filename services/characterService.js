@@ -6,7 +6,7 @@ function character(dntData,itemColumnsToLoad,jobs,hCodeValues) {
 
   var jobConversions = 'rebootplayerweighttable.lzjson';
   var statCaps = 'playercommonleveltable.lzjson';
-  var jobBaseStats = 'playerleveltable.optimised.lzjson';
+  var jobBaseStats = 'playerleveltable.optimised.json';
 
   var heroLevels = 'heroleveltable.lzjson';
   var heroLevelPotentials = 'potentialtable_herolevel.lzjson';
