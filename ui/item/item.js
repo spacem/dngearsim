@@ -304,7 +304,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   function setFileName() {
     if(!$scope.item.fileName) {
       if($scope.item.itemSource in items && items[$scope.item.itemSource].mainDnt) {
-        $scope.item.fileName = items[$scope.item.itemSource].mainDnt.replace('.lzjson', '').replace('.optimised', '');
+        $scope.item.fileName = items[$scope.item.itemSource].mainDnt.replace('.lzjson', '').replace('.json', '').replace('.optimised', '');
       }
     }
   }
