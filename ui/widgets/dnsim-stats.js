@@ -55,13 +55,15 @@ function dnsimStats(hCodeValues) {
         var summaryForStats = {};
         angular.forEach(stats, function(stat, key) {
           var def = hCodeValues.stats[stat.id];
-          if(def.summaryFor) {
+          if(def && def.summaryFor) {
             summaryForStats[def.summaryFor] = stat;
           }
         });
         
         angular.forEach(stats, function(stat, key) {
           var output = '';
+
+          console.log('processing stat', stat);
           
           if(stat.id in hCodeValues.stats) {
             
@@ -77,6 +79,7 @@ function dnsimStats(hCodeValues) {
             if(def.summaryFor) {
               return;
             }
+            console.log('no summaryFor');
             
             if(!first) {
               output += sep;
