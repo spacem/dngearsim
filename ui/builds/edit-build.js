@@ -108,7 +108,7 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntDat
     vm.enemyLevel = vm.group.enemyLevel;
   }
   else {
-    vm.enemyLevel = 90;
+    vm.enemyLevel = 93;
   }
   
   if(vm.group.playerLevel) {
