@@ -31,7 +31,7 @@
     </div>
     <div class="col-xs-12 col-md-7 col-lg-6" ng-if="::!buildCtrl.server" ng-class="{'hidden-xs': buildCtrl.xsView != 'actions'}">
       <br class="hidden-xs hidden-sm" /><br class="hidden-xs hidden-sm" />
-      <dngearsim-build-actions build-name="::buildCtrl.buildName" build="::buildCtrl.build" on-change="buildCtrl.handleChange()">
+      <dngearsim-build-actions build-name="buildCtrl.buildName" build="buildCtrl.build" on-change="buildCtrl.handleChange()">
       </dngearsim-build-actions>
     </div>
     <div class="col-xs-6" ng-show="::buildCtrl.stats.calculatedStats.length == 0">
