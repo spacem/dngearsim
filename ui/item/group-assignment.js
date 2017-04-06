@@ -1,8 +1,21 @@
-angular.module('dnsim').controller('groupAssignmentCtrl',
+(function () {
+'use strict';
 
-['hCodeValues','statHelper','saveHelper','itemCategory','$scope',
-function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
-  'use strict';
+angular.module('dnsim').directive('dngearsimGroupAssignment', function() {
+  return {
+    scope: true,
+    bindToController: {
+      item: '=item',
+      compact: '=compact',
+      onChange: '&onChange'
+    },
+    controller: groupAssignment,
+    controllerAs: 'editCtrl',
+    templateUrl: 'ui/item/group-assignment.html'
+  };
+});
+
+function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,exportLinkHelper,dntData) {
   
   var vm = this;
   
@@ -17,8 +30,8 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
   }
 
   if(!this.groupName && this.savedItems) {
-    for(var groupName in this.savedItems) {
-      this.groupName = groupName;
+    for(var savedGroup in this.savedItems) {
+      this.groupName = savedGroup;
       break;
     }
   }
@@ -41,6 +54,30 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     vm.groupItems = null;
     vm.groupCalcStats = null;
   }
+
+  vm.tryToSetItem = function(dntFiles) {
+    if(!dntData.anyLoading()) {
+      
+      var allLoaded = true;
+      angular.forEach(dntFiles, function(columns, fileName) {
+        if(!dntData.isLoaded(fileName)) {
+          allLoaded = false;
+        }
+      });
+      
+      if(allLoaded) {
+        vm.item = exportLinkHelper.reloadItem(vm.item);
+      }
+    }
+  }
+
+  var dntFiles = exportLinkHelper.getDntFiles(vm.item);
+  angular.forEach(dntFiles, function(columns, fileName) {
+    dntData.init(fileName, columns, function() {}, function() {
+      vm.tryToSetItem(dntFiles);
+    });
+  });
+  vm.tryToSetItem(dntFiles);
 
   $scope.$watch('editCtrl.item', function() {
     vm.clearGroup();
@@ -166,13 +203,13 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     var itemSplit;
     function numMatches(str) {
       if(str) {
-        var numMatches = 0;
+        var matches = 0;
         for(var i=0;i<itemSplit.length;++i) {
           if(str.indexOf(itemSplit[i]) > 0) {
-            numMatches++;
+            matches++;
           }
         }
-        return numMatches;
+        return matches;
       }
       else {
         return -1;
@@ -317,17 +354,6 @@ function(hCodeValues,statHelper,saveHelper,itemCategory,$scope) {
     saveHelper.saveBuildSelection(vm.groupName, vm.savedItems);
   }
   
-}])
-.directive('dngearsimGroupAssignment', function() {
-  return {
-    scope: true,
-    bindToController: {
-      item: '=item',
-      compact: '=compact',
-      onChange: '&onChange'
-    },
-    controller: 'groupAssignmentCtrl',
-    controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/group-assignment.html'
-  };
-});
+};
+
+})();
