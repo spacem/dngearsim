@@ -32,7 +32,7 @@
   'use strict';
   var simHadError = false;
   window.onerror = function(msg, url, lineNo, columnNo, error) {
-    console.log('on error firing');
+    console.log('on error handled');
     
     var string = msg.toLowerCase();
     var substring = "script error";
@@ -41,7 +41,7 @@
     }
     else {
       if(!simHadError) {
-        console.log('adding error');
+        console.log('adding error', error);
         simHadError = true;
         let container = document.createElement('div');
         
