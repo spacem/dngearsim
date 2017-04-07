@@ -275,7 +275,6 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper, dvSt
   this.statcard = function() {
     var stats = statHelper.getBuildStats(vm.build).calculatedStats;
     var dvCardStatHash = dvStatcardHelper.convertStats(stats, vm);
-    // var url = 'https://labs.divinitor.com/tool-store/prod/dv-web-statcard/0.9.7-LAB/#/cards/import?dngsimport=' + btoa(JSON.stringify(dvCardStatHash));
     var url = dvStatcardHelper.cardImportUrl + '?dngsimport=' + btoa(JSON.stringify(dvCardStatHash));
     window.open(url);
   }
