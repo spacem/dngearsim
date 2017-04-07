@@ -464,8 +464,13 @@ function statHelper(hCodeValues) {
       
       stats.calculatedStats = this.getCalculatedStats(build, stats.allStats);
       return stats;
+    },
+    
+    getStatcardStats: function(build) {
+      console.log("hello");
     }
   };
+
 }
 
 })();
