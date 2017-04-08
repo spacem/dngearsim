@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('buildCtrl',
 
-['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper',
-function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
+['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper','dvStatcardHelper', 
+function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper, dvStatcardHelper) {
   'use strict';
   
   var vm = this;
@@ -270,6 +270,13 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper) {
     vm.build.items = newItemList;
     saveHelper.updatedSavedItems(vm.buildName, newItemList);
     vm.handleChange();
+  }
+
+  this.statcard = function() {
+    var stats = statHelper.getBuildStats(vm.build).calculatedStats;
+    var dvCardStatHash = dvStatcardHelper.convertStats(stats, vm);
+    var url = dvStatcardHelper.cardImportUrl + '?dngsimport=' + btoa(JSON.stringify(dvCardStatHash));
+    window.open(url);
   }
   
 }])
