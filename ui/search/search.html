@@ -11,133 +11,130 @@
 </div>
 
 <div class="col-xs-12 col-sm-8 col-md-9">
-<div class="row visible-xs" ng-if="::!ctrl.itemCategory.searchType">
-  <div
-    class="col-xs-12 input-group">
-     <input placeholder="Search" ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 300 }" />
-     <span class="input-group-btn">
-       <button class="btn btn-default" ng-click="ctrl.filters = !ctrl.filters">
-        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-      </button>
-     </span>
-  </div>
-</div>
-<div class="row visible-xs" ng-if="!ctrl.itemCategory.searchType && ctrl.filters">
-  <div class="col-xs-6 form-group" ng-if="::!ctrl.itemCategory.hideRank" ng-repeat="(id,value) in ctrl.grades track by $index">
-    <label class="checkbox-inline">
-      <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}"> {{value.name}}
-    </label>
-  </div>
-  
-  <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-     <label>min&nbsp;lvl:
-     </label>
-     <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" ng-model-options="{ debounce: 300 }" />
-  </div>
-  <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-     <label>max&nbsp;lvl:
-     </label>
-     <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" ng-model-options="{ debounce: 300 }" />
-  </div>
-  <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
-    <label>stat:</label>
-    <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
-    </select>
-  </div>
-  <div class="col-xs-12 col-sm-3" ng-hide="::ctrl.itemCategory.hideJob">
-    <label>class: 
-    </label>
-    <select ng-change="ctrl.changeSearch()" ng-model="ctrl.job" class="form-control"
-     ng-options="job.name for job in ctrl.jobs track by job.id">
-    </select>
-  </div>
-  
-</div>
-<div class="row hidden-xs" ng-if="::!ctrl.itemCategory.searchType">
-  <div class="col-xs-0 col-md-2"></div>
-  <div class="hidden-xs col-md-10 form-group">
-    <br />
-    <span class="form-group" ng-repeat="(id,value) in ctrl.grades track by $index" ng-if="::!ctrl.itemCategory.hideRank">
-    <label class="checkbox-inline">
-      <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
-    </label>
-    </span>
-  </div>
-  
-  <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-     <label>min&nbsp;lvl:
-     </label>
-     <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" ng-model-options="{ debounce: 300 }" />
-  </div>
-  <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-     <label>max&nbsp;lvl:
-     </label>
-     <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" ng-model-options="{ debounce: 300 }" />
-  </div>
-  <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
-    <label>stat:</label>
-    <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
-    </select>
-  </div>
-  
-  <div
-    ng-class="['col-xs-12',{'col-sm-3': !ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-6': !ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob},{'col-sm-6': ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-9': ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob}]">
-     <label>name:</label>
-     <input ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 300 }" />
-     <span class="input-group-btn">
-     </span>
-  </div>
-  <div class="col-xs-12 col-sm-3" ng-hide="::ctrl.itemCategory.hideJob">
-    <label>class: 
-    </label>
-    <select ng-change="ctrl.changeSearch()" ng-model="ctrl.job" class="form-control"
-     ng-options="job.name for job in ctrl.jobs track by job.id">
-    </select>
-  </div>
-</div>
-</div>
-
-<div class="col-xs-12 col-sm-8 col-md-9" ng-if="::ctrl.itemCategory.searchType == 'skills'">
-  <dngearsim-skill-search jobs="ctrl.jobs" job="ctrl.job"></dngearsim-skill-search>
-</div>
-<div class="col-xs-12 col-sm-8 col-md-9" ng-if="::ctrl.itemCategory.searchType == 'custom'">
-  <dngearsim-custom-items></dngearsim-custom-items>
-</div>
-<div class="col-xs-12 col-sm-8 col-md-9" ng-if="::ctrl.itemCategory.searchType == 'everything'">
-  <dngearsim-everything-search name-search="ctrl.nameSearch"></dngearsim-everything-search>
-</div>
-
-<div class="col-xs-12 col-sm-8 col-md-9" ng-if="::!ctrl.itemCategory.searchType">
-<dnsim-loading also-show-for="!ctrl.results">
-<div class="row" 
-    infinite-scroll="ctrl.showMoreResults()">
-  <div class="col-xs-12" ng-repeat="result in ctrl.results track by $index">
-    <div class="dnsim-card">
-      <dngearsim-build-item item="result"></dngearsim-build-item>
-      <div style="float:right">
-          <button class="btn btn-default" ng-click="showUse = !showUse">
-            use
-          </button>
-      </div>
-      <div class="col-xs-12" ng-if="showUse">
-        <br />
-        <dngearsim-group-assignment compact="true" item="result"></dngearsim-group-assignment>
-      </div>
+  <div class="row visible-xs" ng-if="::!ctrl.itemCategory.searchType">
+    <div
+      class="col-xs-12 input-group">
+      <input placeholder="Search" ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 300 }" />
+      <span class="input-group-btn">
+        <button class="btn btn-default" ng-click="ctrl.filters = !ctrl.filters">
+          <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+        </button>
+      </span>
     </div>
   </div>
-</div>
-<div class="row" ng-show="ctrl.totalNumResults >= ctrl.maxDisplay">
-  <div class="col-xs-1"></div>
-  <div class="col-xs-11">
-    <button class="btn btn-link" ng-click="ctrl.showMoreResults(20)">show more</button>
+  <div class="row visible-xs" ng-if="!ctrl.itemCategory.searchType && ctrl.filters">
+    <div class="col-xs-6 form-group" ng-if="::!ctrl.itemCategory.hideRank" ng-repeat="(id,value) in ctrl.grades track by $index">
+      <label class="checkbox-inline">
+        <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}"> {{value.name}}
+      </label>
+    </div>
+    
+    <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
+      <label>min&nbsp;lvl:
+      </label>
+      <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
+      <label>max&nbsp;lvl:
+      </label>
+      <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
+      <label>stat:</label>
+      <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-3" ng-hide="::ctrl.itemCategory.hideJob">
+      <label>class: 
+      </label>
+      <select ng-change="ctrl.changeSearch()" ng-model="ctrl.job" class="form-control"
+      ng-options="job.name for job in ctrl.jobs track by job.id">
+      </select>
+    </div>
+    
   </div>
-</div>
-</dnsim-loading>
-</div>
-</div>
+  <div class="row hidden-xs" ng-if="::!ctrl.itemCategory.searchType">
+    <div class="col-xs-0 col-md-2"></div>
+    <div class="hidden-xs col-md-10 form-group">
+      <br />
+      <span class="form-group" ng-repeat="(id,value) in ctrl.grades track by $index" ng-if="::!ctrl.itemCategory.hideRank">
+      <label class="checkbox-inline">
+        <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
+      </label>
+      </span>
+    </div>
+    
+    <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
+      <label>min&nbsp;lvl:
+      </label>
+      <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
+      <label>max&nbsp;lvl:
+      </label>
+      <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
+      <label>stat:</label>
+      <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
+      </select>
+    </div>
+    
+    <div
+      ng-class="['col-xs-12',{'col-sm-3': !ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-6': !ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob},{'col-sm-6': ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-9': ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob}]">
+      <label>name:</label>
+      <input ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 300 }" />
+      <span class="input-group-btn">
+      </span>
+    </div>
+    <div class="col-xs-12 col-sm-3" ng-hide="::ctrl.itemCategory.hideJob">
+      <label>class: 
+      </label>
+      <select ng-change="ctrl.changeSearch()" ng-model="ctrl.job" class="form-control"
+      ng-options="job.name for job in ctrl.jobs track by job.id">
+      </select>
+    </div>
+  </div>
+
+  <dngearsim-skill-search jobs="ctrl.jobs" job="ctrl.job" ng-if="::ctrl.itemCategory.searchType == 'skills'">
+  </dngearsim-skill-search>
+
+  <dngearsim-custom-items ng-if="::ctrl.itemCategory.searchType == 'custom'">
+  </dngearsim-custom-items>
+
+  <dngearsim-everything-search name-search="ctrl.nameSearch" ng-if="::ctrl.itemCategory.searchType == 'everything'">
+  </dngearsim-everything-search>
+
+  <dnsim-loading also-show-for="!ctrl.results" ng-if="::!ctrl.itemCategory.searchType">
+    <div class="row" 
+        infinite-scroll="ctrl.showMoreResults()">
+      <div class="col-xs-12" ng-repeat="result in ctrl.results track by $index">
+        <div class="dnsim-card">
+          <dngearsim-build-item item="result"></dngearsim-build-item>
+          <div style="float:right">
+              <button class="btn btn-default" ng-click="showUse = !showUse">
+                use
+              </button>
+          </div>
+          <div class="col-xs-12" ng-if="showUse">
+            <br />
+            <dngearsim-group-assignment compact="true" item="result"></dngearsim-group-assignment>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="ctrl.totalNumResults >= ctrl.maxDisplay">
+      <div class="col-xs-1"></div>
+      <div class="col-xs-11">
+        <button class="btn btn-link" ng-click="ctrl.showMoreResults(20)">show more</button>
+      </div>
+    </div>
+  </dnsim-loading>
 </div>
 
+</div> <!-- end the row -->
+</div> <!-- end the main column -->
 <div class="col-lg-3 visible-lg-block">
   <img src="images/jasmin.png" />
 </div>
-</div>
+</div> <!-- end the row -->
