@@ -15,21 +15,10 @@ function published(onlineService, $location, $routeParams, saveHelper, statHelpe
   vm.copyLocally = function() {
     var newGroupName = saveHelper.importGroup(vm.buildName, vm.build.items);
     
-    saveHelper.renameSavedGroup(
+    saveHelper.saveBuild(
       newGroupName, 
       newGroupName,
-      vm.build.enemyLevel,
-      vm.build.playerLevel,
-      vm.build.heroLevel,
-      vm.build.job,
-      vm.build.damageType,
-      vm.build.element,
-      vm.build.secondaryElement,
-      vm.build.enemyStatCaps, 
-      vm.build.playerStatCaps, 
-      vm.build.conversions, 
-      vm.build.baseStats, 
-      vm.build.heroStats);
+      vm.build);
       
     $location.path('/build/' + newGroupName);
   }

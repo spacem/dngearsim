@@ -116,17 +116,25 @@ angular.module('dnsim').controller('ViewGroupCtrl',
       var newBuildName = saveHelper.importGroup($scope.buildName, $scope.build.items);
       // console.log('copying in as ' + newBuildName);
       
-      saveHelper.renameSavedGroup(
+      saveHelper.saveBuild(
         newBuildName, 
         newBuildName,
-        $scope.enemyLevel,
-        $scope.playerLevel,
-        $scope.heroLevel,
-        $scope.job,
-        $scope.damageType,
-        $scope.element,
-        $scope.secondaryElement,
-        $scope.enemyStatCaps, $scope.playerStatCaps, $scope.conversions, $scope.baseStats, $scope.heroStats);
+        {
+          enemyLevel: $scope.enemyLevel,
+          playerLevel: $scope.playerLevel,
+          heroLevel: $scope.heroLevel,
+          job: $scope.job,
+          damageType: $scope.damageType,
+          element: $scope.element,
+          secondaryElement: $scope.secondaryElement,
+          critResist: $scope.critResist,
+          eleResist: $scope.eleResist,
+          enemyStatCaps: $scope.enemyStatCaps,
+          playerStatCaps: $scope.playerStatCaps,
+          conversions: $scope.conversions,
+          baseStats: $scope.baseStats,
+          heroStats: $scope.heroStats
+        });
       
       $location.url('/build/' + newBuildName);
     }

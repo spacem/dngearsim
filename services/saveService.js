@@ -89,9 +89,29 @@ function saveHelper(itemCategory) {
       var stringifiedData = JSON.stringify(builds);
       localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
     },
+
+    saveBuild: function(oldGroupName, newGroupName, build) {
+      this.updateBuild(
+        oldGroupName, 
+        newGroupName,
+        build.enemyLevel,
+        build.playerLevel,
+        build.heroLevel,
+        build.job,
+        build.damageType,
+        build.element,
+        build.secondaryElement,
+        build.critResist,
+        build.eleResist,
+        build.enemyStatCaps, 
+        build.playerStatCaps, 
+        build.conversions, 
+        build.baseStats, 
+        build.heroStats);
+    },
     
-    renameSavedGroup: function(
-      oldGroupName, newGroupName, enemyLevel, playerLevel, heroLevel, job, damageType, element, secondaryElement,
+    updateBuild: function(
+      oldGroupName, newGroupName, enemyLevel, playerLevel, heroLevel, job, damageType, element, secondaryElement, critResist, eleResist,
       enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats) {
         
       var savedItems = this.getSavedItems();
@@ -113,6 +133,8 @@ function saveHelper(itemCategory) {
       savedItems[newGroupName].damageType = damageType;
       savedItems[newGroupName].element = element;
       savedItems[newGroupName].secondaryElement = secondaryElement;
+      savedItems[newGroupName].critResist = critResist;
+      savedItems[newGroupName].eleResist = eleResist;
       savedItems[newGroupName].enemyStatCaps = enemyStatCaps;
       savedItems[newGroupName].playerStatCaps = playerStatCaps;
       savedItems[newGroupName].conversions = conversions;

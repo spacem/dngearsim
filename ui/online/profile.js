@@ -37,21 +37,10 @@ function profile($location, $routeParams, onlineService, saveHelper) {
 
     var newGroupName = saveHelper.importGroup(buildName, build.items);
     
-    saveHelper.renameSavedGroup(
+    saveHelper.saveBuild(
       newGroupName, 
       newGroupName,
-      build.enemyLevel,
-      build.playerLevel,
-      build.heroLevel,
-      build.job,
-      build.damageType,
-      build.element,
-      build.secondaryElement,
-      build.enemyStatCaps, 
-      build.playerStatCaps, 
-      build.conversions, 
-      build.baseStats, 
-      build.heroStats);
+      build);
       
     vm.builds = saveHelper.getSavedItems();
     

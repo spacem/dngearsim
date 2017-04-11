@@ -104,6 +104,20 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntDat
     vm.secondaryElement = hCodeValues.elements[0];
   }
 
+  if(!('critResist' in vm.group)) {
+    vm.critResist = 20;
+  }
+  else {
+    vm.critResist = vm.group.critResist;
+  }
+
+  if(!('eleResist' in vm.group)) {
+    vm.eleResist = 0;
+  }
+  else {
+    vm.eleResist = vm.group.eleResist;
+  }
+
   if(vm.group.enemyLevel) {
     vm.enemyLevel = vm.group.enemyLevel;
   }
@@ -194,17 +208,25 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntDat
       saveHelper.importGroup(vm.groupName, []);
     }
     
-    saveHelper.renameSavedGroup(
+    saveHelper.saveBuild(
       vm.oldGroupName, 
       vm.groupName,
-      vm.enemyLevel,
-      vm.playerLevel,
-      vm.heroLevel,
-      vm.job,
-      vm.damageType,
-      vm.element,
-      vm.secondaryElement,
-      enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats);
+      {
+      enemyLevel: vm.enemyLevel,
+      playerLevel: vm.playerLevel,
+      heroLevel: vm.heroLevel,
+      job: vm.job,
+      damageType: vm.damageType,
+      element: vm.element,
+      secondaryElement: vm.secondaryElement,
+      critResist: vm.critResist,
+      eleResist: vm.eleResist,
+      enemyStatCaps: enemyStatCaps, 
+      playerStatCaps: playerStatCaps, 
+      conversions: conversions,
+      baseStats: baseStats,
+      heroStats: heroStats
+      });
     
     $location.path('/build/' + vm.groupName);
   }
