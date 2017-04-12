@@ -147,6 +147,9 @@ gulp.task('watch', function() {
 
   watcher = gulp.watch(['index/index.html', 'ui/**/*.html'], ['reload-html']);
   watcher.on('change', logChange);
+
+  watcher = gulp.watch(['dngearsim.css'], browserSync.reload);
+  watcher.on('change', logChange);
 })
 
 function logChange(event) {

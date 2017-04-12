@@ -25,6 +25,15 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper, dvSt
     }
   }
 
+  this.changeCategory = function() {
+    this.xsView = null;
+    this.moveItem = null;
+    this.categoryChanging = true;
+    $timeout(function() {
+      vm.categoryChanging = false;
+    }, 0);
+  }
+
 
   var subCats = {};
   var subCatCatName = '';

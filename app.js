@@ -3,7 +3,7 @@
 
 // templates are imported via gulp job
 angular.module('templates', []);
-angular.module('dnsim', ['ngRoute','angulartics','angulartics.google.analytics','templates', 'ngAria', 'infinite-scroll']);
+angular.module('dnsim', ['ngAnimate','ngRoute','angulartics','angulartics.google.analytics','templates', 'ngAria', 'infinite-scroll']);
 
 angular.module('dnsim').config(['$locationProvider', setupHtml5Mode]);
 

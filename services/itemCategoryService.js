@@ -181,7 +181,7 @@ function itemCategory(itemFactory,items,dntData) {
                 var enh1 = item1.enchantmentNum;
                 if(!enh1) enh1 = 0;
                 var enh2 = item2.enchantmentNum;
-                if(!enh2) enh1 = 0;
+                if(!enh2) enh2 = 0;
                 
                 if(enh1 != enh2) {
                   return enh2 - enh1;
@@ -197,7 +197,7 @@ function itemCategory(itemFactory,items,dntData) {
                   }
                   return item1.gemSlot - item2.gemSlot;
                 }
-                else {
+                else if(item2.levelLimit != item1.levelLimit) {
                   return item2.levelLimit - item1.levelLimit;
                 }
               }

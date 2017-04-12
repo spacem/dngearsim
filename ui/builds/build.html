@@ -16,7 +16,7 @@
     </div>
     <dnsim-loading>
     <div class="col-xs-12 visible-xs-block">
-      <dnsim-category-links collapse="true" cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.xsView = null;buildCtrl.moveItem=null" />
+      <dnsim-category-links collapse="true" cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.changeCategory()" />
     </div>
     <div class="col-xs-12 visible-xs-block">
       <button ng-click="buildCtrl.xsView = null" class="btn btn-default" ng-disabled="!buildCtrl.xsView">
@@ -45,10 +45,10 @@
       <br />
       <div class="row">
         <div class="hidden-xs col-sm-4 col-md-4">
-          <dnsim-category-links cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.xsView = null;buildCtrl.moveItem=null" />
+          <dnsim-category-links cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.changeCategory()" />
         </div>
     
-        <div class="col-xs-12 col-sm-8 col-md-8">
+        <div class="col-xs-12 col-sm-8 col-md-8 dnsim-fade" ng-if="!buildCtrl.categoryChanging">
           <div class="row table-look">
             <div class="col-xs-12" ng-if="::!buildCtrl.server">
               <dngearsim-quick-add build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
@@ -104,7 +104,7 @@
             </div>
             <span ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)">moving:</span>
             <dngearsim-build-item item="buildCtrl.moveItem" ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()"></dngearsim-build-item>
-            <div class="col-xs-12 dnsim-card" ng-repeat="result in buildCtrl.getCategoryItems() track by $index" ng-if="buildCtrl.isInSubCat(result, subCat) && !buildCtrl.moveItem">
+            <div class="col-xs-12 dnsim-card dnsim-disolve" ng-repeat="result in buildCtrl.getCategoryItems()" ng-if="buildCtrl.isInSubCat(result, subCat) && !buildCtrl.moveItem">
               <dngearsim-build-item item="result" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()" edit-mode="buildCtrl.editItem == result"></dngearsim-build-item>
               <div ng-if="!buildCtrl.server && buildCtrl.editItem != result" style="float:right">
                 <button class="btn btn-default" ng-click="buildCtrl.moveItem = result" ng-if="buildCtrl.canEdit(result) && buildCtrl.canMove() && !buildCtrl.moveItem">

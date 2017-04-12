@@ -105,7 +105,7 @@
   <dngearsim-everything-search name-search="ctrl.nameSearch" ng-if="::ctrl.itemCategory.searchType == 'everything'">
   </dngearsim-everything-search>
 
-  <dnsim-loading also-show-for="!ctrl.results" ng-if="::!ctrl.itemCategory.searchType">
+  <dnsim-loading ng-if="ctrl.results && !ctrl.itemCategory.searchType">
     <div class="row" 
         infinite-scroll="ctrl.showMoreResults()">
       <div class="col-xs-12" ng-repeat="result in ctrl.results track by $index">
