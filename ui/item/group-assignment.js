@@ -268,6 +268,15 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
   this.hasMaxExchangable = function() {
     var cat = itemCategory.byName(this.item.typeName);
     var items = this.getGroupItems();
+
+    var existing;
+    if(vm.item.itemSource == 'plate' || vm.item.itemSource == 'tman') {
+      if(_.find(items, function(item) {
+        return item.sparkTypeId == vm.item.sparkTypeId;
+      })) {
+        return true;
+      }
+    }
     
     if(cat && cat.maxCat) {
       if(items.length >= cat.maxCat) {
