@@ -222,7 +222,7 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
       var existing;
       if(vm.item.itemSource == 'plate' || vm.item.itemSource == 'tman') {
         existing = _.find(vm.savedItems[vm.groupName].items, function(item) {
-          return item.sparkTypeId == vm.item.sparkTypeId;
+          return item.sparkTypeId == vm.item.sparkTypeId && vm.item.itemSource == item.itemSource;
         });
       }
 
