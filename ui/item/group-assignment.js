@@ -218,25 +218,37 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
     
     if(vm.groupItems == null && vm.groupName && vm.groupName in vm.savedItems && vm.item && vm.item.typeName) {
       vm.groupItems = [];
-      
+
+      var existing;
+      if(vm.item.itemSource == 'plate' || vm.item.itemSource == 'tman') {
+        existing = _.find(vm.savedItems[vm.groupName].items, function(item) {
+          return item.sparkTypeId == vm.item.sparkTypeId;
+        });
+      }
+
       var items = [];
-      angular.forEach(vm.savedItems[vm.groupName].items, function(item, index) {
-        if(item.exchangeType && item.itemSource != 'gem' && item.itemSource != 'plate' && item.itemSource != 'tman') {
-          if(item.exchangeType == vm.item.exchangeType) {
+      if(existing) {
+        items.push(existing);
+      }
+      else {
+        _.each(vm.savedItems[vm.groupName].items, function(item) {
+          if(item.exchangeType && item.itemSource != 'gem' && item.itemSource != 'plate' && item.itemSource != 'tman') {
+            if(item.exchangeType == vm.item.exchangeType) {
+              items.push(item);
+            }
+          }
+          else if(item.typeName == vm.item.typeName) {
             items.push(item);
           }
+        });
+        
+        if(vm.item.name) {
+          itemSplit = vm.item.name.split(' ');
         }
-        else if(item.typeName == vm.item.typeName) {
-          items.push(item);
-        }
-      });
-      
-      if(vm.item.name) {
-        itemSplit = vm.item.name.split(' ');
+        items.sort(function(a,b) {
+          return numMatches(b.name)-numMatches(a.name);
+        });
       }
-      items.sort(function(a,b) {
-        return numMatches(b.name)-numMatches(a.name);
-      });
       
       angular.forEach(items, function(item, index) {
         if(item.name == vm.item.name) {
