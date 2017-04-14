@@ -441,7 +441,7 @@ a.region-hover:hover {
 }
 .dnsim-fade.ng-enter {
   transition:0.3s;
-  opacity: 0;
+  opacity: 0.1;
 }
 .dnsim-fade.ng-enter.ng-enter-active {
   opacity: 1;
@@ -464,4 +464,23 @@ a.region-hover:hover {
   padding-bottom:0;
   margin-top:0;
   margin-bottom:0;
+}
+.dnsim-disolve.ng-enter {
+  transition: 0.5s cubic-bezier(0,1,1,1);
+  max-height: 0;
+  min-height: 0px;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.dnsim-disolve.ng-enter.ng-enter-active {
+  max-height: 160px;
+  min-height: 40px;
+  overflow: hidden;
+  padding-top:5px;
+  padding-bottom:5px;
+  margin-top:8px;
+  margin-bottom:8px;
 }

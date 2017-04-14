@@ -193,12 +193,10 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   function getJobName() {
-    var retVal = '';
     var allJobs = jobs.getAllJobs();
     angular.forEach(allJobs, function(job, index) {
       if(job.id == $scope.item.needJobClass) {
         $scope.jobName = job.name;
-        return;
       }
     });
   }
@@ -212,18 +210,18 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     
     angular.forEach(exportLinkHelper.getDntFiles($scope.preInitItem), function(columns, fileName) {
       if(!dntData.isLoaded(fileName)) {
-        dntData.init(fileName, columns, reportProgress, function() { tryInit() });
+        dntData.init(fileName, columns, reportProgress, tryInit);
         anyToLoad = true;
       }
     });
     
     if(!translations.isLoaded()) {
-      translations.init(reportProgress,function() { tryInit() });
+      translations.init(reportProgress, tryInit);
       anyToLoad = true;
     }
     
     if(!jobs.isLoaded()) {
-      jobs.init(reportProgress, function() { tryInit(); });
+      jobs.init(reportProgress, tryInit);
       anyToLoad = true;
     }
     
@@ -232,9 +230,20 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     }
   }
   init();
+
+  function isLoaded() {
+    var anyDntToLoad = false;
+    angular.forEach(exportLinkHelper.getDntFiles($scope.preInitItem), function(columns, fileName) {
+      if(!dntData.isLoaded(fileName)) {
+        anyDntToLoad = true;
+      }
+    });
+
+    return !anyDntToLoad && translations.isLoaded() && jobs.isLoaded();
+  }
   
   function tryInit() {
-    if(!dntData.anyLoading() && translations.isLoaded() && jobs.isLoaded()) {
+    if(isLoaded()) {
       $scope.item = exportLinkHelper.reloadItem($scope.preInitItem);
       if($scope.item == null) {
         return;
@@ -260,44 +269,48 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         
         setFileName();
       }
-      
-      var itemData = itemFactory.getItemData($scope.item);
-      if(itemData.DisjointDrop1 > 0) {
-        $scope.canExtract = true;
-      }
-      
-      if((itemData.Type == 0 || itemData.Type == 1) && $scope.item.enchantmentNum > 0) {
-        $scope.canTransfer = true;
-      }
-      
-      if($scope.item.setId) {
-        $scope.isInSet = true;
-      }
-      
-      if($scope.item.typeId == 5) {
-        $scope.isPlate = true;
-      }
-      
-      if($scope.item.typeId == 46 || $scope.item.typeId == 8 || $scope.item.typeId == 112 || $scope.item.typeId == 122 || $scope.item.typeId == 142) {
-        $scope.hasContents = true;
-        $scope.detail = 'contents';
-      }
-      else if($scope.item.typeName != null) {
-        $scope.canUse = true;
-        $scope.detail = 'use';
-      }
-      else if($scope.canExtract) {
-        $scope.detail = 'extract';
-      }
-      else if($scope.canTransfer) {
-        $scope.detail = 'transfer';
-      }
-      else if($scope.isPlate) {
-        $scope.detail = 'plate';
-      }
-      else {
-        $scope.detail = 'shops';
-      }
+
+      setupTabs();
+    }
+  }
+
+  function setupTabs() {
+    var itemData = itemFactory.getItemData($scope.item);
+    if(itemData.DisjointDrop1 > 0) {
+      $scope.canExtract = true;
+    }
+    
+    if((itemData.Type == 0 || itemData.Type == 1) && $scope.item.enchantmentNum > 0) {
+      $scope.canTransfer = true;
+    }
+    
+    if($scope.item.setId) {
+      $scope.isInSet = true;
+    }
+    
+    if($scope.item.typeId == 5) {
+      $scope.isPlate = true;
+    }
+    
+    if($scope.item.typeId == 46 || $scope.item.typeId == 8 || $scope.item.typeId == 112 || $scope.item.typeId == 122 || $scope.item.typeId == 142) {
+      $scope.hasContents = true;
+      $scope.detail = 'contents';
+    }
+    else if($scope.item.typeName != null) {
+      $scope.canUse = true;
+      $scope.detail = 'use';
+    }
+    else if($scope.canExtract) {
+      $scope.detail = 'extract';
+    }
+    else if($scope.canTransfer) {
+      $scope.detail = 'transfer';
+    }
+    else if($scope.isPlate) {
+      $scope.detail = 'plate';
+    }
+    else {
+      $scope.detail = 'shops';
     }
   }
   

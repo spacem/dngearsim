@@ -169,15 +169,7 @@ function itemSearchCtrl(
   };
   
   function init() {
-    // console.log('translations loaded');
-    if(jobs.isLoaded()) {
-      jobInit();
-    }
-    else {
-      jobs.init(reportProgress, function() { $timeout(jobInit); } );
-    }
-
-    itemCategory.init(vm.itemCategory.name, loadResults);
+    jobs.init(reportProgress, jobInit);
   }
   
   function reportProgress(msg) {
@@ -196,7 +188,6 @@ function itemSearchCtrl(
       vm.allJobs = jobs.getAllJobs();
       
       var lastJobNumber = Number(localStorage.getItem('jobNumber'));
-      vm.origJobNumber != lastJobNumber;
       if($routeParams.job && $routeParams.job) {
         lastJobNumber = Number($routeParams.job);
       }
@@ -208,6 +199,8 @@ function itemSearchCtrl(
           }
         });
       }
+
+      itemCategory.init(vm.itemCategory.name, loadResults);
     }
   }
   
@@ -219,17 +212,13 @@ function itemSearchCtrl(
   }
   
   function loadResults() {
-    $timeout(function() {
-      vm.maxDisplay = 24;
-      vm.results = getResults();
-    });
+    vm.maxDisplay = 24;
+    vm.results = getResults();
   }
   
   function getResults() {
-    // console.log('getting items');
     var allItems = itemCategory.getItems(vm.itemCategory.name);
     if(allItems == null) {
-      // console.log('no items');
       return null;
     }
     
@@ -365,12 +354,7 @@ function itemSearchCtrl(
   }
   
   region.init();
-  if(translations.isLoaded()) {
-    init();
-  }
-  else {
-    translations.init(reportProgress, function() { $timeout(init); } );
-  }
+  translations.init(reportProgress, init);
 }
 
 })();

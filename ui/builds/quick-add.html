@@ -11,7 +11,7 @@
   </div>
   <div class="col-xs-12">
     quick add:
-    <span ng-repeat="data in quickAdd.datas">
+    <span ng-repeat="data in quickAdd.datas track by $index">
       {{data.value.name}}
     </span>&nbsp;
   </div>

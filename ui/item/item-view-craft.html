@@ -4,12 +4,12 @@
 <div class="col-xs-12" ng-if="ctrl.crafts == 0">
   item not found to be craftable
 </div>
-<div class="col-xs-12" ng-repeat="c in ctrl.crafts">
+<div class="col-xs-12" ng-repeat="c in ctrl.crafts track by $index">
   <div class="row">
     <h4 class="col-xs-12"> <!-- {{c.id}} / {{c.fileName}}: -->
     <small ng-if="c.gold > 0">{{c.gold}} gold</small>
     </h4>
-    <div class="col-xs-12 col-sm-3" ng-repeat="i in c.items">
+    <div class="col-xs-12 col-sm-3" ng-repeat="i in c.items track by $index">
       <dnsim-item-link item="i.item"></dnsim-item-link>
       <span ng-if="i.num > 1">&nbsp;x{{i.num}}</span>
     </div>

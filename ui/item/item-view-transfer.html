@@ -4,7 +4,7 @@
 <div class="col-xs-12" ng-if="ctrl.matchingTransfers == 0">
   enhancement cannot be transfered
 </div>
-<div class="col-xs-12" ng-repeat="transfer in ctrl.matchingTransfers">
+<div class="col-xs-12" ng-repeat="transfer in ctrl.matchingTransfers track by $index">
   <div class="row">
     <h4 class="col-xs-12 {{transfer.rank.name}}-grade">level {{transfer.level}} +{{transfer.enchantmentNum}} {{transfer.rank.name}}<br /><small>costs: {{transfer.gold}} gold, and...</small></h4>
     <div class="col-xs-12 col-sm-3" ng-if="transfer.numItem1 > 0">

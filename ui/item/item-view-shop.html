@@ -4,7 +4,7 @@
 <div class="col-xs-12" ng-if="ctrl.shopCosts == 0">
   item not found in the shops
 </div>
-<div class="col-xs-12" ng-repeat="s in ctrl.shopCosts">
+<div class="col-xs-12" ng-repeat="s in ctrl.shopCosts track by $index">
   <div class="row">
     <h4 class="col-xs-12">{{s.shopName.toString().toLowerCase()}} shop / {{s.tabName.toLowerCase()}}:
     <br />

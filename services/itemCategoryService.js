@@ -140,10 +140,18 @@ function itemCategory(itemFactory,items,dntData) {
     init: function(name, complete) {
       var cat = this.byName(name);
       if(cat && 'sourceType' in cat) {
-        angular.forEach(items, function(source, sourceName) {
-          if(source.type == cat.sourceType) {
-            source.init(function() {}, complete);
-          }
+        var sources = _.filter(items, function(source) {
+          return (source.type == cat.sourceType);
+        });
+
+        var numComplete = 0;
+        _.each(sources, function(source) {
+          source.init(function() {}, function() {
+              numComplete++;
+              if(numComplete == sources.length) {
+                complete();
+              }
+          });
         });
       }
     },

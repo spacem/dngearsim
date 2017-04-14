@@ -6,7 +6,7 @@
   </div>
   <div class="hidden-xs col-sm-4">&nbsp;</div>
   <div class="col-xs-12 col-sm-4">
-    <button class="btn btn-default btn-block" ng-repeat="bJob in ctrl.getBaseJobs()" ng-click="ctrl.bJob = bJob">
+    <button class="btn btn-default btn-block" ng-repeat="bJob in ctrl.getBaseJobs() track by $index" ng-click="ctrl.bJob = bJob">
       <span class="class-image class-{{bJob}}"></span>
       {{ctrl.getJobName(bJob)}}
     </button>
@@ -20,7 +20,7 @@
   </div>
   <div class="hidden-xs col-sm-4">&nbsp;</div>
   <div class="col-xs-12 col-sm-4">
-    <button class="btn btn-default btn-block" ng-repeat="fJob in ctrl.getFinalJobs()" ng-click="ctrl.setJob(fJob)">
+    <button class="btn btn-default btn-block" ng-repeat="fJob in ctrl.getFinalJobs() track by $index" ng-click="ctrl.setJob(fJob)">
       <dnsim-job-icon item="::fJob"></dnsim-job-icon>
       {{fJob.name}}
     </button>

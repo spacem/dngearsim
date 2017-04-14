@@ -9,7 +9,7 @@
       class="btn btn-default btn-block"
       ng-dblclick="editCtrl.setEnchantmentNum(enhancementOption.number)"
       ng-click="editCtrl.setEnchantmentNum(enhancementOption.number)"
-      ng-repeat="enhancementOption in editCtrl.enhancementOptions">
+      ng-repeat="enhancementOption in editCtrl.enhancementOptions track by $index">
         +{{enhancementOption.number}}<br />
         <span dnsim-stats stats="enhancementOption.stats" separator="'|'"></span>
     </button>
@@ -29,7 +29,7 @@
   {{editCtrl.enchantmentAfter.ProtectItemCount}} Jellies required for protection
   <br />
   </span>
-  <div ng-repeat="material in editCtrl.materials">
+  <div ng-repeat="material in editCtrl.materials track by $index">
     <div><dnsim-item-link item="material.item" /></div>x{{material.num}}
   </div>
 </div>

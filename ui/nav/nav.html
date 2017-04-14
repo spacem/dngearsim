@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs" ng-if="!noRegion()">
-  <li class="nav-tab nav-{{::action.name}}" ng-repeat="action in getActions()"> 
+  <li class="nav-tab nav-{{::action.name}}" ng-repeat="action in getActions() track by $index"> 
     <a class="list-group-item {{action.extraCss}}" ng-href="{{action.path}}">
       <span class="glyphicon glyphicon-{{::action.icon}}" ng-if="::action.icon" aria-hidden="true"></span>
       <dnsim-job-icon size="'50%'" item="action.build.job" small="true"></dnsim-job-icon>
