@@ -1,37 +1,37 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('dvStatcardHelper', [dvStatcardHelper]);
+angular.module('dnsim').factory('dvStatcardHelper', dvStatcardHelper);
 function dvStatcardHelper() {
   'use strict';
 
   // Conversions between dngs stat IDs and dvstatcard keys
   var statMap = {
-      0: "statStr",
-      1: "statAgi",
-      2: "statInt",
-      3: "statVit",
-      4: "statPDmgMin",
-      5: "statPDmgMax",
-      6: "statMDmgMin",
-      7: "statMDmgMax",
-      8: "statPDef",
-      9: "statMDef",
-      12: "statCrit",
-      16: "statFire",
-      17: "statIce",
-      18: "statLight",
-      19: "statDark",
-      25: "statHp",
-      26: "statMana",
-      29: "statFD",
-      103: "statCritDmg",
+      0: 'statStr',
+      1: 'statAgi',
+      2: 'statInt',
+      3: 'statVit',
+      4: 'statPDmgMin',
+      5: 'statPDmgMax',
+      6: 'statMDmgMin',
+      7: 'statMDmgMax',
+      8: 'statPDef',
+      9: 'statMDef',
+      12: 'statCrit',
+      16: 'statFire',
+      17: 'statIce',
+      18: 'statLight',
+      19: 'statDark',
+      25: 'statHp',
+      26: 'statMana',
+      29: 'statFD',
+      103: 'statCritDmg',
   };
 
   //    Converts dngs stat IDs to dvstatcard stat keys
   function convertStat(stat) {
     var ret = statMap[stat.id];
-    return ret || "unknown";
+    return ret || 'unknown';
   };
 
   function convertPercentToNum(val) {
@@ -56,13 +56,12 @@ function dvStatcardHelper() {
   };
 
   return {
-      convertStats: function(calcStats, build) {
-        console.log(build);
+      convertStats: function(build, buildName, calcStats) {
         var ret = {
-            characterName: build.buildName,
+            characterName: buildName,
             remark: 'Imported from DNGearsim',
-            classId: build.build.job.id,
-            statHeroLevel: build.build.heroLevel,
+            classId: build.job.id,
+            statHeroLevel: build.heroLevel,
         }
         for (var k in calcStats) {
             var v = calcStats[k];
@@ -70,7 +69,7 @@ function dvStatcardHelper() {
         }
         return ret;
       },
-      cardImportUrl: "https://redirect.divinitor.com/dngsimport",
+      cardImportUrl: 'https://redirect.divinitor.com/dngsimport',
   }
 }
 

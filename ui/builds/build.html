@@ -1,5 +1,6 @@
 <div class="col-xs-12" id="/build/{{::buildCtrl.buildName}}">
   <div class="row">
+    <!-- Header -->
     <div class="col-xs-12 col-md-5 col-lg-6 group-header" ng-if="::!buildCtrl.server">
         <h3 class="text-left">
         <dnsim-job-icon item="::buildCtrl.build.job"></dnsim-job-icon>
@@ -15,9 +16,11 @@
         </h3>
     </div>
     <dnsim-loading>
+    <!-- Small screen categories -->
     <div class="col-xs-12 visible-xs-block">
       <dnsim-category-links collapse="true" cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.changeCategory()" />
     </div>
+    <!-- Small screen view switcher -->
     <div class="col-xs-12 visible-xs-block">
       <button ng-click="buildCtrl.xsView = null" class="btn btn-default" ng-disabled="!buildCtrl.xsView">
         equip
@@ -29,6 +32,7 @@
         build stats
       </button>
     </div>
+    <!-- actions -->
     <div class="col-xs-12 col-md-7 col-lg-6" ng-if="::!buildCtrl.server" ng-class="{'hidden-xs': buildCtrl.xsView != 'actions'}">
       <br class="hidden-xs hidden-sm" /><br class="hidden-xs hidden-sm" />
       <dngearsim-build-actions build-name="buildCtrl.buildName" build="buildCtrl.build" on-change="buildCtrl.handleChange()">
@@ -44,11 +48,14 @@
     <div class="col-xs-12 col-md-9" ng-class="{'hidden-xs': buildCtrl.xsView}">
       <br />
       <div class="row">
+        <!-- categories for large screens -->
         <div class="hidden-xs col-sm-4 col-md-4">
           <dnsim-category-links cat="buildCtrl.category" build-screen="true" on-change="buildCtrl.changeCategory()" />
         </div>
     
+        <!-- categories for large screens -->
         <div class="col-xs-12 col-sm-8 col-md-8 dnsim-fade" ng-if="!buildCtrl.categoryChanging">
+          <!-- links above items (quick add/new custom items/position talismans) -->
           <div class="row table-look">
             <div class="col-xs-12" ng-if="::!buildCtrl.server">
               <dngearsim-quick-add build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
@@ -68,57 +75,16 @@
               </span>
             </div>
           </div>
-          <div class="row table-look" ng-repeat="(exchange, subCat) in buildCtrl.getSubCategories() track by $index" ng-class="{'dnsim-card': subCat}">
-            <span style="float:right" ng-if="subCat && !buildCtrl.moveItem">
-                {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
-            </span>
-            <em ng-if="subCat && !buildCtrl.moveItem" ng-repeat="subCatName in subCat.names track by $index">
-              {{subCatName}}<br />
-            </em>
-            <button 
-              class="btn btn-defualt btn-block dnsim-card"
-              ng-if="subCat && buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)"
-              ng-click="buildCtrl.move(buildCtrl.moveItem, subCat);buildCtrl.moveItem = null;">
-              <span style="float:right">
-                {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
-              </span>
-              keep on<br />
-              <em ng-repeat="subCatName in subCat.names track by $index">
-                {{subCatName}}<br />
-              </em>
-            </button>
-            <button 
-              class="btn btn-defualt btn-block dnsim-card"
-              ng-if="subCat && buildCtrl.moveItem && !buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)"
-              ng-click="buildCtrl.move(buildCtrl.moveItem, subCat);buildCtrl.moveItem = null;">
-              <span style="float:right">
-                {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
-              </span>
-              move to<br />
-              <em ng-repeat="subCatName in subCat.names track by $index">
-                {{subCatName}}<br />
-              </em>
-            </button>
-            <div ng-if="subCat && !buildCtrl.moveItem && buildCtrl.getNumTaken(subCat) < subCat.slots">
-                <dngearsim-quick-add gem-slot="buildCtrl.getGemSlot(subCat)" build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
-            </div>
-            <span ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)">moving:</span>
-            <dngearsim-build-item item="buildCtrl.moveItem" ng-if="buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()"></dngearsim-build-item>
-            <div class="col-xs-12 dnsim-card dnsim-disolve" ng-repeat="result in buildCtrl.getCategoryItems()" ng-if="buildCtrl.isInSubCat(result, subCat) && !buildCtrl.moveItem">
-              <dngearsim-build-item item="result" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()" edit-mode="buildCtrl.editItem == result"></dngearsim-build-item>
-              <div ng-if="!buildCtrl.server && buildCtrl.editItem != result" style="float:right">
-                <button class="btn btn-default" ng-click="buildCtrl.moveItem = result" ng-if="buildCtrl.canEdit(result) && buildCtrl.canMove() && !buildCtrl.moveItem">
-                  move
-                </button>
-                <button class="btn btn-default" ng-click="buildCtrl.editItem = result" ng-if="buildCtrl.canEdit(result) && !buildCtrl.moveItem">
-                  edit
-                </button>
-                <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);" ng-if="!buildCtrl.moveItem">
-                  remove
-                </button>
-              </div>
-            </div>
-          </div>
+
+          <!-- build item list -->
+          <dngearsim-build-item-list
+            category="buildCtrl.category"
+            build="buildCtrl.build"
+            build-name="buildCtrl.buildName"
+            on-change="buildCtrl.handleChange()">
+          </dngearsim-build-item-list>
+
+          <!-- search link -->
           <div class="row table-look" ng-if="buildCtrl.category.name != 'custom'">
             <div class="col-xs-12" ng-if="::!buildCtrl.server">
               <a ng-href="search?cat={{buildCtrl.category.path}}">
@@ -131,9 +97,10 @@
       </div>
     </div>
     
+    <!-- stats -->
     <div class="col-xs-12 col-md-3 group-header" ng-class="{'hidden-xs': buildCtrl.xsView != 'stats'}">
       <div class="row">
-       <dngearsim-build-stats stats="buildCtrl.stats" build="::buildCtrl.build">
+       <dngearsim-build-stats stats="buildCtrl.stats" build="::buildCtrl.build" build-name="::buildCtrl.buildName">
        </dngearsim-build-stats>
       </div>
     </div>
