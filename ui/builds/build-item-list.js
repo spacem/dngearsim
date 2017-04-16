@@ -7,6 +7,7 @@ angular.module('dnsim').directive('dngearsimBuildItemList', function() {
       buildName: '=buildName',
       build: '=build',
       category: '=category',
+      server: '=server',
       onChange: '&onChange'
     },
     controller: buildItemListController,
