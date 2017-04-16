@@ -1,7 +1,13 @@
 {
     "globals": {
         "_": true,
-        "angular": true
+        "angular": true,
+        "expect": true,
+        "beforeEach": true,
+        "describe": true,
+        "dnsimTestSetup": true,
+        "it": true,
+        "inject": true
     },
     "env": {
         "browser": true,
