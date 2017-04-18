@@ -1,16 +1,13 @@
 (function () {
 'use strict';
 
-var everythingParams = ['$window','$timeout','$routeParams','$location','hCodeValues','region','translations','dntData',everythingSearchCtrl];
-
-angular.module('dnsim').controller('ItemsCtrl',everythingParams);
 angular.module('dnsim').directive('dngearsimEverythingSearch', function() {
   return {
     scope: {},
     bindToController: {
       nameSearch: '=nameSearch'
     },
-    controller: everythingParams,
+    controller: everythingSearchCtrl,
     controllerAs: 'items',
     templateUrl: 'ui/search/everything-search.html'
   };
@@ -18,18 +15,17 @@ angular.module('dnsim').directive('dngearsimEverythingSearch', function() {
 
 
 function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCodeValues, region, translations, dntData) {
-  
-  'use strict';
-  
+    
   var vm = this;
   
-  vm.boxes = null;
+  vm.everything = null;
   vm.maxDisplay = 32;
   vm.currentResults = 0;
   vm.results = null;
   vm.minLevel = 1;
   vm.maxLevel = 99;
-
+  vm.version = 'all';
+  vm.versions = [vm.version];
   
   var minLevel = Number(localStorage.getItem('minLevel'));
   if($routeParams.minLevel) {
@@ -61,36 +57,38 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
   
   $window.document.title = 'dngearsim | ALL ITEM SEARCH';
   
-  var fileName = 'all-items.lzjson';
-  
-  dntData.init(fileName, null, function() {}, function() {
-    $timeout(function() {
-      vm.initBoxes();
-    });
-  });
-  
-  vm.initBoxes = function() {
-    if(dntData.isLoaded(fileName) && translations.isLoaded()) {
-      vm.boxes = [];
+  vm.initeverything = function() {
+    if(dntData.isLoaded(fileName) && translations.isLoaded() && !vm.everything) {
+      vm.everything = [];
       
+      var versionMap = {};
       var datas = dntData.getData(fileName);
-      // console.log(datas.length + ' boxes');
+      // console.log(datas.length + ' everything');
       for(var i=0;i<datas.length;++i) {
         var data = datas[i];
         if(data.NameID > 0) {
-          var box = {
+          var item = {
             id: data.id,
             name: translations.translate(data.NameID, data.NameIDParam),
             rank: hCodeValues.rankNames[data.Rank],
             icon: data.IconImageIndex,
             levelLimit: data.LevelLimit,
             fileName: data.fileName,
+            version: data.version
           }
-          vm.boxes.push(box);
+          vm.everything.push(item);
+
+          if(data.version) {
+            versionMap[data.version] = true;
+          }
         }
       }
+
+      for(var version in versionMap) {
+        vm.versions.push(version);
+      }
       
-      vm.boxes = _.sortBy(vm.boxes, 'name');
+      vm.everything = _.sortBy(vm.everything, 'name');
       
       $timeout(function() {
         vm.showMoreResults();
@@ -99,21 +97,25 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
   }
   
   vm.getResults = function() {
-    if(vm.boxes == null) {
-      vm.initBoxes();
+    if(vm.everything == null) {
+      vm.initeverything();
     }
     
-    if(vm.boxes == null) {
+    if(vm.everything == null) {
       return [];
     }
 
     var newResults = [];
-    var numBoxes = vm.boxes.length;
+    var numeverything = vm.everything.length;
     var curDisplay = 0;
-    for(var i=0;i<numBoxes && (curDisplay<vm.maxDisplay);++i) {
-      var e = vm.boxes[i];
+    for(var i=0;i<numeverything && (curDisplay<vm.maxDisplay);++i) {
+      var e = vm.everything[i];
 
       if(e.levelLimit < vm.minLevel || e.levelLimit > vm.maxLevel || (!e.levelLimit)) {
+        continue;
+      }
+
+      if(vm.version != 'all' && vm.version != e.version) {
         continue;
       }
 
@@ -170,6 +172,13 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
       vm.results = vm.getResults();
     });
   }
+
+  var fileName = 'all-items.lzjson';  
+  dntData.init(fileName, null, function() {}, function() {
+    vm.initeverything();
+  });
+
+  translations.init(null, vm.initeverything);
 }
 
 })();
