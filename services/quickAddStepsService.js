@@ -217,7 +217,7 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
           return false;
         }
       },
-      otherRankStep: {
+      plateRankStep: {
         name: 'rank',
         getOptions: function(category, build, datas) {
           
