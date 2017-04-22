@@ -7,7 +7,7 @@ body {
   background: url(//dnskillsim.herokuapp.com/images/ui/skill/classinfobg.png);
   background-size: cover;
   background-position: center;
-  /* opacity: 0.5; */
+  opacity: 0.5;
   top: 0px;
   left: 0px;
   right: 0px;
