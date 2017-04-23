@@ -26,7 +26,7 @@ angular.module('dnsim').controller('BuildListCtrl',
         }
       }
       else {
-        $location.path('/builds/');
+        this.currentGroup = null;
       }
     }
     else if(this.currentGroup && this.currentGroup in this.savedItems) {
