@@ -55,9 +55,8 @@ background-size: cover;
 */
 .chunkyness {
 background-color: #070506;
-opacity: 0.8;
-filter: alpha(opacity=95);
-filter: alpha(opacity=80);
+opacity: 0.75;
+filter: alpha(opacity=75);
 border-color: #8d8578;
 border-style: solid;
 border-width: 5px;
@@ -469,7 +468,6 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
   color: #555;
   text-decoration: none;
   border: 0px;
-  margin-left: 1px;
 }
 .dnsim-fade.ng-enter {
   transition:0.3s;
@@ -523,4 +521,12 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
 
 h3>.glyphicon {
   top: 4px;
+}
+
+.glyphicon {
+  top: 2px;
+}
+
+footer a {
+    color: #777;
 }
