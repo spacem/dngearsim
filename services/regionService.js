@@ -84,7 +84,8 @@ function region(translations,dntReset,dntData,$route) {
         $route.reload();
       }
 
-      if(this.tlocation == null) {
+      var override = this.getOverride();
+      if(this.tlocation == null || !override) {
         this.setTLocation(location);
       }
       
