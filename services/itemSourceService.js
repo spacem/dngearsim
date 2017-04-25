@@ -108,6 +108,15 @@ function items(translations,dntData,itemColumnsToLoad) {
         type: 'cash',
         minLevel: 0,
         minRank: 0 },
+      c2017: { 
+        mainDnt: 'itemtable_common2017.optimised.json', 
+        partsDnt: 'partstable_common2017.optimised.json', 
+        weaponDnt: 'weapontable_common2017.optimised.json', 
+        setDnt: 'setitemtable_cash.optimised.json',
+        type: 'cash',
+        minLevel: 0,
+        ignoreErrors: true,
+        minRank: 0 },
       c2015: { 
         mainDnt: 'itemtable_common2015.optimised.json', 
         partsDnt: 'partstable_common2015.optimised.json', 
