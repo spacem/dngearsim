@@ -127,7 +127,7 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
               return index === 0;
             }
             else {
-              return item.rank.id == id && index != 0;
+              return item.rank && item.rank.id == id && index != 0;
             }
           }
           return false;
@@ -150,10 +150,10 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
               item.name.indexOf('Quality'),
               item.name.indexOf('High Grade'));
             if(id == 999) {
-              return item.rank.id == 3 && index >= 0;
+              return item.rank && item.rank.id == 3 && index >= 0;
             }
             else {
-              return item.rank.id == id && index < 0;
+              return item.rank && item.rank.id == id && index < 0;
             }
           }
           return false;
@@ -170,7 +170,7 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
           return values;
         },
         matchesItem: function(id, item) {
-          return item.rank.id == id;
+          return item.rank && item.rank.id == id;
         }
       },
       enhanceTalismanStep: {
