@@ -8,10 +8,10 @@ body {
   background-size: cover;
   background-position: center;
   opacity: 0.5;
-  top: 0px;
+  top: -100px;
   left: 0px;
   right: 0px;
-  bottom: 0px;
+  bottom: -100px;
   position: fixed;
   z-index:-999;
   filter: blur(4px);

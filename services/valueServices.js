@@ -148,6 +148,7 @@ function hCodeValues() {
       3 : { id: 3, name : 'epic' },
       4 : { id: 4, name : 'unique' },
       5 : { id: 5, name : 'legendary' },
+      6 : { id: 6, name : 'divine' },
     },
     
     shopNames : {

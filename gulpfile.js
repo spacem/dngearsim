@@ -66,7 +66,7 @@ gulp.task('js', function() {
     .pipe(uglify())
     .pipe(remember('dngearsim js')) 
     .pipe(concat('app.min.js'))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('min'))
 })
 
@@ -97,10 +97,10 @@ gulp.task('dntviewer', function() {
       '../dntviewer/dntranslations.js',
     ])
     .pipe(sourcemaps.init())
-    //.pipe(babel({
-    //   presets: ['es2015']
-    //}))
-    //.pipe(uglify())
+    // .pipe(babel({
+       // presets: ['es2015']
+    // }))
+    .pipe(uglify())
     .pipe(concat('dntviewer.min.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('min'))

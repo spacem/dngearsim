@@ -82,27 +82,12 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
           return item.exchangeType == id;
         }
       },
-      sixtyLevelStep: {
+      levelStep: {
         name: 'level',
         getOptions: function(category, build, datas) {
           
           return [
-          { id: 93, name: 'level 93' },
-          { id: 90, name: 'level 90' },
-          { id: 80, name: 'level 80' },
-          { id: 70, name: 'level 70' }, 
-          { id: 60, name: 'level 60' }, 
-          ];
-        },
-        matchesItem: function(id, item) {
-          return item.levelLimit == id;
-        }
-      },
-      allLevelStep: {
-        name: 'level',
-        getOptions: function(category, build, datas) {
-          
-          return [
+          { id: 95, name: 'level 95' },
           { id: 93, name: 'level 93' },
           { id: 90, name: 'level 90' },
           { id: 80, name: 'level 80' },
@@ -116,49 +101,6 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
         },
         matchesItem: function(id, item) {
           return item.levelLimit == id;
-        }
-      },
-      cashRankStep: {
-        name: 'rank',
-        getOptions: function(category, build, datas) {
-          
-          return [
-          { id: 4, name: 'unique' },
-          { id: 3, name: 'epic' },
-          { id: 2, name: 'rare' },
-          { id: 1, name: 'magic' },
-          { id: 0, name: 'normal' },
-          ];
-        },
-        matchesItem: function(id, item) {
-          return item.rank.id == id;
-        }
-      },
-      imprintRankStep: {
-        name: 'rank',
-        getOptions: function(category, build, datas) {
-          
-          return [
-          { id: 4, name: 'unique' },
-          { id: 3, name: 'epic' },
-          { id: 2, name: 'rare' },
-          ];
-        },
-        matchesItem: function(id, item) {
-          return item.rank.id == id;
-        }
-      },
-      techRankStep: {
-        name: 'rank',
-        getOptions: function(category, build, datas) {
-          
-          return [
-          { id: 4, name: 'unique' },
-          { id: 3, name: 'epic' },
-          ];
-        },
-        matchesItem: function(id, item) {
-          return item.rank.id == id;
         }
       },
       talismanRankStep: {
@@ -217,29 +159,15 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
           return false;
         }
       },
-      plateRankStep: {
+      rankStep: {
         name: 'rank',
         getOptions: function(category, build, datas) {
           
-          return [
-          { id: 3, name: 'epic' },
-          { id: 2, name: 'rare' },
-          { id: 1, name: 'normal' },
-          ];
-        },
-        matchesItem: function(id, item) {
-          return item.rank.id == id;
-        }
-      },
-      equipRankStep: {
-        name: 'rank',
-        getOptions: function(category, build, datas) {
-          
-          return [
-          { id: 5, name: 'legendary' },
-          { id: 4, name: 'unique' },
-          { id: 3, name: 'epic' },
-          ];
+          var values = [];
+          for(var id in hCodeValues.rankNames) {
+            values.push(hCodeValues.rankNames[id]);
+          }
+          return values;
         },
         matchesItem: function(id, item) {
           return item.rank.id == id;

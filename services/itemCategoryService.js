@@ -71,9 +71,10 @@ function itemCategory(itemFactory,items,dntData) {
         if(retVal) {
           var vm = this;
           angular.forEach(retVal, function(item, index) {
-            if(item.typeName == cat.name ||
-              vm.isItemForCat(cat, item, item.data)) {
-
+            if(item.typeName == name) {
+              catItems.push(item);
+            }
+            else if(vm.isItemForCat(cat, item, item.data)) {
               item.typeName = name;
               catItems.push(item);
             }
@@ -222,12 +223,14 @@ function itemCategory(itemFactory,items,dntData) {
           }
         });
         
+        /*
         angular.forEach(items, function(item, index) {
           if(item && !(item.typeName in itemMap)) {
             // console.log('we dont know ' + item.typeName + ' anymore')
             itemMap.typeError = true;
           }
         });
+        */
       }
       return itemMap;
     },
