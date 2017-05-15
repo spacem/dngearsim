@@ -32,10 +32,6 @@ function($location,saveHelper,exportLinkHelper) {
   
   function progress() {
   }
-  
-  this.createShortUrl = function() {
-    exportLinkHelper.createShortUrl(vm.buildName, vm.build);
-  }
     
   this.setShortUrl = function() {
     if(vm.build) {

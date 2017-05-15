@@ -1,9 +1,9 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').directive('dnsimStats', ['hCodeValues',dnsimStats]);
+angular.module('dnsim').directive('dnsimStats', ['hCodeValues','$translate',dnsimStats]);
 
-function dnsimStats(hCodeValues) {
+function dnsimStats(hCodeValues, $translate) {
   return {
     restrict: 'A',
     scope: {
@@ -101,18 +101,18 @@ function dnsimStats(hCodeValues) {
                 if($scope.build.element) {
                   eleId = $scope.build.element.id;
                 }
-                output += hCodeValues.elements[eleId].name + '&nbsp;';
+                output += $translate.instant(hCodeValues.elements[eleId].name) + '&nbsp;';
               }
               else if(def.element == 'secondary') {
                 var eleId = 0;
                 if($scope.build.secondaryElement) {
                   eleId = $scope.build.secondaryElement.id;
                 }
-                output += hCodeValues.elements[eleId].name + '&nbsp;';
+                output += $translate.instant(hCodeValues.elements[eleId].name) + '&nbsp;';
               }
             }
             
-            output += def.name+':</strong>&nbsp;'+def.display(stat);
+            output += $translate.instant(def.name)+':</strong>&nbsp;'+def.display(stat);
             if(def.combineWith > 0) {
               angular.forEach(stats, function(stat2, key2) {
                 if(stat2.id == def.combineWith) {

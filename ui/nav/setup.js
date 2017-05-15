@@ -61,6 +61,7 @@ angular.module('dnsim').controller('SetupCtrl',
     dntReset();
     translations.reset();
     translations.location = region.tlocation.url;
+    translations.region = region.tlocation.region;
     translations.init(progressTranslations, translationsStatus);
   }
   

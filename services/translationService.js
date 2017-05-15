@@ -1,8 +1,8 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('translations', ['$routeParams', '$rootScope', translations]);
-function translations($routeParams, $rootScope) {
+angular.module('dnsim').factory('translations', ['$routeParams', '$rootScope', 'uiTranslations', '$translate', translations]);
+function translations($routeParams, $rootScope, uiTranslations, $translate) {
 
   var dnTranslations = new DnTranslations();
   var smallFile = 'uistring.optimised.lzjson';
@@ -12,6 +12,10 @@ function translations($routeParams, $rootScope) {
   var progressCallback = [];
 
   return {
+
+    getRawData: function() {
+      return dnTranslations.data;
+    },
     
     reset : function() {
       dnTranslations = new DnTranslations();
@@ -38,6 +42,7 @@ function translations($routeParams, $rootScope) {
     small: false,
     
     location : null,
+    region: null,
   
     init : function(progress, complete) {
 
@@ -74,6 +79,9 @@ function translations($routeParams, $rootScope) {
               angular.forEach(progressCallback, function(value, key) { value(msg); });
             }, 
             function() {
+              uiTranslations.addTranslations(t.region, t.getRawData());
+              // console.log('using ', t.region);
+              $translate.use(t.region);
               t.loaded = true;
               angular.forEach(completeCallback, function(value, key) { value(); });
               completeCallback = [];
@@ -101,6 +109,8 @@ function translations($routeParams, $rootScope) {
 
         this.loaded = dnTranslations.loadFromSession();
         if(this.loaded) {
+          uiTranslations.addTranslations(this.region, this.getRawData());
+          $translate.use(this.region);
           this.startedLoading = true;
         }
       }

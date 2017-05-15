@@ -167,28 +167,6 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       retVal += '&g=' + encodeURI(groupName) + '&i=' + itemStrings.join(',');
       return retVal;
     },
-
-    createShortUrl: function(groupName, group) {
-      
-      var path = this.createGroupLink(groupName, group);
-      var basePath = angular.element(document.querySelector('base')).attr('href');
-      var longUrl = window.location.href.split(basePath)[0] + basePath + path;
-      var data = { longUrl: longUrl };
-      console.log('getting short url for ', longUrl);
-      
-    	$http.post(
-    	  'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyD5t5o7ZcSAvM-xMwc14ft2BA-MKQA7LMo', data).success(
-    	    function(data,status,headers,config){
-        		group.shortUrl = data.id;
-    	      sessionStorage.setItem(path, data.id);
-        	}).
-        	error(function(data,status,headers,config){
-        		// console.log(data);
-        		// console.log(status);
-        		// console.log(headers);
-        		// console.log(config);
-        	});
-    },
     
     reloadItem: function(item) {
 

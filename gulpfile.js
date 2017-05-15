@@ -83,7 +83,8 @@ gulp.task('libs', function() {
       'bower_components/firebase/firebase.js',
       'bower_components/underscore/underscore-min.js',
       'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
-      'bower_components/file-saver/FileSaver.min.js'
+      'bower_components/file-saver/FileSaver.min.js',
+      'bower_components/angular-translate/angular-translate.min.js'
     ])
     .pipe(uglify())
     .pipe(concat('libs.min.js'))

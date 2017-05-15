@@ -5,7 +5,7 @@
       <dnsim-job-icon size="'50%'" item="action.build.job" small="true"></dnsim-job-icon>
       &nbsp;
       <span class="hidden-xs">
-      {{action.name}}
+      {{action.name | translate}}
       </span>
     </a>
   </li>
@@ -13,7 +13,7 @@
     <a class="list-group-item" ng-href="about">
       <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
       <span class="hidden-xs">
-      about
+      {{ 'about' | translate }}
       </span>
     </a>
   </li>

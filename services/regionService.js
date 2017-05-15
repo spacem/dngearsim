@@ -107,6 +107,7 @@ function region(translations,dntReset,dntData,$route) {
           var override = this.getOverride();
           translations.small = !override;
           translations.location = this.tlocation.url;
+          translations.region = this.tlocation.region;
           translations.init(function() {}, function() {
             $route.reload();
           });
@@ -144,6 +145,7 @@ function region(translations,dntReset,dntData,$route) {
       
       if(this.tlocation) {
         translations.location = this.tlocation.url;
+        translations.region = this.tlocation.region;
       }
       dntData.setLocation(this.dntLocation);
     }
