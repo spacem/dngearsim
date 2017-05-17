@@ -25,7 +25,7 @@ var uiTranslationLookup = {
         'publish': '发布',
         'find a build': '寻找一个新方案',
         'about': '关于',
-        'import a build from a json build file': '从一个json方案文件导入',
+        'import a build from a json build file': '从一个json文件导入方案',
         'log in and publish your builds online': '登录并发布您的方案',
         'vit': '体质',
         'fd': '最终伤害',
