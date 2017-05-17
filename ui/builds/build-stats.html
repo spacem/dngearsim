@@ -17,7 +17,7 @@
 </div>
 
 <div class="col-xs-6 col-md-12" ng-show="statsCtrl.stats.heroStats != null && statsCtrl.stats.heroStats.length > 0">
-  <h4>{{hero&nbsp;stats' | translate}}</h4>
+  <h4>{{'hero&nbsp;stats' | translate}}</h4>
   <button class="btn btn-link" ng-show="!statsCtrl.showHeroStats" ng-click="statsCtrl.showHeroStats = true">&raquo;{{'show&nbsp;hero&nbsp;stats' | translate}}</button>
   <div ng-if="statsCtrl.showHeroStats" dnsim-stats stats="statsCtrl.stats.heroStats"></div>
 </div>
