@@ -6,7 +6,7 @@
 
       <small>
       <span ng-if="::item.rank && item.rank.id > 0" class="{{::item.rank.name}}-grade">
-      {{::item.rank.name}}
+      {{item.rank.name | translate}}
       </span>
       <span ng-if="::jobName">
       {{::jobName.toLowerCase()}}
@@ -31,10 +31,10 @@
       <span ng-if="(item.offensiveGemSlots > 0 || item.increasingGemSlots > 0) && moreInfoLoaded()">
         gem slots:
         <span ng-if="::item.offensiveGemSlots > 0">
-          {{::item.offensiveGemSlots}} offensive
+          {{::item.offensiveGemSlots}} {{'offensive' | translate}}
           <span ng-if="::item.increasingGemSlots > 0"> | </span>
         </span>
-        <span ng-if="::item.increasingGemSlots > 0">{{::item.increasingGemSlots}} increasing</span>
+        <span ng-if="::item.increasingGemSlots > 0">{{::item.increasingGemSlots}} {{'increasing | translate}}</span>
       </span>
       </small>
     </h4>

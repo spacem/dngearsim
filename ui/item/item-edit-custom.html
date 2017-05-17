@@ -1,21 +1,21 @@
 <div class="col-xs-12">
   <button ng-disabled="editCtrl.customView=='basic' || !editCtrl.customView" class="btn btn-link" ng-click="editCtrl.customView='basic'">
-    basic
+    {{'basic' | translate}}
   </button> |
   <button ng-disabled="editCtrl.customView=='dmg'" class="btn btn-link" ng-click="editCtrl.customView='dmg'">
-    dmg
+    {{'dmg' | translate}}
   </button> |
   <button ng-disabled="editCtrl.customView=='def'" class="btn btn-link" ng-click="editCtrl.customView='def'">
-    def
+    {{'def' | translate}}
   </button> |
   <button ng-disabled="editCtrl.customView=='special'" class="btn btn-link" ng-click="editCtrl.customView='special'">
-    special
+    {{'special' | translate}}
   </button> |
   <button ng-disabled="editCtrl.customView=='stats'" class="btn btn-link" ng-click="editCtrl.customView='stats'">
-    overview
+    {{'overview' | translate}}
   </button> |
   <button ng-disabled="editCtrl.customView=='name'" class="btn btn-link" ng-click="editCtrl.customView='name'">
-    name
+    {{'name' | translate}}
   </button>
 </div>
 <div class="col-xs-12" ng-switch="editCtrl.customView">

@@ -23,13 +23,13 @@
     <!-- Small screen view switcher -->
     <div class="col-xs-12 visible-xs-block">
       <button ng-click="buildCtrl.xsView = null" class="btn btn-default" ng-disabled="!buildCtrl.xsView">
-        equip
+        {{'equip' | translate}}
       </button>
       <button ng-click="buildCtrl.xsView = 'actions'" class="btn btn-default" ng-disabled="buildCtrl.xsView == 'actions'">
-        build actions
+        {{'build actions' | translate}}
       </button>
       <button ng-click="buildCtrl.xsView = 'stats'" class="btn btn-default" ng-disabled="buildCtrl.xsView == 'stats'">
-        build stats
+        {{'build stats' | translate}}
       </button>
     </div>
     <!-- actions -->
@@ -42,7 +42,7 @@
     </div>
     <div class="col-xs-10 col-md-12 alert alert-danger" role="alert" ng-if="buildCtrl.stats.calculatedStats.length == 0 || buildCtrl.stats.nakedStats.length == 0">
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> 
-      you must edit the build and set both level and class
+      {{'you must edit the build and set both level and class' | translate}}
     </div>
     
     <div class="col-xs-12 col-md-9" ng-class="{'hidden-xs': buildCtrl.xsView}">
@@ -61,13 +61,13 @@
               <dngearsim-quick-add build="buildCtrl.build" build-name="::buildCtrl.buildName" category="buildCtrl.category" on-change="buildCtrl.handleChange()" ng-if="buildCtrl.allowMoreItems()"></dngearsim-quick-add>
               <span ng-if="buildCtrl.category.name == 'talisman'">&nbsp;
                 <a class="btn btn-link" ng-href="talismans">
-                  <span class="glyphicon glyphicon-move" aria-hidden="true"></span>&nbsp;position
+                  <span class="glyphicon glyphicon-move" aria-hidden="true"></span>&nbsp;{{'position' | translate}}
                 </a>
               </span>
               <span ng-if="buildCtrl.category.name == 'custom'">
                 &nbsp;
                 <button class="btn btn-link" ng-click="buildCtrl.newCustom()">
-                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;new custom item
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;{{'new custom item' | translate}}
                 </button>
               </span>
               <span style="float:right" ng-if="!buildCtrl.canMove()">
@@ -90,7 +90,7 @@
             <div class="col-xs-12" ng-if="::!buildCtrl.server">
               <a ng-href="search?cat={{buildCtrl.category.path}}">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                search {{buildCtrl.category.name}}
+                {{'search' | translate}} {{buildCtrl.category.name}}
               </a>
             </div>
           </div>

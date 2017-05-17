@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-xs-12">
     <h3>
-        import build
-        <small>choose a file containing dngearsim build data</small>
+        {{'import build' | translate}}
+        <small>{{'choose a file containing dngearsim build data' | translate}}</small>
     </h3>
     <br />
     <input type="file" file-change="ctrl.onFileChange($event, files)" accept=".json">
@@ -28,7 +28,7 @@
     </h3>
     
     <button class="btn btn-default" ng-click="ctrl.copyLocally()">
-      copy into local builds
+      {{'copy into local builds' | translate}}
     </button>
 
     <dngearsim-build server="true" build-name="ctrl.buildName" build="ctrl.build">

@@ -1,7 +1,7 @@
 <div class="row table-look" ng-repeat="(exchange, subCat) in buildCtrl.getSubCategories() track by $index" ng-class="{'dnsim-card': subCat}">
     <!-- subcategory summary -->
     <span style="float:right" ng-if="subCat && !buildCtrl.moveItem">
-        {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
+        {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} {{'equipped' | translate}}
     </span>
     <em ng-if="subCat && !buildCtrl.moveItem" ng-repeat="subCatName in subCat.names track by $index">
         {{subCatName}}<br />
@@ -13,9 +13,9 @@
         ng-if="subCat && buildCtrl.moveItem && buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)"
         ng-click="buildCtrl.move(buildCtrl.moveItem, subCat);buildCtrl.moveItem = null;">
         <span style="float:right">
-        {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
+        {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} {{'equipped' | translate}}
         </span>
-        keep on<br />
+        {{'keep on' | translate}}<br />
         <em ng-repeat="subCatName in subCat.names track by $index">
         {{subCatName}}<br />
         </em>
@@ -25,9 +25,9 @@
         ng-if="subCat && buildCtrl.moveItem && !buildCtrl.isInSubCat(buildCtrl.moveItem, subCat)"
         ng-click="buildCtrl.move(buildCtrl.moveItem, subCat);buildCtrl.moveItem = null;">
         <span style="float:right">
-        {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} equipped
+        {{buildCtrl.getNumTaken(subCat)}}/{{subCat.slots}} {{'equipped' | translate}}
         </span>
-        move to<br />
+        {{'move to' | translate}}<br />
         <em ng-repeat="subCatName in subCat.names track by $index">
         {{subCatName}}<br />
         </em>
@@ -49,13 +49,13 @@
         <dngearsim-build-item item="result" on-change="buildCtrl.handleItemEdit()" cancel-edit="buildCtrl.cancelEdit()" edit-mode="buildCtrl.editItem == result"></dngearsim-build-item>
         <div ng-if="!buildCtrl.server && buildCtrl.editItem != result" style="float:right">
         <button class="btn btn-default" ng-click="buildCtrl.moveItem = result" ng-if="buildCtrl.canMove() && !buildCtrl.moveItem">
-            move
+            {{'move' | translate}}
         </button>
         <button class="btn btn-default" ng-click="buildCtrl.editItem = result" ng-if="buildCtrl.canEdit(result) && !buildCtrl.moveItem">
-            edit
+            {{'edit' | translate}}
         </button>
         <button class="btn btn-default" ng-click="buildCtrl.removeItem(result);" ng-if="!buildCtrl.moveItem">
-            remove
+            {{'remove' | translate}}
         </button>
         </div>
     </div>

@@ -1,16 +1,16 @@
 <dnsim-choose-class ng-show="!ctrl.job" job="ctrl.job" on-set-job="ctrl.setJob()"></dnsim-choose-class>
 
-<h3 ng-if="ctrl.job">{{ctrl.job.name}} builds
+<h3 ng-if="ctrl.job">{{ctrl.job.name}} {{'builds' | translate}}
   <small>
     <button class="btn btn-link" ng-click="ctrl.job = null">
-      change class
+      {{'change class' | translate}}
     </button>
   </small>
 </h3>
 <span ng-if="ctrl.job && !ctrl.jobBuilds">loading..</span>
 
 <p ng-if="ctrl.job && ctrl.jobBuilds">
-<label>filter</label>
+<label>{{'filter' | translate}}</label>
 <input class="form-control" ng-model="ctrl.filter"></input>
 </p>
 
@@ -33,7 +33,7 @@
 <div class="row" ng-show="ctrl.totalNumResults >= ctrl.maxDisplay">
   <div class="col-xs-1"></div>
   <div class="col-xs-11">
-    <button class="btn btn-link" ng-click="ctrl.showMoreResults(20)">show more</button> | 
-    <button class="btn btn-link" ng-click="ctrl.showMoreResults(200)">show lots more</button>
+    <button class="btn btn-link" ng-click="ctrl.showMoreResults(20)">{{'show more' | translate}}</button> | 
+    <button class="btn btn-link" ng-click="ctrl.showMoreResults(200)">{{'show lots more' | translate}}</button>
   </div>
 </div>

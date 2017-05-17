@@ -39,21 +39,21 @@
     <label>{{'damage type' | translate}}: 
     </label>
     <select ng-model="editGroup.damageType" class="form-control"
-     ng-options="damage.name for damage in editGroup.damageTypes track by damage.id">
+     ng-options="damage.name | translate for damage in editGroup.damageTypes track by damage.id">
     </select>
   </div>
   <div class="col-xs-4 col-md-3">
     <label>{{'primary element' | translate}}: 
     </label>
     <select ng-model="editGroup.element" class="form-control"
-     ng-options="element.name for element in editGroup.elements track by element.id">
+     ng-options="element.name | translate for element in editGroup.elements track by element.id">
     </select>
   </div>
   <div class="col-xs-4 col-md-3">
     <label>{{'secondary element' | translate}}: 
     </label>
     <select ng-model="editGroup.secondaryElement" class="form-control"
-     ng-options="element.name for element in editGroup.elements track by element.id">
+     ng-options="element.name | translate for element in editGroup.elements track by element.id">
     </select>
   </div>
   <div class="hidden-xs hidden-sm col-md-3">

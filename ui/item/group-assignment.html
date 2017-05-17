@@ -1,7 +1,7 @@
 <div class="col-xs-12 item-type-grouping">
   <div ng-if="::!editCtrl.groupName">
   <p>
-    <a ng-href="new-build">Create a build to see how this item will affect your damage.</a>
+    <a ng-href="new-build">{{'Create a build to see how this item will affect your damage.' | translate}}</a>
   </p>
   </div>
   <div class="row" ng-if="::editCtrl.groupName">
@@ -27,15 +27,15 @@
       </div>
       
       <span ng-if="editCtrl.getAddAffectAmount(statId) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
-        <b ng-if="editCtrl.getAddAffectAmount(statId) > 0">increase</b>
-        <b ng-if="editCtrl.getAddAffectAmount(statId) < 0">decreases</b>
+        <b ng-if="editCtrl.getAddAffectAmount(statId) > 0">{{'increase' | translate}}</b>
+        <b ng-if="editCtrl.getAddAffectAmount(statId) < 0">{{'decreases' | translate}}</b>
         {{editCtrl.getStatName(statId)}} {{editCtrl.getAddAffectAmount(statId)}}%
         <br />
       </span>
 
     </div>
     <div class="col-xs-12 bg-danger" ng-if="editCtrl.getGroupCalcStats().length == 0">
-        this build needs to be set up before stats can be shown
+        {{'this build needs to be set up before stats can be shown' | translate}}
     </div>
   </div>
   <div class="row dnsim-fade" ng-repeat="groupItem in editCtrl.getGroupItems()" ng-init="listIndex = $index">
@@ -47,11 +47,11 @@
       </div>
     </div>
     <div class="col-xs-12 col-md-6" style="padding-top:8px">
-      <button class="btn btn-default" ng-dblclick="editCtrl.replace(groupItem)" ng-click="editCtrl.replace(groupItem)">replace</button>
+      <button class="btn btn-default" ng-dblclick="editCtrl.replace(groupItem)" ng-click="editCtrl.replace(groupItem)">{{'replace' | translate}}</button>
       <div style="padding-top:8px">
       <div ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
-        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">increase</b>
-        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">decreases</b>
+        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">{{'increase' | translate}}</b>
+        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">{{'decreases' | translate}}</b>
         {{editCtrl.getStatName(statId)}} {{editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem)}}%
       </div>
       </div>

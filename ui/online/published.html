@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12" ng-if="!ctrl.profile || !ctrl.build">
-    loading...
+    {{'loading...' | translate}}
   </div>
   <div class="col-xs-12" ng-if="ctrl.profile && ctrl.build">
     <h3>
@@ -21,13 +21,13 @@
     </h3>
     
     <p>
-      created by: &raquo;<a ng-href="profile/?uid={{ctrl.uid}}">{{ctrl.profile.name || 'unnamed user'}}</a>
+      {{'created by:' | translate}} &raquo;<a ng-href="profile/?uid={{ctrl.uid}}">{{ctrl.profile.name || 'unnamed user'}}</a>
       <br />
       <em>{{ctrl.profile.about}}</em>
     </p>
     
     <button class="btn btn-default" ng-click="ctrl.copyLocally()">
-      copy into local builds
+      {{'copy into local builds' | translate}}
     </button>
 
     <dngearsim-build server="true" build-name="ctrl.buildName" build="ctrl.build">

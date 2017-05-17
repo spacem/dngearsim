@@ -30,6 +30,7 @@ var uiTranslationLookup = {
         'vit': '体质',
         'fd': '最终伤害',
         'pdmg': '物理攻击力',
+        'mdmg': '魔法攻击力',
         'crit': '致命一击',
         'cdmg': '致命一击伤害',
         'fire%': '火攻击',
@@ -54,7 +55,12 @@ var uiTranslationLookup = {
         'quick add': '快速添加',
         'hero lvl': '英雄等级'
     },
-    kdn: {
+    sea: {
+        'offensive gems':  'offensive jades',
+        'increasing gems':  'increasing jades',
+        'expedition plates': 'normal heraldry',
+        'enhancement plates': 'unique heraldry',
+        'techs': 'skill accessory',
     },
 };
 

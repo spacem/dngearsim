@@ -1,23 +1,23 @@
 <dnsim-loading>
 <button class="btn btn-link" ng-if="!quickAdd.hasStarted() && quickAdd.hasOptions()" ng-click="quickAdd.start()">
 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-  quick add <span ng-if="quickAdd.gemSlot">here</span>
+  {{'quick add' | translate}} <span ng-if="quickAdd.gemSlot">{{'here' | translate}}</span>
 </button>
 <div class="row" ng-if="quickAdd.hasStarted()">
   <div class="col-xs-12">
-    <button class="btn btn-link" ng-click="quickAdd.back()" ng-disabled="quickAdd.stepNumber == 0">&lt; back</button>
+    <button class="btn btn-link" ng-click="quickAdd.back()" ng-disabled="quickAdd.stepNumber == 0">&lt; {{'back' | translate}}</button>
     |
-    <button class="btn btn-link" ng-click="quickAdd.cancel()">cancel</button>
+    <button class="btn btn-link" ng-click="quickAdd.cancel()">{{'cancel' | translate}}</button>
   </div>
   <div class="col-xs-12">
-    quick add:
+    {{'quick add' | translate}}:
     <span ng-repeat="data in quickAdd.datas track by $index">
       {{data.value.name}}
     </span>&nbsp;
   </div>
   <div class="col-xs-12">
     <span ng-if="quickAdd.options.length == 0">
-      no matching items found...
+      {{'no matching items found...' | translate}}
     </span>
       
     <button class="btn btn-default btn-block dnsim-card" ng-click="quickAdd.selectOption(option)" ng-repeat="option in quickAdd.options track by $index">

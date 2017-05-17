@@ -1,12 +1,12 @@
 <dnsim-loading>
   <div class="row">
     <div class="col-xs-12" ng-if="ctrl.profile">
-      <h3>viewing builds for:<small> {{ctrl.profile.name || 'unnamed user'}}</small>
+      <h3>{{'viewing builds for' | translate}}:<small> {{ctrl.profile.name || 'unnamed user'}}</small>
       </h3>
       <p>{{ctrl.profile.about}}</p>
     </div>
     <div class="col-xs-12" ng-if="!ctrl.profile || !ctrl.storedBuilds">
-      loading...
+      {{'loading...' | translate}}
     </div>
     
     <div class="col-xs-12" ng-if="ctrl.storedBuilds" ng-repeat="(buildName, build) in ctrl.storedBuilds">
@@ -14,7 +14,7 @@
         <dngearsim-build-summary build-name="buildName" build="ctrl.storedBuilds[buildName]">
         </dngearsim-build-summary>
       </a>
-      <button ng-hide="ctrl.reallyDelete == buildName" class="btn btn-default" ng-click="ctrl.load(buildName, ctrl.storedBuilds[buildName])">load to browser</button>
+      <button ng-hide="ctrl.reallyDelete == buildName" class="btn btn-default" ng-click="ctrl.load(buildName, ctrl.storedBuilds[buildName])">{{'load to browser' | translate}}</button>
     </div>
   </div>
   

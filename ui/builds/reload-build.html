@@ -1,16 +1,16 @@
 <dnsim-loading>
 <div ng-if="!ctrl.reloaded">
-<h2>reload build?<br /><small>{{ctrl.name}}</small></h2>
-    <p>Are you sure you want to reload this build?</p>
-    <p>This will update stats of all items using data of the selected region. Items not in this region may be lost.</p>
+<h2>{{'reload build?' | translate}}<br /><small>{{ctrl.name}}</small></h2>
+    <p>{{'Are you sure you want to reload this build?' | translate}}</p>
+    <p>{{'This will update stats of all items using data of the selected region. Items not in this region may be lost.' | translate}}</p>
     
     <p>
-    <button class="btn btn-default" ng-click="ctrl.reload()"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> reload</button>
+    <button class="btn btn-default" ng-click="ctrl.reload()"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> {{'reload' | translate}}</button>
     </p>
 </div>
 </dnsim-loading>
 <div ng-if="ctrl.reloaded">
     <br />
-    reload complete<br /><br />
-    <button class="btn btn-default" ng-click="ctrl.goToBuild()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> back</button>
+    {{'reload complete' | translate}}<br /><br />
+    <button class="btn btn-default" ng-click="ctrl.goToBuild()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> {{'back' | translate}}</button>
 </div>

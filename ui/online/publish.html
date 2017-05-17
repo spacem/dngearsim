@@ -3,58 +3,60 @@
 <div class="row" ng-if="!ctrl.getUser()">
   <div class="col-xs-12">
     <br />
-    authenticating with firebase...
+    {{'loading...' | translate}}
   </div>
 </div>
 <div class="row" ng-if="ctrl.getUser()">
   <div class="col-xs-12">
-    <h4>Logged In</h4>
-    Welcome {{ctrl.getUser().displayName || ctrl.getUser().email}}
+    <h4>{{'Logged In' | translate}}</h4>
+    {{'Welcome' | translate}} {{ctrl.getUser().displayName || ctrl.getUser().email}}
     <br /><br />
   </div>
   <div class="col-xs-12">
-    <button class="btn btn-link" ng-disabled="ctrl.show == 'profile' || !ctrl.show" ng-click="ctrl.show = 'profile'">profile</button> |
-    <button class="btn btn-link" ng-disabled="ctrl.show == 'builds'" ng-click="ctrl.show = 'builds'">builds</button> |
-    <button class="btn btn-link" ng-disabled="ctrl.show == 'delete'" ng-click="ctrl.show = 'delete'">delete account</button> |
-    <button class="btn btn-link" ng-click="ctrl.signOut()">log out</button>
+    <button class="btn btn-link" ng-disabled="ctrl.show == 'profile' || !ctrl.show" ng-click="ctrl.show = 'profile'">{{'profile' | translate}}</button> |
+    <button class="btn btn-link" ng-disabled="ctrl.show == 'builds'" ng-click="ctrl.show = 'builds'">{{'builds' | translate}}</button> |
+    <button class="btn btn-link" ng-disabled="ctrl.show == 'delete'" ng-click="ctrl.show = 'delete'">{{'delete account' | translate}}</button> |
+    <button class="btn btn-link" ng-click="ctrl.signOut()">{{'log out' | translate}}</button>
     <br /><br />
   </div>
   
   <div class="col-xs-12" ng-if="ctrl.show == 'delete'">
     <br />
-    <button class="btn btn-default" ng-click="ctrl.deleteAccount()">really delete?<br />all data will be lost<br />click to proceed</button>
+    <button class="btn btn-default" ng-click="ctrl.deleteAccount()">{{'really delete?' | translate}}
+      <br />{{'all data will be lost' | translate}}
+      <br />{{'click to proceed' | translate}}</button>
     <br /><br />
   </div>
       
   <div class="col-xs-6" ng-if="!ctrl.profile && (!ctrl.show || ctrl.show == 'profile')">
-    loading...
+    {{'loading...' | translate}}
   </div>
   
   <div class="col-xs-12 form-group" ng-if="ctrl.profile && (!ctrl.show || ctrl.show == 'profile')">
-    <label>display name </label><br />
+    <label>{{'display name' | translate}} </label><br />
     <input ng-model="ctrl.profile.name"></input>
     <br /><br />
-    <label>about you</label>
+    <label>{{'about you' | translate}}</label>
     <textarea ng-model="ctrl.profile.about" class="form-control" rows="5"></textarea>
     <br />
-    <button ng-click="ctrl.saveProfile()" ng-disabled="!ctrl.profile.name" class="btn btn-default">save</button>
+    <button ng-click="ctrl.saveProfile()" ng-disabled="!ctrl.profile.name" class="btn btn-default">{{'save' | translate}}</button>
     
-    <a class="btn btn-link" ng-href="profile/?uid={{ctrl.getUser().uid}}">view profile page</a>
+    <a class="btn btn-link" ng-href="profile/?uid={{ctrl.getUser().uid}}">{{'view profile page' | translate}}</a>
     <br />
   </div>
   
   <div class="col-xs-12" ng-if="ctrl.show == 'builds'">
     <div class="row">
       <div class="col-xs-6">
-        <h4>local builds ({{ctrl.getNumBuilds()}})</h4>
+        <h4>{{'local builds' | translate}} ({{ctrl.getNumBuilds()}})</h4>
       </div>
       <div class="col-xs-6" ng-if="ctrl.storedBuilds">
-        <h4>published builds ({{ctrl.getNumStoredBuilds()}} / {{ctrl.getBuildLimit()}})</h4>
+        <h4>{{'published builds' | translate}} ({{ctrl.getNumStoredBuilds()}} / {{ctrl.getBuildLimit()}})</h4>
       </div>
       
       
       <div class="col-xs-6" ng-if="!ctrl.storedBuilds">
-        loading...
+        {{'loading...' | translate}}
       </div>
     </div>
     
@@ -69,10 +71,10 @@
           <dngearsim-build-summary build-name="buildName" build="ctrl.builds[buildName]">
           </dngearsim-build-summary>
         </a>
-        <button ng-disabled="ctrl.getNumStoredBuilds() >= ctrl.getBuildLimit()" ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.startPublish(buildName)">save online</button>
-        <button ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.deleteLocal(buildName)">delete</button>
-        <button class="btn btn-default" ng-if="ctrl.localToDelete == buildName" ng-click="ctrl.reallyDeleteLocal(buildName)">press to actually delete</button>
-        <button class="btn btn-default" ng-if="ctrl.localToDelete == buildName" ng-click="ctrl.deleteLocal('')">cancel delete</button>
+        <button ng-disabled="ctrl.getNumStoredBuilds() >= ctrl.getBuildLimit()" ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.startPublish(buildName)">{{'save online' | translate}}</button>
+        <button ng-hide="ctrl.localToDelete == buildName" class="btn btn-default" ng-click="ctrl.deleteLocal(buildName)">{{'delete' | translate}}</button>
+        <button class="btn btn-default" ng-if="ctrl.localToDelete == buildName" ng-click="ctrl.reallyDeleteLocal(buildName)">{{'press to actually delete' | translate}}</button>
+        <button class="btn btn-default" ng-if="ctrl.localToDelete == buildName" ng-click="ctrl.deleteLocal('')">{{'cancel delete' | translate}}</button>
       </div>
       
       <div class="col-xs-6" ng-if="!ctrl.storedBuilds[buildName] && ctrl.publishBuild != buildName">
@@ -83,10 +85,10 @@
         <div class="row form-group">
           <div class="col-xs-12">
             <br />
-            <h3>publish {{buildName}}</h3>
+            <h3>{{'publish' | translate}} {{buildName}}</h3>
           </div>
           <div class="col-xs-12 col-sm-4">
-            <label>region</label>
+            <label>{{'region' | translate}}</label>
             <select ng-model="ctrl.builds[buildName].region" class="form-control">
               <option>cdn</option>
               <option>eu</option>
@@ -101,17 +103,17 @@
             </select>
           </div>
           <div class="col-xs-12 col-sm-8">
-            <label>guild</label><br />
+            <label>{{'guild' | translate}}</label><br />
             <input ng-model="ctrl.builds[buildName].guild" class="form-control"></input>
           </div>
           <div class="col-xs-12">
-            <label>about</label>
+            <label>{{'about' | translate}}</label>
             <input ng-model="ctrl.builds[buildName].about" class="form-control"></input>
           </div>
           <div class="col-xs-12 text-right">
             <br />
-            <button class="btn btn-default" ng-click="ctrl.publishBuild = null">cancel</button>
-            <button class="btn btn-default" ng-click="ctrl.save(buildName, ctrl.builds[buildName])">publish</button>
+            <button class="btn btn-default" ng-click="ctrl.publishBuild = null">{{'cancel' | translate}}</button>
+            <button class="btn btn-default" ng-click="ctrl.save(buildName, ctrl.builds[buildName])">{{'publish' | translate}}</button>
           </div>
         </div>
       </div>
@@ -125,10 +127,10 @@
           {{ctrl.storedBuilds[buildName].region}} <span ng-if="ctrl.storedBuilds[buildName].guild">[{{ctrl.storedBuilds[buildName].guild}}]</span>
           <em>{{ctrl.storedBuilds[buildName].about}}</em>
         </p>
-        <button ng-hide="ctrl.serverToDelete == buildName" class="btn btn-default" ng-click="ctrl.load(buildName, ctrl.storedBuilds[buildName])">load to browser</button>
-        <button ng-hide="ctrl.serverToDelete == buildName" class="btn btn-default" ng-click="ctrl.deleteServer(buildName)">delete</button>
-        <button class="btn btn-default" ng-if="ctrl.serverToDelete == buildName" ng-click="ctrl.reallyDeleteServer(buildName)">press to actually delete</button>
-        <button class="btn btn-default" ng-if="ctrl.serverToDelete == buildName" ng-click="ctrl.deleteServer('')">cancel delete</button>
+        <button ng-hide="ctrl.serverToDelete == buildName" class="btn btn-default" ng-click="ctrl.load(buildName, ctrl.storedBuilds[buildName])">{{'load to browser' | translate}}</button>
+        <button ng-hide="ctrl.serverToDelete == buildName" class="btn btn-default" ng-click="ctrl.deleteServer(buildName)">{{'delete' | translate}}</button>
+        <button class="btn btn-default" ng-if="ctrl.serverToDelete == buildName" ng-click="ctrl.reallyDeleteServer(buildName)">{{'press to actually delete' | translate}}</button>
+        <button class="btn btn-default" ng-if="ctrl.serverToDelete == buildName" ng-click="ctrl.deleteServer('')">{{'cancel delete' | translate}}</button>
       </div>
 
     </div>

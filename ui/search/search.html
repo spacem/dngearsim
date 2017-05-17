@@ -28,26 +28,26 @@
   <div class="row visible-xs" ng-if="!ctrl.itemCategory.searchType && ctrl.filters">
     <div class="col-xs-6 form-group" ng-if="::!ctrl.itemCategory.hideRank" ng-repeat="(id,value) in ctrl.grades track by $index">
       <label class="checkbox-inline">
-        <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}"> {{value.name}}
+        <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}"> {{value.name | translate}}
       </label>
     </div>
     <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-      <label>min&nbsp;lvl:
+      <label>{{'min&nbsp;lvl:' | translate}}
       </label>
       <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" ng-model-options="{ debounce: 300 }" />
     </div>
     <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-      <label>max&nbsp;lvl:
+      <label>{{'max&nbsp;lvl:' | translate}}
       </label>
       <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" ng-model-options="{ debounce: 300 }" />
     </div>
     <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
-      <label>stat:</label>
-      <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
+      <label>{{'stat:' | translate}}</label>
+      <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name | translate for stat in ::ctrl.stats track by stat.id">
       </select>
     </div>
     <div class="col-xs-12 col-sm-3" ng-hide="::ctrl.itemCategory.hideJob">
-      <label>class: 
+      <label>{{'class:' | translate}}
       </label>
       <select ng-change="ctrl.changeSearch()" ng-model="ctrl.job" class="form-control"
       ng-options="job.name for job in ctrl.jobs track by job.id">
@@ -61,36 +61,36 @@
       <br />
       <span class="form-group" ng-repeat="(id,value) in ctrl.grades track by $index" ng-if="::!ctrl.itemCategory.hideRank">
       <label class="checkbox-inline">
-        <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}">{{value.name}}&nbsp;
+        <input ng-change="ctrl.changeSearch()" type="checkbox" ng-model="ctrl.rankChecked[id]" value="{{id}}">{{value.name | translate}}&nbsp;
       </label>
       </span>
     </div>
     
     <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-      <label>min&nbsp;lvl:
+      <label>{{'min&nbsp;lvl:' | translate}}
       </label>
       <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.minLevel" ng-model-options="{ debounce: 300 }" />
     </div>
     <div class="col-xs-6 col-sm-2" ng-hide="::ctrl.itemCategory.hideLevel">
-      <label>max&nbsp;lvl:
+      <label>{{'max&nbsp;lvl:' | translate}}
       </label>
       <input ng-change="ctrl.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="ctrl.maxLevel" ng-model-options="{ debounce: 300 }" />
     </div>
     <div ng-class="{'col-sm-2': !ctrl.itemCategory.hideLevel, 'col-sm-3': ctrl.itemCategory.hideLevel}" class="col-xs-12">
-      <label>stat:</label>
-      <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name for stat in ::ctrl.stats track by stat.id">
+      <label>{{'stat:' | translate}}</label>
+      <select ng-change="ctrl.changeSearch()" class="form-control" ng-model="ctrl.stat" ng-options="stat.name | translate for stat in ::ctrl.stats track by stat.id">
       </select>
     </div>
     
     <div
       ng-class="['col-xs-12',{'col-sm-3': !ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-6': !ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob},{'col-sm-6': ctrl.itemCategory.hideLevel && !ctrl.itemCategory.hideJob},{'col-sm-9': ctrl.itemCategory.hideLevel && ctrl.itemCategory.hideJob}]">
-      <label>name:</label>
+      <label>{{'name:' | translate}}</label>
       <input ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 300 }" />
       <span class="input-group-btn">
       </span>
     </div>
     <div class="col-xs-12 col-sm-3" ng-hide="::ctrl.itemCategory.hideJob">
-      <label>class: 
+      <label>{{'class:' | translate}}
       </label>
       <select ng-change="ctrl.changeSearch()" ng-model="ctrl.job" class="form-control"
       ng-options="job.name for job in ctrl.jobs track by job.id">
@@ -105,7 +105,7 @@
         <dngearsim-build-item item="result"></dngearsim-build-item>
         <div style="float:right">
             <button class="btn btn-default" ng-click="showUse = !showUse">
-              use
+              {{'use' | translate}}
             </button>
         </div>
         <div class="col-xs-12" ng-if="showUse">

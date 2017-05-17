@@ -19,7 +19,7 @@ function dnsimCategoryLinks() {
   };
 };
 
-function dnsimCategoryLinksController(itemCategory, $window, translations) {
+function dnsimCategoryLinksController(itemCategory, $window, translations, $translate) {
 
   var vm = this;
 
@@ -63,7 +63,7 @@ function dnsimCategoryLinksController(itemCategory, $window, translations) {
       return translations.translate(action.tId).toLowerCase();
     }
     else {
-      return action.name;
+      return $translate.instant(action.name);
     }
   }
 }

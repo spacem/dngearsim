@@ -1,25 +1,25 @@
 <div class="row">
   <div class="col-xs-12">
-    <h4>full item search <small>find anything</small></h4>
+    <h4>{{full item search' | translate}} <small>{{'find anything' | translate}}</small></h4>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12 col-sm-6">
-     <label>seach by name:</label>
+     <label>{{'seach by name:' | translate}}</label>
      <input ng-change="items.changeSearch()" type="text" class="form-control" ng-model="items.nameSearch" ng-model-options="{ debounce: 300 }" />
   </div>
   <div class="col-xs-4 col-sm-2">
-     <label>min&nbsp;lvl:
+     <label>{{'min&nbsp;lvl:' | translate}}
      </label>
      <input ng-change="items.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="items.minLevel" ng-model-options="{ debounce: 300 }" />
   </div>
   <div class="col-xs-4 col-sm-2">
-     <label>max&nbsp;lvl:
+     <label>{{'max&nbsp;lvl:' | translate}}
      </label>
      <input ng-change="items.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="items.maxLevel" ng-model-options="{ debounce: 300 }" />
   </div>
   <div class="col-xs-4 col-sm-2">
-     <label>version
+     <label>{{'version' | translate}}
      </label>
      <select ng-change="items.changeSearch()" ng-model="items.version" class="form-control" ng-options="v for v in items.versions track by v">
      </select>
