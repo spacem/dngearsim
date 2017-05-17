@@ -58,8 +58,8 @@ var uiTranslationLookup = {
     sea: {
         'offensive gems':  'offensive jades',
         'increasing gems':  'increasing jades',
-        'expedition plates': 'normal heraldry',
-        'enhancement plates': 'unique heraldry',
+        'expedition plates': 'unique heraldry',
+        'enhancement plates': 'normal heraldry',
         'techs': 'skill accessory',
     },
 };
