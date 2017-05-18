@@ -292,7 +292,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       $scope.isPlate = true;
     }
     
-    if($scope.item.typeId == 46 || $scope.item.typeId == 8 || $scope.item.typeId == 112 || $scope.item.typeId == 122 || $scope.item.typeId == 142) {
+    if($scope.item.typeId == 46 || $scope.item.typeId == 8 || $scope.item.typeId == 112 || $scope.item.typeId == 122 || $scope.item.typeId == 142 || $scope.item.typeId == 160) {
       $scope.hasContents = true;
       $scope.detail = 'contents';
     }
