@@ -370,7 +370,11 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         return this.reloadSkill(item);
       }
       else if(item.itemSource in items) {
-        return this.reloadSourceItem(item);
+        var itemType = items[item.itemSource];
+        var ds = dntData.findFast(itemType.mainDnt, 'id', item.id);
+        if(ds.length) {
+          return this.reloadSourceItem(item);
+        }
       }
       
       if(item.fileName) {
