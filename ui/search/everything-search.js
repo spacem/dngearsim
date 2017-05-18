@@ -176,7 +176,7 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
   var fileName = 'all-items.lzjson';  
   dntData.init(fileName, null, function() {}, function() {
     vm.initeverything();
-  });
+  }, false);
 
   translations.init(null, vm.initeverything);
 }

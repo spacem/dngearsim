@@ -34,9 +34,12 @@ angular.module('dnsim').controller('itemViewExtractionCtrl',
     }
     
     var itemType = items[vm.item.itemSource];
-    
     if(itemType && d.EnchantID) {
       var enchantments = dntData.find(itemType.enchantDnt, 'EnchantID', d.EnchantID);
+      if(!enchantments.length && itemType.enchantDnt2) {
+        enchantments = dntData.find(itemType.enchantDnt2, 'EnchantID', d.EnchantID);
+      }
+
       for(var i=0;i<enchantments.length;++i) {
         if(enchantments[i].EnchantLevel == vm.item.enchantmentNum) {
           disjoint = enchantments[i].DisjointDrop;

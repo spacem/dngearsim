@@ -18,11 +18,11 @@ function character(dntData,itemColumnsToLoad,jobs,hCodeValues) {
   return {
     init: function(complete) {
       jobs.init(reportProgress, complete);
-      dntData.init(jobConversions, itemColumnsToLoad.jobConversionColsToLoad, reportProgress, complete);
-      dntData.init(statCaps, itemColumnsToLoad.statCapColsToLoad, reportProgress, complete);
-      dntData.init(jobBaseStats, itemColumnsToLoad.jobBaseStatColsToLoad, reportProgress, complete);
-      dntData.init(heroLevels, null, reportProgress, complete);
-      dntData.init(heroLevelPotentials, null, reportProgress, complete);
+      dntData.init(jobConversions, itemColumnsToLoad.jobConversionColsToLoad, reportProgress, complete, false);
+      dntData.init(statCaps, itemColumnsToLoad.statCapColsToLoad, reportProgress, complete, false);
+      dntData.init(jobBaseStats, itemColumnsToLoad.jobBaseStatColsToLoad, reportProgress, complete, false);
+      dntData.init(heroLevels, null, reportProgress, complete, false);
+      dntData.init(heroLevelPotentials, null, reportProgress, complete, false);
     },
     
     getHeroStats: function(heroLevel) {

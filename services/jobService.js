@@ -22,7 +22,7 @@ function jobs(dntData, translations, itemColumnsToLoad) {
     init : function(progress, complete) {
       dntData.init(fileName, colsToLoad, progress, function() {
         complete();
-        });
+        }, false);
     },
 
     reset : function() {

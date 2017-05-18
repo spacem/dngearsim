@@ -119,6 +119,10 @@ function dntData($rootScope,$timeout) {
     },
     
     init : function (fileName, colsToLoad, progress, complete, ignoreErrors) {
+      if(ignoreErrors !== false) {
+        ignoreErrors = true;
+      }
+
       if(!progress) {
         progress = function() {};
       }

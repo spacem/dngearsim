@@ -13,10 +13,10 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'armour', name:'armour', sourceType: 'equipment', numItemText: '5', maxExchange: 1, maxCat: 5, limitExchange: [3,4,5,6,7]},
       {path: 'accessories', name:'accessories', sourceType: 'equipment', hideJob: true, maxCat: 4, maxExchange: 2, limitExchange: [8,9,10], tId: 7604},
       {path: 'techs', name:'techs', sourceType: 'techs', maxCat: 4, maxExchange: 2, limitExchange: [8,9,10], hideJob: true},
-      {path: 'offensive-gems', name:'offensive gems', sourceType: 'gems', hideJob: true, maxCat: 4, maxExchange: 4, limitExchange: [54]},
-      {path: 'increasing-gems', name:'increasing gems', sourceType: 'gems', hideJob: true, maxCat: 14, maxExchange: 14, limitExchange: [54]},
-      {path: 'enhancement-plates', name:'enhancement plates', sourceType: 'plates', hideJob: true, numItemText: '8+3', maxCat: 11, maxExchange: 15, limitExchange: [33]},
-      {path: 'expedition-plates', name:'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, numItemText: '4', maxCat: 4, maxExchange: 15, limitExchange: [33]},
+      {path: 'offensive-gems', name:'offensive gems', sourceType: 'gems', hideJob: true, maxCat: 4, maxExchange: 4, limitExchange: [54], limitGemType: 1},
+      {path: 'increasing-gems', name:'increasing gems', sourceType: 'gems', hideJob: true, maxCat: 14, maxExchange: 14, limitExchange: [54], limitGemType: 2},
+      {path: 'enhancement-plates', name:'enhancement plates', sourceType: 'plates', hideJob: true, numItemText: '8+3', maxCat: 11, maxExchange: 15, limitExchange: [33], limitRank: [0,1,2,3]},
+      {path: 'expedition-plates', name:'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, numItemText: '4', maxCat: 4, maxExchange: 15, limitExchange: [33], limitRank: [4,5]},
       {path: 'talisman', name:'talisman', sourceType: 'talisman', hideJob: true, numItemText: '8+4', maxCat: 12, maxExchange: 12, limitExchange: [52,53], tId: 1000054149},
       {path: 'costume', name:'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, hideLevel: true, limitExchange: [16,17,18,19,20,21,22], tId: 7607},
       {path: 'imprint', name:'imprint', sourceType: 'imprint', numItemText: '7', maxCat: 7, hideLevel: true, hideJob: true, tId: 1000108314},
@@ -88,9 +88,13 @@ function itemCategory(itemFactory,items,dntData) {
       }
     },
     
-    isItemForCat: function(cat, item, rawData) {
+    isItemForCat: function(cat, item) {
+
+      if(!(item.itemSource in items)) {
+        return false;
+      }
       
-      if(item.itemSource in items && items[item.itemSource].type != cat.sourceType) {
+      if(items[item.itemSource].type != cat.sourceType) {
         return false;
       }
       
@@ -98,44 +102,44 @@ function itemCategory(itemFactory,items,dntData) {
         return true;
       }
       
+      var anyMatch;
       if(cat.limitExchange) {
-        
+        anyMatch = false;
         for(var i=0;i<cat.limitExchange.length;++i) {
-          if(cat.limitExchange[i] == item.exchangeType || (rawData && cat.limitExchange[i] == rawData.ExchangeType)) {
-            
-            if(item.itemSource == 'plate') {
-              if((item.rawData && rawData.Rank == 4) || (item.rank && item.rank.id == 4)) {
-                return cat.name == 'expedition plates';
-              }
-              else {
-                return cat.name == 'enhancement plates';
-              }
-            }
-            else if(item.itemSource == 'gem') {
-              var gemTypes = dntData.find(items.gem.gemDnt, 'id', item.id);
-              if(gemTypes.length > 0) {
-                
-                if(gemTypes[0].Type == 1) {
-                  return cat.name == 'offensive gems';
-                }
-                else if(gemTypes[0].Type == 2) {
-                  return cat.name == 'increasing gems';
-                }
-                else {
-                  return false;
-                }
-              }
-            }
-            
-            return true;
+          if(cat.limitExchange[i] == item.exchangeType || (item.rawData && cat.limitExchange[i] == item.rawData.ExchangeType)) {
+            anyMatch = true;
+          }
+        }
+
+        if(!anyMatch) {
+          return false;
+        }
+      }
+
+      if(cat.limitRank) {
+        anyMatch = false;
+        for(var i=0;i<cat.limitRank.length;++i) {
+          if((item.rank && cat.limitRank[i] == item.rank.id) || (item.rawData && cat.limitRank[i] == item.rawData.Rank)) {
+            anyMatch = true;
+          }
+        }
+
+        if(!anyMatch) {
+          return false;
+        }
+      }
+
+      if(cat.limitGemType) {
+        var gemTypes = dntData.find(items.gem.gemDnt, 'id', item.id);
+        if(gemTypes.length > 0) {
+          
+          if(gemTypes[0].Type != cat.limitGemType) {
+            return false;
           }
         }
       }
-      else if(item.itemSource in items) {
-        return items[item.itemSource].type == cat.sourceType;
-      }
-
-      return false;
+      
+      return true;
     },
     
     init: function(name, complete) {

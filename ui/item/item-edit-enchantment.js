@@ -23,6 +23,9 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
   if(vm.itemType.enchantDnt) {
     dntData.init(vm.itemType.enchantDnt, itemColumnsToLoad.enchantDnt, null, vm.getEnchantments);
   }
+  if(vm.itemType.enchantDnt2) {
+    dntData.init(vm.itemType.enchantDnt2, itemColumnsToLoad.enchantDnt, null, vm.getEnchantments);
+  }
   
   if(vm.itemType.petLevelDnt) {
     dntData.init(vm.itemType.petDnt, itemColumnsToLoad.petDnt, null, vm.getEnchantments);
@@ -157,6 +160,9 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
     if(!vm.enchantments && vm.item && vm.item.enchantmentId) {
       if(vm.itemType.enchantDnt && dntData.isLoaded(vm.itemType.enchantDnt)) {
         vm.enchantments = dntData.find(vm.itemType.enchantDnt, 'EnchantID', vm.item.enchantmentId);
+        if(!vm.enchantments.length && vm.itemType.enchantDnt2) {
+          vm.enchantments = dntData.find(vm.itemType.enchantDnt2, 'EnchantID', vm.item.enchantmentId);
+        }
         vm.setEnchantment();
       }
       if(vm.itemType.petLevelDnt && dntData.isLoaded(vm.itemType.petLevelDnt)) {
