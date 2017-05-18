@@ -47,6 +47,13 @@ function items(translations,dntData,itemColumnsToLoad) {
         type: 'plates',
         minLevel: 16,
         minRank: 2 },
+      plate95: { 
+        mainDnt : 'itemtable_glyph95.lzjson', 
+        potentialDnt: 'potentialtable_glyph95.lzjson',
+        type: 'plates',
+        minLevel: 1,
+        minRank: 1,
+        ignoreErrors: true },
 
       items: {
         mainDnt: 'itemtable.optimised.json', 
