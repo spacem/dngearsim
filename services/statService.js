@@ -204,7 +204,6 @@ function statHelper(hCodeValues) {
         
         // special stats for zeal
         var intToPdmg = dupeStat(10164);
-        var defToPdmg = dupeStat(110373);
         
         minPdmg.max += extraPdmg.max;
         minPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
@@ -213,7 +212,6 @@ function statHelper(hCodeValues) {
         minPdmg.max = Math.floor(minPdmg.max*(1+(getPc(minPdmg) + extraPdmgMod.max)));
         minPdmg.max = Math.floor(minPdmg.max * (1+aPwr.max+paPwr.max));
         minPdmg.max += Math.floor(intToPdmg.max * int.max);
-        minPdmg.max += Math.floor(defToPdmg.max * def.max);
         addStat(minPdmg);
   
         maxPdmg.max += extraPdmg.max;
@@ -223,7 +221,6 @@ function statHelper(hCodeValues) {
         maxPdmg.max = Math.floor(maxPdmg.max*(1+(getPc(maxPdmg) + extraPdmgMod.max)));
         maxPdmg.max = Math.floor(maxPdmg.max * (1+aPwr.max+paPwr.max));
         maxPdmg.max += Math.floor(intToPdmg.max * int.max);
-        maxPdmg.max += Math.floor(defToPdmg.max * def.max);
         addStat(maxPdmg);
       }
       

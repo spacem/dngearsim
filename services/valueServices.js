@@ -137,7 +137,6 @@ function hCodeValues() {
       10164: {id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true, dps: true },
       10165: {id: 10165, name: 'strToMdmg', display: toPercent, noCustom: true, dps: true },
       10372: {id: 10372, name: 'intToMdmg', display: toPercent, noCustom: true, dps: true },
-     110373: {id: 110373, name: 'defToPdmg', display: toPercent, noCustom: true, dps: true },
       // items over 10000 are unknown skill effects
     },
   
@@ -258,9 +257,6 @@ function hCodeValues() {
             var vals = val.split(';');
             if(vals.length == 3 && vals[0] == 2 && vals[2] == 6) {
               return [{ id: 10372, name: 'intToMdmg', max: Number(vals[1]) }];
-            }
-            else if(vals.length == 3 && vals[0] == 5 && vals[2] == 7) {
-              return [{ id: 110373, name: 'defToPdmg', max: Number(vals[1]) }];
             }
           }
           return [];
