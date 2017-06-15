@@ -167,7 +167,8 @@ function hCodeValues() {
       40001: 'daredevil faire', 40002: 'daredevil faire', 40111: 'daredevil faire',
       91001: 'wrath',
       45001: 'farm',
-      100004: 'event'
+      100004: 'event',
+      89000: 'nightmare'
     },
     
     checkedRank : {

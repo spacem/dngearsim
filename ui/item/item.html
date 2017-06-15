@@ -102,14 +102,11 @@
     <span ng-if="canTransfer">
       <button class="btn btn-link" ng-click="setDetail('transfer')" ng-disabled="detail == 'transfer'">transfer</button> |
     </span>
-    <span>
-      <button class="btn btn-link" ng-click="setDetail('shops')" ng-disabled="detail == 'shops'">buy</button> |
-    </span>
-    <span>
-      <button class="btn btn-link" ng-click="setDetail('craft')" ng-disabled="detail == 'craft'">craft</button> |
-    </span>
     <span ng-if="isInSet">
       <button class="btn btn-link" ng-click="setDetail('set')" ng-disabled="detail == 'set'">set</button> |
+    </span>
+    <span>
+      <button class="btn btn-link" ng-click="setDetail('attainment')" ng-disabled="detail == 'attainment'">attainment</button> |
     </span>
   </div>
 </div>
@@ -129,11 +126,11 @@
   <dngearsim-item-view-transfer item="item">
   </dngearsim-item-view-transfer>
 </div>
-<div class="row" ng-if="detail == 'shops' && item != null">
+<div class="row" ng-if="detail == 'attainment' && item != null">
+  <dngearsim-item-view-attainment item="item">
+  </dngearsim-item-view-attainment>
   <dngearsim-item-view-shop item="item">
   </dngearsim-item-view-shop>
-</div>
-<div class="row" ng-if="detail == 'craft' && item != null">
   <dngearsim-item-view-craft item="item">
   </dngearsim-item-view-craft>
 </div>

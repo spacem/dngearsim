@@ -310,7 +310,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       $scope.detail = 'plate';
     }
     else {
-      $scope.detail = 'shops';
+      $scope.detail = 'attainment';
     }
   }
   

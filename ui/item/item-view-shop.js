@@ -116,6 +116,8 @@ angular.module('dnsim').controller('itemViewShopCtrl',
         tabName: translations.translate(s.TabNameID),
         gold: 0,
         nightmarePoints: 0,
+        dungeonPoints: 0,
+        nestPoints: 0,
         ladderPoints: 0,
         item1: itemFactory.createBasicItem(item1s[0]),
         item2: itemFactory.createBasicItem(item2s[0]),
@@ -136,8 +138,15 @@ angular.module('dnsim').controller('itemViewShopCtrl',
       else if(s.PurchaseType1 == 8) {
         shopCost.nightmarePoints += s.PurchaseItemValue1;
       }
+      else if(s.PurchaseType1 == 13) {
+        shopCost.nestPoints += s.PurchaseItemValue1;
+      }
+      else if(s.PurchaseType1 == 14) {
+        shopCost.dungeonPoints += s.PurchaseItemValue1;
+      }
       else {
         shopCost.numItem1 = s.PurchaseItemValue1;
+        shopCost.pointsId1 = s.PurchaseType1;
       }
       
       if(s.PurchaseType2 == 1) {
@@ -149,8 +158,15 @@ angular.module('dnsim').controller('itemViewShopCtrl',
       else if(s.PurchaseType2 == 8) {
         shopCost.nightmarePoints += s.PurchaseItemValue2;
       }
+      else if(s.PurchaseType1 == 13) {
+        shopCost.nestPoints += s.PurchaseItemValue2;
+      }
+      else if(s.PurchaseType1 == 14) {
+        shopCost.dungeonPoints += s.PurchaseItemValue2;
+      }
       else {
         shopCost.numItem2 = s.PurchaseItemValue2;
+        shopCost.pointsId2 = s.PurchaseType2;
       }
       
       shopCost.gold = shopCost.gold/100/100;

@@ -13,13 +13,16 @@ angular.module('dnsim').controller('itemViewCraftCtrl',
     'itemcompoundtable.lzjson',
     'itemcompoundtable_custom.lzjson',
     'itemcompoundtable_glyph.lzjson',
+    'itemcompoundtable_glyph95.lzjson',
     'itemcompoundtable_jewel.lzjson',
     'itemcompoundtable_renewal.lzjson',
     'itemcompoundtable_set.lzjson'];
   
+  var dropFile = 'itemdroptable.lzjson';
+  
   var allItemFileName = 'all-items.lzjson';
   
-  var files = cFiles.concat([allItemFileName]);
+  var files = cFiles.concat([allItemFileName, dropFile]);
   for(var i=0;i<files.length;++i) {
     dntData.init(files[i], null, function() {}, function() {
       $timeout(function() {
@@ -30,14 +33,25 @@ angular.module('dnsim').controller('itemViewCraftCtrl',
   
   this.initCrafts = function() {
     for(var i=0;i<files.length;++i) {
-      if(!dntData.isLoaded(files[i])) {
+      if(!dntData.isLoaded(files[i]) && !dntData.hasFailed(files[i])) {
         return;
       }
     }
     
     vm.crafts = [];
     for(var i=0;i<cFiles.length;++i) {
-      vm.initCraft(cFiles[i]);
+      vm.initCraft(cFiles[i], vm.item.id);
+    }
+
+    for(var di=1;di<=20;++di) {
+      var drops = dntData.find(dropFile, 'Item' + di + 'Index', vm.item.id);
+      if(drops.length) {
+        drops.forEach(function(drop) {
+          for(var i=0;i<cFiles.length;++i) {
+            vm.initCraft(cFiles[i], drop.id);
+          }
+        });
+      }
     }
     
     var newCrafts = [];
@@ -65,8 +79,8 @@ angular.module('dnsim').controller('itemViewCraftCtrl',
     vm.crafts = newCrafts;
   }
 
-  this.initCraft = function(fileName) {
-    var fCrafts = dntData.find(fileName, 'SuccessItemID1', vm.item.id);
+  this.initCraft = function(fileName, id) {
+    var fCrafts = dntData.find(fileName, 'SuccessItemID1', id);
     
     for(var i=0;i<fCrafts.length;++i) {
       var c = fCrafts[i];
