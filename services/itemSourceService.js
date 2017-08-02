@@ -101,6 +101,15 @@ function items(translations,dntData,itemColumnsToLoad) {
         minLevel: 24,
         minRank: 3 },
 
+      cCommon: {
+        mainDnt: 'itemtable_commoncash.lzjson', 
+        partsDnt: 'partstable_commoncash.lzjson', 
+        weaponDnt: 'weapontable_commoncash.lzjson', 
+        setDnt: 'setitemtable_cash.lzjson',
+        type: 'cash',
+        minLevel: 0,
+        ignoreErrors: true,
+        minRank: 4 },
       cClone: {
         mainDnt: 'itemtable_cashclone.optimised.json',
         partsDnt: 'partstable_cashclone.optimised.json',
