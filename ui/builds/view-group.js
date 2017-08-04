@@ -136,7 +136,7 @@ angular.module('dnsim').controller('ViewGroupCtrl',
           heroStats: $scope.heroStats
         });
       
-      $location.url('/build/' + newBuildName);
+      $location.url('/build?buildName=' + newBuildName);
     }
   }]
 );

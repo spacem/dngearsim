@@ -67,7 +67,7 @@
       </div>
 
       <div class="col-xs-6" ng-if="ctrl.builds[buildName]">
-        <a class="btn btn-link btn-block group-header-btn" ng-href="build/{{buildName}}">
+        <a class="btn btn-link btn-block group-header-btn" ng-href="build?buildName={{buildName}}">
           <dngearsim-build-summary build-name="buildName" build="ctrl.builds[buildName]">
           </dngearsim-build-summary>
         </a>

@@ -270,7 +270,8 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   
   this.save = function() {
     saveHelper.updatedSavedItems(vm.groupName, vm.savedItems[vm.groupName].items);
-    $location.path('/build/' + vm.groupName);
+    $location.path('/build');
+    $location.search('buildName', vm.groupName);
   };
   
   this.updateRows();

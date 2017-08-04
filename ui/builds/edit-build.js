@@ -228,7 +228,8 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntDat
       heroStats: heroStats
       });
     
-    $location.path('/build/' + vm.groupName);
+    $location.path('/build');
+    $location.search('buildName', vm.groupName);
   }
   
   vm.setHeroStats = function() {

@@ -30,7 +30,8 @@ angular.module('dnsim').controller('BuildListCtrl',
       }
     }
     else if(this.currentGroup && this.currentGroup in this.savedItems) {
-      $location.path('/build/' + this.currentGroup);
+      $location.path('/build');
+      $location.search('buildName', this.currentGroup);
     }
     else {
       this.currentGroup = null;
@@ -59,7 +60,7 @@ angular.module('dnsim').controller('BuildListCtrl',
   
     this.toggleGroup = function(buildName) {
       saveHelper.saveBuildSelection(buildName, this.savedItems);
-      $location.url('/build/' + buildName);
+      $location.url('/build?buildName=' + buildName);
     }
     
     this.publish = function() {

@@ -39,6 +39,7 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
       newGroupName,
       vm.build);
       
-    $location.path('/build/' + newGroupName);
+    $location.path('/build');
+    $location.search('buildName', newGroupName);
   }
 }]);

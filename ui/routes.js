@@ -34,15 +34,15 @@ function config($routeProvider) {
       templateUrl: 'ui/builds/build-list.html',
       controller: 'BuildListCtrl as buildList'
     }).
-    when('/build/:buildName*', {
+    when('/build', {
       templateUrl: 'ui/builds/build-list.html',
       controller: 'BuildListCtrl as buildList'
     }).
-    when('/view-group/:region?', {
+    when('/view-group', {
       templateUrl: 'ui/builds/view-group.html',
       controller: 'ViewGroupCtrl'
     }).
-    when('/edit-build/:buildName*', {
+    when('/edit-build', {
       templateUrl: 'ui/builds/edit-build.html',
       controller: 'EditBuildCtrl as editGroup',
       // reloadOnSearch: false,
@@ -52,18 +52,18 @@ function config($routeProvider) {
       controller: 'EditBuildCtrl as editGroup',
       // reloadOnSearch: false,
     }).
-    when('/delete-build/:name*', {
+    when('/delete-build', {
       templateUrl: 'ui/builds/delete-build.html',
       controller: 'DeleteBuildCtrl as deleteBuild',
       // reloadOnSearch: false,
     }).
-    when('/reload-build/:name*', {
+    when('/reload-build', {
       templateUrl: 'ui/builds/reload-build.html',
       controller: 'ReloadBuildCtrl as ctrl',
       // reloadOnSearch: false,
     }).
     
-    when('/search/:cat?', {
+    when('/search', {
       templateUrl: 'ui/search/search.html',
       controller: 'ItemSearchCtrl as ctrl',
       reloadOnSearch: false,
@@ -74,7 +74,7 @@ function config($routeProvider) {
       controller: 'ItemCtrl',
       // reloadOnSearch: false,
     }).
-    when('/item/:region?/:i*', {
+    when('/item', {
       templateUrl: 'ui/item/item.html',
       controller: 'ItemCtrl',
       // reloadOnSearch: false,
@@ -95,7 +95,7 @@ function config($routeProvider) {
       controller: 'PublishCtrl as ctrl',
     }).
     
-    when('/profile/:uid?', {
+    when('/profile', {
       templateUrl: 'ui/online/profile.html',
       controller: 'ProfileCtrl as ctrl',
     }).
@@ -110,12 +110,12 @@ function config($routeProvider) {
       controller: 'BuildImportCtrl as ctrl',
     }).
     
-    when('/published/:uid/:buildName*', {
+    when('/published', {
       templateUrl: 'ui/online/published.html',
       controller: 'PublishedCtrl as ctrl',
     }).
     
-    when('/build-search/:jobId?', {
+    when('/build-search', {
       templateUrl: 'ui/online/build-search.html',
       controller: 'BuildSearchCtrl as ctrl',
     }).

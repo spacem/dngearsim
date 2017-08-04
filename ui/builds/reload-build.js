@@ -28,7 +28,8 @@ function reloadBuildCtrl($location,$routeParams,$timeout,saveHelper,dntData,dntR
   }
   
   vm.goToBuild = function() {
-    $location.path('/build/' + vm.name);
+    $location.path('/build');
+    $location.search('buildName', vm.name);
   }
   
   function progress() {

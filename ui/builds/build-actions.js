@@ -7,11 +7,13 @@ function($location,saveHelper,exportLinkHelper) {
   var vm = this;
   
   this.deleteGroup = function() {
-    $location.path('/delete-build/' + vm.buildName);
+    $location.path('/delete-build');
+    $location.search('name', vm.buildName);
   }
   
   this.editGroup = function() {
-    $location.path('/edit-build/' + vm.buildName)
+    $location.path('/edit-build');
+    $location.search('buildName', vm.buildName);
   }
   
   this.copyGroup = function() {
@@ -22,12 +24,14 @@ function($location,saveHelper,exportLinkHelper) {
       newGroupName,
       vm.build);
     
-    $location.path('/build/' + newGroupName);
+    $location.path('/build');
+    $location.search('buildName', newGroupName);
   }
   
   this.reloaded = false;
   this.reloadGroup = function() {
-    $location.path('/reload-build/' + vm.buildName);
+    $location.path('/reload-build');
+    $location.search('name', vm.buildName);
   }
   
   function progress() {

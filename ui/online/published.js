@@ -20,7 +20,8 @@ function published(onlineService, $location, $routeParams, saveHelper, statHelpe
       newGroupName,
       vm.build);
       
-    $location.path('/build/' + newGroupName);
+    $location.path('/build');
+    $location.search('buildName', newGroupName);
   }
   
   function getProfile() {

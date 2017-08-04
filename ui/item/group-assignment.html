@@ -8,7 +8,7 @@
     <div class="col-xs-12 col-md-5">
       <h4>
         <dnsim-job-icon item="editCtrl.getBuild().job"></dnsim-job-icon>
-        <a ng-href="build/{{editCtrl.groupName}}">{{editCtrl.groupName}}</a>
+        <a ng-href="build?buildName={{editCtrl.groupName}}">{{editCtrl.groupName}}</a>
         <br ng-if="!editCtrl.compact" />
         <small class="hidden-xs" ng-if="!editCtrl.compact">
           <span dnsim-stats build="editCtrl.getBuild()" stats="editCtrl.getGroupCalcStats()" separator="'|'" filter="'summaryDisplay'" />
