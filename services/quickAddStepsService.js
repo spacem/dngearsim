@@ -139,6 +139,7 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
           
           return [
           { id: 5, name: 'legendary' },
+          { id: 4, name: 'unique' },
           { id: 999, name: 'quality high grade epic' },
           { id: 3, name: 'epic' },
           ];
