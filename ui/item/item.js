@@ -89,6 +89,29 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     
     return buildName;
   }
+
+  $scope.getSellingPrice = function() {
+    var itemData = itemFactory.getItemData($scope.item);
+    var retVal = '';
+    if('SellAmount' in itemData && itemData.SellAmount > 0) {
+
+      var gold = Math.floor(itemData.SellAmount / 10000);
+      if(gold) {
+        retVal += gold + 'gold ';
+      }
+
+      var silver = Math.floor(itemData.SellAmount / 100) % 100;
+      if(silver) {
+        retVal += silver + 'silver ';
+      }
+
+      var copper = itemData.SellAmount % 100;
+      if(copper) {
+        retVal += copper + 'copper ';
+      }
+    }
+    return retVal;
+  }
   
   $scope.getServerStorage = function() {
     var itemData = itemFactory.getItemData($scope.item);
@@ -109,10 +132,10 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         }
         
         if(itemData.Reversion == 0) {
-          retVal += 'can sell';
+          retVal += 'can trade';
         }
         else if(itemData.Reversion == 1) {
-          retVal += 'not sellable ';
+          retVal += 'not tradable ';
         }
       }
     }
