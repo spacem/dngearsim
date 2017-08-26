@@ -123,9 +123,12 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
           retVal = 'can server storage';
         }
         else if(itemData.AbleWStorage == 0) {
-          retVal = 'not transferable';
+          if(itemData && 'Reversion' in itemData && itemData.Reversion) {
+            retVal = 'not transferable';
+          }
         }
       }
+
       if(itemData && 'Reversion' in itemData) {
         if(retVal.length) {
           retVal += ', ';
@@ -170,10 +173,10 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       else if(itemData && 'IsCash' in itemData && 'CashTradeCount' in itemData && 'Reversion' in itemData && 'AbleWStorage' in itemData) {
         if(itemData.Reversion == 2) {
           if(itemData.CashTradeCount) {
-            return 'cash trade count: ' + itemData.CashTradeCount;
+            return 'can server storage, cash trade count: ' + itemData.CashTradeCount;
           }
           else {
-            return 'can use warranty';
+            return 'can server storage, can use warranty';
           }
         }
         else if(itemData.AbleWStorage) {
