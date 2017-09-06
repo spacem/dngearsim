@@ -34,14 +34,14 @@ function hCodeValues() {
   
   return {
     stats : {
-      0  : {id: 0, name: 'str', display: toNoDec, dps: true, pc: 50, skPc: 4050, searchable: true, quickHigh: true },
-      1  : {id: 1, name: 'agi', display: toNoDec, dps: true, pc: 51, skPc: 4051, searchable: true, quickHigh: true },
-      2  : {id: 2, name: 'int', display: toNoDec, dps: true, pc: 52, skPc: 4052, searchable: true, quickHigh: true },
-      3  : {id: 3, name: 'vit', display: toNoDec, def: true, pc: 53, skPc: 4053, searchable: true, quickHigh: true },
-      4  : {id: 4, name: 'pdmg', display: toNoDec, combineWith: 5, dps: true, pc: 54, searchable: true, altStat: 32, quickHigh: true },
-      5  : {id: 5, name: 'maxPdmg', display: toNoDec, hide: true, pc: 55 },
-      6  : {id: 6, name: 'mdmg', display: toNoDec, combineWith: 7, dps: true, pc: 56, searchable: true, altStat: 33, quickHigh: true },
-      7  : {id: 7, name: 'maxMdmg', display: toNoDec, hide: true, pc: 57 },
+      0  : {id: 0, name: 'str', display: inThousands, dps: true, pc: 50, skPc: 4050, searchable: true, quickHigh: true },
+      1  : {id: 1, name: 'agi', display: inThousands, dps: true, pc: 51, skPc: 4051, searchable: true, quickHigh: true },
+      2  : {id: 2, name: 'int', display: inThousands, dps: true, pc: 52, skPc: 4052, searchable: true, quickHigh: true },
+      3  : {id: 3, name: 'vit', display: inThousands, def: true, pc: 53, skPc: 4053, searchable: true, quickHigh: true },
+      4  : {id: 4, name: 'pdmg', display: inThousands, combineWith: 5, dps: true, pc: 54, searchable: true, altStat: 32, quickHigh: true },
+      5  : {id: 5, name: 'maxPdmg', display: inThousands, hide: true, pc: 55 },
+      6  : {id: 6, name: 'mdmg', display: inThousands, combineWith: 7, dps: true, pc: 56, searchable: true, altStat: 33, quickHigh: true },
+      7  : {id: 7, name: 'maxMdmg', display: inThousands, hide: true, pc: 57 },
       8  : {id: 8, name: 'pdef', display: inThousands, def: true, pc: 58, searchable: true },
       9  : {id: 9, name: 'mdef', display: inThousands, def: true, pc: 59, searchable: true },
       10 : {id: 10, name: 'para', display: inThousands, pc: 60, noCustom: true },
