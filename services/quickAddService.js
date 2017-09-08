@@ -7,12 +7,12 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
   return {
     categorySteps: {
       titles: ['titleStep'],
-      weapons: ['exchangeStep','levelStep','rankStep','itemNameStep','hasStatStep','itemStep','enhanceStep'],
-      armour: ['exchangeStep','levelStep','rankStep','itemNameStep','hasStatStep','itemStep','enhanceStep'],
+      weapons: ['exchangeStep','levelStep','rankStep','itemNameStep','hasStatStep','itemStep','enhanceEqStep'],
+      armour: ['exchangeStep','levelStep','rankStep','itemNameStep','hasStatStep','itemStep','enhanceEqStep'],
       accessories: ['accExchangeStep','levelStep','rankStep','itemNameStep','hasStatStep','itemStep'],
       techs: ['exchangeStep','levelStep','rankStep','techSkillStep','itemNameStep','hasStatStep','itemStep'],
-      'offensive gems': ['levelStep','gemRankStep','itemNameStep','numStatsStep','hasStatStep','itemStep','enhanceStep'],
-      'increasing gems': ['levelStep','gemRankStep','itemNameStep','numStatsStep','hasStatStep','itemStep','enhanceStep'],
+      'offensive gems': ['levelStep','gemRankStep','itemNameStep','numStatsStep','hasStatStep','itemStep','enhanceGemStep'],
+      'increasing gems': ['levelStep','gemRankStep','itemNameStep','numStatsStep','hasStatStep','itemStep','enhanceGemStep'],
       'enhancement plates': ['levelStep','rankStep','distinctItemNameStep','numStatsStep','hasStatStep','itemStep'],
       'expedition plates': ['levelStep','distinctItemNameStep','numStatsStep','highStatStep','hasStatStep','itemStep'],
       talisman: ['levelStep','talismanRankStep','distinctItemNameStep','numStatsStep','hasStatStep','itemStep','enhanceTalismanStep'],

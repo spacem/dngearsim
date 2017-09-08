@@ -219,7 +219,45 @@ function quickAddSteps(dntData, translations, itemColumnsToLoad, itemCategory,it
         },
         isItemStep: true,
       },
-      enhanceStep: {
+      enhanceEqStep: {
+        name: 'enhance',
+        getOptions: function(category, build, datas) {
+          
+          var item = quickAddHelper.getItem(datas);
+          if(item && item.enchantmentId) {
+            return [
+            { id: 20, name: 'enhance to +20' },
+            { id: 19, name: 'enhance to +19' },
+            { id: 18, name: 'enhance to +18' },
+            { id: 17, name: 'enhance to +17' },
+            { id: 16, name: 'enhance to +16' },
+            { id: 15, name: 'enhance to +15' },
+            { id: 14, name: 'enhance to +14' },
+            { id: 13, name: 'enhance to +13' },
+            { id: 12, name: 'enhance to +12' },
+            { id: 11, name: 'enhance to +11' },
+            { id: 10, name: 'enhance to +10' },
+            { id: 9, name: 'enhance to +9' },
+            { id: 8, name: 'enhance to +8' },
+            { id: 7, name: 'enhance to +7' },
+            { id: 6, name: 'enhance to +6' },
+            { id: 5, name: 'enhance to +5' },
+            { id: 4, name: 'enhance to +4' },
+            { id: 3, name: 'enhance to +3' },
+            { id: 2, name: 'enhance to +2' },
+            { id: 1, name: 'enhance to +1' },
+            { id: 0, name: 'not enhanced' },
+            ];
+          }
+          else {
+            return [{ id: 0, name: 'not enhanced' }];
+          }
+        },
+        alterItem: function(id, item) {
+          item.enchantmentNum = id;
+        }
+      },
+      enhanceGemStep: {
         name: 'enhance',
         getOptions: function(category, build, datas) {
           
