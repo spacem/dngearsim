@@ -123,6 +123,9 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   
       if(item.name == null) {
         item.name = translations.translate(d.NameID, d.NameIDParam);
+        if(d.TierName) {
+          item.name += ' (' + translations.translate(d.TierName) + ')';
+        }
       }
       
       if(!item.sparkTypeId && d.TypeParam2 > 0) {
