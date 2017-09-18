@@ -8,3 +8,15 @@
   <span ng-if="item.count > 1">&nbsp;x{{item.count}}</span>
   <span ng-if="item.gold > 0">{{item.gold/100/100}}g</span>
 </div>
+<div ng-if="ctrl.items && ctrl.items.length" class="col-xs-12">
+  <br />
+  <p ng-if="ctrl.item.typeId == 8">
+    Data found looking up id: {{ctrl.lookupId}} from:
+  </p>
+  <p ng-if="ctrl.item.typeId != 8">
+      Data found looking up CharmNum: {{ctrl.lookupId}} from:
+    <a ng-repeat="(fileName, used) in ctrl.usedFiles" ng-href="{{ctrl.getFileLink(fileName)}}" target="_blank">
+      {{fileName}}
+    </a>
+  </p>
+</div>

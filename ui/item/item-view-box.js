@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemViewBoxCtrl',
 
-['$timeout','dntData','itemFactory',
-  function($timeout, dntData, itemFactory) {
+['$timeout','dntData','itemFactory','region',
+  function($timeout, dntData, itemFactory, region) {
   'use strict';
   
   if(this.item == null) return;
@@ -37,6 +37,8 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   var allItemFileName = 'all-items.lzjson';
   var charmItemtable = 'charmitemtable.lzjson';
   var commonCharmItemtable = 'charmitemtable_common.lzjson';
+  this.usedFiles = {};
+  this.lookupId = null;
   
   var files;
   if(this.item.typeId == 46 || this.item.typeId == 112 || this.item.typeId == 122 || this.item.typeId == 142 || this.item.typeId == 160) {
@@ -66,6 +68,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
     var datas = dntData.find(this.item.fileName + '.lzjson', 'id', this.item.id);
     if(datas.length > 0) {
       var d = datas[0];
+      this.lookupId = d.TypeParam1;
       vm.items = [];
       
       
@@ -116,6 +119,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
                 gold: gold,
                 item: basicItem
               });
+              this.usedFiles[pouchFileName] = true;
             }
           }
         }
@@ -145,11 +149,16 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
                 gold: cd.Gold,
                 item: itemFactory.createBasicItem(itemds[0])
               });
+              this.usedFiles[charmFiles[i]] = true;
             }
           }
         }
       }
     }
+  }
+
+  this.getFileLink = function(fileName) {
+    return 'https://spacem.github.io/dntviewer/#dnt=' + fileName + '&location=' + region.dntLocation.url;
   }
 
 }])
