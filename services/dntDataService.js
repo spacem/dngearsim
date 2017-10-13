@@ -16,7 +16,7 @@ function dntData($rootScope,$timeout) {
       file: file,
       
       dntLocation: dntLocation,
-      progressCallback: null,
+      // progressCallback: null,
       completeCallbacks : [],
       
       init: function(progress, complete, ignoreErrors) {
@@ -27,7 +27,7 @@ function dntData($rootScope,$timeout) {
           }
         }
         else {
-          this.progressCallback = progress;
+          // this.progressCallback = progress;
           if(complete) {
             this.completeCallbacks.push(complete);
           }
@@ -48,9 +48,9 @@ function dntData($rootScope,$timeout) {
                 t.reader.loadDntFromServerFile(
                   t.dntLocation.url + '/' + file,
                   function(msg) {
-                    if(t.progressCallback) {
-                      t.progressCallback(msg);
-                    }
+                    // if(t.progressCallback) {
+                      // t.progressCallback(msg);
+                    // }
                   }, 
                   function(result, fileName) {
                     // console.info('dnt loading complete : ' + file);
@@ -160,7 +160,7 @@ function dntData($rootScope,$timeout) {
     findFast : function(fileName, column, value) {
       
       if(this.isLoaded(fileName)) {
-        if(!(fileName in this.findIndexes)){
+        if(!(fileName in this.findIndexes)) {
           this.findIndexes[fileName] = {};
         }
         
@@ -173,13 +173,10 @@ function dntData($rootScope,$timeout) {
           var index = {}
           findIndex[column] = index;
           
-          var results = [];
-          
           var data = reader.data;
           var len = data.length;
           for(var r=0;r<len;++r) {
-            var d = data[r];
-            var val = d[colIndex];
+            var val = data[r][colIndex];
 
             if(!(val in index)) {
               index[val] = [r];
@@ -191,7 +188,12 @@ function dntData($rootScope,$timeout) {
         }
         
         if(value in findIndex[column]) {
-          return findIndex[column][value];
+          if(Array.isArray(findIndex[column][value])) {
+            return findIndex[column][value];
+          }
+          else {
+            return [findIndex[column][value]];
+          }
         }
         else {
           return [];
@@ -223,7 +225,6 @@ function dntData($rootScope,$timeout) {
       });
     },
     anyLoading : function() {
-      var t = this;
       var found = 0;
       angular.forEach(this.loaders, function(value, key) {
         if(!value.loaded && value.startedLoading) {
@@ -272,7 +273,12 @@ function dntData($rootScope,$timeout) {
       else {
         return null;
       }
-    }
+    },
+    saveMemory: function() {
+      for(var fileName in this.loaders) {
+        this.loaders[fileName].saveReaderMemory();
+      }
+    },
   };
 }
 

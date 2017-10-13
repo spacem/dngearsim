@@ -58,13 +58,13 @@ gulp.task('js', function() {
   return gulp.src(['ui/**/*.js', 'services/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(plumber(onError))
-    .pipe(cached('dngearsim js'))
+    //.pipe(cached('dngearsim js'))
     .pipe(ngAnnotate())
     .pipe(babel({
-       presets: ['es2015']
+      presets: ['es2015']
     }))
     .pipe(uglify())
-    .pipe(remember('dngearsim js')) 
+    //.pipe(remember('dngearsim js')) 
     .pipe(concat('app.min.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('min'))
