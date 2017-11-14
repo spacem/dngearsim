@@ -308,6 +308,10 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     
     if((itemData.Type == 0 || itemData.Type == 1) && $scope.item.enchantmentNum > 0) {
       $scope.canTransfer = true;
+    } 
+
+    if((itemData.Type == 0 || itemData.Type == 1) && $scope.item.enchantmentNum > 0) {
+      $scope.canTune = true;
     }
     
     if($scope.item.setId) {
@@ -331,6 +335,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
     }
     else if($scope.canTransfer) {
       $scope.detail = 'transfer';
+    }
+    else if($scope.canTune) {
+      $scope.detail = 'tuning';
     }
     else if($scope.isPlate) {
       $scope.detail = 'plate';

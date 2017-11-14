@@ -1,0 +1,58 @@
+angular.module('dnsim').controller('itemViewTuningCtrl',
+
+['$timeout','dntData','itemFactory','hCodeValues',
+  function($timeout, dntData, itemFactory, hCodeValues) {
+  'use strict';
+  
+  if(this.item == null) return;
+  
+  var vm = this;
+  vm.rewardItems = [];
+  
+  var allItemFileName = 'all-items.lzjson';
+  var changeFileName = 'itemchangetable.lzjson';
+  
+  var files = [allItemFileName,changeFileName];
+  for(var i=0;i<files.length;++i) {
+    dntData.init(files[i], null, function() {}, function() {
+      $timeout(function() {
+        vm.initTransfers();
+      });
+    });
+  }
+  
+  this.initTransfers = function() {
+    for(let i=0;i<files.length;++i) {
+      if(!dntData.isLoaded(files[i])) {
+        return;
+      }
+    }
+    vm.rewardItems = [];
+
+    var changes = dntData.find(changeFileName, 'OriginalItemID', vm.item.id);
+    if(changes && changes.length > 0) {
+      for(let i=0;i<changes.length;++i) {
+        const c = changes[i];
+        if(c.OriginalLevel == vm.item.enchantmentNum) {
+          const rItem = dntData.find(allItemFileName, 'id', c.RewardItemID);
+
+          vm.rewardItems.push({
+            rewardItem: itemFactory.createBasicItem(rItem[0]),
+          });
+        }
+      }
+    }
+  }
+
+}])
+.directive('dngearsimItemViewTuning', function() {
+  return {
+    scope: true,
+    bindToController: {
+      item: '=item',
+    },
+    controller: 'itemViewTuningCtrl',
+    controllerAs: 'ctrl',
+    templateUrl: 'ui/item/item-view-tuning.html'
+  };
+});

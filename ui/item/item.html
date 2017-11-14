@@ -106,6 +106,9 @@
     <span ng-if="canTransfer">
       <button class="btn btn-link" ng-click="setDetail('transfer')" ng-disabled="detail == 'transfer'">transfer</button> |
     </span>
+    <span ng-if="canTune">
+      <button class="btn btn-link" ng-click="setDetail('tuning')" ng-disabled="detail == 'tuning'">tuning</button> |
+    </span>
     <span ng-if="isInSet">
       <button class="btn btn-link" ng-click="setDetail('set')" ng-disabled="detail == 'set'">set</button> |
     </span>
@@ -129,6 +132,10 @@
 <div class="row" ng-if="detail == 'transfer' && item != null">
   <dngearsim-item-view-transfer item="item">
   </dngearsim-item-view-transfer>
+</div>
+<div class="row" ng-if="detail == 'tuning' && item != null">
+  <dngearsim-item-view-tuning item="item">
+  </dngearsim-item-view-tuning>
 </div>
 <div class="row" ng-if="detail == 'attainment' && item != null">
   <dngearsim-item-view-attainment item="item">
