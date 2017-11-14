@@ -33,7 +33,7 @@ angular.module('dnsim').controller('itemViewTuningCtrl',
     if(changes && changes.length > 0) {
       for(let i=0;i<changes.length;++i) {
         const c = changes[i];
-        if(c.OriginalLevel == vm.item.enchantmentNum) {
+        if(c.OriginalLevel == vm.item.enchantmentNum || !c.OriginalLevel) {
           const rItem = dntData.find(allItemFileName, 'id', c.RewardItemID);
 
           vm.rewardItems.push({

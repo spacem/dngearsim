@@ -310,7 +310,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       $scope.canTransfer = true;
     } 
 
-    if((itemData.Type == 0 || itemData.Type == 1) && $scope.item.enchantmentNum > 0) {
+    if(itemData.Type == 0 || itemData.Type == 1) {
       $scope.canTune = true;
     }
     
