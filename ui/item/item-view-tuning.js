@@ -22,7 +22,7 @@ angular.module('dnsim').controller('itemViewTuningCtrl',
   }
   
   this.initTransfers = function() {
-    for(let i=0;i<files.length;++i) {
+    for(var i=0;i<files.length;++i) {
       if(!dntData.isLoaded(files[i])) {
         return;
       }
@@ -31,10 +31,10 @@ angular.module('dnsim').controller('itemViewTuningCtrl',
 
     var changes = dntData.find(changeFileName, 'OriginalItemID', vm.item.id);
     if(changes && changes.length > 0) {
-      for(let i=0;i<changes.length;++i) {
-        const c = changes[i];
+      for(var i=0;i<changes.length;++i) {
+        var c = changes[i];
         if(c.OriginalLevel == vm.item.enchantmentNum || !c.OriginalLevel) {
-          const rItem = dntData.find(allItemFileName, 'id', c.RewardItemID);
+          var rItem = dntData.find(allItemFileName, 'id', c.RewardItemID);
 
           vm.rewardItems.push({
             rewardItem: itemFactory.createBasicItem(rItem[0]),

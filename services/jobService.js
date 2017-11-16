@@ -100,7 +100,7 @@ function jobs(dntData, translations, itemColumnsToLoad) {
     },
     
     isClassJob : function (d, c) {
-      if(c == 0) return true;
+      if(!c) return true;
       if(d.id == c) {
         return true;
       }
