@@ -73,9 +73,14 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
 
   var dntFiles = exportLinkHelper.getDntFiles(vm.item);
   angular.forEach(dntFiles, function(columns, fileName) {
-    dntData.init(fileName, columns, function() {}, function() {
-      vm.tryToSetItem(dntFiles);
-    });
+    if(vm.item.fileName && fileName.indexOf(vm.item.fileName) == 0 && dntData.isLoaded(vm.item.fileName + '.optimised.json')) {
+      delete dntFiles[fileName];
+    }
+    else {
+      dntData.init(fileName, columns, function() {}, function() {
+        vm.tryToSetItem(dntFiles);
+      });
+    }
   });
   vm.tryToSetItem(dntFiles);
 
