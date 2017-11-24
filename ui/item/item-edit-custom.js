@@ -79,6 +79,6 @@ function(hCodeValues,$scope) {
     },
     controller: 'itemEditCustomCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-custom.html'
+    template: require('./item-edit-custom.html')
   };
 });

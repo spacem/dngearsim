@@ -45,6 +45,6 @@ function($timeout,statHelper,saveHelper,hCodeValues) {
     },
     controller: 'buildItemCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/builds/build-item.html'
+    template: require('./build-item.html')
   };
 });

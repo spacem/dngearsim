@@ -61,6 +61,6 @@ angular.module('dnsim').controller('itemViewPlateCtrl',
     },
     controller: 'itemViewPlateCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/item/item-view-plate.html'
+    template: require('./item-view-plate.html')
   };
 });

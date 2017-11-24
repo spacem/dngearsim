@@ -1,6 +1,9 @@
 (function () {
 'use strict';
 
+const firebase = require('firebase');
+const LZString = require('lz-string');
+
 angular.module('dnsim').factory('onlineService', ['$window','$q','hCodeValues',onlineService]);
 
 function onlineService($window, $q, hCodeValues) {

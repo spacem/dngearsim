@@ -8,7 +8,7 @@ angular.module('dnsim').directive('dngearsimCustomItems', function() {
     },
     controller: ['$window','saveHelper','$location','hCodeValues','itemCategory','$timeout', customItemCtrl],
     controllerAs: 'customItems',
-    templateUrl: 'ui/search/custom-items.html'
+    template: require('./custom-items.html')
   };
 });
 

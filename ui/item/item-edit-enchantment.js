@@ -227,6 +227,6 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
     },
     controller: 'itemEditEnchantmentCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-enchantment.html'
+    template: require('./item-edit-enchantment.html')
   };
 });

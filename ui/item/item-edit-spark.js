@@ -100,6 +100,6 @@ function(dntData,hCodeValues,items,itemColumnsToLoad) {
     },
     controller: 'itemEditSparkCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-spark.html'
+    template: require('./item-edit-spark.html')
   };
 });

@@ -9,7 +9,7 @@ function dnsimItemIcon(exportLinkHelper,$location,region) {
     scope: {
       item: '=item',
     },
-    templateUrl: 'ui/widgets/dnsim-item-icon.html',
+    template: require('./dnsim-item-icon.html'),
     link: function($scope, element, attrs) {
       
       $scope.$watch('item', function(newValue, oldValue) {

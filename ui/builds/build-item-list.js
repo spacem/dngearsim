@@ -12,7 +12,7 @@ angular.module('dnsim').directive('dngearsimBuildItemList', function() {
     },
     controller: buildItemListController,
     controllerAs: 'buildCtrl',
-    templateUrl: 'ui/builds/build-item-list.html'
+    template: require('./build-item-list.html')
   };
 });
 

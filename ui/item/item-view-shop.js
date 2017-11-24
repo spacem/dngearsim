@@ -184,6 +184,6 @@ angular.module('dnsim').controller('itemViewShopCtrl',
     },
     controller: 'itemViewShopCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/item/item-view-shop.html'
+    template: require('./item-view-shop.html')
   };
 });

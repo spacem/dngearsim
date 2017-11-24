@@ -22,6 +22,6 @@ function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,expor
     },
     controller: 'buildExportActionCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/builds/build-export-action.html'
+    template: require('./build-export-action.html')
   };
 });

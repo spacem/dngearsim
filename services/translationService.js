@@ -1,6 +1,8 @@
 (function () {
 'use strict';
 
+const DnTranslations = require('../util/dntranslations');
+
 angular.module('dnsim').factory('translations', ['$routeParams', '$rootScope', 'uiTranslations', '$translate', translations]);
 function translations($routeParams, $rootScope, uiTranslations, $translate) {
 

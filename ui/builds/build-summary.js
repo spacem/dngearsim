@@ -50,6 +50,6 @@ function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
     },
     controller: 'buildSummaryCtrl',
     controllerAs: 'buildCtrl',
-    templateUrl: 'ui/builds/build-summary.html'
+    template: require('./build-summary.html')
   };
 });

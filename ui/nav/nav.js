@@ -108,6 +108,6 @@ angular.module('dnsim').controller('NavCtrl',
 ])
 .directive('dngearsimNav', function() {
   return {
-    templateUrl: 'ui/nav/nav.html'
+    template: require('./nav.html')
   };
 });

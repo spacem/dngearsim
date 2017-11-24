@@ -1,0 +1,32 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "ban-types": false,
+        "no-empty": false,
+        "array-type": false,
+        "member-ordering": false,
+        "object-literal-shorthand": false,
+        "forin": false,
+        "typedef-whitespace": false,
+        "no-trailing-whitespace": false,
+        "member-access": false,
+        "ordered-imports": false,
+        "arrow-parens": false,
+        "whitespace": false,
+        "prefer-const": false,
+        "no-var-keyword": false,
+        "eofline": false,
+        "one-line": false,
+        "no-var-requires": false,
+        "object-literal-sort-keys": false,
+        "prefer-for-of": false,
+        "trailing-comma": false,
+        "quotemark": [true, "single"],        
+        "interface-name": [true, "never-prefix"],
+        "max-classes-per-file": [true, 15]
+    }
+}

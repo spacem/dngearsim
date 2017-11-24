@@ -3,6 +3,8 @@
 
 angular.module('dnsim').factory('dntData', ['$rootScope','$timeout',dntData]);
 
+const DntReader = require('../util/dntreader');
+
 function dntData($rootScope,$timeout) {
   
   function createLoader(dntLocation, file, colsToLoad) {

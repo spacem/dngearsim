@@ -1,6 +1,8 @@
 (function () {
 'use strict';
 
+const LZString = require('lz-string');
+
 angular.module('dnsim').factory('saveHelper', ['itemCategory',saveHelper]);
 function saveHelper(itemCategory) {
   return {

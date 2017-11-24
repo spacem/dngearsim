@@ -11,7 +11,7 @@ function chooseClass() {
       job: '=job',
       onSetJob: '&onSetJob'
     },
-    templateUrl: 'ui/widgets/choose-class.html',
+    template: require('./choose-class.html'),
     controllerAs: 'ctrl',
     controller: [
       '$window','$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad','character', 

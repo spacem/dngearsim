@@ -1,3 +1,7 @@
+'use strict'
+
+const LZString = require('lz-string');
+
 angular.module('dnsim').controller('ExportCtrl', 
   ['$scope','$window','saveHelper',
    function($scope, $window, saveHelper) {

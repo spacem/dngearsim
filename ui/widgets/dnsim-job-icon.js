@@ -11,7 +11,7 @@ function dnsimJobIcon() {
       item: '=item',
       small: '=small'
     },
-    templateUrl: 'ui/widgets/dnsim-job-icon.html',
+    template: require('./dnsim-job-icon.html'),
     controller: dnsimJobIconController,
     controllerAs: 'ctrl'
   }
