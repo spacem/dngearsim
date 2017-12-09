@@ -6,7 +6,7 @@ function region(translations,dntReset,dntData,$route) {
   
   var alternativeFiles = {region: 'ALT', name: 'Alternative user specified files', url : ''};
   var hostedFiles =[
-      {region: 'sea', name: 'south east asia', url : 'https://seadnfiles.firebaseapp.com'},
+    {region: 'sea', name: 'south east asia', url : 'https://seadnfiles.netlify.com/public'},
       {region: 'na', name: 'north america', url : 'https://dnna.firebaseapp.com'},
       {region: 'eu', name: 'europe', url : 'https://eufiles.firebaseapp.com'},
       {region: 'ina', name: 'indonesia ', url : 'https://inafiles-da491.firebaseapp.com'},
