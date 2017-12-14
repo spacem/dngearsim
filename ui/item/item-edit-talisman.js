@@ -18,7 +18,7 @@ angular.module('dnsim').controller('itemEditTalismanCtrl',
       
       var extraStats = [];
       angular.forEach(this.item.stats, function(stat, index) {
-        extraStats.push({id: stat.id, max: stat.max * (amount/100)});
+        extraStats.push({id: stat.id, max: Math.floor(stat.max) * (amount/100)});
       });
       
       this.item.enchantmentStats = extraStats;

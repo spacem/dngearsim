@@ -170,7 +170,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     var extraStats = [];
     angular.forEach(item.stats, function(stat, index) {
       if(newEnhancementNum) {
-        extraStats.push({id: stat.id, max: stat.max * (newEnhancementNum/100)});
+        extraStats.push({id: stat.id, max: Math.floor(stat.max) * (newEnhancementNum/100)});
       }
     });
     
@@ -202,14 +202,14 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
     var fullStats1 = [];
     if(item.stats) {
       angular.forEach(item.stats, function(stat, index) {
-        extraStats.push({id: stat.id, max: stat.max * (item2.enchantmentNum/100)});
+        extraStats.push({id: stat.id, max: Math.floor(stat.max) * (item2.enchantmentNum/100)});
       });
       fullStats1 = hCodeValues.mergeStats(extraStats, item.stats);
     }
     
     extraStats = [];
     angular.forEach(item2.stats, function(stat, index) {
-      extraStats.push({id: stat.id, max: stat.max * (item.enchantmentNum/100)});
+      extraStats.push({id: stat.id, max: Math.floor(stat.max) * (item.enchantmentNum/100)});
     });
     var fullStats2 = hCodeValues.mergeStats(extraStats, item2.stats);
 
