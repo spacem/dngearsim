@@ -237,7 +237,7 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
       }
       else {
         _.each(vm.savedItems[vm.groupName].items, function(item) {
-          if(item.exchangeType && item.itemSource != 'gem' && item.itemSource != 'plate' && item.itemSource != 'tman') {
+          if(item.exchangeType && item.itemSource != 'gem' && item.itemSource != 'plate' && item.itemSource != 'plate95' && item.itemSource != 'tman') {
             if(item.exchangeType == vm.item.exchangeType) {
               items.push(item);
             }
