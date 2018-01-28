@@ -60,7 +60,7 @@ function hCodeValues() {
       23 : {id: 23, name: 'dark def', display: toPercent, def: true, searchable: true },
       25 : {id: 25, name: 'hp', display: inThousands, def: true, pc: 75, skPc: 4075, searchable: true },
       26 : {id: 26, name: 'mp', display: inThousands, def: true, pc: 76, skPc: 4076 },
-      29 : {id: 29, name: 'fd', display: toNoDec, dps: true, searchable: true },
+      29 : {id: 29, name: 'fd', display: toNoDec, dps: true, pc: 1029, searchable: true },
       
       // these are both min and max
       // shows with the same name but these are used really just for set bonus I think
