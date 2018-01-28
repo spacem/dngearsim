@@ -284,8 +284,9 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
         }
         else if(newItem.typeName == 'talisman') {
           var extraStats = [];
-          angular.forEach(newItem.stats, function(stat, index) {
-            extraStats.push({id: stat.id, max: Math.floor(stat.max) * (newItem.enchantmentNum/100)});
+          var useStats = hCodeValues.mergeStats(newItem.stats, []);
+          angular.forEach(useStats, function(stat, index) {
+            extraStats.push({id: stat.id, max: stat.max * (newItem.enchantmentNum/100)});
           });
           
           newItem.enchantmentStats = extraStats;

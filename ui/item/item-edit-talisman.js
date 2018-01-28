@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('itemEditTalismanCtrl',
 
-[function() {
+['hCodeValues', function(hCodeValues) {
   'use strict';
   
   if(this.item == null) return;
@@ -17,8 +17,11 @@ angular.module('dnsim').controller('itemEditTalismanCtrl',
       this.item.enchantmentNum = amount;
       
       var extraStats = [];
-      angular.forEach(this.item.stats, function(stat, index) {
-        extraStats.push({id: stat.id, max: Math.floor(stat.max) * (amount/100)});
+
+      var useStats = hCodeValues.mergeStats(this.item.stats, []);
+
+      angular.forEach(useStats, function(stat, index) {
+        extraStats.push({id: stat.id, max: stat.max * (amount/100)});
       });
       
       this.item.enchantmentStats = extraStats;
