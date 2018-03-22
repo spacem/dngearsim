@@ -77,7 +77,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
       var dTypeParam1 = dntData.getValue(itemType.mainDnt, r, 'TypeParam1');
         
       // skip items with no data
-      if(state1Max > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35) {        
+      if(state1Max > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35 || dType == 1) {
         var potentials = [];
         if(dTypeParam1 > 0 && 'potentialDnt' in itemType) {
           potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
