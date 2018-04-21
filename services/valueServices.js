@@ -21,7 +21,7 @@ function hCodeValues() {
     else if(val < 1000000) {
       return Math.round(val/1000) + 'k';
     }
-    else if(val < 10000000) {
+    else if(val < 100000000) {
       return Math.round(val/10000)/100 + 'm';
     }
     else {
