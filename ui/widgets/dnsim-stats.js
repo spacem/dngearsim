@@ -80,6 +80,27 @@ function dnsimStats(hCodeValues, $translate) {
               return;
             }
             // console.log('no summaryFor');
+
+            // hide when the hideIf stat exists
+            if('hideIf' in def && def.hideIf > 0) {
+              var hideStat = _.find(stats, function(s) {
+                return s.id == def.hideIf;
+              });
+              if(hideStat) {
+                return;
+              }
+            }
+
+            // alter stat when addTo is set
+            if('addTo' in def && def.addTo > 0) {
+              var addStat = _.find(stats, function(s) {
+                return s.id == def.addTo;
+              });
+              if(addStat) {
+                stat = _.clone(stat);
+                stat.max += addStat.max;
+              }
+            }
             
             if(!first) {
               output += sep;
@@ -116,6 +137,18 @@ function dnsimStats(hCodeValues, $translate) {
             if(def.combineWith > 0) {
               angular.forEach(stats, function(stat2, key2) {
                 if(stat2.id == def.combineWith) {
+
+                  // alter stat when addTo is set
+                  if('addTo' in def && def.addTo > 0) {
+                    var addStat2 = _.find(stats, function(s) {
+                      return s.id == def.addTo;
+                    });
+                    if(addStat2) {
+                      stat2 = _.clone(stat2);
+                      stat2.max += addStat2.max;
+                    }
+                  }
+
                   if(stat2.max != stat.max) {
                     output += '-' + def.display(stat2);
                   }

@@ -47,15 +47,13 @@
       </div>
     </div>
     <div class="col-xs-12 col-md-6" style="padding-top:8px">
-      <button class="btn btn-default" ng-dblclick="editCtrl.replace(groupItem)" ng-click="editCtrl.replace(groupItem)">{{'replace' | translate}}</button>
-      <div style="padding-top:8px">
       <div ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
         <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">{{'increase' | translate}}</b>
-        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">{{'decreases' | translate}}</b>
+        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">{{'decrease' | translate}}</b>
         {{editCtrl.getStatName(statId)}} {{editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem)}}%
       </div>
-      </div>
-      
+      <button class="btn btn-default" ng-dblclick="editCtrl.replace(groupItem)" ng-click="editCtrl.replace(groupItem)">{{'replace' | translate}}</button>
+      <br /><br />
     </div>
   </div>
 </div>

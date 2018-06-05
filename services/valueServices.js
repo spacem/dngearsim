@@ -38,10 +38,10 @@ function hCodeValues() {
       1  : {id: 1, name: 'agi', display: inThousands, dps: true, pc: 51, skPc: 4051, searchable: true, quickHigh: true },
       2  : {id: 2, name: 'int', display: inThousands, dps: true, pc: 52, skPc: 4052, searchable: true, quickHigh: true },
       3  : {id: 3, name: 'vit', display: inThousands, def: true, pc: 53, skPc: 4053, searchable: true, quickHigh: true },
-      4  : {id: 4, name: 'pdmg', display: inThousands, combineWith: 5, dps: true, pc: 54, searchable: true, altStat: 32, quickHigh: true },
-      5  : {id: 5, name: 'maxPdmg', display: inThousands, hide: true, pc: 55 },
-      6  : {id: 6, name: 'mdmg', display: inThousands, combineWith: 7, dps: true, pc: 56, searchable: true, altStat: 33, quickHigh: true },
-      7  : {id: 7, name: 'maxMdmg', display: inThousands, hide: true, pc: 57 },
+      4  : {id: 4, name: 'pdmg', display: inThousands, combineWith: 5, dps: true, pc: 54, searchable: true, altStat: 32, quickHigh: true, addTo: 32 },
+      5  : {id: 5, name: 'maxPdmg', display: inThousands, hide: true, pc: 55, addTo: 32 },
+      6  : {id: 6, name: 'mdmg', display: inThousands, combineWith: 7, dps: true, pc: 56, searchable: true, altStat: 33, quickHigh: true, addTo: 33 },
+      7  : {id: 7, name: 'maxMdmg', display: inThousands, hide: true, pc: 57, addTo: 33 },
       8  : {id: 8, name: 'pdef', display: inThousands, def: true, pc: 58, searchable: true },
       9  : {id: 9, name: 'mdef', display: inThousands, def: true, pc: 59, searchable: true },
       10 : {id: 10, name: 'para', display: inThousands, pc: 60, noCustom: true },
@@ -64,8 +64,8 @@ function hCodeValues() {
       
       // these are both min and max
       // shows with the same name but these are used really just for set bonus I think
-      32 : {id: 32, name: 'pdmg', display: toNoDec, dps: true, pc: 54, quickHigh: true },
-      33 : {id: 33, name: 'mdmg', display: toNoDec, dps: true, pc: 56, quickHigh: true },
+      32 : {id: 32, name: 'pdmg', display: inThousands, dps: true, pc: 54, quickHigh: true, hideIf: 4 },
+      33 : {id: 33, name: 'mdmg', display: inThousands, dps: true, pc: 56, quickHigh: true, hideIf: 6 },
       
       50 : {id: 50, name: 'str%', display: toPercent, dps: true },
       51 : {id: 51, name: 'agi%', display: toPercent, dps: true },
@@ -84,15 +84,15 @@ function hCodeValues() {
       64 : {id: 64, name: 'stun%', display: toPercent, noCustom: true, def: true },
       65 : {id: 65, name: 'stun resist%', display: toPercent, noCustom: true, def: true },
       74 : {id: 74, name: 'move%', display: toPercent, noCustom: true, def: true },
-      75 : {id: 75, name: 'hp%', display: toPercent, def: true },
+      75 : {id: 75, name: 'hp%', display: toPercent, def: true, searchable: true },
       76 : {id: 76, name: 'mp%', display: toPercent, def: true },
       77 : {id: 77, name: 'mp recover%', display: toPercent, def: true },
       81 : {id: 81, name: 'safe move%', display: toPercent, noCustom: true, def: true },
 
       // these are both min and max
       // shows with the same name but these are used really just for set bonus I think
-      101 : {id: 101, name: 'pdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true },
-      102 : {id: 102, name: 'mdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true },
+      101 : {id: 101, name: 'pdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true, searchable: true },
+      102 : {id: 102, name: 'mdmg%', display: toPercent, noCustom: true, dps: true, quickHigh: true, searchable: true },
 
       103: {id: 103, name: 'cdmg', display: inThousands, dps: true, pc: 104, searchable: true },
       104: {id: 104, name: 'crit dmg%', display: toPercent, noCustom: true, dps: true },
