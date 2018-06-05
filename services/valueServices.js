@@ -146,8 +146,9 @@ function hCodeValues() {
       2 : { id: 2, name : 'rare' },
       3 : { id: 3, name : 'epic' },
       4 : { id: 4, name : 'unique' },
-      5 : { id: 5, name : 'legendary' },
-      // 6 : { id: 6, name : 'divine' },
+      5 : { id: 5, name : 'legend' },
+      6 : { id: 6, name : 'divine' },
+      7 : { id: 7, name : 'ancient' },
     },
     
     shopNames : {
@@ -178,6 +179,8 @@ function hCodeValues() {
       3 : true,
       4 : true,
       5 : true,
+      6 : true,
+      7 : true,
     },
     
     typeNames : {
