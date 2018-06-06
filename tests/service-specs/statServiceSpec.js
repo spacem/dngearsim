@@ -46,7 +46,7 @@ describe('statHelper', function () {
     expect(cStrStat.id).toBe(0);
     expect(cStrStat.max).toBe(Math.floor(12 + (12 * 0.7)));
   });
-  
+  /*
   it('adds element even when not in group', function() {
     
     var lightStat = {id: 18, max: 1.2};
@@ -115,5 +115,5 @@ describe('statHelper', function () {
     
     expect(cLightStat.id).toBe(18);
     expect(cLightStat.max).toBe(1.2);
-  });
+  });*/
 });
