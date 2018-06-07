@@ -160,6 +160,7 @@
         // add vit to hp
         var hp = dupeStat(25);
         hp.max += (vit.max * Number(group.conversions.HP));
+        applyPc(hp);
         
         // defs
         var def = dupeStat(8);
@@ -386,7 +387,6 @@
         eqHp.max = (pdefEqHp.max + mdefEqHp.max) / 2;
         addStat(eqHp);
 
-        applyPc(hp);
         addStat(str);
         addStat(agi);
         addStat(int);
