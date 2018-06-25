@@ -14,29 +14,29 @@ angular.module('dnsim').controller('itemViewSetCtrl',
   'partstable_cash.optimised.json',
   'partstable_common2014.optimised.json',
   'partstable_common2015.optimised.json',
-  'partstable_common2016.lzjson',
-  'partstable_commoncash.lzjson',
+  'partstable_common2016.json',
+  'partstable_commoncash.json',
   'partstable_equipment.optimised.json',
-  'partstable_event.lzjson',
-  'partstable_guild.lzjson',
+  'partstable_event.json',
+  'partstable_guild.json',
   'partstable_pvp.optimised.json',
   'partstable_reboot.optimised.json',
-  'partstable_skilllevelup.lzjson',
+  'partstable_skilllevelup.json',
   'weapontable.optimised.json',
   'weapontable_cash.optimised.json',
   'weapontable_common2014.optimised.json',
   'weapontable_common2015.optimised.json',
-  'weapontable_common2016.lzjson',
-  'weapontable_commoncash.lzjson',
+  'weapontable_common2016.json',
+  'weapontable_commoncash.json',
   'weapontable_equipment.optimised.json',
-  'weapontable_event.lzjson',
-  'weapontable_guild.lzjson',
+  'weapontable_event.json',
+  'weapontable_guild.json',
   'weapontable_pvp.optimised.json',
   'weapontable_reboot.optimised.json',
-  //'weapontable_skilllevelup.lzjson'
+  //'weapontable_skilllevelup.json'
   ];
   
-  var allItemFileName = 'all-items.lzjson';
+  var allItemFileName = 'all-items.json';
   
   var allFiles = files.concat([allItemFileName]);
   for(var i=0;i<allFiles.length;++i) {

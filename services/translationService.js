@@ -1,12 +1,12 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('translations', ['$routeParams', '$rootScope', 'uiTranslations', '$translate', translations]);
-function translations($routeParams, $rootScope, uiTranslations, $translate) {
+angular.module('dnsim').factory('translations', ['$rootScope', 'uiTranslations', '$translate', translations]);
+function translations($rootScope, uiTranslations, $translate) {
 
   var dnTranslations = new DnTranslations();
-  var smallFile = 'uistring.optimised.lzjson';
-  var bigFile = 'uistring.lzjson';
+  var smallFile = 'uistring.optimised.json';
+  var bigFile = 'uistring.json';
 
   var completeCallback = [];
   var progressCallback = [];

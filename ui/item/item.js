@@ -33,9 +33,9 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
       }
     }
     else if($scope.item.fileName &&
-      dntData.isLoaded($scope.item.fileName + '.lzjson')) {
+      dntData.isLoaded($scope.item.fileName + '.json')) {
         
-      var itemData = dntData.find($scope.item.fileName + '.lzjson', 'id', $scope.item.id);
+      var itemData = dntData.find($scope.item.fileName + '.json', 'id', $scope.item.id);
       if(itemData && itemData.length > 0 && itemData[0].DescriptionID > 0) {
         return translations.translate(itemData[0].DescriptionID, itemData[0].DescriptionIDParam);
       } 
@@ -45,7 +45,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   
   $scope.getExchangeType = function() {
     // console.log('getting exchange');
-    var exchangeDnt = 'exchange.lzjson';
+    var exchangeDnt = 'exchange.json';
     if(translations.isLoaded() &&
       dntData.isLoaded(exchangeDnt) &&
       $scope.item.exchangeType > 0) {
@@ -156,7 +156,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
         if(itemData && 'SealID' in itemData && 'SealCount' in itemData) {
           sealTimes = itemData.SealCount;
             
-          var sealData = dntData.find('sealcounttable.lzjson', 'Type2', itemData.SealID);
+          var sealData = dntData.find('sealcounttable.json', 'Type2', itemData.SealID);
           if(sealData && sealData.length > 0 && sealData[0].Type1 == 0) {
             
             var colName = 'Count0';
@@ -197,13 +197,13 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   }
   
   $scope.moreInfoLoaded = function() {
-    return dntData.isLoaded($scope.item.fileName + '.lzjson') &&
-      dntData.isLoaded('sealcounttable.lzjson');
+    return dntData.isLoaded($scope.item.fileName + '.json') &&
+      dntData.isLoaded('sealcounttable.json');
   }
   
   $scope.loadMoreInfo = function() {
-    dntData.init($scope.item.fileName + '.lzjson', null, $timeout);
-    dntData.init('sealcounttable.lzjson', null, $timeout);
+    dntData.init($scope.item.fileName + '.json', null, $timeout);
+    dntData.init('sealcounttable.json', null, $timeout);
   }
   
   $scope.handleChange = function() {
@@ -350,7 +350,7 @@ function($scope,$window,dntData,hCodeValues,items,jobs,exportLinkHelper,$routePa
   function setFileName() {
     if(!$scope.item.fileName) {
       if($scope.item.itemSource in items && items[$scope.item.itemSource].mainDnt) {
-        $scope.item.fileName = items[$scope.item.itemSource].mainDnt.replace('.lzjson', '').replace('.json', '').replace('.optimised', '');
+        $scope.item.fileName = items[$scope.item.itemSource].mainDnt.replace('.json', '').replace('.json', '').replace('.optimised', '');
       }
     }
   }

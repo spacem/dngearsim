@@ -174,7 +174,7 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
     return vm.enchantments;
   }
   
-  var fileName = 'all-items.lzjson';
+  var fileName = 'all-items.json';
   
   this.showMaterials = function() {
     dntData.init(fileName, null, function() {}, function() {

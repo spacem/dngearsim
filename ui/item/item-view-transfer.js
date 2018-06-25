@@ -9,9 +9,9 @@ angular.module('dnsim').controller('itemViewTransferCtrl',
   var vm = this;
   vm.matchingTransfers = [];
   
-  var transferFileName = 'enchanttransfertable.lzjson';
-  var allItemFileName = 'all-items.lzjson';
-  var transferItemsFileName = 'enchanttransferitemtable.lzjson';
+  var transferFileName = 'enchanttransfertable.json';
+  var allItemFileName = 'all-items.json';
+  var transferItemsFileName = 'enchanttransferitemtable.json';
   
   var files = [transferFileName,allItemFileName,transferItemsFileName];
   for(var i=0;i<files.length;++i) {

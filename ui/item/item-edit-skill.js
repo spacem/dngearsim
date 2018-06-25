@@ -16,7 +16,7 @@ function($timeout,dntData,statHelper) {
   var vm = this;
   
   function getDntFile() {
-    return 'skillleveltable_character' + vm.item.baseJobName + vm.item.pve + '.lzjson';
+    return 'skillleveltable_character' + vm.item.baseJobName + vm.item.pve + '.json';
   }
   
   this.initSkills = function() {

@@ -60,7 +60,7 @@
         23 : {id: 23, name: 'dark def', display: toPercent, def: true, searchable: true },
         25 : {id: 25, name: 'hp', display: inThousands, def: true, pc: 75, skPc: 4075, searchable: true },
         26 : {id: 26, name: 'mp', display: inThousands, def: true, pc: 76, skPc: 4076 },
-        29 : {id: 29, name: 'fd', display: toNoDec, dps: true, pc: 1029, searchable: true },
+        29 : {id: 29, name: 'fd', display: toNoDec, dps: true, pc: 1030, searchable: true },
         
         // these are both min and max
         // shows with the same name but these are used really just for set bonus I think
@@ -111,8 +111,8 @@
         1009: {id: 1009, name: 'mdef', display: toPercent, noCustom: true, summaryFor: 9 },
         
         1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true, dps: true, summaryFor: 12 },
-        1029: {id: 1029, name: 'fd', display: toPercent, noCustom: true, dps: true, summaryFor: 29 },
-        1030: {id: 1030, name: 'future fd', display: toPercent, noCustom: true, dps: true },
+        1029: {id: 1029, name: 'old fd', display: toPercent, noCustom: true, dps: true },
+        1030: {id: 1030, name: 'future fd', display: toPercent, noCustom: true, dps: true, summaryFor: 29 },
         1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true, dps: true, summaryFor: 103 },
         
         2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
@@ -273,7 +273,7 @@
         },
         
         
-        389: { id: 389, name: 'fd buf', mapTo: 1029 },
+        389: { id: 389, name: 'fd buf', mapTo: 1030 },
         404: { id: 404, name: 'critical damage%', mapTo: 1103 },
       },
       

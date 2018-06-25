@@ -9,11 +9,11 @@ angular.module('dnsim').controller('itemViewShopCtrl',
   var vm = this;
   vm.shopCosts = [];
   
-  var cShopFileName = 'combinedshoptable.lzjson';
-  var cSysShopFileName = 'combinedshoptable_system.lzjson';
-  var cCashShopFileName = 'combinedshoptable_cash.lzjson';
-  // var shopFileName = 'shoptable.lzjson';
-  var allItemFileName = 'all-items.lzjson';
+  var cShopFileName = 'combinedshoptable.json';
+  var cSysShopFileName = 'combinedshoptable_system.json';
+  var cCashShopFileName = 'combinedshoptable_cash.json';
+  // var shopFileName = 'shoptable.json';
+  var allItemFileName = 'all-items.json';
   
   var files = [cCashShopFileName,cSysShopFileName,cShopFileName,allItemFileName];
   for(var i=0;i<files.length;++i) {

@@ -329,7 +329,7 @@
           // add crit
           nonEleDamage += (critChance * (critDamagePc+1) * nonEleDamage * (1 - critResist));
           // apply fd
-          nonEleDamage = nonEleDamage * (1 + fdPc.max);
+          nonEleDamage = nonEleDamage * (1 + newFdPc.max);
           
           // apply element(s)
           var avgDmg = nonEleDamage;

@@ -104,7 +104,7 @@ function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,expor
       vm.setOptions();
     }
   }
-  dntData.init('exchange.lzjson', null, function() {}, vm.reset);
+  dntData.init('exchange.json', null, function() {}, vm.reset);
   
 }])
 .directive('dngearsimQuickAdd', function() {

@@ -13,30 +13,30 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
   var vm = this;
   
   var pouchFileNames = [
-    'itemdroptable.lzjson',
-    'itemdroptable_abyss.lzjson',
-    'itemdroptable_apprentice.lzjson',
-    'itemdroptable_cook.lzjson',
-    'itemdroptable_darklair.lzjson',
-    'itemdroptable_dimension.lzjson',
-    'itemdroptable_disjoint.lzjson',
-    'itemdroptable_dnexpedition.lzjson',
-    'itemdroptable_event.lzjson',
-    'itemdroptable_farm.lzjson',
-    'itemdroptable_fishing.lzjson',
-    'itemdroptable_guildwar.lzjson',
-    'itemdroptable_item.lzjson',
-    'itemdroptable_monsteritem.lzjson',
-    'itemdroptable_propdrop.lzjson',
-    'itemdroptable_pvp.lzjson',
-    'itemdroptable_randomcompound.lzjson',
-    'itemdroptable_stageclear.lzjson',
-    'itemdroptable_themepark.lzjson',
-    'itemdroptable_union.lzjson']
+    'itemdroptable.json',
+    'itemdroptable_abyss.json',
+    'itemdroptable_apprentice.json',
+    'itemdroptable_cook.json',
+    'itemdroptable_darklair.json',
+    'itemdroptable_dimension.json',
+    'itemdroptable_disjoint.json',
+    'itemdroptable_dnexpedition.json',
+    'itemdroptable_event.json',
+    'itemdroptable_farm.json',
+    'itemdroptable_fishing.json',
+    'itemdroptable_guildwar.json',
+    'itemdroptable_item.json',
+    'itemdroptable_monsteritem.json',
+    'itemdroptable_propdrop.json',
+    'itemdroptable_pvp.json',
+    'itemdroptable_randomcompound.json',
+    'itemdroptable_stageclear.json',
+    'itemdroptable_themepark.json',
+    'itemdroptable_union.json']
   
-  var allItemFileName = 'all-items.lzjson';
-  var charmItemtable = 'charmitemtable.lzjson';
-  var commonCharmItemtable = 'charmitemtable_common.lzjson';
+  var allItemFileName = 'all-items.json';
+  var charmItemtable = 'charmitemtable.json';
+  var commonCharmItemtable = 'charmitemtable_common.json';
   this.usedFiles = {};
   this.lookupId = null;
   
@@ -65,7 +65,7 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
       }
     }
 
-    var datas = dntData.find(this.item.fileName + '.lzjson', 'id', this.item.id);
+    var datas = dntData.find(this.item.fileName + '.json', 'id', this.item.id);
     if(datas.length > 0) {
       var d = datas[0];
       this.lookupId = d.TypeParam1;

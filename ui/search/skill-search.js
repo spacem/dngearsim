@@ -71,7 +71,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
   function getDntName(baseClassName) {
     // console.log('got base class :' + baseClassName);
     if(baseClassName != null) {
-      return 'skilltable_character' + baseClassName.toLowerCase() + '.lzjson';
+      return 'skilltable_character' + baseClassName.toLowerCase() + '.json';
     }
     else {
       return null;

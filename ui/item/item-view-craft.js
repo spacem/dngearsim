@@ -10,17 +10,17 @@ angular.module('dnsim').controller('itemViewCraftCtrl',
   vm.crafts = [];
 
   var cFiles = [
-    'itemcompoundtable.lzjson',
-    'itemcompoundtable_custom.lzjson',
-    'itemcompoundtable_glyph.lzjson',
-    'itemcompoundtable_glyph95.lzjson',
-    'itemcompoundtable_jewel.lzjson',
-    'itemcompoundtable_renewal.lzjson',
-    'itemcompoundtable_set.lzjson'];
+    'itemcompoundtable.json',
+    'itemcompoundtable_custom.json',
+    'itemcompoundtable_glyph.json',
+    'itemcompoundtable_glyph95.json',
+    'itemcompoundtable_jewel.json',
+    'itemcompoundtable_renewal.json',
+    'itemcompoundtable_set.json'];
   
-  var dropFile = 'itemdroptable.lzjson';
+  var dropFile = 'itemdroptable.json';
   
-  var allItemFileName = 'all-items.lzjson';
+  var allItemFileName = 'all-items.json';
   
   var files = cFiles.concat([allItemFileName, dropFile]);
   for(var i=0;i<files.length;++i) {
@@ -87,7 +87,7 @@ angular.module('dnsim').controller('itemViewCraftCtrl',
       
       var craft = {
         id: c.id,
-        fileName: fileName.replace('.lzjson', ''),
+        fileName: fileName.replace('.json', ''),
         gold: c.Cost/100/100,
         items: [],
       };

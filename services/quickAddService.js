@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('dnsim').factory('quickAdd', quickAdd);
-function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFactory,jobs,hCodeValues, quickAddSteps, quickAddHelper) {
+function quickAdd(quickAddSteps, quickAddHelper) {
 
   return {
     categorySteps: {
@@ -19,7 +19,7 @@ function quickAdd(dntData, translations, itemColumnsToLoad, itemCategory,itemFac
       costume: ['exchangeStep','rankStep','itemNameStep','itemStep'],
       imprint: ['rankStep','itemNameStep','highStatStep','itemStep'],
       cash: ['accExchangeStep','rankStep','itemNameStep','itemStep'],
-      custom: ['customStep'],
+      custom: [],
     },
     getOptions: function(category, build, datas) {
       var t = this;

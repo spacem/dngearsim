@@ -64,7 +64,7 @@ angular.module('dnsim').controller('NavCtrl',
           }
           else if(currentBuild && currentBuild != 'null') {
             menu = withBuildMenu;
-            buildAction.path = 'build?buildName=' + currentBuild;
+            buildAction.path = 'build?buildName=' + encodeURIComponent(currentBuild);
             buildAction.name = currentBuild;
             if(currentBuild in $scope.savedItems) {
               buildAction.build = $scope.savedItems[currentBuild];

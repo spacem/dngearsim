@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('dnsim').factory('exportLinkHelper', exportLinkHelper);
-function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations,itemCategory,region) {
+function exportLinkHelper(items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations,itemCategory,region) {
 
   return {
     
@@ -174,12 +174,12 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
           item.enchantmentNum = 1;
         }
         
-        var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
+        var skillDnt = 'skilltable_character' + item.baseJobName + '.json';
         var pv = 'pve';
         if(item.pve == 'pvp') {
           pv = 'pvp';
         }
-        var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + pv + '.lzjson';
+        var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + pv + '.json';
         
         var skillData = dntData.find(skillDnt, 'id', item.id)[0];
         if(!skillData) {
@@ -328,7 +328,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       else if(newItem.dragonjeweltype) {
         newItem.offensiveGemSlots = 0;
         newItem.increasingGemSlots = 0;
-        var itemData = dntData.find('dragonjewelslottable.lzjson', 'DragonJewelID', newItem.dragonjeweltype);
+        var itemData = dntData.find('dragonjewelslottable.json', 'DragonJewelID', newItem.dragonjeweltype);
         if(itemData && itemData.length > 0) {
           if(itemData[0].DragonJewelSlot1 == 1) newItem.offensiveGemSlots++;
           if(itemData[0].DragonJewelSlot2 == 1) newItem.offensiveGemSlots++;
@@ -379,10 +379,10 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       }
       
       if(item.fileName) {
-        var datas = dntData.findFast(item.fileName + '.lzjson', 'id', item.id);
+        var datas = dntData.findFast(item.fileName + '.json', 'id', item.id);
         if(datas.length > 0) {
           var row = datas[0];
-          var d = dntData.getRow(item.fileName + '.lzjson', row);
+          var d = dntData.getRow(item.fileName + '.json', row);
           var newItem = itemFactory.createBasicItem(d);
           newItem.row = row;
           newItem.needJobClass = d.NeedJobClass;
@@ -419,7 +419,7 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       if(item.itemSource in items) {
         var itemType = items[item.itemSource];
         
-        dntFiles['exchange.lzjson'] = null;
+        dntFiles['exchange.json'] = null;
         dntFiles[itemType.mainDnt] = itemColumnsToLoad.mainDnt;
         
         for(var fileType in itemType) {
@@ -432,16 +432,16 @@ function exportLinkHelper($http,items,dntData,itemFactory,hCodeValues,itemColumn
       }
       
       if(item.itemSource == 'skills' || item.typeName == 'skills') {
-          var skillDnt = 'skilltable_character' + item.baseJobName + '.lzjson';
+          var skillDnt = 'skilltable_character' + item.baseJobName + '.json';
           dntFiles[skillDnt] = null;
-          var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.lzjson';
+          var skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pve' + '.json';
           dntFiles[skillLevelDnt] = null;
-          skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pvp' + '.lzjson';
+          skillLevelDnt = 'skillleveltable_character' + item.baseJobName + 'pvp' + '.json';
           dntFiles[skillLevelDnt] = null;
       }
       
       if(item.fileName) {
-        dntFiles[item.fileName + '.lzjson'] = null;
+        dntFiles[item.fileName + '.json'] = null;
       }
     
       return dntFiles;

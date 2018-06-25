@@ -8,8 +8,8 @@ angular.module('dnsim').controller('itemViewExtractionCtrl',
   
   var vm = this;
   
-  var extractFileName = 'itemdroptable_disjoint.lzjson';
-  var allItemFileName = 'all-items.lzjson';
+  var extractFileName = 'itemdroptable_disjoint.json';
+  var allItemFileName = 'all-items.json';
   
   var files = [extractFileName,allItemFileName];
   for(var i=0;i<files.length;++i) {

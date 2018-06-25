@@ -60,7 +60,7 @@ angular.module('dnsim').controller('BuildListCtrl',
   
     this.toggleGroup = function(buildName) {
       saveHelper.saveBuildSelection(buildName, this.savedItems);
-      $location.url('/build?buildName=' + buildName);
+      $location.url('/build?buildName=' + encodeURIComponent(buildName));
     }
     
     this.publish = function() {

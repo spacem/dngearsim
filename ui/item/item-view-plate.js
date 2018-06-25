@@ -9,8 +9,8 @@ angular.module('dnsim').controller('itemViewPlateCtrl',
   var vm = this;
   vm.items = [];
   
-  var plateFile = 'platetable.lzjson';
-  var allItemFileName = 'all-items.lzjson';
+  var plateFile = 'platetable.json';
+  var allItemFileName = 'all-items.json';
   
   var allFiles = [plateFile,allItemFileName];
   for(var i=0;i<allFiles.length;++i) {

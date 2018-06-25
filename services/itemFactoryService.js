@@ -115,7 +115,7 @@ function itemFactory(translations,dntData,hCodeValues,items) {
         d = dntData.getRow(items[item.itemSource].mainDnt, item.row);
       }
       else if(item.fileName) {
-        d = dntData.getRow(item.fileName + '.lzjson', item.row);
+        d = dntData.getRow(item.fileName + '.json', item.row);
       }
       delete item.row;
 
@@ -187,8 +187,8 @@ function itemFactory(translations,dntData,hCodeValues,items) {
   function getItemData(item) {
     var itemType = items[item.itemSource];
     
-    if(item.fileName && dntData.isLoaded(item.fileName + '.lzjson')) {
-      var result = getItemDataFromFile(item.fileName + '.lzjson', item);
+    if(item.fileName && dntData.isLoaded(item.fileName + '.json')) {
+      var result = getItemDataFromFile(item.fileName + '.json', item);
       if(result) {
         return result;
       }

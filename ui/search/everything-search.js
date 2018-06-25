@@ -173,7 +173,7 @@ function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCode
     });
   }
 
-  var fileName = 'all-items.lzjson';  
+  var fileName = 'all-items.json';  
   dntData.init(fileName, null, function() {}, function() {
     vm.initeverything();
   }, false);

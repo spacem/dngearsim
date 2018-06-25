@@ -10,12 +10,12 @@ angular.module('dnsim').controller('itemViewAttainmentCtrl',
   vm.attainments = [];
 
   var files = [
-    'itemgaintable.lzjson',
-    'itemgaintable_dragonjewel.lzjson',
-    'itemgaintable_enchant.lzjson',
-    'itemgaintable_etc.lzjson',
-    'itemgaintable_reboot.lzjson',
-    'itemgaintable_talisman.lzjson'];
+    'itemgaintable.json',
+    'itemgaintable_dragonjewel.json',
+    'itemgaintable_enchant.json',
+    'itemgaintable_etc.json',
+    'itemgaintable_reboot.json',
+    'itemgaintable_talisman.json'];
 
   for(var i=0;i<files.length;++i) {
     dntData.init(files[i], null, function() {}, function() {

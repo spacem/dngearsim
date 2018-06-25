@@ -9,8 +9,8 @@ angular.module('dnsim').controller('itemViewTuningCtrl',
   var vm = this;
   vm.rewardItems = [];
   
-  var allItemFileName = 'all-items.lzjson';
-  var changeFileName = 'itemchangetable.lzjson';
+  var allItemFileName = 'all-items.json';
+  var changeFileName = 'itemchangetable.json';
   
   var files = [allItemFileName,changeFileName];
   for(var i=0;i<files.length;++i) {
