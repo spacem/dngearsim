@@ -1,6 +1,12 @@
 <header>
   <div class="container-fluid chunkyness" id="head">
       <div class="container">
+        <span class="chunkyness toggle-box text-right" style="border-width: 1px;border-top:0px;padding: 5px;" ng-if="!ctrl.isClosed">
+          notice: fd calculation has been updated to match kdn
+          <div>
+            <button class="btn btn-link" ng-click="ctrl.doClose()">close</button>
+          </div>
+        </span>
         <a href="/dngearsim">
           <div class="dnsim-logo">
             <span class="dnsim-logo-dn">DN</span>
