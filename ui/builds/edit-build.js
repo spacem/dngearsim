@@ -58,11 +58,11 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntDat
         defaultElement = hCodeValues.elements[4];
         defaultSecondaryElement = hCodeValues.elements[4];
       }
-      else if(jobName == 'SALEANA' || jobName == 'RIPPER' || jobName == 'DARKAVENGER') {
+      else if(jobName == 'SALEANA' || jobName == 'RIPPER' || jobName == 'DARKAVENGER' || jobName == 'RANDGRID') {
         defaultElement = hCodeValues.elements[1];
         defaultSecondaryElement = hCodeValues.elements[1];
       }
-      else if(jobName == 'ELESTRA') {
+      else if(jobName == 'ELESTRA' || jobName == 'AVALANCHE') {
         defaultElement = hCodeValues.elements[2];
         defaultSecondaryElement = hCodeValues.elements[2];
       }
