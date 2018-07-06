@@ -23,6 +23,7 @@
     ng-hide="editCtrl.enchantmentAfter == null || editCtrl.isMaxEnchantLevel() || editCtrl.enhancementOptions.length > 0"
     ng-if="editCtrl.materials != null">
   <label>when enhancing:</label><br />
+  <span ng-if="editCtrl.enchantmentAfter.NeedPointCount">points: {{ editCtrl.enchantmentAfter.NeedPointCount }} | </span>
   cost: {{editCtrl.enchantmentCost}} | min down: {{editCtrl.enchantmentAfter.MinDown}} | max down: {{editCtrl.enchantmentAfter.MaxDown}}<br />
   enchant ratio: {{editCtrl.enchantmentAfter.EnchantRatio | percentage}} | break ratio: {{editCtrl.enchantmentAfter.BreakRatio | percentage}}<br />
   <span ng-if="editCtrl.enchantmentAfter && editCtrl.enchantmentAfter.ProtectItemCount > 0 && editCtrl.materials != null">
