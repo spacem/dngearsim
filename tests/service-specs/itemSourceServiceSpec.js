@@ -47,7 +47,6 @@ describe('items', function () {
     expect(items.eq.weaponDnt).toBe('weapontable_equipment.optimised.json');
     expect(items.eq.enchantDnt).toBe('enchanttable.optimised.json');
     expect(items.eq.potentialDnt).toBe('potentialtable.optimised.json');
-    expect(items.eq.sparkDnt).toBe('potentialtable_potentialjewel.optimised.json');
     expect(items.eq.setDnt).toBe('setitemtable.optimised.json');
   });
   

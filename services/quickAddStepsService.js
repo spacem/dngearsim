@@ -91,12 +91,6 @@ function quickAddSteps(dntData, translations, itemFactory, hCodeValues, quickAdd
           { id: 93, name: 'level 93' },
           { id: 90, name: 'level 90' },
           { id: 80, name: 'level 80' },
-          { id: 70, name: 'level 70' }, 
-          { id: 60, name: 'level 60' }, 
-          { id: 50, name: 'level 50' }, 
-          { id: 40, name: 'level 40' }, 
-          { id: 32, name: 'level 32' }, 
-          { id: 24, name: 'level 24' }, 
           ];
         },
         matchesItem: function(id, item) {

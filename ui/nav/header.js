@@ -11,7 +11,7 @@ angular.module('dnsim').controller('HeaderCtrl',
       vm.isClosed = true;
     }
     
-    vm.isClosed = localStorage.getItem(noticeId) != null;
+    vm.isClosed = true; // localStorage.getItem(noticeId) != null;
   }
 ]).directive('dngearsimHeader', function() {
   return {

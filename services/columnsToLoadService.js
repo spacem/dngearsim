@@ -54,7 +54,6 @@ function itemColumnsToLoad() {
       Type: true
     },
     setDnt : null,
-    sparkDnt: null,
     jobsDnt: {
       JobName: true,JobNumber: true,BaseClass: true,ParentJob: true, EnglishName: true, JobIcon: true
     },

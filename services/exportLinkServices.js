@@ -317,15 +317,7 @@ function exportLinkHelper(items,dntData,itemFactory,hCodeValues,itemColumnsToLoa
         newItem.fullStats = hCodeValues.mergeStats(newItem.enchantmentStats, newItem.stats);
       }
       
-      if(item.sparkId > 0) {
-        newItem.sparkId = item.sparkId;
-        var sparks = dntData.find(itemType.sparkDnt, 'id', item.sparkId);
-        if(sparks.length > 0) {
-          newItem.sparkStats = hCodeValues.getStats(sparks[0]);
-          newItem.fullStats = hCodeValues.mergeStats(newItem.fullStats, newItem.sparkStats);
-        }
-      }
-      else if(newItem.dragonjeweltype) {
+      if(newItem.dragonjeweltype) {
         newItem.offensiveGemSlots = 0;
         newItem.increasingGemSlots = 0;
         var itemData = dntData.find('dragonjewelslottable.json', 'DragonJewelID', newItem.dragonjeweltype);
