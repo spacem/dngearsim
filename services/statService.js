@@ -300,24 +300,30 @@
         else {
           secElementId = 0;
         }
+
+        var allElementStat = dupeStat(88);
         
         // elements
         var firePc = dupeStat(16);
+        firePc.max += allElementStat.max;
         if(firePc.id == priElementId || firePc.id == secElementId) {
           addStat(firePc);
         }
         
         var icePc = dupeStat(17);
+        icePc.max += allElementStat.max;
         if(icePc.id == priElementId || icePc.id == secElementId) {
           addStat(icePc);
         }
         
         var lightPc = dupeStat(18);
+        lightPc.max += allElementStat.max;
         if(lightPc.id == priElementId || lightPc.id == secElementId) {
           addStat(lightPc);
         }
         
         var darkPc = dupeStat(19);
+        darkPc.max += allElementStat.max;
         if(darkPc.id == priElementId || darkPc.id == secElementId) {
           addStat(darkPc);
         }

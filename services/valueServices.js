@@ -50,10 +50,10 @@
         13 : {id: 13, name: 'crit resist', display: inThousands, pc: 63, noCustom: true },
         14 : {id: 14, name: 'stun', display: inThousands, pc: 64, noCustom: true },
         15 : {id: 15, name: 'stun resist', display: inThousands, pc: 65, noCustom: true },
-        16 : {id: 16, name: 'fire%', display: toPercent, dps: true, searchable: true },
-        17 : {id: 17, name: 'ice%', display: toPercent, dps: true, searchable: true },
-        18 : {id: 18, name: 'light%', display: toPercent, dps: true, searchable: true },
-        19 : {id: 19, name: 'dark%', display: toPercent, dps: true, searchable: true },
+        16 : {id: 16, name: 'fire%', display: toPercent, dps: true, searchable: true, altStat: 88, addTo: 88 },
+        17 : {id: 17, name: 'ice%', display: toPercent, dps: true, searchable: true, altStat: 88, addTo: 88 },
+        18 : {id: 18, name: 'light%', display: toPercent, dps: true, searchable: true, altStat: 88, addTo: 88 },
+        19 : {id: 19, name: 'dark%', display: toPercent, dps: true, searchable: true, altStat: 88, addTo: 88 },
         20 : {id: 20, name: 'fire def', display: toPercent, def: true, searchable: true },
         21 : {id: 21, name: 'ice def', display: toPercent, def: true, searchable: true },
         22 : {id: 22, name: 'light def', display: toPercent, def: true, searchable: true },
@@ -88,6 +88,9 @@
         76 : {id: 76, name: 'mp%', display: toPercent, def: true },
         77 : {id: 77, name: 'mp recover%', display: toPercent, def: true },
         81 : {id: 81, name: 'safe move%', display: toPercent, noCustom: true, def: true },
+
+        // this is found on ladder costumes and gives all types of element
+        88 : {id: 88, name: 'all element%', display: toPercent, noCustom: true, def: false, dps: true },
   
         // these are both min and max
         // shows with the same name but these are used really just for set bonus I think
