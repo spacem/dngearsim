@@ -6,6 +6,10 @@ angular.module('dnsim').factory('uiTranslations', uiTranslations);
 // translations for each region go in here
 // the key is the english text
 var uiTranslationLookup = {
+    na: {
+        1000128908: 'Tier 3',
+        1000128979: 't4?'
+    },
     cdn: {
         'dragon nest gear simulator': '龙之谷配装模拟器',
         'enemy lvl': '敌人等级',
