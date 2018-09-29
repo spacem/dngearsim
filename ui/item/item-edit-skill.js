@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemEditSkillCtrl',
 
-['$timeout','dntData','statHelper',
-function($timeout,dntData,statHelper) {
+['$timeout','dntData',
+function($timeout,dntData) {
   'use strict';
   
   if(this.item == null) return;

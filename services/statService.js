@@ -197,6 +197,9 @@
           
           // special stats for zeal
           var intToPdmg = dupeStat(10164);
+
+          // special stat for ah
+          var strToPdmg = dupeStat(103721);
           
           minPdmg.max += extraPdmg.max;
           minPdmg.max += Math.floor(str.max*Number(group.conversions.StrengthAttack));
@@ -205,6 +208,7 @@
           minPdmg.max = Math.floor(minPdmg.max*(1+(getPc(minPdmg) + extraPdmgMod.max)));
           minPdmg.max = Math.floor(minPdmg.max * (1+aPwr.max+paPwr.max));
           minPdmg.max += Math.floor(intToPdmg.max * int.max);
+          minPdmg.max += Math.floor(strToPdmg.max * str.max);
           addStat(minPdmg);
     
           maxPdmg.max += extraPdmg.max;
@@ -214,6 +218,7 @@
           maxPdmg.max = Math.floor(maxPdmg.max*(1+(getPc(maxPdmg) + extraPdmgMod.max)));
           maxPdmg.max = Math.floor(maxPdmg.max * (1+aPwr.max+paPwr.max));
           maxPdmg.max += Math.floor(intToPdmg.max * int.max);
+          maxPdmg.max += Math.floor(strToPdmg.max * str.max);
           addStat(maxPdmg);
         }
         
@@ -278,13 +283,10 @@
         addStat(fd);
         var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
         
-        var fdPc = dupeStat(1029);
+        var fdSkill = dupeStat(10389);
         var newFdPc = dupeStat(1030);
-        newFdPc.max += fdPc.max + Math.min(1, (fd.max / maxFd));
+        newFdPc.max += fdSkill.max + Math.min(1, (fd.max / maxFd));
         addStat(newFdPc);
-        
-        fdPc.max += Math.min(Math.max(0.35*Number(fd.max)/maxFd,Math.pow(Number(fd.max)/maxFd,2.2)),1);
-        addStat(fdPc);
         
         var secElementId = 0;
         var priElementId = 0;
@@ -445,38 +447,22 @@
           var valColName = 'EffectClassValue' + index;
           if(data && colName in data && valColName in skillLevelVals) {
             if(data[colName] > 0) {
-              
-              var val = skillLevelVals[valColName];
-              
-              // for now add 10k
               var effectId = data[colName];
+              var val = skillLevelVals[valColName];
+                        
               var map = hCodeValues.skillEffectMapping[effectId];
-              if(map && map.getVals) {
+              if(map && map.getVals && map.getVals(val)) {
                 var vals = map.getVals(val);
-                for(var i=0;i<vals.length;++i) {
+                for (var i=0;i<vals.length;++i) {
                   effects.push(vals[i]);
                 }
               }
+              else if(map && map.mapTo) {
+                effects.push({ id: map.mapTo, effect: effectId, max: val });
+              }
               else {
-                var statId;
-                if(map && map.mapTo) {
-                  statId = map.mapTo;
-                }
-                else {
-                  statId = 10000 + effectId;
-                }
-                
-                if(val > 0) {
-                  effects.push({ id: statId, effect: effectId, max: val });
-                }
-                else {
-                  if(val.toString().indexOf(';') > 0) {
-                    var vals = val.split(';');
-                    if(vals.length > 0 && vals[0] > 0) {
-                      effects.push({ id: statId, effect: effectId, max: vals[0] });
-                    }
-                  }
-                }
+                // CAN ENABLE THIS TO DEBUG UNUSED STAT VALUES
+                // effects.push({ id: -effectId, effect: effectId, max: val });
               }
             }
           }

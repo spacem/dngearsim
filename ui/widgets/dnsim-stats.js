@@ -94,7 +94,11 @@ function dnsimStats(hCodeValues, $translate) {
             // hide when stat is added
             var statAddTo = _.find(stats, function(s) {
               var addToDef = hCodeValues.stats[s.id];
-              return addToDef.addTo == def.id;
+              if (!addToDef) {
+                console.log('cannot find stat id', s.id)
+              } else {
+                return addToDef.addTo == def.id;
+              }
             });
 
             if(statAddTo) {

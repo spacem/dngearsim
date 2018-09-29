@@ -8,13 +8,13 @@ angular.module('dnsim').directive('dngearsimSkillSearch', function() {
       job: '=job',
       jobs: '=jobs',
     },
-    controller: ['$window','$timeout','saveHelper','region','jobs','translations','dntData','hCodeValues','itemCategory','$location', skillSearchCtrl],
+    controller: ['$timeout','region','jobs','translations','dntData','hCodeValues','itemCategory','$location','exportLinkHelper', skillSearchCtrl],
     controllerAs: 'skillSearch',
     templateUrl: 'ui/search/skill-search.html'
   };
 });
 
-function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations,dntData,hCodeValues,itemCategory,$location) {
+function skillSearchCtrl($timeout,region, jobs, translations,dntData,hCodeValues,itemCategory,$location,exportLinkHelper) {
 
   var vm = this;
   
@@ -77,6 +77,16 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
       return null;
     }
   }
+  
+  function getLevelDntName(baseClassName) {
+    // console.log('got base class :' + baseClassName);
+    if(baseClassName != null) {
+      return 'skillleveltable_character' + baseClassName.toLowerCase() + 'pve.json';
+    }
+    else {
+      return null;
+    }
+  }
 
   function getSkills() {
     // console.log('getting skills for ' + vm.job.name);
@@ -93,10 +103,19 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
 
       angular.forEach(baseJobNames, function(baseName, index) {
         var dntName = getDntName(baseName);
+        var levelDntName = getLevelDntName(baseName);
         if(dntName) {
           if(!dntData.isLoaded(dntName)) {
             // console.log('loading skills for ' + baseName);
-            dntData.init(dntName, null, reportProgress, function() { $timeout(function() { setupSkills(baseJobNames, vm.job);} ); });
+            dntData.init(dntName, null, reportProgress, function() {
+              $timeout();
+            });
+          }
+          else if(!dntData.isLoaded(levelDntName)) {
+            // console.log('loading skills for ' + baseName);
+            dntData.init(levelDntName, null, reportProgress, function() {
+              $timeout();
+            });
           }
           else {
             setupSkills(baseJobNames, vm.job);
@@ -146,7 +165,7 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
             newItem.baseJobName = baseName.toLowerCase();
             newItem.icon = skills[s].IconImageIndex;
             
-            vm.skills.push(newItem);
+            vm.skills.push(exportLinkHelper.reloadSkill(newItem));
           }
         }
       });
@@ -169,7 +188,6 @@ function skillSearchCtrl($window,$timeout,saveHelper, region, jobs, translations
 
     var newResults = [];
     var numSkills = skills.length;
-    var curDisplay = 0;
     for(var i=0;i<numSkills;++i) {
       var e = skills[i];
       

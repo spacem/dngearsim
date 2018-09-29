@@ -104,19 +104,18 @@
         107: {id: 107, name: 'mp?', display: toNoDec, noCustom: true, hide: true, def: true },
         
         // stats below here are ones I made up
-        1001: {id: 1001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
-        1004: {id: 1004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
-        1005: {id: 1005, name: 'pheal', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
-        1006: {id: 1006, name: 'mdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
+        1001: {id: 1001, name: 'avg dmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
+        1004: {id: 1004, name: 'avg pdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
+        1005: {id: 1005, name: 'avg pheal', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
+        1006: {id: 1006, name: 'avg mdmg', display: inThousands, summaryDisplay: true, element: 'primary', noCustom: true, hide: true },
         1007: {id: 1007, name: 'mheal', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
         
         1008: {id: 1008, name: 'pdef', display: toPercent, noCustom: true, summaryFor: 8 },
         1009: {id: 1009, name: 'mdef', display: toPercent, noCustom: true, summaryFor: 9 },
         
-        1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true, dps: true, summaryFor: 12 },
-        1029: {id: 1029, name: 'old fd', display: toPercent, noCustom: true, dps: true },
-        1030: {id: 1030, name: 'future fd', display: toPercent, noCustom: true, dps: true, summaryFor: 29 },
-        1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true, dps: true, summaryFor: 103 },
+        1012: {id: 1012, name: 'crit chance', display: toPercent, noCustom: true, dps: true, summaryFor: 12, summaryDisplay: true },
+        1030: {id: 1030, name: 'fd%', display: toPercent, noCustom: true, dps: true, summaryFor: 29, summaryDisplay: true },
+        1103: {id: 1103, name: 'crit dmg', display: toPercent, noCustom: true, dps: true, summaryFor: 103, summaryDisplay: true },
         
         2001: {id: 2001, name: 'dmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
         2004: {id: 2004, name: 'pdmg', display: inThousands, summaryDisplay: true, element: 'secondary', noCustom: true, hide: true },
@@ -143,7 +142,11 @@
         10164: {id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true, dps: true },
         10165: {id: 10165, name: 'strToMdmg', display: toPercent, noCustom: true, dps: true },
         10372: {id: 10372, name: 'intToMdmg', display: toPercent, noCustom: true, dps: true },
+        103721: {id: 103721, name: 'strToPdmg', display: toPercent, noCustom: true, dps: true },
+
+        10389: {id: 10389, name: 'fd%', display: toPercent, dps: true },
         // items over 10000 are unknown skill effects
+
       },
     
       rankNames : {
@@ -269,14 +272,25 @@
               var vals = val.split(';');
               if(vals.length == 3 && vals[0] == 2 && vals[2] == 6) {
                 return [{ id: 10372, name: 'intToMdmg', max: Number(vals[1]) }];
+              } else if(vals.length == 3 && vals[0] == 0 && vals[2] == 5) {
+                return [{ id: 103721, name: 'strToPdmg', max: Number(vals[1]) }];
               }
             }
             return [];
           }
         },
-        
-        
-        389: { id: 389, name: 'fd buf', mapTo: 1030 },
+        389: {
+          id: 389,
+          name: 'fd buff or sader cm1',
+          getVals: function(val) {
+            if(val && val.indexOf && val.indexOf(';') > 0) {
+              return [];
+            }
+            else {
+              return [{ id: 10389, name: 'fd buf', max: Number(val) }];
+            }
+          }
+        },
         404: { id: 404, name: 'critical damage%', mapTo: 1103 },
       },
       

@@ -25,7 +25,8 @@
   </div>
   <div class="col-xs-12" ng-if="ctrl.selectedIndex > -1">
     <br />
-    {{'now click where you want to move it or' | translate}} <btn class="btn-link" ng-click="ctrl.selectedIndex = -1">{{'cancel' | translate}}</btn>
+    {{'now click where you want to move it or ' | translate}}&nbsp;
+    <btn class="btn btn-default" ng-click="ctrl.selectedIndex = -1">{{'cancel' | translate}}</btn>
   </div>
   <div class="col-xs-12">&nbsp;</div>
 </div>
@@ -39,11 +40,11 @@
       <div class="col-xs-12 col-sm-4 col-md-2 text-center">
         <dnsim-item-icon item="c.item" />
       </div>
-      <div class="col-xs-12 col-sm-8 col-md-10" style="height:50px">
+      <div class="col-xs-12 col-sm-8 col-md-10" style="height:80px">
         <div dnsim-stats stats="c.item.fullStats" alt-stats="c.item.stats" ng-if="c.index >= 0"></div>
       </div>
       
-      <div class="col-xs-12" style="height:70px">
+      <div class="col-xs-12" style="height:140px">
         <small
           ng-if="ctrl.selectedIndex != c.index && ctrl.selectedIndex >= 0 && ctrl.getReplaceAffectAmount(statId, c.index, c.item)"
           ng-repeat="statId in ctrl.summaryStatIds">

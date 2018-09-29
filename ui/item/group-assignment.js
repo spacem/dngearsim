@@ -49,6 +49,8 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
     
   this.clearGroup = function() {
     vm.addAffectAmount = null;
+    vm.newAffectAmount = null;
+    vm.oldAffectAmount = null;
     vm.replaceAffectAmount = {};
 
     vm.groupItems = null;
@@ -93,6 +95,18 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
     // console.log('add affect: ', this.addAffectAmount[stat], this.item);
     return this.addAffectAmount[stat];
   };
+
+  this.getNewAffectAmount = function(stat) {
+    this.initAddAffects();
+    // console.log('add affect: ', this.addAffectAmount[stat], this.item);
+    return this.newAffectAmount[stat];
+  };
+
+  this.getOldAffectAmount = function(stat) {
+    this.initAddAffects();
+    // console.log('add affect: ', this.addAffectAmount[stat], this.item);
+    return this.oldAffectAmount[stat];
+  };
   
   this.getReplaceAffectAmount = function(statId, itemIndex, item) {
     this.initReplaceAffects(itemIndex, item);
@@ -133,9 +147,13 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
     var newStats = statHelper.getCalculatedStatsFromItems(group, newItems);
     
     this.addAffectAmount = {};
+    this.newAffectAmount = {};
+    this.oldAffectAmount = {};
     for(var id in hCodeValues.stats) {
       if(hCodeValues.stats[id].summaryDisplay) {
-        vm.addAffectAmount[id] = calcStatPercent(vm.getStat(id, newStats).max, vm.getStat(id, origStats).max);
+        vm.newAffectAmount[id] = vm.getStat(id, newStats).max;
+        vm.oldAffectAmount[id] = vm.getStat(id, origStats).max;
+        vm.addAffectAmount[id] = calcStatPercent(vm.newAffectAmount[id], vm.oldAffectAmount[id]);
       }
     }
   };
@@ -167,7 +185,7 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
   function calcStatPercent(newVal, origVal) {
     if(newVal && origVal) {
       // console.log('orig: ' + origVal + ',new: ' + newVal);
-      return Math.round(10000 * (1 - (origVal / newVal))) / 100;
+      return Math.round(10000 * ((newVal-origVal)/origVal)) / 100;
     }
     else {
       return 0;

@@ -558,3 +558,11 @@ footer a {
 .dnsim-logo-gearsim {
   font-weight: 500;
 }
+
+.checkbox-inline {
+  padding-left: 16px;
+}
+
+.checkbox-inline > input[type=checkbox] {
+  margin-left: -16px;
+}

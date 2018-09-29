@@ -30,6 +30,7 @@
         <b ng-if="editCtrl.getAddAffectAmount(statId) > 0">{{'increase' | translate}}</b>
         <b ng-if="editCtrl.getAddAffectAmount(statId) < 0">{{'decreases' | translate}}</b>
         {{editCtrl.getStatName(statId)}} {{editCtrl.getAddAffectAmount(statId)}}%
+        <!-- ({{ editCtrl.getOldAffectAmount(statId) + '->' + editCtrl.getNewAffectAmount(statId) }}) -->
         <br />
       </span>
 
