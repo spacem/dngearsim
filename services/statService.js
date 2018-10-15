@@ -392,7 +392,8 @@
         mdefEqHp.max = hp.max / (1-mdefpc.max);
         
         var eqHp = dupeStat(3008);
-        eqHp.max = (pdefEqHp.max + mdefEqHp.max) / 2;
+        // eqHp.max = (pdefEqHp.max + mdefEqHp.max) / 2;
+        eqHp.max = pdefEqHp.max;
         addStat(eqHp);
 
         addStat(str);
