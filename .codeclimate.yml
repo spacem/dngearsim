@@ -1,9 +1,0 @@
-languages:
-  JavaScript: true
-exclude_paths:
-- "min/app.min.js"
-- "min/app.min.js.map"
-- "min/dntviewer.min.js"
-- "min/dntviewer.min.js.map"
-- "min/libs.min.js"
-- "min/templates.min.js"
