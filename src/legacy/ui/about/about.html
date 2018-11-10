@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-8">
+    <h3>contact</h3>
+    <p>
+      If you have any problems or want to make a suggestion come to my <a href="https://discord.gg/011C92KwJWoCfRcEY">&raquo;discord server</a><br />
+      or<br />
+      * use the <a href="https://github.com/spacem/dngearsim/issues">&raquo;github issue tracker</a><br />
+      * use the <a href="http://feathub.com/spacem/dngearsim">&raquo;feathub feature voting</a><br />
+    </p>
+    <h3>faq</h3>
+    <h4>How is average damage calculated and what is eqhp?</h4>
+    <p>
+      Something like:
+      <pre>damage = element% x (1 - element resist %) x skill% x fd% x (avg(dmg) + ((crit dmg-100%) x crit chance x (1 - crit resist%) x avg(dmg)))</pre>
+      I believe Rune Dragon is 20% critical resist but you can override this value for each build.
+      If you want to see the full calculations in the code these are in statService.js
+      <pre>eqhp = ( (hp / (1-pdef%)) + (hp / (1-mdef%)) ) / 2</pre>
+      eqhp is equivalent hp.
+      This is essentially the amount of damage you will take before you die.
+      It takes both hp and defence into acount.
+      There is magic and phisical defence so I work out both magic and physical eqhp and show the average.
+    </p>
+    <h4>Some skills do not work correctly?</h4>
+    <p>
+      I have implemented many skills now however there numerous classes I do not play.
+      Feel free to get in touch if you want to work with me to implement any extra skill for your class.
+    </p>
+    <h4>What is with all these items that do not exist in-game?</h4>
+    <p>
+      I show everything I can from the data files.
+      Some items may not exist also some items have duplicates but it is useful to see what might be coming.
+    </p>
+    <h4>How is the data stored?</h4>
+    <p>
+      Only published builds are saved to the server. Other builds may be lost if your browser is reset.
+      If you want to keep any builds without logging in you can export them as json files that can be shared and imported into another browser.
+      When you log in your log in to publish your build your details are sent directly from your browser to google firebase for authentication.
+    </p>
+    <h4>Growth spirits cannot be enhanced?</h4>
+    <p>
+      Stats for this are random so please create a custom item with the stats you get.
+    </p>
+    <h4>Why are the calcuations not accurate?</h4>
+    <p>
+      I believe they are - or at least out only by a tiny bit.
+      If your stats are marginally different most likely you are missing some item or passive skill, etc.
+      Feel free to ask if things do not look right.
+      If you publish your build I can have a look to see if there is a glitch that needs fixing.
+    </p>
+
+    <h3>advanced</h3>
+    <p>
+      For advanced configuration settings use <a ng-href="setup">&raquo;this link</a>
+    </p>
+  </div>
+    
+  <div class="col-sm-4 hidden-xs">
+    <img src="/assets/images/tink.png" />
+  </div>
+</div>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Multi-region equipment simulator for the game Dragon Nest with up to date data of all in-game items.">
+<base href="/dngearsim/">
+<link rel="icon" type="image/png" href="assets/images/dngearsim_icon.png">
+
+<title>dngearsim: dragon nest gear simulator</title>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "https://spacem.github.io/dngearsim",
+  "name": "dngearsim",
+  "alternateName": "Dragon Nest Gear Simulator",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://spacem.github.io/dngearsim/items?name={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "sameAs": [
+    "http://www.facebook.com/dngearsim"
+  ]
+}
+</script>
+
+<script>
+  'use strict';
+  var simHadError = false;
+  window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.log('on error handled');
+    
+    var string = msg.toLowerCase();
+    var substring = "script error";
+    if (string.indexOf(substring) > -1 && false) {
+      // do nothing
+    }
+    else {
+      if(!simHadError) {
+        console.log('adding error', error);
+        simHadError = true;
+        let container = document.createElement('div');
+        
+        container.style.color = 'red';
+        container.style.position = 'fixed';
+        container.style.background = '#eee';
+        container.style.padding = '2em';
+        container.style.top = '1em';
+        container.style.left = '1em';
+        container.style.zIndex = '9999';
+        
+        let ele = document.createElement('pre');
+        ele.innerText = [
+        'msg: ' + msg,
+        'URL: ' + url,
+        'Line: ' + lineNo,
+        'col: ' + columnNo,
+        'Stack: ' + (error && error.stack)
+        ].join('\n');
+        
+        container.appendChild(ele);
+        
+        document.body.appendChild(container);
+      }
+    }
+  };
+</script>
+
+<link rel="stylesheet" href="dngearsim.css">
+</head>
+<body ng-app="dnsim">
+<noscript>
+<br /><br />
+<p>javascript is required</p>
+<br /><br />
+</noscript>
+<div class="dngearsim-background-image hidden-xs">
+</div>
+<dngearsim-header id="simheader"></dngearsim-header>
+<div id="nav" class="container">
+  <div class="row" dngearsim-nav ng-controller="NavCtrl">
+  </div>
+  <div class="row">
+    <div class="col-xs-12 dnsim-fade" id="app" ng-view autoscroll="true">
+      <br />
+      <div class="row">
+        <div class="col-xs-12 loading"></div>
+        <div class="col-xs-12 text-center">
+          loading...
+          <br /><br /><br />
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+</div>
+<div class="visible-xs-block">
+  <div class="container-fluid chunkyness">
+  <div class="container text-right">
+    <a href="https://spacem.github.io/dnskillsim">skill&nbsp;sim</a> |
+    <a href="https://discord.gg/011C92KwJWoCfRcEY">discord</a> |
+    <a href="https://www.facebook.com/dngearsim">facebook</a> |
+    <a href="https://github.com/spacem/dngearsim">github</a>
+  </div>
+  </div>
+</div>
+<footer>
+  <div class="hidden-xs container-fluid chunkyness navbar-fixed-bottom">
+  <div class="container text-right">
+    <a href="https://spacem.github.io/dnskillsim">skill sim</a> |
+    <a href="https://discord.gg/011C92KwJWoCfRcEY">discord chatroom</a> |
+    <a href="https://www.facebook.com/dngearsim">facebook page</a> |
+    <a href="https://github.com/spacem/dngearsim">browse source code</a>
+  </div>
+  </div>
+</footer>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-shim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.34.2/es6-shim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.34.2/es6-sham.min.js"></script>
+
+<script src="min/libs.min.js"></script>
+<script src="min/dntviewer.min.js"></script>
+
+<script src="app.js"></script>
+<script src="min/templates.min.js"></script>
+<script src="min/app.min.js"></script>
+<script type="text/javascript">
+  if(top.location != window.location) {
+      var headElement = document.getElementById('simheader');
+      headElement.remove();
+
+      var navElement = document.getElementById('nav');
+      var newElement = document.createElement('p');
+      newElement.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><h2><a style="color: blue" target="_parent" href="https://spacem.github.io/dngearsim">Click here to open dngearsim</a><h2>';
+      navElement.parentNode.replaceChild(newElement, navElement);
+  }
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-72901872-1', 'auto');
+</script>
+</body>
+</html>
