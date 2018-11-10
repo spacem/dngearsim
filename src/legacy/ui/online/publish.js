@@ -1,3 +1,4 @@
+const _ = require('lodash');
 (function () {
 'use strict';
 angular.module('dnsim').controller('PublishCtrl', ['$location', 'saveHelper', 'onlineService', '$routeParams', 'region', publish]);

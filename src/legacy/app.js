@@ -2,8 +2,8 @@
 'use strict';
 
 // templates are imported via gulp job
-angular.module('templates', []);
-angular.module('dnsim', ['ngAnimate','ngRoute','angulartics','angulartics.google.analytics','templates', 'ngAria', 'infinite-scroll', 'pascalprecht.translate']);
+// angular.module('dnsim', ['ngAnimate','ngRoute','angulartics','angulartics.google.analytics','templates', 'ngAria', 'infinite-scroll', 'pascalprecht.translate']);
+angular.module('dnsim', [require('angular-route'),require('ng-infinite-scroll'),require('angular-translate')]);
 
 angular.module('dnsim').config(['$compileProvider', allowAutoBindings]);
 angular.module('dnsim').config(['$locationProvider', setupHtml5Mode]);

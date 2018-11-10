@@ -10,7 +10,7 @@ angular.module('dnsim').directive('dngearsimBuildStats', function() {
     },
     controller: buildStatsController,
     controllerAs: 'statsCtrl',
-    templateUrl: 'ui/builds/build-stats.html'
+    template: require('./build-stats.html')
   };
 });
 

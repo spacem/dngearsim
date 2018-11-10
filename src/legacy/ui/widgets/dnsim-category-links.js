@@ -13,7 +13,7 @@ function dnsimCategoryLinks() {
       buildScreen: '=buildScreen',
       onChange: '&onChange'
     },
-    templateUrl: 'ui/widgets/dnsim-category-links.html',
+    template: require('./dnsim-category-links.html'),
     controller: dnsimCategoryLinksController,
     controllerAs: 'ctrl',
   };

@@ -53,6 +53,6 @@ angular.module('dnsim').controller('itemViewTuningCtrl',
     },
     controller: 'itemViewTuningCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/item/item-view-tuning.html'
+    template: require('./item-view-tuning.html')
   };
 });

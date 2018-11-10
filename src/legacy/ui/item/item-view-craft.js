@@ -123,6 +123,6 @@ angular.module('dnsim').controller('itemViewCraftCtrl',
     },
     controller: 'itemViewCraftCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/item/item-view-craft.html'
+    template: require('./item-view-craft.html')
   };
 });

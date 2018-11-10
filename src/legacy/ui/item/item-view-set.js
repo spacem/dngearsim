@@ -79,6 +79,6 @@ angular.module('dnsim').controller('itemViewSetCtrl',
     },
     controller: 'itemViewSetCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/item/item-view-set.html'
+    template: require('./item-view-set.html')
   };
 });

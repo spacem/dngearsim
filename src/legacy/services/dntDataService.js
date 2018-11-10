@@ -1,3 +1,5 @@
+const DntReader = require('../dntviewer/dntreader');
+
 (function () {
 'use strict';
 

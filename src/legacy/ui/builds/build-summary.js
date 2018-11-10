@@ -5,10 +5,11 @@ function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
   'use strict';
   
   var vm = this;
-  
-  this.stats = statHelper.getBuildStats(this.build);
-  this.itemsByCategory = itemCategory.getItemsByCategory(this.build.items);
-  
+  if (this.build) {
+    this.stats = statHelper.getBuildStats(this.build);
+    this.itemsByCategory = itemCategory.getItemsByCategory(this.build.items);
+  }
+
   this.getSaveDate = function(group) {
     if(vm.build.lastUpdate > 0) {
       var lastUpdate = new Date(vm.build.lastUpdate);
@@ -50,6 +51,6 @@ function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
     },
     controller: 'buildSummaryCtrl',
     controllerAs: 'buildCtrl',
-    templateUrl: 'ui/builds/build-summary.html'
+    template: require('./build-summary.html')
   };
 });

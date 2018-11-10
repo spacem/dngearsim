@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 (function () {
 'use strict';
 
@@ -11,7 +13,7 @@ angular.module('dnsim').directive('dngearsimGroupAssignment', function() {
     },
     controller: groupAssignment,
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/group-assignment.html'
+    template: require('./group-assignment.html')
   };
 });
 

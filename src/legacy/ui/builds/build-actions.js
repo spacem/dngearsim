@@ -56,6 +56,6 @@ function($location,saveHelper,exportLinkHelper) {
     },
     controller: 'buildActionsCtrl',
     controllerAs: 'buildActions',
-    templateUrl: 'ui/builds/build-actions.html'
+    template: require('./build-actions.html')
   };
 });

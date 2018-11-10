@@ -1,3 +1,4 @@
+const _ = require('lodash');
 (function () {
 'use strict';
 
@@ -9,7 +10,7 @@ angular.module('dnsim').directive('dngearsimEverythingSearch', function() {
     },
     controller: everythingSearchCtrl,
     controllerAs: 'items',
-    templateUrl: 'ui/search/everything-search.html'
+    template: require('./everything-search.html')
   };
 });
 

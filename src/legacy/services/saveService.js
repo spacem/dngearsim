@@ -1,3 +1,5 @@
+const LZString = require('lz-string');
+
 (function () {
 'use strict';
 

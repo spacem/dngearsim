@@ -32,21 +32,21 @@ border-top-width: 0;
 
 /*
 .search-back {
-background: url(images/search-background.jpeg)  no-repeat center center fixed;
+background: url(assets/images/search-background.jpeg)  no-repeat center center fixed;
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
 background-size: cover;
 }
 .default-back {
-background: url(images/background.jpeg)  no-repeat center center fixed;
+background: url(assets/images/background.jpeg)  no-repeat center center fixed;
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
 background-size: cover;
 }
 .saved-back {
-background: url(images/saved-background.jpeg)  no-repeat center center fixed;
+background: url(assets/images/saved-background.jpeg)  no-repeat center center fixed;
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
@@ -123,11 +123,11 @@ border-style: none;
 font-size: 75%;
 }
 .dark-toggle {
-background: url(images/dark_toggle.png) no-repeat center center;
+background: url(/assets/images/dark_toggle.png) no-repeat center center;
 color: #8d8578;
 }
 .light-toggle {
-background: url(images/light_toggle.png) no-repeat center center;
+background: url(/assets/images/light_toggle.png) no-repeat center center;
 color: white;
 }
 .toggle-text {
@@ -276,7 +276,7 @@ height: 40px;
 width:60px;
 height: 34px;
 display: inline-block;
-background: transparent url(images/classes.png);
+background: transparent url(/assets/images/classes.png);
 float: left;
 }
 .class-WARRIOR {
@@ -308,7 +308,7 @@ background-position: -610px -10px;
 }
 .login {
   height:100vh;
-  background: url(images/Npc_left_argenta.png) no-repeat center top;
+  background: url(/assets/images/Npc_left_argenta.png) no-repeat center top;
 }
 #firebaseui-auth-container {
   position: fixed;
@@ -320,55 +320,55 @@ background-position: -610px -10px;
   filter: alpha(opacity=80);
 }
 .cat-icon-titles {
-  background: url("images/icons/itemicon63.png") -285px -44px;
+  background: url("/assets/images/icons/itemicon63.png") -285px -44px;
 }
 .cat-icon-armour {
-  background: url("images/icons/itemicon21.png") -325px -564px;
+  background: url("/assets/images/icons/itemicon21.png") -325px -564px;
 }
 .cat-icon-weapons {
-  background: url("images/icons/itemicon08.png") -5px -404px;
+  background: url("/assets/images/icons/itemicon08.png") -5px -404px;
 }
 .cat-icon-accessories {
-  background: url("images/icons/itemicon42.png") -45px -164px;
+  background: url("/assets/images/icons/itemicon42.png") -45px -164px;
 }
 .cat-icon-techs {
-  background: url("images/icons/itemicon41.png") -205px -604px;
+  background: url("/assets/images/icons/itemicon41.png") -205px -604px;
 }
 .cat-icon-offensive {
-  background: url("images/icons/itemicon92.png") -85px -44px;
+  background: url("/assets/images/icons/itemicon92.png") -85px -44px;
 }
 .cat-icon-increasing {
-  background: url("images/icons/itemicon92.png") -325px -44px;
+  background: url("/assets/images/icons/itemicon92.png") -325px -44px;
 }
 .cat-icon-enhancement {
-  background: url("images/icons/itemicon91.png") -125px -4px;
+  background: url("/assets/images/icons/itemicon91.png") -125px -4px;
 }
 .cat-icon-expedition {
-  background: url("images/icons/itemicon91.png") -205px -4px;
+  background: url("/assets/images/icons/itemicon91.png") -205px -4px;
 }
 .cat-icon-talisman {
-  background: url("images/icons/itemicon92.png") -165px -124px;
+  background: url("/assets/images/icons/itemicon92.png") -165px -124px;
 }
 .cat-icon-imprint {
-  background: url("images/icons/itemicon74.png") -45px -524px;
+  background: url("/assets/images/icons/itemicon74.png") -45px -524px;
 }
 .cat-icon-costume {
-  background: url("images/icons/itemicon132.png") -85px -4px;
+  background: url("/assets/images/icons/itemicon132.png") -85px -4px;
 }
 .cat-icon-cash {
-  background: url("images/icons/itemicon23.png") -45px -724px;
+  background: url("/assets/images/icons/itemicon23.png") -45px -724px;
 }
 .cat-icon-extras {
-  background: url("images/icons/itemicon64.png") -45px -44px;
+  background: url("/assets/images/icons/itemicon64.png") -45px -44px;
 }
 .cat-icon-skills {
-  background: url("images/icons/skillicon02.png") -285px -204px;
+  background: url("/assets/images/icons/skillicon02.png") -285px -204px;
 }
 .cat-icon-custom {
-  background: url("images/icons/skillicon07.png") -205px -44px;
+  background: url("/assets/images/icons/skillicon07.png") -205px -44px;
 }
 .cat-icon-everything {
-  background: url("images/icons/itemicon62.png") -85px -404px;
+  background: url("/assets/images/icons/itemicon62.png") -85px -404px;
 }
 
 .cat-icon {

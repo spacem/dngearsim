@@ -1,4 +1,5 @@
 'use strict';
+const _ = require('lodash');
   
 angular.module('dnsim').directive('dngearsimBuildItemList', function() {
   return {
@@ -12,7 +13,7 @@ angular.module('dnsim').directive('dngearsimBuildItemList', function() {
     },
     controller: buildItemListController,
     controllerAs: 'buildCtrl',
-    templateUrl: 'ui/builds/build-item-list.html'
+    template: require('./build-item-list.html')
   };
 });
 

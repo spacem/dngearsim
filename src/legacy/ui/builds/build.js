@@ -9,7 +9,7 @@ angular.module('dnsim').directive('dngearsimBuild', function() {
     },
     controller: bulidController,
     controllerAs: 'buildCtrl',
-    templateUrl: 'ui/builds/build.html'
+    template: require('./build.html')
   };
 });
 
@@ -17,7 +17,9 @@ function bulidController($timeout, statHelper, itemCategory, saveHelper) {
   'use strict';  
   var vm = this;
   
-  vm.stats = statHelper.getBuildStats(vm.build);
+  if (vm.build) {
+    vm.stats = statHelper.getBuildStats(vm.build);
+  }
   
   var selectedCategory = localStorage.getItem('selectedItemCategory');
   vm.category = itemCategory.byName(selectedCategory);

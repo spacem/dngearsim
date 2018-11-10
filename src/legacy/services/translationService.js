@@ -1,3 +1,5 @@
+const DnTranslations = require('../dntviewer/dntranslations');
+
 (function () {
 'use strict';
 
@@ -76,11 +78,11 @@ function translations($rootScope, uiTranslations, $translate) {
           dnTranslations.loadDefaultFile(
             fileName, 
             function(msg) {
-              angular.forEach(progressCallback, function(value, key) { value(msg); });
+              console.log(msg);
             }, 
             function() {
               uiTranslations.addTranslations(t.region, t.getRawData());
-              // console.log('using ', t.region);
+              console.log('using ', t.region);
               $translate.use(t.region);
               t.loaded = true;
               angular.forEach(completeCallback, function(value, key) { value(); });

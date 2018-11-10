@@ -6,6 +6,7 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
   var vm = this;
   
   if(!vm.item || !vm.item.enchantmentId) {
+    console.log('no item to ehnance', vm.item);
     return;
   }
   
@@ -14,9 +15,11 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
   }
   
   if(!vm.itemType) {
+    console.log('no item type to ehnance');
     return;
   }
   if(!('enchantDnt' in vm.itemType) && !('petLevelDnt' in vm.itemType)) {
+    console.log('no dnt for ehnance');
     return;
   }
   
@@ -227,6 +230,6 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
     },
     controller: 'itemEditEnchantmentCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-enchantment.html'
+    template: require('./item-edit-enchantment.html')
   };
 });

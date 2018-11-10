@@ -10,7 +10,7 @@ function dnsimItemLink(exportLinkHelper,$location,region) {
       item: '=item',
       noClick: '=noClick',
     },
-    templateUrl: 'ui/widgets/dnsim-item-link.html',
+    template: require('./dnsim-item-link.html'),
     link: function($scope, element, attrs) {
       $scope.itemLink = 'item/?region=' + region.dntLocation.region + '&i=' + exportLinkHelper.encodeItem($scope.item);
       // var basePath = angular.element(document.querySelector('base')).attr('href');

@@ -1,3 +1,9 @@
+const _ = require('lodash');
+const LZString = require('lz-string');
+const firebase = require('firebase/app');
+require('firebase/auth');
+require('firebase/database');
+
 (function () {
 'use strict';
 

@@ -136,6 +136,6 @@ function(dntData,items,hCodeValues,itemColumnsToLoad) {
     },
     controller: 'itemEditPotentialCtrl',
     controllerAs: 'editCtrl',
-    templateUrl: 'ui/item/item-edit-potential.html'
+    template: require('./item-edit-potential.html')
   };
 });

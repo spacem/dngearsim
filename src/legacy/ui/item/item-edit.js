@@ -25,6 +25,6 @@ function(hCodeValues) {
     },
     controller: 'itemEditCtrl',
     controllerAs: 'ctrl',
-    templateUrl: 'ui/item/item-edit.html'
+    template: require('./item-edit.html')
   };
 });
