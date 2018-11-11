@@ -11,7 +11,7 @@ angular.module('dnsim').directive('dngearsimBuildItemList', function() {
       server: '=server',
       onChange: '&onChange'
     },
-    controller: buildItemListController,
+    controller: ['hCodeValues', 'itemCategory', 'saveHelper', buildItemListController],
     controllerAs: 'buildCtrl',
     template: require('./build-item-list.html')
   };

@@ -1,6 +1,6 @@
 (function () {
 'use strict';
-angular.module('dnsim').controller('ProfileCtrl', ['$location', '$routeParams', 'onlineService', profile]);
+angular.module('dnsim').controller('ProfileCtrl', ['$location', '$routeParams', 'onlineService', 'saveHelper', profile]);
 
 function profile($location, $routeParams, onlineService, saveHelper) {
   'use strict';

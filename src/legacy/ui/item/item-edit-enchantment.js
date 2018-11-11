@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('itemEditEnchantmentCtrl',
-
-function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemFactory) {
+['dntData','hCodeValues','items','$timeout','itemColumnsToLoad','itemFactory',
+function(dntData,hCodeValues,items,$timeout,itemColumnsToLoad,itemFactory) {
   'use strict';
   
   var vm = this;
@@ -220,7 +220,7 @@ function(dntData,hCodeValues,items,$timeout,translations,itemColumnsToLoad,itemF
   function reportProgress(msg) {
     // console.log('progress: ' + msg);
   }
-})
+}])
 .directive('dngearsimItemEditEnchantment', function() {
   return {
     scope: true,

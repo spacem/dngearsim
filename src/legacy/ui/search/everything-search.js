@@ -8,14 +8,14 @@ angular.module('dnsim').directive('dngearsimEverythingSearch', function() {
     bindToController: {
       nameSearch: '=nameSearch'
     },
-    controller: everythingSearchCtrl,
+    controller: ['$window', '$timeout', '$routeParams', '$location', 'hCodeValues', 'translations', 'dntData', everythingSearchCtrl],
     controllerAs: 'items',
     template: require('./everything-search.html')
   };
 });
 
 
-function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCodeValues, region, translations, dntData) {
+function everythingSearchCtrl ($window, $timeout, $routeParams, $location, hCodeValues, translations, dntData) {
     
   var vm = this;
   

@@ -8,13 +8,13 @@ angular.module('dnsim').directive('dngearsimBuildStats', function() {
       build: '=build',
       buildName: '=buildName',
     },
-    controller: buildStatsController,
+    controller: ['dvStatcardHelper', buildStatsController],
     controllerAs: 'statsCtrl',
     template: require('./build-stats.html')
   };
 });
 
-function buildStatsController(statHelper,dvStatcardHelper) {
+function buildStatsController(dvStatcardHelper) {
   var vm = this;
 
   vm.exportStatCard = function() {

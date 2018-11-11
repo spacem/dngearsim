@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('BuildImportCtrl',
 
-['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper','exportLinkHelper','groupHelper','translations','dntData','dntReset',
-function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,exportLinkHelper,groupHelper,translations,dntData,dntReset) {
+['$timeout','$location','saveHelper',
+function($timeout,$location,saveHelper) {
   'use strict';
   
   var vm = this;

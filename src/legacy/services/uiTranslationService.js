@@ -69,7 +69,7 @@ var uiTranslationLookup = {
 };
 
 // this function gets called on language change to add the translations to the main list
-function uiTranslations($routeParams, $rootScope) {
+function uiTranslations() {
     return {
         addTranslations: function(region, data) {
             if(region && data && region in uiTranslationLookup) {

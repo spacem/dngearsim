@@ -1,7 +1,9 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('quickAddSteps', quickAddSteps);
+angular.module('dnsim').factory('quickAddSteps',
+['dntData', 'translations', 'itemFactory', 'hCodeValues', 'quickAddHelper',
+quickAddSteps]);
 function quickAddSteps(dntData, translations, itemFactory, hCodeValues, quickAddHelper) {
 
   return {

@@ -14,7 +14,7 @@ function dnsimCategoryLinks() {
       onChange: '&onChange'
     },
     template: require('./dnsim-category-links.html'),
-    controller: dnsimCategoryLinksController,
+    controller: ['itemCategory', '$window', 'translations', '$translate', dnsimCategoryLinksController],
     controllerAs: 'ctrl',
   };
 };

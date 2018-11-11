@@ -3,7 +3,9 @@ const _ = require('lodash');
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('quickAdd', quickAdd);
+angular.module('dnsim').factory('quickAdd',
+['quickAddSteps', 'quickAddHelper',
+quickAdd]);
 function quickAdd(quickAddSteps, quickAddHelper) {
 
   return {

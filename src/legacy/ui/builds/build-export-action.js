@@ -1,7 +1,7 @@
-angular.module('dnsim').controller('buildExportActionCtrl',
+import saveAs from 'file-saver';
 
-['$timeout','$location','hCodeValues','statHelper','itemCategory','saveHelper','exportLinkHelper','groupHelper','translations','dntData','dntReset',
-function($timeout,$location,hCodeValues,statHelper,itemCategory,saveHelper,exportLinkHelper,groupHelper,translations,dntData,dntReset) {
+angular.module('dnsim').controller('buildExportActionCtrl',
+[function() {
   'use strict';
   
   var vm = this;

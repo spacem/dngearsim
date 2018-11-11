@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('itemViewSetCtrl',
 
-['$timeout','dntData','itemFactory','hCodeValues','translations',
+['$timeout','dntData','itemFactory',
   function($timeout, dntData, itemFactory) {
   'use strict';
   

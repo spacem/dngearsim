@@ -14,12 +14,12 @@ function chooseClass() {
     template: require('./choose-class.html'),
     controllerAs: 'ctrl',
     controller: [
-      '$window','$location','$routeParams','$timeout','saveHelper','dntData','jobs','hCodeValues','itemColumnsToLoad','character', 
+      '$timeout','jobs',
       chooseClassController],
   };
 }
 
-function chooseClassController($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad,character) {
+function chooseClassController($timeout,jobs) {
   this.getFinalJobs = function() {
     var allJobs = jobs.getFinalJobs();
     var finalJobs = [];

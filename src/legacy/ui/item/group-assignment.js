@@ -11,7 +11,7 @@ angular.module('dnsim').directive('dngearsimGroupAssignment', function() {
       compact: '=compact',
       onChange: '&onChange'
     },
-    controller: groupAssignment,
+    controller: ['hCodeValues','statHelper','saveHelper','itemCategory','$scope','exportLinkHelper','dntData', groupAssignment],
     controllerAs: 'editCtrl',
     template: require('./group-assignment.html')
   };

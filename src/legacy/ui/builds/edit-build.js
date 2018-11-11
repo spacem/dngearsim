@@ -1,9 +1,11 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').controller('EditBuildCtrl', editBuildCtrl);
+angular.module('dnsim').controller('EditBuildCtrl',
+['$window','$location','$routeParams','$timeout','saveHelper','jobs','hCodeValues','character','region',
+editBuildCtrl]);
 
-function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,dntData,jobs,hCodeValues,itemColumnsToLoad,character,region) {
+function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,jobs,hCodeValues,character,region) {
   'use strict';
   
   var vm = this;

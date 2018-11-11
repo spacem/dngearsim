@@ -1,9 +1,9 @@
 (function () {
 'use strict';
   
-angular.module('dnsim').directive('dnsimItemIcon', ['exportLinkHelper','$location','region', dnsimItemIcon]);
+angular.module('dnsim').directive('dnsimItemIcon', [dnsimItemIcon]);
 
-function dnsimItemIcon(exportLinkHelper,$location,region) {
+function dnsimItemIcon() {
   return {
     restrict: 'E',
     scope: {

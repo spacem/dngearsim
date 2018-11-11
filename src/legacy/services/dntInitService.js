@@ -1,8 +1,8 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('dntInit', ['items','jobs','dntData','itemFactory',dntInit]);
-function dntInit(items,jobs,dntData,itemFactory) {
+angular.module('dnsim').factory('dntInit', ['items','jobs','dntData',dntInit]);
+function dntInit(items,jobs,dntData) {
   return function(progress) {
     
     progress('starting init');

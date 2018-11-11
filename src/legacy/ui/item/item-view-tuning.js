@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemViewTuningCtrl',
 
-['$timeout','dntData','itemFactory','hCodeValues',
-  function($timeout, dntData, itemFactory, hCodeValues) {
+['$timeout','dntData','itemFactory',
+  function($timeout, dntData, itemFactory) {
   'use strict';
   
   if(this.item == null) return;
