@@ -7,7 +7,7 @@ angular.module('dnsim').directive('dngearsimBuild', function() {
       onChange: '&onChange',
       server: '=server'
     },
-    controller: bulidController,
+    controller: ['$timeout', 'statHelper', 'itemCategory', 'saveHelper', bulidController],
     controllerAs: 'buildCtrl',
     template: require('./build.html')
   };

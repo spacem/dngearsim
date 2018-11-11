@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('RegionCtrl', 
-  ['$timeout','$route','$routeParams','$location','translations','region','$http',
-  function($timeout,$route,$routeParams,$location,translations,region,$http) {
+  ['$timeout','$route','$routeParams','translations','region','$http',
+  function($timeout,$route,$routeParams,translations,region,$http) {
     'use strict';
     
     var vm = this;

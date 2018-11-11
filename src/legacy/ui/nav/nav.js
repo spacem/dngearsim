@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('NavCtrl', 
-  ['$scope','$location','translations','region','itemCategory','saveHelper',
-  function($scope,$location,translations,region,itemCategory,saveHelper) {
+  ['$scope','$location','translations','region','saveHelper',
+  function($scope,$location,translations,region,saveHelper) {
     'use strict';
     
     try {

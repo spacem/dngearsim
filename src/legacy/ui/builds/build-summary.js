@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('buildSummaryCtrl',
 
-['$routeParams','$location','hCodeValues','statHelper','itemCategory',
-function($routeParams,$location,hCodeValues,statHelper,itemCategory) {
+['statHelper','itemCategory',
+function(statHelper,itemCategory) {
   'use strict';
   
   var vm = this;

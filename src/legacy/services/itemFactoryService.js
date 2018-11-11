@@ -1,7 +1,9 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('itemFactory',itemFactory);
+angular.module('dnsim').factory('itemFactory',
+['translations','dntData','hCodeValues','items',
+itemFactory]);
 
 function itemFactory(translations,dntData,hCodeValues,items) {
   

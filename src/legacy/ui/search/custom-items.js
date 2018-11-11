@@ -6,13 +6,13 @@ angular.module('dnsim').directive('dngearsimCustomItems', function() {
     scope: {},
     bindToController: {
     },
-    controller: ['$window','saveHelper','$location','hCodeValues','itemCategory','$timeout', customItemCtrl],
+    controller: ['$location','hCodeValues', customItemCtrl],
     controllerAs: 'customItems',
     template: require('./custom-items.html')
   };
 });
 
-function customItemCtrl($window,saveHelper,$location,hCodeValues,itemCategory,$timeout) {
+function customItemCtrl($location,hCodeValues) {
   'use strict';
 
   var vm = this;

@@ -1,6 +1,6 @@
 angular.module('dnsim').controller('ViewGroupCtrl', 
-  ['$scope','$window','region','$location','$routeParams','saveHelper','dntData','$timeout','translations','dntReset','exportLinkHelper','groupHelper','jobs','character','statHelper','hCodeValues',
-  function($scope,$window,region,$location,$routeParams,saveHelper,dntData,$timeout,translations,dntReset,exportLinkHelper,groupHelper,jobs,character,statHelper,hCodeValues) {
+  ['$scope','$window','region','$location','$routeParams','saveHelper','dntData','$timeout','translations','exportLinkHelper','groupHelper','jobs','character','statHelper','hCodeValues',
+  function($scope,$window,region,$location,$routeParams,saveHelper,dntData,$timeout,translations,exportLinkHelper,groupHelper,jobs,character,statHelper,hCodeValues) {
     'use strict';
   
     document.body.className = 'saved-back';

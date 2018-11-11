@@ -1,7 +1,9 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('character', character);
+angular.module('dnsim').factory('character',
+['dntData','itemColumnsToLoad','jobs','hCodeValues',
+character]);
 function character(dntData,itemColumnsToLoad,jobs,hCodeValues) {
 
   var jobConversions = 'rebootplayerweighttable.json';

@@ -1,8 +1,10 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('quickAddHelper', quickAddHelper);
-function quickAddHelper(dntData, translations, itemColumnsToLoad, itemCategory,itemFactory,jobs,hCodeValues) {
+angular.module('dnsim').factory('quickAddHelper',
+['itemCategory','itemFactory','jobs',
+quickAddHelper]);
+function quickAddHelper(itemCategory,itemFactory,jobs) {
 
   return {
     getItem: getItem,

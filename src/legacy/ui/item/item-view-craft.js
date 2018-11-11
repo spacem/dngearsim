@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemViewCraftCtrl',
 
-['$timeout','dntData','itemFactory','hCodeValues','translations',
-  function($timeout, dntData, itemFactory, hCodeValues, translations) {
+['$timeout','dntData','itemFactory',
+  function($timeout, dntData, itemFactory) {
   'use strict';
   
   if(this.item == null) return;

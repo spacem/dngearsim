@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('itemEditCtrl',
 
-['hCodeValues',
-function(hCodeValues) {
+[
+function() {
   'use strict';
   
   var vm = this;

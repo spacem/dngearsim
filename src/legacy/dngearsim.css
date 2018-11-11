@@ -306,19 +306,6 @@ background-position: -530px 0;
 .class-MACHINA {
 background-position: -610px -10px;
 }
-.login {
-  height:100vh;
-  background: url(/assets/images/Npc_left_argenta.png) no-repeat center top;
-}
-#firebaseui-auth-container {
-  position: fixed;
-  bottom: 5vh;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  opacity: 0.8;
-  filter: alpha(opacity=80);
-}
 .cat-icon-titles {
   background: url("/assets/images/icons/itemicon63.png") -285px -44px;
 }

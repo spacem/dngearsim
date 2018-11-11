@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('buildItemCtrl',
 
-['$timeout','statHelper','saveHelper','hCodeValues',
-function($timeout,statHelper,saveHelper,hCodeValues) {
+['hCodeValues',
+function(hCodeValues) {
   'use strict';
   
   var vm = this;

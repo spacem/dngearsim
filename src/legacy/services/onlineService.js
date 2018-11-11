@@ -53,7 +53,7 @@ function onlineService($window, $q, hCodeValues) {
       auth.onAuthStateChanged(function(user) {
         if(user == null) {
           // console.log('redirecting');
-          $window.location.href = 'login.html';
+          $window.location.href = 'assets/login.html';
         }
         else {
           // console.log('logged in');

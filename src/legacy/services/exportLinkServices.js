@@ -1,7 +1,9 @@
 (function () {
 'use strict';
 
-angular.module('dnsim').factory('exportLinkHelper', exportLinkHelper);
+angular.module('dnsim').factory('exportLinkHelper',
+['items','dntData','itemFactory','hCodeValues','itemColumnsToLoad','statHelper','translations','itemCategory','region',
+exportLinkHelper]);
 function exportLinkHelper(items,dntData,itemFactory,hCodeValues,itemColumnsToLoad,statHelper,translations,itemCategory,region) {
 
   return {

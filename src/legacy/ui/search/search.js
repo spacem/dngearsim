@@ -1,26 +1,25 @@
 (function () {
 'use strict';
 
-var controllerParams = ['$scope','$window','$routeParams','$timeout','$location','$route',
+var controllerParams = ['$window','$routeParams','$timeout','$location','$route',
 'translations',
 'itemCategory',
 'jobs',
 'hCodeValues',
 'itemFactory',
 'region',
-'saveHelper', itemSearchCtrl];
+itemSearchCtrl];
 
 angular.module('dnsim').controller('ItemSearchCtrl', controllerParams);
 
 function itemSearchCtrl(
-  $scope,$window,$routeParams,$timeout,$location,$route,
+  $window,$routeParams,$timeout,$location,$route,
   translations,
   itemCategory,
   jobs,
   hCodeValues,
   itemFactory,
-  region,
-  saveHelper) {
+  region) {
   'use strict';
   
   var vm = this;

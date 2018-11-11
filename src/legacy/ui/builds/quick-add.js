@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('quickAddCtrl',
 
-['$timeout','statHelper','saveHelper','quickAdd','itemCategory','jobs','dntData','exportLinkHelper',
-function($timeout,statHelper,saveHelper,quickAdd,itemCategory,jobs,dntData,exportLinkHelper) {
+['$timeout','saveHelper','quickAdd','itemCategory','jobs','dntData','exportLinkHelper',
+function($timeout,saveHelper,quickAdd,itemCategory,jobs,dntData,exportLinkHelper) {
   'use strict';
   
   var vm = this;
