@@ -5,12 +5,12 @@
 <meta name="description" content="dngearsim: dragon nest gear simulator">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<link rel="icon" type="image/png" href="assets/images/dngearsim_icon.png">
+<link rel="icon" type="image/png" href="images/dngearsim_icon.png">
 
 <title>dngearsim login</title>
-<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+<script src="//www.gstatic.com/firebasejs/5.5.3/firebase-app.js"></script>
+<script src="//www.gstatic.com/firebasejs/5.5.3/firebase-auth.js"></script>
 <script>
-  const firebase = require('firebase/app');
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyC-Mckgho1xAI2SQzsKnpsr2ObDKOhdSrE",
@@ -21,10 +21,10 @@
   firebase.initializeApp(config);
 </script>
   <script src="//www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css" />
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></link>
-  <link type="text/css" rel="stylesheet" href="dngearsim.css" />
+  <link type="text/css" rel="stylesheet" href="//www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" />
+  <link type="text/css" rel="stylesheet" href="login.css" />
   <script type="text/javascript">
     // FirebaseUI config.
     var uiConfig = {
@@ -59,7 +59,7 @@
         <div class="row">
           <div class="xs-col-12">
             <h3 class="header-title">
-              &nbsp;<a href="/dngearsim"><img src="/assets/images/dngearsim.png" /></a> <small>dragon nest gear simulator</small>
+              &nbsp;<a href="/dngearsim"><img src="images/dngearsim.png" /></a> <small>dragon nest gear simulator</small>
             </h3>
           </div>
         </div>
@@ -78,7 +78,7 @@
                 }
               </script>
               
-              <a href=".">skip log in</a><br />
+              <a class="btn btn-link" href=".">skip log in</a><br />
               <button class="btn btn-link" onclick="document.getElementById('reset').style.visibility = 'visible'"> reset password </button><br />
               <span id="reset" style="visibility : hidden">
                 <input id="email" value="username@email"></input><br />
