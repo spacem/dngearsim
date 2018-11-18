@@ -22,7 +22,7 @@ require('./services/saveService');
 require('./services/statService');
 require('./services/translationService');
 require('./services/uiTranslationService');
-require('./services/valueServices');
+require('./services/valueService');
 require('./ui/routes');
 require('./ui/about/about');
 require('./ui/builds/build-actions');
