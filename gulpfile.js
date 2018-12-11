@@ -15,7 +15,7 @@ var onError = function (err) {
   process.stdout.write('\x07');
 };
 
-gulp.task('default', ['build', 'watch', 'test'], function() {
+gulp.task('default', ['build', 'watch'], function() {
   return gulp.start('browser-sync');
 });
 

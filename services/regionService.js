@@ -15,6 +15,7 @@ function region(translations,dntReset,dntData,$route) {
       // {region: 'jdn', name: 'japan 日本', url : 'https://jdnfiles-59d57.firebaseapp.com'},
       {region: 'cdn', name: 'china 中國', url : 'https://cdnfiles.netlify.com/public'},
       {region: 'kdn', name: 'korea 대한민국', url : 'https://kdnfiles.netlify.com/public'},
+      {region: 'br', name: 'brazil', url : 'https://dnbr.netlify.com/public'},
     ];
   
   var dntLocationRegion = localStorage.getItem('lastDNTRegion');
