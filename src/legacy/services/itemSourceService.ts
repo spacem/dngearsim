@@ -94,8 +94,10 @@ function items(translations, dntData, itemColumnsToLoad) {
     pvpeq: null as ItemSource,
     cCommon: null as ItemSource,
     cClone: null as ItemSource,
-    c2016: null as ItemSource,
+    c2019: null as ItemSource,
+    c2018: null as ItemSource,
     c2017: null as ItemSource,
+    c2016: null as ItemSource,
     c2015: null as ItemSource,
     c2014: null as ItemSource,
     cash: null as ItemSource,
@@ -221,13 +223,24 @@ function items(translations, dntData, itemColumnsToLoad) {
       ignoreErrors: true,
       minRank: 4
   });
-  Object.assign(itemSources.c2016, {
-      mainDnt: 'itemtable_common2016.optimised.json',
-      partsDnt: 'partstable_common2016.optimised.json',
-      weaponDnt: 'weapontable_common2016.optimised.json',
+  Object.assign(itemSources.c2019, {
+      mainDnt: 'itemtable_common2019.optimised.json',
+      partsDnt: 'partstable_common2019.optimised.json',
+      weaponDnt: 'weapontable_common2019.optimised.json',
       setDnt: 'setitemtable_cash.optimised.json',
       type: 'cash',
       minLevel: 0,
+      ignoreErrors: true,
+      minRank: 0
+  });
+  Object.assign(itemSources.c2018, {
+      mainDnt: 'itemtable_common2018.optimised.json',
+      partsDnt: 'partstable_common2018.optimised.json',
+      weaponDnt: 'weapontable_common2018.optimised.json',
+      setDnt: 'setitemtable_cash.optimised.json',
+      type: 'cash',
+      minLevel: 0,
+      ignoreErrors: true,
       minRank: 0
   });
   Object.assign(itemSources.c2017, {
@@ -238,6 +251,15 @@ function items(translations, dntData, itemColumnsToLoad) {
       type: 'cash',
       minLevel: 0,
       ignoreErrors: true,
+      minRank: 0
+  });
+  Object.assign(itemSources.c2016, {
+      mainDnt: 'itemtable_common2016.optimised.json',
+      partsDnt: 'partstable_common2016.optimised.json',
+      weaponDnt: 'weapontable_common2016.optimised.json',
+      setDnt: 'setitemtable_cash.optimised.json',
+      type: 'cash',
+      minLevel: 0,
       minRank: 0
   });
   Object.assign(itemSources.c2015, {
