@@ -280,6 +280,7 @@
   
         // fd
         var fd = dupeStat(29);
+        fd.max = Math.floor(fd.max*(1+(getPc(fd))));
         addStat(fd);
         var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
         
