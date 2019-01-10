@@ -57,7 +57,7 @@ export const StatLookup: ValueStatDefs = {
     23: { id: 23, name: 'dark def', display: toPercent, def: true, searchable: true },
     25: { id: 25, name: 'hp', display: inThousands, def: true, pc: 75, skPc: 4075, searchable: true },
     26: { id: 26, name: 'mp', display: inThousands, def: true, pc: 76, skPc: 4076 },
-    29: { id: 29, name: 'fd', display: toNoDec, dps: true, pc: 1030, searchable: true },
+    29: { id: 29, name: 'fd', display: toNoDec, dps: true, pc: 79, searchable: true },
 
     // these are both min and max
     // shows with the same name but these are used really just for set bonus I think
@@ -84,6 +84,7 @@ export const StatLookup: ValueStatDefs = {
     75: { id: 75, name: 'hp%', display: toPercent, def: true, searchable: true },
     76: { id: 76, name: 'mp%', display: toPercent, def: true },
     77: { id: 77, name: 'mp recover%', display: toPercent, def: true },
+    79: { id: 79, name: 'fd%', display: toPercent, dps: true },
     81: { id: 81, name: 'safe move%', display: toPercent, noCustom: true, def: true },
 
     // this is found on ladder costumes and gives all types of element
