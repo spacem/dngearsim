@@ -62,7 +62,7 @@ function hCodeValues() {
 
         const stateId = Number(data[stateProp]);
         if (stateId === -1) {
-          break;
+          continue;
         }
 
         if (stateId === 107) {
