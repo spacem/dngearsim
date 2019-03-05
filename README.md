@@ -1,10 +1,10 @@
 # dngearsim - Dragon Nest Gear Simulator
 
 In case you came here looking to use the sim here is a link:
-https://spacem.github.io/dngearsim/
+https://dngearsim.netlify.com/
 
 Also check out my dnt viewer that is hosted here:
-https://spacem.github.io/dntviewer
+https://dntviewer.netlify.com/
 
 In the rest of this readme I will discuss the architecture of dngearsim.
 If you want to help with development please feel free to contact me via discord.
@@ -23,10 +23,9 @@ My idea was to use static html/javascript pages which could be hosted on free ho
 
 ## Starting development
 * npm start
-* Now browse to http://localhost:8080/dngearsim
+* Now browse to http://localhost:4200
 * Open the dngearsim folder in your ide to begin development
 * When you save you should notice the browser refresh
-* For unit tests browse to http://localhost:8080/dngearsim/tests/test.html
 
 ## Data
 I don’t use a database - as such.
@@ -69,5 +68,4 @@ This service stringifies javascript objects to json and then compresses them bef
 Data files for each region are uploaded to separate firebase hosting sites each with CORS enabled.
 This allows regions to be updated separately from the sim or from each other.
 Potentially they could go anywhere - even to the same location as dngearsim just as long as RegionService.js has the correct url to the locations.
-In theory you can deploy vanilla dnt files however you will need to adjust the file names in ItemSourceService as most files deployed use optimised versions.
 There are a set of scripts in a separate dntpreprocess project that create the optimised files as well as a few extra files.
