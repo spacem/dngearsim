@@ -343,8 +343,9 @@
           // apply element(s)
           var avgDmg = nonEleDamage;
           if(priElementId > 0) {
-            var elementStat = statLookup[priElementId];
+            var elementStat = dupeStat(priElementId);
             if(elementStat) {
+              elementStat.max += allElementStat.max;
               avgDmg = avgDmg * (1 + Number(elementStat.max)) * (1 - Number(eleResist));
             }
           }
@@ -352,8 +353,9 @@
           
           if(secElementId != priElementId) {
             if(secElementId > 0) {
-              var secondaryElementStat = statLookup[secElementId];
+              var secondaryElementStat = dupeStat(secElementId);
               if(secondaryElementStat) {
+                secondaryElementStat.max += allElementStat.max;
                 var secAvgDmg = nonEleDamage * (1+Number(secondaryElementStat.max)) * (1 - Number(eleResist));
                 addStat({id: id + 1000, max: secAvgDmg});
               }
