@@ -136,11 +136,23 @@ function quickAddSteps(dntData, translations, itemFactory, hCodeValues, quickAdd
           return [
           { id: 5, name: 'legendary' },
           { id: 4, name: 'unique' },
+          { id: 444, name: 'quality high grade unique' },
           { id: 3, name: 'epic' },
+          { id: 333, name: 'quality high grade epic' },
           ];
         },
         matchesItem: function(id, item) {
-          return item.rank && item.rank.id == id;
+          var index = Math.max(
+            item.name.indexOf('Quality'),
+            item.name.indexOf('High Grade'));
+          if(id == 333) {
+            return item.rank && item.rank.id == 3 && index >= 0;
+          } else if(id == 444) {
+            return item.rank && item.rank.id == 4 && index >= 0;
+          }
+          else {
+            return item.rank && item.rank.id == id && (index == -1 || id > 4);
+          }
         }
       },
       rankStep: {
