@@ -136,24 +136,11 @@ function quickAddSteps(dntData, translations, itemFactory, hCodeValues, quickAdd
           return [
           { id: 5, name: 'legendary' },
           { id: 4, name: 'unique' },
-          { id: 999, name: 'quality high grade epic' },
           { id: 3, name: 'epic' },
           ];
         },
         matchesItem: function(id, item) {
-          itemFactory.initItem(item);
-          if(item.name) {
-            var index = Math.max(
-              item.name.indexOf('Quality'),
-              item.name.indexOf('High Grade'));
-            if(id == 999) {
-              return item.rank && item.rank.id == 3 && index >= 0;
-            }
-            else {
-              return item.rank && item.rank.id == id && index < 0;
-            }
-          }
-          return false;
+          return item.rank && item.rank.id == id;
         }
       },
       rankStep: {
@@ -290,17 +277,11 @@ function quickAddSteps(dntData, translations, itemFactory, hCodeValues, quickAdd
       itemStep: {
         name: 'select',
         getOptions: function(category, build, datas) {
-          return quickAddHelper.findData(category, build, datas);
+          const retVal = quickAddHelper.findData(category, build, datas);
+          return quickAddHelper.filterDuplicates(retVal);
         },
         isItemStep: true,
         hideName: true,
-      },
-      namedItemStep: {
-        name: 'select',
-        getOptions: function(category, build, datas) {
-          return quickAddHelper.findData(category, build, datas);
-        },
-        isItemStep: true,
       },
       techSkillStep: {
         name: 'skill',
