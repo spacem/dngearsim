@@ -8,7 +8,8 @@ function quickAddHelper(itemCategory,itemFactory,jobs) {
 
   return {
     getItem: getItem,
-    findData: findData
+    findData: findData,
+    filterDuplicates: filterDuplicates
   };
   
   function getItem(datas) {
@@ -72,8 +73,6 @@ function quickAddHelper(itemCategory,itemFactory,jobs) {
       }
     }
 
-    retVal = filterDuplicates(retVal);
-
     retVal = retVal.sort(function(item1, item2) {
       if(sortFunc) {
         return sortFunc(sortId, item1, item2);
@@ -87,11 +86,12 @@ function quickAddHelper(itemCategory,itemFactory,jobs) {
   }
 
   function filterDuplicates(items) {
+
     var retVal = [];
     for(var i=0;i<items.length;++i) {
         var found = false;
-        for(var j=0;j<i;++j) {
-            if(areSameItem(items[i], items[j])) {
+        for(var j=0;j<retVal.length;++j) {
+            if(areSameItem(items[i], retVal[j])) {
                 found = true;
                 break;
             }
@@ -106,11 +106,19 @@ function quickAddHelper(itemCategory,itemFactory,jobs) {
   }
 
   function areSameItem(item1, item2) {
-      if(item1.name != item2.name || item1.stats.length != item2.stats.length || item1.rank != item2.rank || item1.levelLimit != item1.levelLimit) {
+      if(item1.stats.length !== item2.stats.length || item1.rank != item2.rank || item1.levelLimit != item1.levelLimit || item1.name !== item2.name) {
           return false;
       }
 
-      return _.isEqual(item1.stats, item2.stats);
+      for(var i=0;i<item1.stats.length;++i) {
+        if(item1.stats[i].id != item2.stats[i].id) {
+          return false;
+        }
+        if(item1.stats[i].max != item2.stats[i].max) {
+          return false;
+        }
+      }
+      return true;
   }
 }
 

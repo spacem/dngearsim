@@ -56,6 +56,7 @@ function itemSearchCtrl(
   vm.totalNumResults = 0;
   vm.grades = hCodeValues.rankNames;
   vm.stat = {id:-1, name:''};
+  vm.stat2 = {id:-1, name:''};
   vm.stats = [vm.stat];
   vm.results = null;
   
@@ -97,6 +98,14 @@ function itemSearchCtrl(
   }
   if(vm.origSavedSearchStatId > -1 && vm.origSavedSearchStatId in hCodeValues.stats) {
     vm.stat = hCodeValues.stats[vm.origSavedSearchStatId];
+  }
+
+  vm.origSavedSearchStatId2 = localStorage.getItem('searchStat2');
+  if($routeParams.stat2) {
+    vm.origSavedSearchStatId2 = $routeParams.stat2;
+  }
+  if(vm.origSavedSearchStatId2 > -1 && vm.origSavedSearchStatId2 in hCodeValues.stats) {
+    vm.stat2 = hCodeValues.stats[vm.origSavedSearchStatId2];
   }
 
   vm.navigate = function() {
@@ -160,6 +169,20 @@ function itemSearchCtrl(
         }
         
         vm.origSavedSearchStatId = vm.stat.id;
+      }
+    }
+
+    if(vm.stat2) {
+      if(vm.origSavedSearchStatId2 != vm.stat2.id) {
+        localStorage.setItem('searchStat2', vm.stat2.id);
+        if(vm.stat2.id > -1) {
+          $location.search('stat2', vm.stat2.id);
+        }
+        else {
+          $location.search('stat2', null);
+        }
+        
+        vm.origSavedSearchStatId2 = vm.stat2.id;
       }
     }
 
@@ -234,12 +257,22 @@ function itemSearchCtrl(
     if('altStat' in vm.stat) {
       altStatId = vm.stat.altStat;
     }
+
+    var pcStatId2 = -1;
+    if('pc' in vm.stat2) {
+      pcStatId2 = vm.stat2.pc;
+    }
+          
+    var altStatId2 = -1;
+    if('altStat' in vm.stat2) {
+      altStatId2 = vm.stat2.altStat;
+    }
   
     var statVals = [];
     var newResults = [];
     var numEquip = allItems.length;
     var curDisplay = 0;
-    for(var i=0;i<numEquip && (curDisplay<vm.maxDisplay || vm.stat.id >= 0);++i) {
+    for(var i=0;i<numEquip && (curDisplay<vm.maxDisplay || vm.stat.id >= 0 || vm.stat2.id >= 0);++i) {
       var e = allItems[i];
       if(e) {
         
@@ -288,10 +321,10 @@ function itemSearchCtrl(
           }
         }
         
+        var statVal = {};
         if(vm.stat.id >= 0) {
-          var statFound = false;
+          let statFound = false;
           
-          var statVal = {};
           for(var s=0;s<e.stats.length;++s) {
             var stat = e.stats[s];
             if(stat.id == vm.stat.id) {
@@ -311,13 +344,40 @@ function itemSearchCtrl(
               statVal.s = Number(stat.max);
             }
           }
-          
           if(!statFound) {
             continue;
           }
-          else {
-            statVals.push(statVal);
+        }
+        
+        if(vm.stat2.id >= 0) {
+          let statFound = false;
+          
+          for(var s=0;s<e.stats.length;++s) {
+            var stat = e.stats[s];
+            if(stat.id == vm.stat2.id) {
+              statFound = true;
+              statVal.i = curDisplay;
+              statVal.s2 = Number(stat.max);
+              break;
+            }
+            else if(stat.id == pcStatId2) {
+              statFound = true;
+              statVal.i = curDisplay;
+              statVal.s2 = Number(stat.max);
+            }
+            else if(stat.id == altStatId2) {
+              statFound = true;
+              statVal.i = curDisplay;
+              statVal.s2 = Number(stat.max);
+            }
           }
+          if(!statFound) {
+            continue;
+          }
+        }
+
+        if(vm.stat.id >= 0 || vm.stat2.id >= 0) {
+          statVals.push(statVal);
         }
         
         newResults.push(e);
@@ -325,11 +385,16 @@ function itemSearchCtrl(
       }
     }
     
-    if(vm.stat.id >= 0) {
-      
+    if(vm.stat.id >= 0 || vm.stat2.id >= 0) {
       var currentResults = Math.min(curDisplay, vm.maxDisplay);
       
       statVals = statVals.sort(function(value1, value2) {
+        if(!vm.stat2.id) {
+          return value2.s - value1.s;
+        }
+        if(!vm.stat.id || value2.s == value1.s) {
+          return value2.s2 - value1.s2;
+        }
         return value2.s - value1.s;
       });
       

@@ -427,7 +427,7 @@ background-image: linear-gradient(120deg, rgba(196,189,173, 0.1), rgba(233,231,2
 }
 .dnsim-card {
   overflow: hidden;
-  min-height: 50px;
+  min-height: 45px;
   margin: 8px;
   margin-left: 0;
   margin-right: 0;
