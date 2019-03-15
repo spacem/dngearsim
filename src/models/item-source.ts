@@ -13,6 +13,8 @@ export interface ItemSource {
     partsDnt?: string;
     petDnt?: string;
     petLevelDnt?: string;
+    skillDnt?: string;
+    skillLevelDnt?: string;
     type?: string;
     weaponDnt?: string;
     setDnt?: string;

@@ -1,8 +1,15 @@
 // note: skills shown on-screen have 1k added to their id
 export const SkillEffectLookup = {
+    1: { id: 1, name: 'phyisical attack power', mapTo: 32 },
     2: { id: 2, name: 'phyisical attack power', mapTo: 3001 },
+    3: { id: 3, name: 'def', mapTo: 8 },
+    5: { id: 5, name: 'str', mapTo: 0 },
+    6: { id: 6, name: 'agi', mapTo: 1 },
+    7: { id: 7, name: 'int', mapTo: 2 },
+    8: { id: 8, name: 'vit', mapTo: 3 },
     13: { id: 13, name: 'mp', mapTo: 26 },
     25: { id: 25, name: 'action speed' },
+    28: { id: 28, name: 'magic attack power', mapTo: 33 },
     29: { id: 29, name: 'magic attack power', mapTo: 3002 },
     32: { id: 32, name: 'fire %', mapTo: 16 },
     33: { id: 33, name: 'ice %', mapTo: 17 },
@@ -20,6 +27,7 @@ export const SkillEffectLookup = {
     88: { id: 88, name: 'agi%', mapTo: 4051 },
     89: { id: 89, name: 'int%', mapTo: 4052 },
     90: { id: 90, name: 'vit%', mapTo: 4053 },
+    93: { id: 93, name: 'mdef', mapTo: 9 },
     // 134 : { id: 134, name: 'p dmg reduction%' },
     // 135 : { id: 135, name: 'm dmg reduction%' },
     185: { id: 185, name: 'wots attack power', mapTo: 3000 },
