@@ -23,7 +23,7 @@ function itemCategory(itemFactory,items,dntData) {
       {path: 'costume', name:'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, hideLevel: true, limitExchange: [16,17,18,19,20,21,22], tId: 7607},
       {path: 'imprint', name:'imprint', sourceType: 'imprint', numItemText: '7', maxCat: 7, hideLevel: true, hideJob: true, tId: 1000108314},
       {path: 'cash', name:'cash', sourceType: 'cash', numItemText: '8', maxCat: 8, maxExchange: 2, hideJob: true, hideLevel: true, limitExchange: [23,24,25,26,27,28,29], tId: 7608},
-      {path: 'wellspring', name:'wellspring', sourceType: 'wellspring', hideJob: true, numItemText: '1', maxCat: 1, limitExchange: [51]},
+      {path: 'food', name:'food', sourceType: 'food', hideJob: true, numItemText: '1', maxCat: 1, limitExchange: [40,51]},
       {path: 'extras', name:'extras', sourceType: 'xtras', limitExchange: [47], hideJob: true, hideLevel: true, tId: 4504},
       {path: 'skills', name:'skills', searchType: 'skills'},
       {path: 'custom', name:'custom', searchType: 'custom', hideInSearch: true},

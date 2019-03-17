@@ -118,7 +118,8 @@ function items(translations, dntData, itemColumnsToLoad) {
     event: null as ItemSource,
     xtras: null as ItemSource,
     imprint: null as ItemSource,
-    wellspring: null as ItemSource
+    wellspring: null as ItemSource,
+    food: null as ItemSource
   };
 
   for (const key of Object.keys(itemSources)) {
@@ -331,11 +332,19 @@ function items(translations, dntData, itemColumnsToLoad) {
   });
   Object.assign(itemSources.wellspring, {
     mainDnt: 'itemtable_source.json',
-    type: 'wellspring',
+    type: 'food',
     minLevel: 0,
     minRank: 0,
     skillDnt: 'skilltable_item.json',
     skillLevelDnt: 'skillleveltable_item.json'
+  });
+  Object.assign(itemSources.food, {
+    mainDnt: 'itemtable_cook.json',
+    type: 'food',
+    minLevel: 0,
+    minRank: 0,
+    skillDnt: 'skilltable_farm.json',
+    skillLevelDnt: 'skillleveltable_farm.json'
   });
 
   return itemSources;

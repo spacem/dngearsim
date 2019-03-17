@@ -85,9 +85,10 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
       var state1Max = dntData.getValue(itemType.mainDnt, r, 'State1_Max');
       var dStateValue1 = dntData.getValue(itemType.mainDnt, r, 'StateValue1');
       var dTypeParam1 = dntData.getValue(itemType.mainDnt, r, 'TypeParam1');
+      var skillId = dntData.getValue(itemType.mainDnt, r, 'SkillID');
 
       // skip items with no data
-      if (state1Max > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35 || dType == 1 || dType == 90) {
+      if (state1Max > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35 || dType == 1 || skillId > 0) {
         var potentials = [];
         if (dTypeParam1 > 0 && 'potentialDnt' in itemType) {
           potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);

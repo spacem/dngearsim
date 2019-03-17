@@ -128,11 +128,21 @@ export const StatLookup: ValueStatDefs = {
 
     3008: { id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
 
+    4000: { id: 4000, name: 'skStr', display: inThousands, def: true },
+    4001: { id: 4001, name: 'skAgi', display: inThousands, def: true },
+    4002: { id: 4002, name: 'skInt', display: inThousands, def: true },
+    4003: { id: 4003, name: 'skVit', display: inThousands, def: true },
+    4008: { id: 4008, name: 'skPDef', display: inThousands, def: true },
+    4009: { id: 4009, name: 'skPDef', display: inThousands, def: true },
     4012: { id: 4012, name: 'skCrit', display: inThousands, dps: true },
+    4032: { id: 4032, name: 'skPdmg', display: inThousands, dps: true },
+    4033: { id: 4033, name: 'skMdmg', display: inThousands, dps: true },
     4050: { id: 4050, name: 'skStr%', display: toPercent, dps: true },
     4051: { id: 4051, name: 'skAgi%', display: toPercent, dps: true },
     4052: { id: 4052, name: 'skInt%', display: toPercent, dps: true },
     4053: { id: 4053, name: 'skVit%', display: toPercent, def: true },
+    4058: { id: 4058, name: 'skPDef%', display: toPercent, def: true },
+    4059: { id: 4059, name: 'skMDef%', display: toPercent, def: true },
     4075: { id: 4075, name: 'skHp%', display: toPercent, def: true },
     4076: { id: 4076, name: 'skMp%', display: toPercent, def: true },
 
