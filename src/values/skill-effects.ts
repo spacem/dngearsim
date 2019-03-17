@@ -3,6 +3,7 @@ export const SkillEffectLookup = {
     1: { id: 1, name: 'phyisical attack power', mapTo: 32 },
     2: { id: 2, name: 'phyisical attack power', mapTo: 3001 },
     3: { id: 3, name: 'def', mapTo: 8 },
+    4: { id: 4, name: '%def', mapTo: 58 },
     5: { id: 5, name: 'str', mapTo: 0 },
     6: { id: 6, name: 'agi', mapTo: 1 },
     7: { id: 7, name: 'int', mapTo: 2 },
@@ -28,6 +29,7 @@ export const SkillEffectLookup = {
     89: { id: 89, name: 'int%', mapTo: 4052 },
     90: { id: 90, name: 'vit%', mapTo: 4053 },
     93: { id: 93, name: 'mdef', mapTo: 9 },
+    94: { id: 94, name: '%mdef', mapTo: 59 },
     // 134 : { id: 134, name: 'p dmg reduction%' },
     // 135 : { id: 135, name: 'm dmg reduction%' },
     185: { id: 185, name: 'wots attack power', mapTo: 3000 },
@@ -49,6 +51,7 @@ export const SkillEffectLookup = {
             }
         }
     },
+    234: { id: 234, name: 'crit', mapTo: 12 },
     372: {
         id: 372,
         name: 'statConversion',
