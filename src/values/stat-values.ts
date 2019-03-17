@@ -133,7 +133,7 @@ export const StatLookup: ValueStatDefs = {
     4002: { id: 4002, name: 'skInt', display: inThousands, def: true },
     4003: { id: 4003, name: 'skVit', display: inThousands, def: true },
     4008: { id: 4008, name: 'skPDef', display: inThousands, def: true },
-    4009: { id: 4009, name: 'skPDef', display: inThousands, def: true },
+    4009: { id: 4009, name: 'skMDef', display: inThousands, def: true },
     4012: { id: 4012, name: 'skCrit', display: inThousands, dps: true },
     4032: { id: 4032, name: 'skPdmg', display: inThousands, dps: true },
     4033: { id: 4033, name: 'skMdmg', display: inThousands, dps: true },

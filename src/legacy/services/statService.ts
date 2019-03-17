@@ -1,5 +1,56 @@
 import { Item } from 'src/models/item';
 import { Build } from 'src/models/build';
+import { Stat } from 'src/models/stat';
+
+class StatCalc {
+  retVal = [];
+  statLookup = {};
+
+  constructor(combinedStats: Stat[], private valueService: any) {
+    angular.forEach(combinedStats, function (stat, index) {
+      this.statLookup[stat.id] = stat;
+    });
+  }
+
+  getPc(stat) {
+    const statDef = this.valueService.stats[stat.id];
+    if (this.statLookup[statDef.pc]) {
+      return Number(this.statLookup[statDef.pc].max);
+    } else {
+      return 0;
+    }
+  }
+
+  getSkillPc(stat) {
+    const statDef = this.valueService.stats[stat.id];
+    if (this.statLookup[statDef.skPc]) {
+      return Number(this.statLookup[statDef.skPc].max);
+    } else {
+      return 0;
+    }
+  }
+
+  applyPc(stat) {
+    stat.max = Math.floor(
+      stat.max * (1 + this.getPc(stat)) * (1 + this.getSkillPc(stat))
+    );
+  }
+
+  dupeStat(id) {
+    const stat = this.statLookup[id];
+    if (stat) {
+      return { id: id, max: Number(stat.max), pc: stat.pc };
+    } else {
+      return { id: id, max: 0, pc: 0 };
+    }
+  }
+
+  addStat(stat) {
+    if (stat.max > 0) {
+      this.retVal.push(stat);
+    }
+  }
+}
 
 (function () {
   'use strict';
@@ -74,199 +125,172 @@ import { Build } from 'src/models/build';
         return this.getCalculatedStats(group, allStats);
       },
 
-      getCalculatedStats: function (group: Build, combinedStats) {
+      getCalculatedStats: function (group: Build, combinedStats: Stat[]) {
 
-        var retVal = [];
-        var statLookup = {};
         if (!group.conversions || !group.enemyStatCaps || !group.playerStatCaps) {
           return [];
         }
 
-        angular.forEach(combinedStats, function (stat, index) {
-          statLookup[stat.id] = stat;
-        });
+        const calc = new StatCalc(combinedStats, hCodeValues);
 
-        function getPc(stat) {
-          var statDef = hCodeValues.stats[stat.id];
-          if (statLookup[statDef.pc]) {
-            return Number(statLookup[statDef.pc].max);
-          }
-          else {
-            return 0;
-          }
-        }
-
-        function getSkillPc(stat) {
-          var statDef = hCodeValues.stats[stat.id];
-          if (statLookup[statDef.skPc]) {
-            return Number(statLookup[statDef.skPc].max);
-          }
-          else {
-            return 0;
-          }
-        }
-
-        function applyPc(stat) {
-          stat.max = Math.floor(
-            stat.max * (1 + getPc(stat)) * (1 + getSkillPc(stat))
-          );
-        }
-
-        function dupeStat(id) {
-          var stat = statLookup[id];
-          if (stat) {
-            return { id: id, max: Number(stat.max), pc: stat.pc };
-          }
-          else {
-            return { id: id, max: 0, pc: 0 };
-          }
-        }
-
-        function addStat(stat) {
-          if (stat.max > 0) {
-            retVal.push(stat);
-          }
-        }
-
-        var critResist;
+        let critResist;
         if (!('critResist' in group)) {
           critResist = 0.20;
-        }
-        else {
+        } else {
           critResist = group.critResist / 100.0;
         }
 
-        var eleResist;
+        let eleResist;
         if (!('eleResist' in group)) {
           eleResist = 0;
-        }
-        else {
+        } else {
           eleResist = group.eleResist / 100.0;
         }
 
         // base stats
-        var str = dupeStat(0);
-        applyPc(str);
+        const str = calc.dupeStat(0);
+        calc.applyPc(str);
+        const skStr = calc.dupeStat(4000);
+        str.max += skStr.max;
 
-        var agi = dupeStat(1);
-        applyPc(agi);
+        const agi = calc.dupeStat(1);
+        calc.applyPc(agi);
+        const skAgi = calc.dupeStat(4001);
+        agi.max += skAgi.max;
 
-        var int = dupeStat(2);
-        applyPc(int);
+        const int = calc.dupeStat(2);
+        calc.applyPc(int);
+        const skInt = calc.dupeStat(4002);
+        int.max += skInt.max;
 
-        var vit = dupeStat(3);
-        applyPc(vit);
+        const vit = calc.dupeStat(3);
+        calc.applyPc(vit);
+        const skVit = calc.dupeStat(4003);
+        vit.max += skVit.max;
 
         // add vit to hp
-        var hp = dupeStat(25);
+        const hp = calc.dupeStat(25);
         hp.max += (vit.max * Number(group.conversions.HP));
-        applyPc(hp);
+        calc.applyPc(hp);
 
         // defs
-        var def = dupeStat(8);
+        const def = calc.dupeStat(8);
         def.max += (vit.max * Number(group.conversions.PhysicalDefense));
-        applyPc(def);
+        calc.applyPc(def);
+        const skDef = calc.dupeStat(4008);
+        def.max += skDef.max;
 
-        var defpc = dupeStat(1008);
+        const defpc = calc.dupeStat(1008);
         // defpc.max = Math.max(0.85, Number(def.max)/Number(group.enemyStatCaps.Cdefense));
         defpc.max = Math.min(0.85, def.max / Number(group.enemyStatCaps.Cdefense));
-        addStat(defpc);
+        const skDefPc = calc.dupeStat(4058);
+        defpc.max += skDefPc.max; // TODO: need to confirm this is how to calculate def% skill
+        calc.addStat(defpc);
 
-        var mdef = dupeStat(9);
+        const mdef = calc.dupeStat(9);
         mdef.max += (int.max * Number(group.conversions.MagicDefense));
-        applyPc(mdef);
+        calc.applyPc(mdef);
+        const skMDef = calc.dupeStat(4009);
+        mdef.max += skMDef.max;
 
-        var mdefpc = dupeStat(1009);
+        const mdefpc = calc.dupeStat(1009);
         // mdefpc.max = Math.max(0.85, Number(mdef.max)/Number(group.enemyStatCaps.Cdefense));
         mdefpc.max = Math.min(0.85, mdef.max / Number(group.enemyStatCaps.Cdefense));
-        addStat(mdefpc);
+        const skMDefPc = calc.dupeStat(4059);
+        mdefpc.max += skMDefPc.max; // TODO: need to confirm this is how to calculate def% skill
+        calc.addStat(mdefpc);
 
         // attack power - like fd but for bufs
         // this shows as blue damage
         // i think there are magic and phis variants of this but doesnt matter
-        var aPwr = dupeStat(3000);
+        var aPwr = calc.dupeStat(3000);
 
-        var minPdmg = dupeStat(4);
-        var maxPdmg = dupeStat(5);
+        var minPdmg = calc.dupeStat(4);
+        var maxPdmg = calc.dupeStat(5);
 
         // physical damage
         if (!group.damageType || (group.damageType.id != 2 && group.damageType.id != 5)) {
-          var extraPdmg = dupeStat(32);
-          var extraPdmgMod = dupeStat(101);
-          var paPwr = dupeStat(3001);
+          var extraPdmg = calc.dupeStat(32);
+          var extraPdmgMod = calc.dupeStat(101);
+          var paPwr = calc.dupeStat(3001);
+          var skPdmg = calc.dupeStat(4032);
 
           // special stats for zeal
-          var intToPdmg = dupeStat(10164);
+          var intToPdmg = calc.dupeStat(10164);
 
           // special stat for ah
-          var strToPdmg = dupeStat(103721);
+          var strToPdmg = calc.dupeStat(103721);
 
           minPdmg.max += extraPdmg.max;
           minPdmg.max += Math.floor(str.max * Number(group.conversions.StrengthAttack));
           minPdmg.max += Math.floor(agi.max * Number(group.conversions.AgilityAttack));
 
-          minPdmg.max = Math.floor(minPdmg.max * (1 + (getPc(minPdmg) + extraPdmgMod.max)));
+          minPdmg.max = Math.floor(minPdmg.max * (1 + (this.getPc(minPdmg) + extraPdmgMod.max)));
           minPdmg.max = Math.floor(minPdmg.max * (1 + aPwr.max + paPwr.max));
           minPdmg.max += Math.floor(intToPdmg.max * int.max);
           minPdmg.max += Math.floor(strToPdmg.max * str.max);
-          addStat(minPdmg);
+          minPdmg.max += Math.floor(skPdmg.max);
+          calc.addStat(minPdmg);
 
           maxPdmg.max += extraPdmg.max;
           maxPdmg.max += Math.floor(str.max * Number(group.conversions.StrengthAttack));
           maxPdmg.max += Math.floor(agi.max * Number(group.conversions.AgilityAttack));
 
-          maxPdmg.max = Math.floor(maxPdmg.max * (1 + (getPc(maxPdmg) + extraPdmgMod.max)));
+          maxPdmg.max = Math.floor(maxPdmg.max * (1 + (this.getPc(maxPdmg) + extraPdmgMod.max)));
           maxPdmg.max = Math.floor(maxPdmg.max * (1 + aPwr.max + paPwr.max));
           maxPdmg.max += Math.floor(intToPdmg.max * int.max);
           maxPdmg.max += Math.floor(strToPdmg.max * str.max);
-          addStat(maxPdmg);
+          maxPdmg.max += Math.floor(skPdmg.max);
+          calc.addStat(maxPdmg);
         }
 
-        var minMdmg = dupeStat(6);
-        var maxMdmg = dupeStat(7);
+        var minMdmg = calc.dupeStat(6);
+        var maxMdmg = calc.dupeStat(7);
 
         // magic damage
         if (!group.damageType || (group.damageType.id != 1 && group.damageType.id != 4)) {
-          var extraMdmg = dupeStat(33);
-          var extraMdmgMod = dupeStat(102);
-          var maPwr = dupeStat(3002);
+          var extraMdmg = calc.dupeStat(33);
+          var extraMdmgMod = calc.dupeStat(102);
+          var maPwr = calc.dupeStat(3002);
+          var skMdmg = calc.dupeStat(4033);
 
           // special stats for zeal
-          var strToMdmg = dupeStat(10165);
-          var intToMdmg = dupeStat(10372);
+          var strToMdmg = calc.dupeStat(10165);
+          var intToMdmg = calc.dupeStat(10372);
 
           minMdmg.max += extraMdmg.max;
           minMdmg.max += Math.floor(int.max * Number(group.conversions.IntelligenceAttack));
 
-          minMdmg.max = Math.floor(minMdmg.max * (1 + (getPc(minMdmg) + extraMdmgMod.max)));
+          minMdmg.max = Math.floor(minMdmg.max * (1 + (this.getPc(minMdmg) + extraMdmgMod.max)));
           minMdmg.max = minMdmg.max * (1 + aPwr.max + maPwr.max);
           minMdmg.max += Math.floor(strToMdmg.max * str.max);
           minMdmg.max += Math.floor(intToMdmg.max * int.max);
-          addStat(minMdmg);
+          minMdmg.max += Math.floor(skMdmg.max);
+          calc.addStat(minMdmg);
 
           maxMdmg.max += extraMdmg.max;
           maxMdmg.max += (int.max * Number(group.conversions.IntelligenceAttack));
 
-          maxMdmg.max = Math.floor(maxMdmg.max * (1 + (getPc(maxMdmg) + extraMdmgMod.max)));
+          maxMdmg.max = Math.floor(maxMdmg.max * (1 + (this.getPc(maxMdmg) + extraMdmgMod.max)));
           maxMdmg.max = maxMdmg.max * (1 + aPwr.max + maPwr.max);
           maxMdmg.max += Math.floor(strToMdmg.max * str.max);
           maxMdmg.max += Math.floor(intToMdmg.max * int.max);
-          addStat(maxMdmg);
+          maxMdmg.max += Math.floor(skMdmg.max);
+          calc.addStat(maxMdmg);
         }
 
-
         // crit chance %
-        var crit = dupeStat(12);
+        var crit = calc.dupeStat(12);
         crit.max += (agi.max * Number(group.conversions.Critical));
-        applyPc(crit);
+        calc.applyPc(crit);
 
-        var skCrit = dupeStat(4012);
+        var skCrit = calc.dupeStat(4012);
         crit.max += skCrit.max;
-        addStat(crit);
-        var itemCrit = dupeStat(1012);
+        calc.addStat(crit);
+        var itemCrit = calc.dupeStat(1012);
 
         var critChance = Math.min(0.89, (crit.max / Number(group.enemyStatCaps.Ccritical)) + itemCrit.max);
-        retVal.push({id: 1012, max: critChance});
+        calc.addStat({id: 1012, max: critChance});
 
         let agiToCdmg = 0;
         if(Number(group.conversions.AgilityToCriticalDamage) > 0) {
@@ -288,27 +312,27 @@ import { Build } from 'src/models/build';
         }
   
         // crit damage %
-        var cDmg = dupeStat(103);
+        var cDmg = calc.dupeStat(103);
         cDmg.max += ((str.max) * strToCdmg);
         cDmg.max += ((agi.max) * agiToCdmg);
         cDmg.max += ((int.max) * intToCdmg);
-        applyPc(cDmg);
-        addStat(cDmg);
+        calc.applyPc(cDmg);
+        calc.addStat(cDmg);
 
-        var itemCtriDmg = dupeStat(1103);
+        var itemCtriDmg = calc.dupeStat(1103);
         var critDamagePc = Math.min(1, (cDmg.max / group.playerStatCaps.CcriticalDamage) + itemCtriDmg.max);
-        addStat({ id: 1103, max: critDamagePc + 2 });
+        calc.addStat({ id: 1103, max: critDamagePc + 2 });
 
         // fd
-        var fd = dupeStat(29);
-        fd.max = Math.floor(fd.max * (1 + (getPc(fd))));
-        addStat(fd);
+        var fd = calc.dupeStat(29);
+        fd.max = Math.floor(fd.max * (1 + (calc.getPc(fd))));
+        calc.addStat(fd);
         var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
 
-        var fdSkill = dupeStat(10389);
-        var newFdPc = dupeStat(1030);
+        var fdSkill = calc.dupeStat(10389);
+        var newFdPc = calc.dupeStat(1030);
         newFdPc.max += fdSkill.max + Math.min(1, (fd.max / maxFd));
-        addStat(newFdPc);
+        calc.addStat(newFdPc);
 
         var secElementId = 0;
         var priElementId = 0;
@@ -325,31 +349,31 @@ import { Build } from 'src/models/build';
           secElementId = 0;
         }
 
-        var allElementStat = dupeStat(88);
+        var allElementStat = calc.dupeStat(88);
 
         // elements
-        var firePc = dupeStat(16);
+        var firePc = calc.dupeStat(16);
         firePc.max += allElementStat.max;
         if (firePc.id == priElementId || firePc.id == secElementId) {
-          addStat(firePc);
+          calc.addStat(firePc);
         }
 
-        var icePc = dupeStat(17);
+        var icePc = calc.dupeStat(17);
         icePc.max += allElementStat.max;
         if (icePc.id == priElementId || icePc.id == secElementId) {
-          addStat(icePc);
+          calc.addStat(icePc);
         }
 
-        var lightPc = dupeStat(18);
+        var lightPc = calc.dupeStat(18);
         lightPc.max += allElementStat.max;
         if (lightPc.id == priElementId || lightPc.id == secElementId) {
-          addStat(lightPc);
+          calc.addStat(lightPc);
         }
 
-        var darkPc = dupeStat(19);
+        var darkPc = calc.dupeStat(19);
         darkPc.max += allElementStat.max;
         if (darkPc.id == priElementId || darkPc.id == secElementId) {
-          addStat(darkPc);
+          calc.addStat(darkPc);
         }
 
         // average damage
@@ -364,25 +388,25 @@ import { Build } from 'src/models/build';
           // apply element(s)
           var avgDmg = nonEleDamage;
           if (priElementId > 0) {
-            var elementStat = dupeStat(priElementId);
+            var elementStat = calc.dupeStat(priElementId);
             if (elementStat) {
               elementStat.max += allElementStat.max;
               avgDmg = avgDmg * (1 + Number(elementStat.max)) * (1 - Number(eleResist));
             }
           }
-          addStat({ id: id, max: avgDmg });
+          calc.addStat({ id: id, max: avgDmg });
 
           if (secElementId != priElementId) {
             if (secElementId > 0) {
-              var secondaryElementStat = dupeStat(secElementId);
+              var secondaryElementStat = calc.dupeStat(secElementId);
               if (secondaryElementStat) {
                 secondaryElementStat.max += allElementStat.max;
                 var secAvgDmg = nonEleDamage * (1 + Number(secondaryElementStat.max)) * (1 - Number(eleResist));
-                addStat({ id: id + 1000, max: secAvgDmg });
+                calc.addStat({ id: id + 1000, max: secAvgDmg });
               }
             }
             else {
-              addStat({ id: id + 1000, max: nonEleDamage });
+              calc.addStat({ id: id + 1000, max: nonEleDamage });
             }
           }
         }
@@ -401,34 +425,34 @@ import { Build } from 'src/models/build';
         }
 
         if (group.damageType && group.damageType.id == 4) {
-          addStat({ id: 1005, max: (minPdmg.max + maxPdmg.max) / 2 });
+          calc.addStat({ id: 1005, max: (minPdmg.max + maxPdmg.max) / 2 });
         }
 
         if (group.damageType && group.damageType.id == 5) {
-          addStat({ id: 1007, max: (minMdmg.max + maxMdmg.max) / 2 });
+          calc.addStat({ id: 1007, max: (minMdmg.max + maxMdmg.max) / 2 });
         }
 
         // Equivalent HP
-        var pdefEqHp = dupeStat(2008);
+        var pdefEqHp = calc.dupeStat(2008);
         pdefEqHp.max = hp.max / (1 - defpc.max);
 
-        var mdefEqHp = dupeStat(2009);
+        var mdefEqHp = calc.dupeStat(2009);
         mdefEqHp.max = hp.max / (1 - mdefpc.max);
 
-        var eqHp = dupeStat(3008);
+        var eqHp = calc.dupeStat(3008);
         // eqHp.max = (pdefEqHp.max + mdefEqHp.max) / 2;
         eqHp.max = pdefEqHp.max;
-        addStat(eqHp);
+        calc.addStat(eqHp);
 
-        addStat(str);
-        addStat(agi);
-        addStat(int);
-        addStat(vit);
-        addStat(hp);
-        addStat(def);
-        addStat(mdef);
+        calc.addStat(str);
+        calc.addStat(agi);
+        calc.addStat(int);
+        calc.addStat(vit);
+        calc.addStat(hp);
+        calc.addStat(def);
+        calc.addStat(mdef);
 
-        return retVal;
+        return calc.retVal;
       },
 
       getNakedStats(group: Build) {

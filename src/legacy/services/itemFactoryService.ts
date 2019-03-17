@@ -124,8 +124,7 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
       let d;
       if (item.itemSource && item.itemSource in items) {
         d = dntData.getRow(items[item.itemSource].mainDnt, item.row);
-      }
-      else if (item.fileName) {
+      } else if (item.fileName) {
         d = dntData.getRow(item.fileName + '.json', item.row);
       }
       delete item.row;
