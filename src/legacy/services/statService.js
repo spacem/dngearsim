@@ -267,13 +267,34 @@
         
         var critChance = Math.min(0.89, (crit.max / Number(group.enemyStatCaps.Ccritical)) + itemCrit.max);
         retVal.push({id: 1012, max: critChance});
+
+        let agiToCdmg = 0;
+        if(Number(group.conversions.AgilityToCriticalDamage) > 0) {
+          agiToCdmg = Number(group.conversions.AgilityToCriticalDamage);
+        }
+
+        let strToCdmg = 0;
+        if(Number(group.conversions.StrengthToCriticalDamage) > 0) {
+          strToCdmg = Number(group.conversions.StrengthToCriticalDamage);
+        } else if(Number(group.conversions.StrengthIntelligenceToCriticalDamage)) {
+          strToCdmg = Number(group.conversions.StrengthIntelligenceToCriticalDamage);
+        }
+
+        let intToCdmg = 0;
+        if(Number(group.conversions.IntelligenceToCriticalDamage) > 0) {
+          intToCdmg = Number(group.conversions.IntelligenceToCriticalDamage);
+        } else if(Number(group.conversions.StrengthIntelligenceToCriticalDamage)) {
+          intToCdmg = Number(group.conversions.StrengthIntelligenceToCriticalDamage);
+        }
   
         // crit damage %
         var cDmg = dupeStat(103);
-        cDmg.max += ((str.max+int.max) * Number(group.conversions.StrengthIntelligenceToCriticalDamage));
+        cDmg.max += ((str.max) * strToCdmg);
+        cDmg.max += ((agi.max) * agiToCdmg);
+        cDmg.max += ((int.max) * intToCdmg);
         applyPc(cDmg);
         addStat(cDmg);
-  
+
         var itemCtriDmg = dupeStat(1103);
         var critDamagePc = Math.min(1, (cDmg.max / group.playerStatCaps.CcriticalDamage) + itemCtriDmg.max);
         addStat({id: 1103, max: critDamagePc + 2});

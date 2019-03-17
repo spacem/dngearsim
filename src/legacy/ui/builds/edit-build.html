@@ -108,8 +108,15 @@
 {{'int&nbsp;to&nbsp;mdmg'| translate}}:&nbsp;{{editGroup.getJobConversion('IntelligenceAttack') | number:2}} |
 {{'vit&nbsp;to&nbsp;pdef'| translate}}:&nbsp;{{editGroup.getJobConversion('PhysicalDefense') | number:2}} |
 {{'int&nbsp;to&nbsp;mdef'| translate}}:&nbsp;{{editGroup.getJobConversion('MagicDefense') | number:2}} |
-{{'agi&nbsp;to&nbsp;crit'| translate}}:&nbsp;{{editGroup.getJobConversion('Critical')}} |
-{{'str&nbsp;int&nbsp;to&nbsp;cdmg'| translate}}:&nbsp;{{editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
+{{'agi&nbsp;to&nbsp;crit'| translate}}:&nbsp;{{editGroup.getJobConversion('Critical')}}
+    </p>
+    <p ng-if="editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')">
+{{'both&nbsp;str&nbsp;and&nbsp;int&nbsp;to&nbsp;cdmg'| translate}}:&nbsp;{{editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')}}
+    </p>
+    <p ng-if="!editGroup.getJobConversion('StrengthIntelligenceToCriticalDamage')">
+{{'str&nbsp;to&nbsp;cdmg'| translate}}:&nbsp;{{editGroup.getJobConversion('StrengthToCriticalDamage')}} |
+{{'agi&nbsp;to&nbsp;cdmg'| translate}}:&nbsp;{{editGroup.getJobConversion('AgilityToCriticalDamage')}} |
+{{'int&nbsp;to&nbsp;cdmg'| translate}}:&nbsp;{{editGroup.getJobConversion('IntelligenceToCriticalDamage')}}
     </p>
   </div>
 </div>

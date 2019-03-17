@@ -75,16 +75,16 @@ function quickAdd(quickAddSteps, quickAddHelper) {
     hasOptions: function(category, build, datas) {
       if(category.name in this.categorySteps) {
         var stepName = this.getStepName(category, datas.length);
-        if(quickAddSteps[stepName].hasOptions) {
-          return quickAddSteps[stepName].hasOptions(category, build, datas);
-        }
-        else {
-          return quickAddSteps[stepName].getOptions(category, build, datas).length > 0;
+        if(stepName in quickAddSteps) {
+          if(quickAddSteps[stepName].hasOptions) {
+            return quickAddSteps[stepName].hasOptions(category, build, datas);
+          }
+          else {
+            return quickAddSteps[stepName].getOptions(category, build, datas).length > 0;
+          }
         }
       }
-      else {
-        return false;
-      }
+      return false;
     },
     isValidStepNumber: function(category, stepNumber) {
       return this.categorySteps[category.name].length > stepNumber;

@@ -6,7 +6,7 @@ function(dntData,hCodeValues,items,$timeout,itemColumnsToLoad,itemFactory) {
   var vm = this;
   
   if(!vm.item || !vm.item.enchantmentId) {
-    console.log('no item to ehnance', vm.item);
+    // console.log('no item to ehnance', vm.item);
     return;
   }
   
