@@ -128,9 +128,9 @@ export const StatLookup: ValueStatDefs = {
 
     3008: { id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
 
-    4000: { id: 4000, name: 'skStr', display: inThousands, def: true },
-    4001: { id: 4001, name: 'skAgi', display: inThousands, def: true },
-    4002: { id: 4002, name: 'skInt', display: inThousands, def: true },
+    4000: { id: 4000, name: 'skStr', display: inThousands, dps: true },
+    4001: { id: 4001, name: 'skAgi', display: inThousands, dps: true },
+    4002: { id: 4002, name: 'skInt', display: inThousands, dps: true },
     4003: { id: 4003, name: 'skVit', display: inThousands, def: true },
     4008: { id: 4008, name: 'skPDef', display: inThousands, def: true },
     4009: { id: 4009, name: 'skMDef', display: inThousands, def: true },
@@ -143,8 +143,10 @@ export const StatLookup: ValueStatDefs = {
     4053: { id: 4053, name: 'skVit%', display: toPercent, def: true },
     4058: { id: 4058, name: 'skPDef%', display: toPercent, def: true },
     4059: { id: 4059, name: 'skMDef%', display: toPercent, def: true },
+    4062: { id: 4062, name: 'skCrit%', display: toPercent, dps: true },
     4075: { id: 4075, name: 'skHp%', display: toPercent, def: true },
     4076: { id: 4076, name: 'skMp%', display: toPercent, def: true },
+    4079: { id: 4079, name: 'skFd%', display: toPercent, dps: true },
 
     // special cases for skills
     10164: { id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true, dps: true },

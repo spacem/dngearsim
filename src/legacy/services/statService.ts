@@ -7,9 +7,9 @@ class StatCalc {
   statLookup = {};
 
   constructor(combinedStats: Stat[], private valueService: any) {
-    angular.forEach(combinedStats, function (stat, index) {
+    for (const stat of combinedStats) {
       this.statLookup[stat.id] = stat;
-    });
+    }
   }
 
   getPc(stat) {
@@ -225,7 +225,7 @@ class StatCalc {
           minPdmg.max += Math.floor(str.max * Number(group.conversions.StrengthAttack));
           minPdmg.max += Math.floor(agi.max * Number(group.conversions.AgilityAttack));
 
-          minPdmg.max = Math.floor(minPdmg.max * (1 + (this.getPc(minPdmg) + extraPdmgMod.max)));
+          minPdmg.max = Math.floor(minPdmg.max * (1 + (calc.getPc(minPdmg) + extraPdmgMod.max)));
           minPdmg.max = Math.floor(minPdmg.max * (1 + aPwr.max + paPwr.max));
           minPdmg.max += Math.floor(intToPdmg.max * int.max);
           minPdmg.max += Math.floor(strToPdmg.max * str.max);
@@ -236,7 +236,7 @@ class StatCalc {
           maxPdmg.max += Math.floor(str.max * Number(group.conversions.StrengthAttack));
           maxPdmg.max += Math.floor(agi.max * Number(group.conversions.AgilityAttack));
 
-          maxPdmg.max = Math.floor(maxPdmg.max * (1 + (this.getPc(maxPdmg) + extraPdmgMod.max)));
+          maxPdmg.max = Math.floor(maxPdmg.max * (1 + (calc.getPc(maxPdmg) + extraPdmgMod.max)));
           maxPdmg.max = Math.floor(maxPdmg.max * (1 + aPwr.max + paPwr.max));
           maxPdmg.max += Math.floor(intToPdmg.max * int.max);
           maxPdmg.max += Math.floor(strToPdmg.max * str.max);
@@ -261,7 +261,7 @@ class StatCalc {
           minMdmg.max += extraMdmg.max;
           minMdmg.max += Math.floor(int.max * Number(group.conversions.IntelligenceAttack));
 
-          minMdmg.max = Math.floor(minMdmg.max * (1 + (this.getPc(minMdmg) + extraMdmgMod.max)));
+          minMdmg.max = Math.floor(minMdmg.max * (1 + (calc.getPc(minMdmg) + extraMdmgMod.max)));
           minMdmg.max = minMdmg.max * (1 + aPwr.max + maPwr.max);
           minMdmg.max += Math.floor(strToMdmg.max * str.max);
           minMdmg.max += Math.floor(intToMdmg.max * int.max);
@@ -271,7 +271,7 @@ class StatCalc {
           maxMdmg.max += extraMdmg.max;
           maxMdmg.max += (int.max * Number(group.conversions.IntelligenceAttack));
 
-          maxMdmg.max = Math.floor(maxMdmg.max * (1 + (this.getPc(maxMdmg) + extraMdmgMod.max)));
+          maxMdmg.max = Math.floor(maxMdmg.max * (1 + (calc.getPc(maxMdmg) + extraMdmgMod.max)));
           maxMdmg.max = maxMdmg.max * (1 + aPwr.max + maPwr.max);
           maxMdmg.max += Math.floor(strToMdmg.max * str.max);
           maxMdmg.max += Math.floor(intToMdmg.max * int.max);
@@ -286,6 +286,10 @@ class StatCalc {
 
         var skCrit = calc.dupeStat(4012);
         crit.max += skCrit.max;
+        var skCritPc = calc.dupeStat(4062);
+        if (skCritPc.max) {
+          skCritPc.max = skCritPc.max * (skCritPc.max + 1); // TODO: need to confirm calc of crit sushi
+        }
         calc.addStat(crit);
         var itemCrit = calc.dupeStat(1012);
 
@@ -333,6 +337,9 @@ class StatCalc {
         var newFdPc = calc.dupeStat(1030);
         newFdPc.max += fdSkill.max + Math.min(1, (fd.max / maxFd));
         calc.addStat(newFdPc);
+
+        // TODO: how is this calculated
+        var fdUnifiedSkill = calc.dupeStat(4079);
 
         var secElementId = 0;
         var priElementId = 0;
@@ -513,7 +520,7 @@ class StatCalc {
                 effects.push({ id: map.mapTo, effect: effectId, max: val });
               } else {
                 // CAN ENABLE THIS TO DEBUG UNUSED STAT VALUES
-                effects.push({ id: -effectId, effect: effectId, max: val });
+                // effects.push({ id: -effectId, effect: effectId, max: val });
               }
             }
           } else {

@@ -7,4 +7,7 @@ export class DntFiles {
     static heroLevelPotentials = 'potentialtable_herolevel.json';
     static optimisedTitles = 'appellationtable.optimised.json';
     static optimisedTechs = 'itemtable_skilllevelup.optimised.json';
+    static totalSkills = 'skilltable_totalskill.json';
+    static totalSkillLevels = 'skillleveltable_totalskill.json';
+    static totalSkillHeroLevels = 'totallevelskill.json';
 }
