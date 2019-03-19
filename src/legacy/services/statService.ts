@@ -31,9 +31,8 @@ class StatCalc {
   }
 
   applyPc(stat) {
-    stat.max = Math.floor(
-      stat.max * (1 + this.getPc(stat)) * (1 + this.getSkillPc(stat))
-    );
+    stat.max += Math.floor(stat.max * this.getPc(stat));
+    stat.max += Math.floor(stat.max * this.getSkillPc(stat));
   }
 
   dupeStat(id) {
@@ -183,8 +182,8 @@ class StatCalc {
         const defpc = calc.dupeStat(1008);
         // defpc.max = Math.max(0.85, Number(def.max)/Number(group.enemyStatCaps.Cdefense));
         defpc.max = Math.min(0.85, def.max / Number(group.enemyStatCaps.Cdefense));
-        const skDefPc = calc.dupeStat(4058);
-        defpc.max += skDefPc.max; // TODO: need to confirm this is how to calculate def% skill
+        // const skDefPc = calc.dupeStat(4058);
+        // defpc.max += skDefPc.max; // TODO: need to confirm this is how to calculate def% skill
         calc.addStat(defpc);
 
         const mdef = calc.dupeStat(9);
@@ -196,8 +195,8 @@ class StatCalc {
         const mdefpc = calc.dupeStat(1009);
         // mdefpc.max = Math.max(0.85, Number(mdef.max)/Number(group.enemyStatCaps.Cdefense));
         mdefpc.max = Math.min(0.85, mdef.max / Number(group.enemyStatCaps.Cdefense));
-        const skMDefPc = calc.dupeStat(4059);
-        mdefpc.max += skMDefPc.max; // TODO: need to confirm this is how to calculate def% skill
+        // const skMDefPc = calc.dupeStat(4059);
+        // mdefpc.max += skMDefPc.max; // TODO: need to confirm this is how to calculate def% skill
         calc.addStat(mdefpc);
 
         // attack power - like fd but for bufs
@@ -225,8 +224,8 @@ class StatCalc {
           minPdmg.max += Math.floor(str.max * Number(group.conversions.StrengthAttack));
           minPdmg.max += Math.floor(agi.max * Number(group.conversions.AgilityAttack));
 
-          minPdmg.max = Math.floor(minPdmg.max * (1 + (calc.getPc(minPdmg) + extraPdmgMod.max)));
-          minPdmg.max = Math.floor(minPdmg.max * (1 + aPwr.max + paPwr.max));
+          minPdmg.max += Math.floor(minPdmg.max * (calc.getPc(minPdmg) + extraPdmgMod.max));
+          minPdmg.max += Math.floor(minPdmg.max * (aPwr.max + paPwr.max));
           minPdmg.max += Math.floor(intToPdmg.max * int.max);
           minPdmg.max += Math.floor(strToPdmg.max * str.max);
           minPdmg.max += Math.floor(skPdmg.max);
@@ -236,8 +235,8 @@ class StatCalc {
           maxPdmg.max += Math.floor(str.max * Number(group.conversions.StrengthAttack));
           maxPdmg.max += Math.floor(agi.max * Number(group.conversions.AgilityAttack));
 
-          maxPdmg.max = Math.floor(maxPdmg.max * (1 + (calc.getPc(maxPdmg) + extraPdmgMod.max)));
-          maxPdmg.max = Math.floor(maxPdmg.max * (1 + aPwr.max + paPwr.max));
+          maxPdmg.max += Math.floor(maxPdmg.max * (calc.getPc(maxPdmg) + extraPdmgMod.max));
+          maxPdmg.max += Math.floor(maxPdmg.max * (aPwr.max + paPwr.max));
           maxPdmg.max += Math.floor(intToPdmg.max * int.max);
           maxPdmg.max += Math.floor(strToPdmg.max * str.max);
           maxPdmg.max += Math.floor(skPdmg.max);
@@ -261,8 +260,8 @@ class StatCalc {
           minMdmg.max += extraMdmg.max;
           minMdmg.max += Math.floor(int.max * Number(group.conversions.IntelligenceAttack));
 
-          minMdmg.max = Math.floor(minMdmg.max * (1 + (calc.getPc(minMdmg) + extraMdmgMod.max)));
-          minMdmg.max = minMdmg.max * (1 + aPwr.max + maPwr.max);
+          minMdmg.max += Math.floor(minMdmg.max * (calc.getPc(minMdmg) + extraMdmgMod.max));
+          minMdmg.max += Math.floor(minMdmg.max * (aPwr.max + maPwr.max));
           minMdmg.max += Math.floor(strToMdmg.max * str.max);
           minMdmg.max += Math.floor(intToMdmg.max * int.max);
           minMdmg.max += Math.floor(skMdmg.max);
@@ -271,8 +270,8 @@ class StatCalc {
           maxMdmg.max += extraMdmg.max;
           maxMdmg.max += (int.max * Number(group.conversions.IntelligenceAttack));
 
-          maxMdmg.max = Math.floor(maxMdmg.max * (1 + (calc.getPc(maxMdmg) + extraMdmgMod.max)));
-          maxMdmg.max = maxMdmg.max * (1 + aPwr.max + maPwr.max);
+          maxMdmg.max += Math.floor(maxMdmg.max * (calc.getPc(maxMdmg) + extraMdmgMod.max));
+          maxMdmg.max += Math.floor(maxMdmg.max * (aPwr.max + maPwr.max));
           maxMdmg.max += Math.floor(strToMdmg.max * str.max);
           maxMdmg.max += Math.floor(intToMdmg.max * int.max);
           maxMdmg.max += Math.floor(skMdmg.max);
@@ -280,15 +279,15 @@ class StatCalc {
         }
 
         // crit chance %
-        var crit = calc.dupeStat(12);
+        const crit = calc.dupeStat(12);
         crit.max += (agi.max * Number(group.conversions.Critical));
         calc.applyPc(crit);
 
-        var skCrit = calc.dupeStat(4012);
+        const skCrit = calc.dupeStat(4012);
         crit.max += skCrit.max;
-        var skCritPc = calc.dupeStat(4062);
+        const skCritPc = calc.dupeStat(4062);
         if (skCritPc.max) {
-          crit.max = crit.max * (skCritPc.max + 1); // TODO: need to confirm calc of crit sushi
+          crit.max += Math.floor(crit.max * skCritPc.max);
         }
         calc.addStat(crit);
         var itemCrit = calc.dupeStat(1012);
@@ -329,7 +328,7 @@ class StatCalc {
 
         // fd
         var fd = calc.dupeStat(29);
-        fd.max = Math.floor(fd.max * (1 + (calc.getPc(fd))));
+        fd.max += Math.floor(fd.max * (calc.getPc(fd)));
         calc.addStat(fd);
         var maxFd = Number(group.enemyStatCaps.Cfinaldamage);
 
@@ -339,7 +338,7 @@ class StatCalc {
         calc.addStat(newFdPc);
 
         // TODO: how is this calculated
-        var fdUnifiedSkill = calc.dupeStat(4079);
+        // var fdUnifiedSkill = calc.dupeStat(4079);
 
         var secElementId = 0;
         var priElementId = 0;
@@ -390,7 +389,7 @@ class StatCalc {
           // add crit
           nonEleDamage += (critChance * (critDamagePc + 1) * nonEleDamage * (1 - critResist));
           // apply fd
-          nonEleDamage = nonEleDamage * (1 + newFdPc.max);
+          nonEleDamage += Math.floor(nonEleDamage * newFdPc.max);
 
           // apply element(s)
           var avgDmg = nonEleDamage;
