@@ -288,7 +288,7 @@ class StatCalc {
         crit.max += skCrit.max;
         var skCritPc = calc.dupeStat(4062);
         if (skCritPc.max) {
-          skCritPc.max = skCritPc.max * (skCritPc.max + 1); // TODO: need to confirm calc of crit sushi
+          crit.max = crit.max * (skCritPc.max + 1); // TODO: need to confirm calc of crit sushi
         }
         calc.addStat(crit);
         var itemCrit = calc.dupeStat(1012);

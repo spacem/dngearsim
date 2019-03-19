@@ -12,8 +12,10 @@ function toNoDec(stat) {
 }
 function inThousands(stat) {
     const val = Number(stat.max);
-    if (val < 100) {
+    if (val < 1000) {
         return val;
+    } else if (val < 10000) {
+        return Math.round(val / 10) / 100 + 'k';
     } else if (val < 100000) {
         return Math.round(val / 100) / 10 + 'k';
     } else if (val < 1000000) {
