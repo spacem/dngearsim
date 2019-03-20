@@ -1,6 +1,7 @@
 import { ItemSource } from 'src/models/item-source';
 import { Item } from 'src/models/item';
 import { DntFiles } from 'src/values/dnt-files';
+import * as angular from 'angular';
 
 class ItemSourceImpl implements ItemSource {
   items: Item[];

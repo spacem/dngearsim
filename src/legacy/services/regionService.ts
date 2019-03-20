@@ -1,4 +1,5 @@
 import { Region } from 'src/models/region';
+import * as angular from 'angular';
 
 angular.module('dnsim').factory('region', ['translations', 'dntReset', 'dntData', '$route', region]);
 function region(translations, dntReset, dntData, $route) {

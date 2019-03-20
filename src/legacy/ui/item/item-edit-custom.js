@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import * as _ from 'lodash';
 angular.module('dnsim').controller('itemEditCustomCtrl',
 
 ['hCodeValues','$scope',

@@ -1,9 +1,8 @@
-(function () {
-'use strict';
+import * as angular from 'angular';
 
 angular.module('dnsim').factory('quickAddHelper',
-['itemCategory','itemFactory','jobs',
-quickAddHelper]);
+['itemCategory','itemFactory','jobs', quickAddHelper]);
+
 function quickAddHelper(itemCategory,itemFactory,jobs) {
 
   return {
@@ -121,5 +120,3 @@ function quickAddHelper(itemCategory,itemFactory,jobs) {
       return true;
   }
 }
-
-})();

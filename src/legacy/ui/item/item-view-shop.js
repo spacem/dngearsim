@@ -117,6 +117,7 @@ angular.module('dnsim').controller('itemViewShopCtrl',
         gold: 0,
         nightmarePoints: 0,
         dungeonPoints: 0,
+        bloodSweatTearsPoints: 0,
         nestPoints: 0,
         ladderPoints: 0,
         item1: itemFactory.createBasicItem(item1s[0]),
@@ -144,6 +145,9 @@ angular.module('dnsim').controller('itemViewShopCtrl',
       else if(s.PurchaseType1 == 14) {
         shopCost.dungeonPoints += s.PurchaseItemValue1;
       }
+      else if(s.PurchaseType1 == 35) {
+        shopCost.bloodSweatTearsPoints += s.PurchaseItemValue1;
+      }
       else {
         shopCost.numItem1 = s.PurchaseItemValue1;
         shopCost.pointsId1 = s.PurchaseType1;
@@ -163,6 +167,9 @@ angular.module('dnsim').controller('itemViewShopCtrl',
       }
       else if(s.PurchaseType1 == 14) {
         shopCost.dungeonPoints += s.PurchaseItemValue2;
+      }
+      else if(s.PurchaseType1 == 35) {
+        shopCost.bloodSweatTearsPoints += s.PurchaseItemValue1;
       }
       else {
         shopCost.numItem2 = s.PurchaseItemValue2;

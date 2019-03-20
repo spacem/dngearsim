@@ -1,5 +1,6 @@
-import { ItemSource } from "src/models/item-source";
+import { ItemSource } from 'src/models/item-source';
 import { Item } from 'src/models/item';
+import * as angular from 'angular';
 
 angular.module('dnsim').factory('itemFactory',
   ['translations', 'dntData', 'hCodeValues', 'items', 'statHelper',

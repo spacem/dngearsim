@@ -1,15 +1,13 @@
-const LZString = require('lz-string');
+import * as LZString from 'lz-string';
+import * as angular from 'angular';
 
-(function () {
-'use strict';
-
-angular.module('dnsim').factory('saveHelper', ['itemCategory',saveHelper]);
+angular.module('dnsim').factory('saveHelper', ['itemCategory', saveHelper]);
 function saveHelper(itemCategory) {
   return {
-    saveItem: function(groupName, item) {
+    saveItem: function (groupName, item) {
       var groups = this.getSavedItems();
-      if(groupName in groups && Array.isArray(groups[groupName].items)) {
-        
+      if (groupName in groups && Array.isArray(groups[groupName].items)) {
+
         groups[groupName].items.push(item);
         groups[groupName].lastUpdate = (new Date()).getTime();
         this.updatedSavedItems(groupName, groups[groupName].items);
@@ -18,83 +16,83 @@ function saveHelper(itemCategory) {
         this.updatedSavedItems(groupName, [item]);
       }
     },
-    
-    saveBuildSelection : function(buildName, builds) {
+
+    saveBuildSelection: function (buildName, builds) {
       this.setCurrentBuild(buildName);
-      if(builds && buildName in builds && builds[buildName].job && builds[buildName].job.id) {
+      if (builds && buildName in builds && builds[buildName].job && builds[buildName].job.id) {
         localStorage.setItem('jobNumber', builds[buildName].job.id);
       }
     },
-    
-    importGroup: function(groupName, updatedItems) {
+
+    importGroup: function (groupName, updatedItems) {
       var items = this.getSavedItems();
       groupName = this.getUniqueGroupName(groupName, items);
       this.updatedSavedItems(groupName, updatedItems);
       return groupName;
     },
-    
-    getUniqueGroupName: function(groupName, existingGroups) {
+
+    getUniqueGroupName: function (groupName, existingGroups) {
       var groupNameIndex = 0;
-      if(groupName.lastIndexOf(')') == groupName.length-1) {
+      if (groupName.lastIndexOf(')') == groupName.length - 1) {
         var startIndex = groupName.lastIndexOf('(');
-        if(startIndex > 0) {
-          var foundIndex = Number(groupName.substr(startIndex+1, groupName.length-startIndex-2));
-          if(foundIndex > 0) {
+        if (startIndex > 0) {
+          var foundIndex = Number(groupName.substr(startIndex + 1, groupName.length - startIndex - 2));
+          if (foundIndex > 0) {
             groupNameIndex = foundIndex + 1;
             groupName = groupName.substr(0, startIndex - 1);
           }
         }
       }
-      
+
       var originalName = groupName;
-      for(;;) {
+      for (; ;) {
         var groupName = originalName;
-        if(groupNameIndex > 0) {
+        if (groupNameIndex > 0) {
           groupName = originalName + ' (' + groupNameIndex + ')';
         }
-        
-        if(groupName in existingGroups) {
+
+        if (groupName in existingGroups) {
           groupNameIndex++;
         }
         else {
           break;
         }
       }
-      
+
       return groupName;
     },
-    
-    deleteBuild: function(buildName) {
+
+    deleteBuild: function (buildName) {
       var builds = this.getSavedItems();
-      if(buildName in builds) {
-          delete builds[buildName];
-          this.setCurrentBuild(null);
-          this.saveBuilds(builds);
+      if (buildName in builds) {
+        delete builds[buildName];
+        this.setCurrentBuild(null);
+        this.saveBuilds(builds);
       }
     },
-    
-    updatedSavedItems: function(groupName, updatedItems) {
+
+    updatedSavedItems: function (groupName, updatedItems) {
       var items = this.getSavedItems();
-      if(groupName in items) {
+      if (groupName in items) {
         items[groupName].items = updatedItems;
         items[groupName].lastUpdate = (new Date()).getTime();
       }
       else {
-        items[groupName] = {items : updatedItems, lastUpdate: (new Date()).getTime()};
-          // console.log('created group');
+        items[groupName] = { items: updatedItems, lastUpdate: (new Date()).getTime() };
+        // console.log('created group');
       }
-      
+
       this.saveBuilds(items);
     },
-    
-    saveBuilds: function(builds) {
+
+    saveBuilds: function (builds) {
       var stringifiedData = JSON.stringify(builds);
       localStorage.setItem('savedItems', LZString.compressToUTF16(stringifiedData));
     },
 
-    saveBuild: function(oldGroupName, newGroupName, build) {
+    saveBuild: function (oldGroupName, newGroupName, build) {
       this.updateBuild(
-        oldGroupName, 
+        oldGroupName,
         newGroupName,
         build.enemyLevel,
         build.playerLevel,
@@ -105,29 +103,29 @@ function saveHelper(itemCategory) {
         build.secondaryElement,
         build.critResist,
         build.eleResist,
-        build.enemyStatCaps, 
-        build.playerStatCaps, 
-        build.conversions, 
-        build.baseStats, 
+        build.enemyStatCaps,
+        build.playerStatCaps,
+        build.conversions,
+        build.baseStats,
         build.heroStats);
     },
-    
-    updateBuild: function(
+
+    updateBuild: function (
       oldGroupName, newGroupName, enemyLevel, playerLevel, heroLevel, job, damageType, element, secondaryElement, critResist, eleResist,
       enemyStatCaps, playerStatCaps, conversions, baseStats, heroStats) {
-        
+
       var savedItems = this.getSavedItems();
-      
-      if(newGroupName in savedItems || oldGroupName == newGroupName) {
+
+      if (newGroupName in savedItems || oldGroupName == newGroupName) {
         // console.log('not changing name');
         newGroupName = oldGroupName;
       }
-      else if(oldGroupName in savedItems) {
+      else if (oldGroupName in savedItems) {
         var group = savedItems[oldGroupName];
         savedItems[newGroupName] = group;
         delete savedItems[oldGroupName];
       }
-      
+
       savedItems[newGroupName].enemyLevel = enemyLevel;
       savedItems[newGroupName].playerLevel = playerLevel;
       savedItems[newGroupName].heroLevel = heroLevel;
@@ -142,42 +140,42 @@ function saveHelper(itemCategory) {
       savedItems[newGroupName].conversions = conversions;
       savedItems[newGroupName].baseStats = baseStats;
       savedItems[newGroupName].heroStats = heroStats;
-      
+
       this.saveBuilds(savedItems);
     },
-    
-    getSavedItems: function() {
+
+    getSavedItems: function () {
       try {
         var stringifiedData = LZString.decompressFromUTF16(localStorage.getItem('savedItems'));
         var savedItems = JSON.parse(stringifiedData);
         return savedItems;
       }
-      catch(ex) {
+      catch (ex) {
       }
-      
+
       return {};
     },
-    
+
     currentBuild: null,
-    getCurrentBuild: function() {
-      if(!this.currentBuild) {
+    getCurrentBuild: function () {
+      if (!this.currentBuild) {
         this.currentBuild = localStorage.getItem('currentGroup');
-        if(this.currentBuild) {
+        if (this.currentBuild) {
           var savedItems = this.getSavedItems();
-          if(!(this.currentBuild in savedItems)) {
+          if (!(this.currentBuild in savedItems)) {
             localStorage.removeItem('currentGroup');
             this.currentBuild = null;
           }
         }
       }
-      
+
       return this.currentBuild;
     },
-    
-    setCurrentBuild: function(buildName) {
+
+    setCurrentBuild: function (buildName) {
       this.currentBuild = buildName;
-      if(!buildName) {
-        localStorage.removeItem('currentGroup', buildName);
+      if (!buildName) {
+        localStorage.removeItem('currentGroup');
       }
       else {
         localStorage.setItem('currentGroup', buildName);
@@ -185,5 +183,3 @@ function saveHelper(itemCategory) {
     }
   };
 }
-
-})();

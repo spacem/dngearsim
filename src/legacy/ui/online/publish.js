@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import * as _ from 'lodash';
 (function () {
 'use strict';
 angular.module('dnsim').controller('PublishCtrl', ['$location', 'saveHelper', 'onlineService', '$routeParams', 'region', publish]);

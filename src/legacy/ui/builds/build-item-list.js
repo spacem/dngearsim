@@ -1,5 +1,4 @@
-'use strict';
-const _ = require('lodash');
+import * as _ from 'lodash';
   
 angular.module('dnsim').directive('dngearsimBuildItemList', function() {
   return {
