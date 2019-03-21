@@ -14,11 +14,9 @@ function inThousands(stat) {
     const val = Number(stat.max);
     if (val < 1000) {
         return val;
-    } else if (val < 10000) {
-        return Math.round(val / 10) / 100 + 'k';
     } else if (val < 100000) {
         return Math.round(val / 100) / 10 + 'k';
-    } else if (val < 1000000) {
+    } else if (val < 900000) {
         return Math.round(val / 1000) + 'k';
     } else if (val < 100000000) {
         return Math.round(val / 10000) / 100 + 'm';
