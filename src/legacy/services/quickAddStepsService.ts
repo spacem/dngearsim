@@ -469,7 +469,7 @@ function quickAddSteps(dntData, translations, itemFactory, hCodeValues, quickAdd
           }
         }
 
-        return selectedVal > largestVal;
+        return selectedVal >= largestVal;
       },
       sortFunc: function (id, item1, item2) {
         var val1 = 0;
