@@ -14,6 +14,7 @@ export const ShopNameLookup = {
     88001: 'battlefield', 88002: 'battlefield', 88003: 'battlefield', 88004: 'battlefield', 88005: 'battlefield', 88006: 'battlefield',
     88007: 'battlefield', 88008: 'battlefield', 88009: 'battlefield',
     66001: 'erosion',
+    33001: 'Mission Board',
     35006: 'plate',
     14051: 'abyss', 14052: 'abyss', 14053: 'abyss', 14054: 'abyss', 14055: 'abyss', 14056: 'abyss', 14057: 'abyss', 14058: 'abyss',
     14059: 'abyss',

@@ -1,5 +1,6 @@
 import { DntFiles } from 'src/values/dnt-files';
 import { Job } from 'src/models/job';
+import * as angular from 'angular';
 
 angular.module('dnsim').factory('jobs', ['dntData', 'translations', 'itemColumnsToLoad', jobs]);
 function jobs(dntData, translations, itemColumnsToLoad) {

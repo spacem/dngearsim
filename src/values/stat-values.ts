@@ -12,11 +12,11 @@ function toNoDec(stat) {
 }
 function inThousands(stat) {
     const val = Number(stat.max);
-    if (val < 100) {
+    if (val < 1000) {
         return val;
     } else if (val < 100000) {
         return Math.round(val / 100) / 10 + 'k';
-    } else if (val < 1000000) {
+    } else if (val < 900000) {
         return Math.round(val / 1000) + 'k';
     } else if (val < 100000000) {
         return Math.round(val / 10000) / 100 + 'm';
@@ -128,13 +128,25 @@ export const StatLookup: ValueStatDefs = {
 
     3008: { id: 3008, name: 'eqhp', display: inThousands, summaryDisplay: true, noCustom: true, hide: true },
 
+    4000: { id: 4000, name: 'skStr', display: inThousands, dps: true },
+    4001: { id: 4001, name: 'skAgi', display: inThousands, dps: true },
+    4002: { id: 4002, name: 'skInt', display: inThousands, dps: true },
+    4003: { id: 4003, name: 'skVit', display: inThousands, def: true },
+    4008: { id: 4008, name: 'skPDef', display: inThousands, def: true },
+    4009: { id: 4009, name: 'skMDef', display: inThousands, def: true },
     4012: { id: 4012, name: 'skCrit', display: inThousands, dps: true },
+    4032: { id: 4032, name: 'skPdmg', display: inThousands, dps: true },
+    4033: { id: 4033, name: 'skMdmg', display: inThousands, dps: true },
     4050: { id: 4050, name: 'skStr%', display: toPercent, dps: true },
     4051: { id: 4051, name: 'skAgi%', display: toPercent, dps: true },
     4052: { id: 4052, name: 'skInt%', display: toPercent, dps: true },
     4053: { id: 4053, name: 'skVit%', display: toPercent, def: true },
+    // 4058: { id: 4058, name: 'skPDef?%', display: toPercent, def: true },
+    // 4059: { id: 4059, name: 'skMDef?%', display: toPercent, def: true },
+    4062: { id: 4062, name: 'skCrit%', display: toPercent, dps: true },
     4075: { id: 4075, name: 'skHp%', display: toPercent, def: true },
     4076: { id: 4076, name: 'skMp%', display: toPercent, def: true },
+    // 4079: { id: 4079, name: 'skFd?%', display: toPercent, dps: true },
 
     // special cases for skills
     10164: { id: 10164, name: 'intToPdmg', display: toPercent, noCustom: true, dps: true },

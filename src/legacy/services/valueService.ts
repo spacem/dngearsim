@@ -7,6 +7,7 @@ import { DamageTypeLookup } from 'src/values/damage-types';
 import { ItemTypeNameLookup } from 'src/values/item-type-names';
 import { SkillEffectLookup } from 'src/values/skill-effects';
 import { GemExchanges } from 'src/values/gem-exchanges';
+import * as angular from 'angular';
 
 angular.module('dnsim').factory('hCodeValues', [hCodeValues]);
 function hCodeValues() {

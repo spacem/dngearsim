@@ -313,10 +313,10 @@ background-position: -610px -10px;
   background: url("/assets/images/icons/itemicon21.png") -325px -564px;
 }
 .cat-icon-weapons {
-  background: url("/assets/images/icons/itemicon08.png") -5px -404px;
+  background: url("/assets/images/icons/itemicon203.png") -85px -84px;
 }
 .cat-icon-accessories {
-  background: url("/assets/images/icons/itemicon42.png") -45px -164px;
+  background: url("/assets/images/icons/itemicon42.png") -5px -124px;
 }
 .cat-icon-techs {
   background: url("/assets/images/icons/itemicon41.png") -205px -604px;
@@ -356,6 +356,9 @@ background-position: -610px -10px;
 }
 .cat-icon-everything {
   background: url("/assets/images/icons/itemicon62.png") -85px -404px;
+}
+.cat-icon-food {
+  background: url("/assets/images/icons/itemicon69.png") -245px -324px;
 }
 
 .cat-icon {

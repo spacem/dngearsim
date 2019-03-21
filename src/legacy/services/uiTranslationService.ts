@@ -1,6 +1,4 @@
-(function () {
-'use strict';
-
+import * as angular from 'angular';
 angular.module('dnsim').factory('uiTranslations', uiTranslations);
 
 // translations for each region go in here
@@ -81,5 +79,3 @@ function uiTranslations() {
         }
     }
 }
-
-})();

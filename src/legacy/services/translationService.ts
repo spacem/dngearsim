@@ -1,7 +1,5 @@
-const DnTranslations = require('../dntviewer/dntranslations');
-
-(function () {
-'use strict';
+import { DnTranslations } from '../dntviewer/dntranslations';
+import * as angular from 'angular';
 
 angular.module('dnsim').factory('translations', ['$rootScope', 'uiTranslations', '$translate', translations]);
 function translations($rootScope, uiTranslations, $translate) {
@@ -15,11 +13,11 @@ function translations($rootScope, uiTranslations, $translate) {
 
   return {
 
-    getRawData: function() {
+    getRawData: function () {
       return dnTranslations.data;
     },
-    
-    reset : function() {
+
+    reset: function () {
       dnTranslations = new DnTranslations();
       dnTranslations.sizeLimit = 100;
       this.loaded = false;
@@ -27,9 +25,9 @@ function translations($rootScope, uiTranslations, $translate) {
       completeCallback = [];
       progressCallback = [];
     },
-    
-    getFileName: function() {
-      if(this.small) {
+
+    getFileName: function () {
+      if (this.small) {
         // console.log('loading optimised translations');
         return smallFile;
       }
@@ -38,59 +36,59 @@ function translations($rootScope, uiTranslations, $translate) {
         return bigFile;
       }
     },
-    
-    loaded : false,
-    startedLoading : false,
-    small: false,
-    
-    location : null,
-    region: null,
-  
-    init : function(progress, complete) {
 
-      if(this.isLoaded()) {
+    loaded: false,
+    startedLoading: false,
+    small: false,
+
+    location: null,
+    region: null,
+
+    init: function (progress, complete) {
+
+      if (this.isLoaded()) {
         complete();
       }
       else {
         progressCallback = [];
-        if(progress) {
+        if (progress) {
           progressCallback.push(progress);
         }
-        if(complete) {
+        if (complete) {
           completeCallback.push(complete);
         }
-  
-        if(!this.startedLoading) {
+
+        if (!this.startedLoading) {
           this.startedLoading = true;
           var t = this;
-          
+
           var fileName = null;
-          if(this.location && this.location != '') {
+          if (this.location && this.location != '') {
             fileName = this.location + '/' + this.getFileName();
-            
-            if(fileName != localStorage.getItem("UIStrings_file")) {
+
+            if (fileName != localStorage.getItem("UIStrings_file")) {
               sessionStorage.removeItem('UIStrings');
               localStorage.removeItem('UIStrings_file');
             }
           }
-          
+
           $rootScope.$broadcast('TRANSLATION_LOAD_EVENT');
           dnTranslations.loadDefaultFile(
-            fileName, 
-            function(msg) {
+            fileName,
+            function (msg) {
               console.log(msg);
-            }, 
-            function() {
+            },
+            function () {
               uiTranslations.addTranslations(t.region, t.getRawData());
               console.log('using ', t.region);
               $translate.use(t.region);
               t.loaded = true;
-              angular.forEach(completeCallback, function(value, key) { value(); });
+              angular.forEach(completeCallback, function (value, key) { value(); });
               completeCallback = [];
               $rootScope.$broadcast('TRANSLATION_LOAD_EVENT');
             },
-            function(msg) {
-              angular.forEach(progressCallback, function(value, key) { value(msg); });
+            function (msg) {
+              angular.forEach(progressCallback, function (value, key) { value(msg); });
               $rootScope.$broadcast('TRANSLATION_LOAD_ERROR');
               t.startedLoading = false;
               t.loaded = false;
@@ -99,18 +97,18 @@ function translations($rootScope, uiTranslations, $translate) {
         }
       }
     },
-    
-    isLoaded : function() {
-      if(!this.loaded) {
+
+    isLoaded: function () {
+      if (!this.loaded) {
         var fileName = this.location + '/' + this.getFileName();
-        
-        if(fileName != localStorage.getItem("UIStrings_file")) {
+
+        if (fileName != localStorage.getItem("UIStrings_file")) {
           sessionStorage.removeItem('UIStrings');
           localStorage.removeItem('UIStrings_file');
         }
 
         this.loaded = dnTranslations.loadFromSession();
-        if(this.loaded) {
+        if (this.loaded) {
           uiTranslations.addTranslations(this.region, this.getRawData());
           $translate.use(this.region);
           this.startedLoading = true;
@@ -118,33 +116,33 @@ function translations($rootScope, uiTranslations, $translate) {
       }
       return this.loaded;
     },
-    
-    translate : function(id,idParam) {
-      if(this.loaded) {
+
+    translate: function (id, idParam) {
+      if (this.loaded) {
         try {
           var name;
-          if(!id) {
+          if (!id) {
             return '';
           }
           else {
             name = dnTranslations.translate(id);
-            
-            if(typeof name != 'string') {
+
+            if (typeof name != 'string') {
               return 'm' + name;
             }
           }
-          
-          if(idParam && name) {
-            
-            if(typeof idParam === 'string') {
+
+          if (idParam && name) {
+
+            if (typeof idParam === 'string') {
               var params = idParam.split(',');
-              for(var p=0;p<params.length;++p) {
+              for (var p = 0; p < params.length; ++p) {
                 var pid = params[p];
-                if(pid.indexOf('{') == 0) {
-                  pid = params[p].replace(/\{|\}/g,'');
+                if (pid.indexOf('{') == 0) {
+                  pid = params[p].replace(/\{|\}/g, '');
                   pid = dnTranslations.translate(pid);
                 }
-                
+
                 name = name.replace('{' + p + '}', pid);
               }
             }
@@ -155,7 +153,7 @@ function translations($rootScope, uiTranslations, $translate) {
 
           return name;
         }
-        catch(ex) {
+        catch (ex) {
           console.log('unable to translate', id, idParam, ex);
         }
       }
@@ -164,5 +162,3 @@ function translations($rootScope, uiTranslations, $translate) {
     }
   }
 }
-
-})();

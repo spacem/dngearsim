@@ -1,6 +1,7 @@
 import { ItemSource } from 'src/models/item-source';
 import { Item } from 'src/models/item';
 import { DntFiles } from 'src/values/dnt-files';
+import * as angular from 'angular';
 
 class ItemSourceImpl implements ItemSource {
   items: Item[];
@@ -22,6 +23,8 @@ class ItemSourceImpl implements ItemSource {
   minLevel: number;
   minRank: number;
   ignoreErrors: boolean;
+  skillDnt: string;
+  skillLevelDnt: string;
 
   constructor(public name: string, private dntData: any, private translations: any, private itemColumnsToLoad: any) {
   }
@@ -54,6 +57,16 @@ class ItemSourceImpl implements ItemSource {
           this.doComplete(complete);
         }, this.ignoreErrors);
       }
+      if ('skillDnt' in this) {
+        this.dntData.init(this.skillDnt, this.itemColumnsToLoad.skillDnt, progress, () => {
+          this.doComplete(complete);
+        }, this.ignoreErrors);
+      }
+      if ('skillLevelDnt' in this) {
+        this.dntData.init(this.skillLevelDnt, this.itemColumnsToLoad.skillLevelDnt, progress, () => {
+          this.doComplete(complete);
+        }, this.ignoreErrors);
+      }
       if ('gemDnt' in this) {
         this.dntData.init(this.gemDnt, this.itemColumnsToLoad.gemDnt, progress, () => {
           this.doComplete(complete);
@@ -69,6 +82,8 @@ class ItemSourceImpl implements ItemSource {
       this.dntData.isLoaded(this.mainDnt) &&
       (!('potentialDnt' in this) || this.dntData.isLoaded(this.potentialDnt) || this.dntData.hasFailed(this.potentialDnt)) &&
       (!('potentialDntEx' in this) || this.dntData.isLoaded(this.potentialDntEx) || this.dntData.hasFailed(this.potentialDntEx)) &&
+      (!('skillDnt' in this) || this.dntData.isLoaded(this.skillDnt) || this.dntData.hasFailed(this.skillDnt)) &&
+      (!('skillLevelDnt' in this) || this.dntData.isLoaded(this.skillLevelDnt) || this.dntData.hasFailed(this.skillLevelDnt)) &&
       (!('gemDnt' in this) || this.dntData.isLoaded(this.gemDnt) || this.dntData.hasFailed(this.gemDnt))
     ) {
       complete();
@@ -103,7 +118,9 @@ function items(translations, dntData, itemColumnsToLoad) {
     cash: null as ItemSource,
     event: null as ItemSource,
     xtras: null as ItemSource,
-    imprint: null as ItemSource
+    imprint: null as ItemSource,
+    wellspring: null as ItemSource,
+    food: null as ItemSource
   };
 
   for (const key of Object.keys(itemSources)) {
@@ -313,6 +330,22 @@ function items(translations, dntData, itemColumnsToLoad) {
       type: 'imprint',
       minLevel: 0,
       minRank: 0
+  });
+  Object.assign(itemSources.wellspring, {
+    mainDnt: 'itemtable_source.json',
+    type: 'food',
+    minLevel: 0,
+    minRank: 0,
+    skillDnt: 'skilltable_item.json',
+    skillLevelDnt: 'skillleveltable_item.json'
+  });
+  Object.assign(itemSources.food, {
+    mainDnt: 'itemtable_cook.json',
+    type: 'food',
+    minLevel: 0,
+    minRank: 0,
+    skillDnt: 'skilltable_farm.json',
+    skillLevelDnt: 'skillleveltable_farm.json'
   });
 
   return itemSources;
