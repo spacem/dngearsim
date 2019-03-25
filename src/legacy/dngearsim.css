@@ -476,43 +476,30 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
 .dnsim-fade.ng-enter.ng-enter-active {
   opacity: 1;
 }
-.dnsim-disolve.ng-leave {
-  transition: 0.5s cubic-bezier(0,1,1,1);
-  max-height: 160px;
-  min-height: 40px;
-  overflow: hidden;
-  padding-top: 5;
-  padding-bottom: 5;
-  margin-top: 8;
-  margin-bottom: 8;
-}
-.dnsim-disolve.ng-leave.ng-leave-active {
-  max-height: 0;
-  min-height: 0;
-  overflow: hidden;
-  padding-top:0;
-  padding-bottom:0;
-  margin-top:0;
-  margin-bottom:0;
-}
-.dnsim-disolve.ng-enter {
-  transition: 0.5s cubic-bezier(0,1,1,1);
-  max-height: 0;
-  min-height: 0px;
-  overflow: hidden;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.dnsim-disolve.ng-enter.ng-enter-active {
-  max-height: 160px;
-  min-height: 40px;
+.dnsim-disolve {
   overflow: hidden;
   padding-top:5px;
   padding-bottom:5px;
   margin-top:8px;
   margin-bottom:8px;
+}
+.dnsim-disolve.ng-leave {
+  transition: 0.3s cubic-bezier(0.42, 0.0, 1.0, 1.0);
+  max-height: 160px;
+  min-height: 40px;
+}
+.dnsim-disolve.ng-leave.ng-leave-active {
+  max-height: 0px;
+  min-height: 0px;
+}
+.dnsim-disolve.ng-enter {
+  transition: 0.3s cubic-bezier(0.42, 0.0, 1.0, 1.0);
+  max-height: 0px;
+  min-height: 0px;
+}
+.dnsim-disolve.ng-enter.ng-enter-active {
+  max-height: 160px;
+  min-height: 40px;
 }
 
 .btn-link:focus, .btn-link:hover {
