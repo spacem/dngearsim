@@ -126,7 +126,7 @@ function skillSearchCtrl($timeout, region, jobs, translations, dntData, hCodeVal
           newItem.id = dntData.getValue(dntName, s, 'id');
           newItem.typeName = 'skills';
           newItem.itemSource = 'skills';
-          newItem.name = translations.translate(nameId, dntData.getValue(dntName, s, 'NameIDParam');
+          newItem.name = translations.translate(nameId, dntData.getValue(dntName, s, 'NameIDParam'));
           newItem.needJobClass = dntData.getValue(dntName, s, 'NeedJob');
           newItem.rank = hCodeValues.rankNames[0];
           newItem.baseJobName = baseName.toLowerCase();
