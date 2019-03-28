@@ -321,7 +321,11 @@ function itemSearchCtrl(
           }
         }
         
-        var statVal = {};
+        var statVal = {
+          i: undefined,
+          s: undefined,
+          s2: undefined
+        };
         if(vm.stat.id >= 0) {
           let statFound = false;
           

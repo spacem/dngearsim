@@ -124,6 +124,8 @@ angular.module('dnsim').controller('itemViewShopCtrl',
         item2: itemFactory.createBasicItem(item2s[0]),
         numItem1: 0,
         numItem2: 0,
+        pointsId1: undefined,
+        pointsId2: undefined,
       };
       
       if(shopCost.shopName in hCodeValues.shopNames) {

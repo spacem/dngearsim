@@ -7,7 +7,7 @@ angular.module('dnsim').controller('HeaderCtrl',
     var vm = this;
 
     vm.doClose = function() {
-      localStorage.setItem(noticeId, true)
+      localStorage.setItem(noticeId, true.toString());
       vm.isClosed = true;
     }
     

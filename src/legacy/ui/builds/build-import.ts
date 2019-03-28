@@ -18,7 +18,7 @@ function($timeout,$location,saveHelper) {
       var reader = new FileReader();
       reader.readAsText(files[0]);
       reader.onload = function() {
-        vm.build = JSON.parse(reader.result);
+        vm.build = JSON.parse(reader.result as string);
         if(fileName && fileName.length > 5) {
           vm.buildName = fileName.substr(0, fileName.length-5);
           vm.buildName = vm.buildName.replace('dngearsim-', '')

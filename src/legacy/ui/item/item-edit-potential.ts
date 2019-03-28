@@ -33,7 +33,7 @@ function(dntData,items,hCodeValues,itemColumnsToLoad) {
         if(potentials.length == 1) {
           vm.potential = potentials[0];
           vm.potentials = dntData.find(vm.itemType.potentialDnt, 'PotentialID', vm.potential.PotentialID);
-          vm.potentialStats = getPotentialStats(vm.potentials);
+          vm.potentialStats = getPotentialStats();
         }
         else if('potentialDntEx' in vm.itemType) {
           potentials = dntData.find(vm.itemType.potentialDntEx, 'id', vm.item.pid);
@@ -41,7 +41,7 @@ function(dntData,items,hCodeValues,itemColumnsToLoad) {
           if(potentials.length == 1) {
             vm.potential = potentials[0];
             vm.potentials = dntData.find(vm.itemType.potentialDntEx, 'PotentialID', vm.potential.PotentialID);
-            vm.potentialStats = getPotentialStats(vm.potentials);
+            vm.potentialStats = getPotentialStats();
           }
         }
       }

@@ -5,7 +5,7 @@ angular.module('dnsim').filter('escape', [function() {
 
   function escapeFilter(input) {
       if(input) {
-          return window.encodeURIComponent(input);
+          return encodeURIComponent(input);
       }
       return '';
   }
