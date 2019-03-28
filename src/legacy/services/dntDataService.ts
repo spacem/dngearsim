@@ -130,7 +130,18 @@ function dntData($rootScope, $timeout) {
           this.loaders[fileName] = createLoader(this.dntLocation, fileName, colsToLoad);
         }
       }
-      this.loaders[fileName].init(progress, complete, ignoreErrors);
+
+      return new Promise(res => {
+        this.loaders[fileName].init(
+          progress,
+          () => {
+            if  (complete) {
+              complete();
+            }
+            res();
+          },
+          ignoreErrors);
+        });
     },
     getData: function (fileName) {
       if (this.isLoaded(fileName)) {

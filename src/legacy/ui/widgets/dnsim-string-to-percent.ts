@@ -11,7 +11,7 @@ function dnsimStringToNumber() {
         return '' + (value/100.0);
       });
       ngModel.$formatters.push(function(value) {
-        return parseFloat(value, 10)*100;
+        return Math.floor(parseFloat(value)*100000)/1000;
       });
     }
   };

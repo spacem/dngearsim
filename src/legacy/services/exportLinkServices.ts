@@ -187,7 +187,7 @@ function exportLinkHelper(items, dntData, itemFactory, hCodeValues, itemColumnsT
       if (!skillData) {
         console.log('cannot get skill data from ', skillDnt);
       }
-      var skillLevelDatas = dntData.getData(skillLevelDnt);
+      var skillLevelDatas = dntData.find(skillLevelDnt, 'SkillIndex', item.id);
 
       var skillLevelVals: any = {};
       angular.forEach(skillLevelDatas, function (value, index) {

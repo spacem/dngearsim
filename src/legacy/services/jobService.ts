@@ -21,8 +21,10 @@ function jobs(dntData, translations, itemColumnsToLoad) {
     },
 
     init: function (progress, complete) {
-      dntData.init(fileName, colsToLoad, progress, function () {
-        complete();
+      return dntData.init(fileName, colsToLoad, progress, function () {
+        if (complete) {
+          complete();
+        }
       }, false);
     },
 

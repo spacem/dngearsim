@@ -21,12 +21,12 @@
     <label>class: 
     </label>
     <select ng-model="skillSearch.job" class="form-control"
-     ng-options="job.name for job in skillSearch.jobs track by job.id" ng-change="skillSearch.skills = null;">
+     ng-options="job.name for job in skillSearch.jobs track by job.id" ng-change="skillSearch.init();">
     </select>
   </div>
 </div>
 <dnsim-loading>
-  <div class="row">
+  <div class="row" infinite-scroll="skillSearch.showMoreResults()">
     <div class="col-xs-12">&nbsp;</div>
     <div class="col-xs-12 dnsim-card" ng-repeat="result in skillSearch.getResults() track by $index">
       <dngearsim-build-item item="result"></dngearsim-build-item>

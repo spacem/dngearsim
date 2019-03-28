@@ -240,7 +240,7 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,jobs,h
   }
   
   $timeout(function() {
-    var input = document.getElementById('groupNameInput');
+    var input = document.getElementById('groupNameInput') as HTMLInputElement;
     if(input) {
       input.focus();
       input.setSelectionRange(0, 9999);

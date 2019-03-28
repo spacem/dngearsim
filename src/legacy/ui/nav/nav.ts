@@ -10,7 +10,7 @@ angular.module('dnsim').controller('NavCtrl',
         {path: 'search', name:'search', icon: 'search'},
         ];
       
-      var buildAction = {path: 'build', name:'build'};
+      var buildAction = {path: 'build', name:'build', build: undefined};
       
       var withBuildMenu = [
         {path: 'builds', name:'builds', icon: 'menu-hamburger'},

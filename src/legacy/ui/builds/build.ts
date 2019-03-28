@@ -133,7 +133,7 @@ function bulidController($timeout, statHelper, itemCategory, saveHelper) {
         }
       });
       
-      itemCountText = numItems;
+      itemCountText = numItems.toString();
       var cat = itemCategory.byName(vm.category.name);
       if(cat && 'numItemText' in cat) {
         itemCountText += ' / ' + cat.numItemText;
