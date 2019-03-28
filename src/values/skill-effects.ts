@@ -74,6 +74,7 @@ export const SkillEffectLookup = {
             return [];
         }
     },
+    307: { id: 307, name: 'passion ele', mapTo: 88 },
     389: {
         id: 389,
         name: 'fd buff or sader cm1',
