@@ -1,6 +1,6 @@
 const angular = require('angular');
 require('./app.js');
-require('./services/characterService');
+require('./services');
 require('./services/columnsToLoadService');
 require('./services/dntDataService');
 require('./services/dntInitService');
