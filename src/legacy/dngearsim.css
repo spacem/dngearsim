@@ -309,6 +309,9 @@ background-position: -610px -10px;
 .cat-icon-titles {
   background: url("/assets/images/icons/itemicon63.png") -285px -44px;
 }
+.cat-icon-hero.titles {
+  background: url("/assets/images/icons/itemicon63.png") -125px -244px;
+}
 .cat-icon-armour {
   background: url("/assets/images/icons/itemicon21.png") -325px -564px;
 }

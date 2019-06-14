@@ -25,6 +25,7 @@ class ItemSourceImpl implements ItemSource {
   ignoreErrors: boolean;
   skillDnt: string;
   skillLevelDnt: string;
+  fixstatDnt: string;
 
   constructor(public name: string, private dntData: any, private translations: any, private itemColumnsToLoad: any) {
   }
@@ -72,6 +73,11 @@ class ItemSourceImpl implements ItemSource {
           this.doComplete(complete);
         }, this.ignoreErrors);
       }
+      if ('fixstatDnt' in this) {
+        this.dntData.init(this.fixstatDnt, this.itemColumnsToLoad.fixstatDnt, progress, () => {
+          this.doComplete(complete);
+        }, this.ignoreErrors);
+      }
 
       this.doComplete(complete);
     }
@@ -84,7 +90,8 @@ class ItemSourceImpl implements ItemSource {
       (!('potentialDntEx' in this) || this.dntData.isLoaded(this.potentialDntEx) || this.dntData.hasFailed(this.potentialDntEx)) &&
       (!('skillDnt' in this) || this.dntData.isLoaded(this.skillDnt) || this.dntData.hasFailed(this.skillDnt)) &&
       (!('skillLevelDnt' in this) || this.dntData.isLoaded(this.skillLevelDnt) || this.dntData.hasFailed(this.skillLevelDnt)) &&
-      (!('gemDnt' in this) || this.dntData.isLoaded(this.gemDnt) || this.dntData.hasFailed(this.gemDnt))
+      (!('gemDnt' in this) || this.dntData.isLoaded(this.gemDnt) || this.dntData.hasFailed(this.gemDnt)) &&
+      (!('fixstatDnt' in this) || this.dntData.isLoaded(this.fixstatDnt) || this.dntData.hasFailed(this.fixstatDnt))
     ) {
       complete();
       this.loading = false;
@@ -128,7 +135,8 @@ function items(translations, dntData, itemColumnsToLoad) {
   }
 
   Object.assign(itemSources.title, {
-      mainDnt: DntFiles.optimisedTitles,
+      mainDnt: DntFiles.titles,
+      fixstatDnt: DntFiles.titleFixStats,
       type: 'titles',
       minLevel: 0,
       minRank: 0

@@ -1,0 +1,27 @@
+<dnsim-loading>
+<h3>
+    hero titles
+    <small *ngIf="buildName">percentages show adding to {{ $ctrl.buildName }}</small>
+    <br />
+    <small>Sorted by <button class="btn btn-link" ng-click="$ctrl.switchSortStat()">{{ $ctrl.sortStat.name }}</button></small>
+</h3>
+
+<div class="row" infinite-scroll="$ctrl.showMoreResults()">
+    <div class="col-xs-12" ng-repeat="result in $ctrl.displayTitles track by $index">
+        <div class="row dnsim-card">
+            <dngearsim-build-item item="result"></dngearsim-build-item>
+            <div style="float: right">
+                <div ng-repeat="stat in $ctrl.useStats" ng-if="result.affectAmounts[stat.id] > 0">
+                    {{stat.name }}: +{{ result.affectAmounts[stat.id] }}%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="$ctrl.totalNumResults >= $ctrl.maxDisplay">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-11">
+        <button class="btn btn-link" ng-click="$ctrl.showMoreResults(20)">show more</button>
+    </div>
+</div>
+</dnsim-loading>

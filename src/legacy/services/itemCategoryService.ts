@@ -9,6 +9,7 @@ function itemCategory(itemFactory, items, dntData) {
     categories: [
       { path: 'everything', name: 'everything', searchType: 'everything', hideInBuild: true },
       { path: 'titles', name: 'titles', sourceType: 'titles', hideRank: true, hideJob: true, hideLevel: true, numItemText: '1', maxCat: 1 },
+      { path: 'hero-titles', name: 'hero titles', sourceType: 'titles', searchType: 'hero-titles' },
       { path: 'weapons', name: 'weapons', sourceType: 'equipment', numItemText: '2', maxExchange: 1, maxCat: 2, limitExchange: [1, 2] },
       { path: 'armour', name: 'armour', sourceType: 'equipment', numItemText: '5', maxExchange: 1, maxCat: 5, limitExchange: [3, 4, 5, 6, 7] },
       { path: 'accessories', name: 'accessories', sourceType: 'equipment', hideJob: true, maxCat: 4, maxExchange: 2, limitExchange: [8, 9, 10], tId: 7604 },
@@ -144,22 +145,27 @@ function itemCategory(itemFactory, items, dntData) {
     },
 
     init: function (name, complete) {
-      var cat = this.byName(name);
-      if (cat && 'sourceType' in cat) {
-        var sources = _.filter(items, function (source) {
-          return (source.type == cat.sourceType);
-        });
-
-        var numComplete = 0;
-        _.each(sources, function (source) {
-          source.init(function () { }, function () {
-            numComplete++;
-            if (numComplete == sources.length) {
-              complete();
-            }
+      return new Promise((res, rej) => {
+        var cat = this.byName(name);
+        if (cat && 'sourceType' in cat) {
+          var sources = _.filter(items, function (source) {
+            return (source.type == cat.sourceType);
           });
-        });
-      }
+
+          var numComplete = 0;
+          _.each(sources, function (source) {
+            source.init(function () { }, function () {
+              numComplete++;
+              if (numComplete == sources.length) {
+                if (complete) {
+                  complete();
+                }
+                res();
+              }
+            });
+          });
+        }
+      });
     },
 
     setItemCategory: function (item, rawData) {
