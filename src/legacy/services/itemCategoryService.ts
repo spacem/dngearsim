@@ -13,8 +13,8 @@ function itemCategory(itemFactory, items, dntData) {
       { path: 'armour', name: 'armour', sourceType: 'equipment', numItemText: '5', maxExchange: 1, maxCat: 5, limitExchange: [3, 4, 5, 6, 7] },
       { path: 'accessories', name: 'accessories', sourceType: 'equipment', hideJob: true, maxCat: 4, maxExchange: 2, limitExchange: [8, 9, 10], tId: 7604 },
       { path: 'techs', name: 'techs', sourceType: 'techs', maxCat: 4, maxExchange: 2, limitExchange: [8, 9, 10], hideJob: true },
-      { path: 'offensive-gems', name: 'offensive gems', sourceType: 'gems', hideJob: true, limitExchange: [54], limitGemType: 1 },
-      { path: 'increasing-gems', name: 'increasing gems', sourceType: 'gems', hideJob: true, limitExchange: [54], limitGemType: 2 },
+      { path: 'offensive-gems', name: 'offensive gems', sourceType: 'gems', hideJob: true, limitExchange: [54], limitGemTypes: [1] },
+      { path: 'increasing-gems', name: 'increasing gems', sourceType: 'gems', hideJob: true, limitExchange: [54, 55], limitGemTypes: [2, 3] },
       { path: 'enhancement-plates', name: 'enhancement plates', sourceType: 'plates', hideJob: true, numItemText: '8+3', maxCat: 11, maxExchange: 15, limitExchange: [33], limitRank: [0, 1, 2, 3] },
       { path: 'expedition-plates', name: 'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, numItemText: '4', maxCat: 4, maxExchange: 15, limitExchange: [33], limitRank: [4, 5] },
       { path: 'talisman', name: 'talisman', sourceType: 'talisman', hideJob: true, numItemText: '8+4', maxCat: 12, maxExchange: 12, limitExchange: [52, 53], tId: 1000054149 },
@@ -130,13 +130,10 @@ function itemCategory(itemFactory, items, dntData) {
         }
       }
 
-      if (cat.limitGemType) {
+      if (cat.limitGemTypes && cat.limitGemTypes.length) {
         var gemTypes = dntData.find(items.gem.gemDnt, 'id', item.id);
         if (gemTypes.length > 0) {
-
-          if (gemTypes[0].Type != cat.limitGemType) {
-            return false;
-          }
+          return cat.limitGemTypes.find(type => type == gemTypes[0].Type) != null;
         }
       }
 
