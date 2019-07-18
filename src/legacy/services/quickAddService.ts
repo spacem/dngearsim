@@ -12,7 +12,6 @@ function quickAdd(quickAddSteps, quickAddHelper) {
       weapons: ['exchangeStep', 'levelStep', 'rankStep', 'itemNameStep', 'hasStatStep', 'itemStep', 'enhanceEqStep'],
       armour: ['exchangeStep', 'levelStep', 'rankStep', 'itemNameStep', 'hasStatStep', 'itemStep', 'enhanceEqStep'],
       accessories: ['accExchangeStep', 'levelStep', 'rankStep', 'itemNameStep', 'hasStatStep', 'itemStep'],
-      techs: ['exchangeStep', 'levelStep', 'rankStep', 'techSkillStep', 'itemNameStep', 'hasStatStep', 'itemStep'],
       'offensive gems': ['levelStep', 'gemRankStep', 'itemNameStep', 'hasStatStep', 'hasStatStep', 'itemStep', 'enhanceGemStep'],
       'increasing gems': ['levelStep', 'gemRankStep', 'itemNameStep', 'hasStatStep', 'hasStatStep', 'itemStep', 'enhanceGemStep'],
       'enhancement plates': ['levelStep', 'rankStep', 'distinctItemNameStep', 'numStatsStep', 'hasStatStep', 'itemStep'],

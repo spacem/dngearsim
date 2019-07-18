@@ -57,13 +57,6 @@ var uiTranslationLookup = {
         'quick add': '快速添加',
         'hero lvl': '英雄等级'
     },
-    sea: {
-        'offensive gems':  'offensive jades',
-        'increasing gems':  'increasing jades',
-        'expedition plates': 'unique heraldry',
-        'enhancement plates': 'normal heraldry',
-        'techs': 'skill accessory',
-    },
 };
 
 // this function gets called on language change to add the translations to the main list
