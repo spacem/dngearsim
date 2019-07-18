@@ -54,7 +54,6 @@ function buildItemListController(hCodeValues, itemCategory, saveHelper) {
       else if(vm.category.name == 'imprint') {
         var costumeCat = itemCategory.byName('costume');
         subCatList = _.filter(items, function(item) {
-          console.log(item);
           return itemCategory.isItemForCat(costumeCat, item) ||
             item.exchangeType == 26 ||
             item.exchangeType == 27 ||
