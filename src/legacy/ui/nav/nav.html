@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs" ng-if="!noRegion()">
   <li class="nav-tab nav-{{::action.name}}" ng-repeat="action in getActions() track by $index"> 
-    <a class="list-group-item {{action.extraCss}}" ng-href="{{action.path}}">
+    <a class="list-group-item" ng-href="{{action.path}}" ng-class="{'active': isSelected(action.path)}">
       <span class="glyphicon glyphicon-{{::action.icon}}" ng-if="::action.icon" aria-hidden="true"></span>
       <dnsim-job-icon size="'50%'" item="action.build.job" small="true"></dnsim-job-icon>
       &nbsp;
@@ -10,10 +10,10 @@
     </a>
   </li>
   <li class="nav-tab nav-about pull-right">
-    <a class="list-group-item" ng-href="about">
+    <a class="list-group-item" ng-href="about" ng-class="{'active': isSelected('about')}">
       <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
       <span class="hidden-xs">
-      {{ 'about' | translate }}
+      {{ 'faq' | translate }}
       </span>
     </a>
   </li>
