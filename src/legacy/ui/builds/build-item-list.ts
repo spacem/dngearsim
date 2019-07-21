@@ -20,6 +20,10 @@ function buildItemListController(hCodeValues, itemCategory, saveHelper) {
 
   var vm = this;
 
+  vm.getSubCategoryItems = function(subCat) {
+    return vm.getCategoryItems().filter(i => vm.isInSubCat(i, subCat));
+  };
+
   vm.getCategoryItems = function() {
     var itemsByCat = itemCategory.getItemsByCategory(vm.build.items);
     if(vm.category.name in itemsByCat) {

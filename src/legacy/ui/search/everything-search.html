@@ -3,7 +3,7 @@
     <h4>{{'full item search' | translate}} <small>{{'find anything' | translate}}</small></h4>
   </div>
 </div>
-<div class="row">
+<div class="row search-box">
   <div class="col-xs-12 col-sm-6">
      <label>{{'seach by name:' | translate}}</label>
      <input ng-change="items.changeSearch()" type="text" class="form-control" ng-model="items.nameSearch" ng-model-options="{ debounce: 300 }" />
@@ -27,9 +27,9 @@
 </div>
 
 <dnsim-loading>
-  <div class="row table-look"
+  <div class="row"
     infinite-scroll="items.showMoreResults()">
-    <div class="col-xs-12 col-md-6" ng-repeat="result in items.results track by $index">
+    <div class="col-xs-12 search-item" ng-repeat="result in items.results track by $index">
       <div class="dnsim-card">
         <dnsim-item-link item="result" />
       </div>
