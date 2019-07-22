@@ -15,7 +15,7 @@
   <!-- For small screens this is the search box with filter button -->
   <div class="row visible-xs" ng-if="::!ctrl.itemCategory.searchType">
     <div
-      class="col-xs-12 input-group">
+      class="col-xs-12 input-group search-box">
       <input placeholder="Search" ng-change="ctrl.changeSearch()" type="text" class="form-control" ng-model="ctrl.nameSearch" ng-model-options="{ debounce: 300 }" />
       <span class="input-group-btn">
         <button class="btn btn-default" ng-click="ctrl.filters = !ctrl.filters">
@@ -60,7 +60,7 @@
     </div>
   </div>
   <!-- For large screens search options -->
-  <div class="row hidden-xs" ng-if="::!ctrl.itemCategory.searchType">
+  <div class="row hidden-xs search-box" ng-if="::!ctrl.itemCategory.searchType">
     <div class="col-xs-0 col-md-2"></div>
     <div class="hidden-xs col-md-10 form-group">
       <br />
@@ -110,7 +110,7 @@
 
   <!-- Search results -->
   <div class="row" infinite-scroll="ctrl.showMoreResults()" ng-if="!ctrl.itemCategory.searchType && ctrl.results">
-    <div class="col-xs-12" ng-repeat="result in ctrl.results track by $index">
+    <div class="col-xs-12 search-item" ng-repeat="result in ctrl.results track by $index">
       <div class="row dnsim-card">
         <dngearsim-build-item item="result"></dngearsim-build-item>
         <div style="float:right">
@@ -118,7 +118,7 @@
               {{'use' | translate}}
             </button>
         </div>
-        <div class="col-xs-12" ng-if="showUse">
+        <div ng-if="showUse">
           <br />
           <dngearsim-group-assignment compact="true" item="result"></dngearsim-group-assignment>
         </div>
@@ -131,6 +131,7 @@
       <button class="btn btn-link" ng-click="ctrl.showMoreResults(20)">show more</button>
     </div>
   </div>
+  <div class="row hidden-xs search-end"></div>
 </dnsim-loading>
 </div>
 

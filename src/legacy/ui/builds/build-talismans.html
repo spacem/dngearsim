@@ -19,6 +19,18 @@
 </div>
 
 <div class="row">
+  <div class="col-xs-7 text-right">
+    <h4> <small> changes are not applied to build until saved </small></h4>
+  </div>
+  <div class="col-xs-5"></div>
+    <button class="btn btn-default" ng-click="ctrl.save()">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+      {{'save' | translate}}
+    </button>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-xs-12" ng-if="ctrl.selectedIndex == -1">
     <br />
     {{'click a talisman to change its location' | translate}}
@@ -26,13 +38,12 @@
   <div class="col-xs-12" ng-if="ctrl.selectedIndex > -1">
     <br />
     {{'now click where you want to move it or ' | translate}}&nbsp;
-    <btn class="btn btn-default" ng-click="ctrl.selectedIndex = -1">{{'cancel' | translate}}</btn>
+    <button class="btn btn-default" ng-click="ctrl.selectedIndex = -1">{{'cancel' | translate}}</button>
   </div>
   <div class="col-xs-12">&nbsp;</div>
 </div>
 
-
-<div class="row" ng-repeat="r in ctrl.rows track by $index">
+<div class="row talisman-row" ng-repeat="r in ctrl.rows track by $index">
   <div class="col-xs-3" ng-repeat="c in r track by $index">
     <div class="row">
 
@@ -64,14 +75,5 @@
 <div class="row">  
   <div class="col-xs-12">
     &nbsp;
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xs-12">
-    <button class="btn btn-default" ng-click="ctrl.save()">
-      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-      {{'save' | translate}}
-    </button>
   </div>
 </div>

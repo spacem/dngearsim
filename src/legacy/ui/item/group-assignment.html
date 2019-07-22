@@ -43,11 +43,13 @@
     <div class="col-xs-12 item-type-grouping">
     </div>
     <div class="col-xs-12 col-md-6">
-      <div class="dnsim-card">
+      <div class="assign-item-top col-xs-12"></div>
+      <div class="assign-item col-xs-12">
         <dngearsim-build-item item="groupItem"></dngearsim-build-item>
       </div>
+      <div class="assign-item-bottom col-xs-12"></div>
     </div>
-    <div class="col-xs-12 col-md-6" style="padding-top:8px">
+    <div class="col-xs-12 col-md-6 assign-item-stat" style="padding-top:8px">
       <div ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
         <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">{{'increase' | translate}}</b>
         <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">{{'decrease' | translate}}</b>

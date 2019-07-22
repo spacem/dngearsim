@@ -3,33 +3,33 @@
     <h4>{{'full item search' | translate}} <small>{{'find anything' | translate}}</small></h4>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12 col-sm-6">
-     <label>{{'seach by name:' | translate}}</label>
-     <input ng-change="items.changeSearch()" type="text" class="form-control" ng-model="items.nameSearch" ng-model-options="{ debounce: 300 }" />
-  </div>
-  <div class="col-xs-4 col-sm-2">
-     <label>{{'min&nbsp;lvl:' | translate}}
-     </label>
-     <input ng-change="items.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="items.minLevel" ng-model-options="{ debounce: 300 }" />
-  </div>
-  <div class="col-xs-4 col-sm-2">
-     <label>{{'max&nbsp;lvl:' | translate}}
-     </label>
-     <input ng-change="items.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="items.maxLevel" ng-model-options="{ debounce: 300 }" />
-  </div>
-  <div class="col-xs-4 col-sm-2">
-     <label>{{'version' | translate}}
-     </label>
-     <select ng-change="items.changeSearch()" ng-model="items.version" class="form-control" ng-options="v for v in items.versions track by v">
-     </select>
-  </div>
-</div>
-
 <dnsim-loading>
-  <div class="row table-look"
+  <div class="row search-box">
+    <div class="col-xs-12 col-sm-6">
+      <label>{{'seach by name:' | translate}}</label>
+      <input ng-change="items.changeSearch()" type="text" class="form-control" ng-model="items.nameSearch" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div class="col-xs-4 col-sm-2">
+      <label>{{'min&nbsp;lvl:' | translate}}
+      </label>
+      <input ng-change="items.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="items.minLevel" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div class="col-xs-4 col-sm-2">
+      <label>{{'max&nbsp;lvl:' | translate}}
+      </label>
+      <input ng-change="items.changeSearch()" type="number" dnsim-string-to-number step="any" class="form-control" ng-model="items.maxLevel" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div class="col-xs-4 col-sm-2">
+      <label>{{'version' | translate}}
+      </label>
+      <select ng-change="items.changeSearch()" ng-model="items.version" class="form-control" ng-options="v for v in items.versions track by v">
+      </select>
+    </div>
+  </div>
+
+  <div class="row"
     infinite-scroll="items.showMoreResults()">
-    <div class="col-xs-12 col-md-6" ng-repeat="result in items.results track by $index">
+    <div class="col-xs-12 search-item" ng-repeat="result in items.results track by $index">
       <div class="dnsim-card">
         <dnsim-item-link item="result" />
       </div>
@@ -37,5 +37,6 @@
     <div class="col-xs-12" ng-if="items.results && items.maxDisplay <= items.results.length">
       <button class="btn btn-link" ng-click="items.showMoreResults()">{{'show more' | translate}}</button>
     </div>
+    <div class="col-xs-12 hidden-xs search-end"></div>
   </div>
 </dnsim-loading>
