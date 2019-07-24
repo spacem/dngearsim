@@ -36,6 +36,8 @@ angular.module('dnsim')
           region.init();
           region.setTLocation(region.dntLocation);
         }
+      }).catch(err => {
+        this.loading = false;
       });
     };
 

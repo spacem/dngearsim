@@ -1,8 +1,8 @@
 import { Region } from 'src/models/region';
 import * as angular from 'angular';
 
-angular.module('dnsim').factory('region', ['translations', 'dntReset', 'dntData', '$route', region]);
-function region(translations, dntReset, dntData, $route) {
+angular.module('dnsim').factory('region', ['translations', 'dntReset', 'dntData', '$route', '$location', region]);
+function region(translations, dntReset, dntData, $route, $location) {
 
   const alternativeFiles: Region = { region: 'ALT', name: 'Alternative user specified files', url: '' };
   let hostedFiles: Region[] = [
@@ -26,6 +26,9 @@ function region(translations, dntReset, dntData, $route) {
         dntLocation = hostedFile;
       }
     }
+  }
+  if (!dntLocation && $location.path().indexOf('desktop-setup') > 0) {
+    dntLocation = alternativeFiles;
   }
 
   const lastTFile = localStorage.getItem('UIStrings_file');
