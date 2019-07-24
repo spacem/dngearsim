@@ -18,7 +18,7 @@ angular.module('dnsim').controller('RegionCtrl',
     vm.region = region;
     vm.tHoverLocation = region.tlocation;
     vm.hoverLocation = region.dntLocation;
-    vm.edit = (region.dntLocation == null);
+    vm.edit = (region.dntLocation == null && region.region != 'ALT');
     vm.dntVersion = '';
     setDntVersion();
     

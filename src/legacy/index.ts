@@ -25,6 +25,7 @@ require('./services/uiTranslationService');
 require('./services/valueService');
 require('./ui/routes');
 require('./ui/about/about');
+require('./ui/desktop/desktop-setup');
 require('./ui/builds/build-actions');
 require('./ui/builds/build-export-action');
 require('./ui/builds/build-import');

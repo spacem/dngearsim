@@ -1,0 +1,15 @@
+<dnsim-loading also-show-for="loading">
+    <div class="col-xs-12">
+        <label>{{'dragon nest folder:' | translate}}</label>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="ctrl.workLocation" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="ctrl.selectWorkingFolder()">...</button>
+            </span>
+        </div>
+    </div>
+    <div class="col-xs-12">
+    <button class="btn btn-default" ng-click="ctrl.setFolder()">set location</button>
+    {{ ctrl.locationDetail }} {{ ctrl.error }}
+    </div>
+</dnsim-loading>

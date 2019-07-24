@@ -21,7 +21,7 @@ function region(translations, dntReset, dntData, $route) {
   const dntLocationRegion: string = localStorage.getItem('lastDNTRegion');
   let dntLocation: Region = null;
   if (dntLocationRegion) {
-    for (const hostedFile of hostedFiles) {
+    for (const hostedFile of [...hostedFiles, alternativeFiles]) {
       if (hostedFile.region === dntLocationRegion) {
         dntLocation = hostedFile;
       }
