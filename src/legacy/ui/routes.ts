@@ -11,6 +11,11 @@ function config($routeProvider) {
       template: require('./about/about.html'),
       controller: 'AboutCtrl as about'
     }).
+
+    when('/desktop-setup', {
+      template: require('./desktop/desktop-setup.html'),
+      controller: 'DesktopSetupCtrl as ctrl'
+    }).
     
     when('/setup', {
       template: require('./nav/setup.html'),

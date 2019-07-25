@@ -41,6 +41,10 @@ angular.module('dnsim').controller('NavCtrl',
         return region.dntLocation == null;
       }
       
+      $scope.altRegion = function() {
+        return region.dntLocation && region.dntLocation.region == 'ALT';
+      }
+      
       $scope.isHttpOnly = function() {
         return location.protocol != 'https:' && location.hostname != 'localhost';
       }

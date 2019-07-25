@@ -17,6 +17,14 @@
       </span>
     </a>
   </li>
+  <li class="nav-tab nav-about pull-right" ng-if="altRegion()">
+    <a class="list-group-item" ng-href="desktop-setup" ng-class="{'active': isSelected('desktop-setup')}">
+      <span class="glyphicon glyphicon-cog"" aria-hidden="true"></span>
+      <span class="hidden-xs">
+      {{ 'setup' | translate }}
+      </span>
+    </a>
+  </li>
 </ul>
 <div class="container-fluid sim-error" ng-if="simError">
   {{simError}}
