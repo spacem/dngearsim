@@ -1,10 +1,10 @@
 # dngearsim - Dragon Nest Gear Simulator
 
 In case you came here looking to use the sim here is a link:
-https://spacem.github.io/dngearsim/
+https://dngearsim.netlify.com
 
 Also check out my dnt viewer that is hosted here:
-https://spacem.github.io/dntviewer
+https://dntviewer.netlify.com/
 
 In the rest of this readme I will discuss the architecture of dngearsim.
 If you want to help with development please feel free to contact me via discord.
@@ -14,9 +14,9 @@ Here is my discord server: https://discord.gg/011C92KwJWoCfRcEY
 I wanted an app that is usable on mobile but I didn’t want hosting costs.
 My idea was to use static html/javascript pages which could be hosted on free hosting (ie. github pages).
 
-## Development enviroment
-* Install node.js, gitand an editor (eg. visual studio code)
-* Open node.js command prompt
+## Development environment
+* Install node.js, git and an editor (eg. visual studio code)
+* Open command prompt
 * git clone https://github.com/spacem/dngearsim.git
 * cd dngearsim
 * npm install
