@@ -444,8 +444,7 @@ function statHelper(hCodeValues) {
       mdefEqHp.max = hp.max / (1 - mdefpc.max);
 
       var eqHp = calc.dupeStat(3008);
-      // eqHp.max = (pdefEqHp.max + mdefEqHp.max) / 2;
-      eqHp.max = pdefEqHp.max;
+      eqHp.max = (pdefEqHp.max + mdefEqHp.max) / 2;
       calc.addStat(eqHp);
 
       calc.addStat(str);
