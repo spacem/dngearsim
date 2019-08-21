@@ -10,7 +10,7 @@ angular.module('dnsim').controller('NavCtrl',
         {path: 'search', name:'search', icon: 'search'},
         ];
       
-      var buildAction = {path: 'build', name:'build', build: undefined};
+      var buildAction = {path: 'build', name: 'build', build: undefined};
       
       var withBuildMenu = [
         {path: 'builds', name:'builds', icon: 'menu-hamburger'},
@@ -19,9 +19,14 @@ angular.module('dnsim').controller('NavCtrl',
         ];
         
       region.init();
-    
-      $scope.isSearch = function() {
-        return $location.path().indexOf('/search') == 0;
+
+      $scope.isSelected = function(actionPath) {
+        var path =$location.path();
+        if ('/' + actionPath == path) {
+          return true;
+        } else if(path == '/build' && actionPath == buildAction.path) {
+          return true;
+        }
       }
   
       $scope.isLoading = function() {
@@ -34,6 +39,10 @@ angular.module('dnsim').controller('NavCtrl',
       
       $scope.noRegion = function() {
         return region.dntLocation == null;
+      }
+      
+      $scope.altRegion = function() {
+        return region.dntLocation && region.dntLocation.region == 'ALT';
       }
       
       $scope.isHttpOnly = function() {
@@ -76,21 +85,6 @@ angular.module('dnsim').controller('NavCtrl',
           else {
             menu = normalMenu;
           }
-          
-          var path = $location.path;
-          angular.forEach(menu, function(value, key) {
-            delete value.extraCss;
-            if(path && path.length == 1) {
-              if(value.path.length == 1) {
-                value.extraCss = 'active';
-              }
-            }
-            else if(value.path && value.path.length > 1 && path.indexOf('/' + value.path) == 0) {
-              if(value.path != 'builds' || path == '/builds') {
-                value.extraCss = 'active';
-              }
-            }
-          });
           
           return menu;
         }

@@ -20,6 +20,10 @@ function buildItemListController(hCodeValues, itemCategory, saveHelper) {
 
   var vm = this;
 
+  vm.getSubCategoryItems = function(subCat) {
+    return vm.getCategoryItems().filter(i => vm.isInSubCat(i, subCat));
+  };
+
   vm.getCategoryItems = function() {
     var itemsByCat = itemCategory.getItemsByCategory(vm.build.items);
     if(vm.category.name in itemsByCat) {
@@ -51,10 +55,13 @@ function buildItemListController(hCodeValues, itemCategory, saveHelper) {
           return item.offensiveGemSlots > 0;
         });
       }
-      else if(vm.category.name == 'imprint') {  
+      else if(vm.category.name == 'imprint') {
         var costumeCat = itemCategory.byName('costume');
         subCatList = _.filter(items, function(item) {
-          return itemCategory.isItemForCat(costumeCat, item);
+          return itemCategory.isItemForCat(costumeCat, item) ||
+            item.exchangeType == 26 ||
+            item.exchangeType == 27 ||
+            item.exchangeType == 28;
         });
       }
       _.each(subCatList, function(item) {

@@ -132,12 +132,7 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
     return vm.savedItems[vm.groupName];
   };
   
-  this.initAddAffects = function() {
-    
-    if(vm.addAffectAmount) {
-      return;
-    }
-    
+  this.initAddAffects = function() {    
     // console.log('initialising add affects ');
     
     var origStats = vm.getGroupCalcStats();
@@ -160,11 +155,7 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
     }
   };
   
-  this.initReplaceAffects = function(itemIndex, item) {
-    if(vm.replaceAffectAmount[itemIndex]) {
-      return;
-    }
-    
+  this.initReplaceAffects = function(itemIndex, item) {    
     var group = vm.savedItems[vm.groupName];
     var newItems = [vm.item];
     angular.forEach(group.items, function(gItem , index) {

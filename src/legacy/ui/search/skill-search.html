@@ -11,8 +11,8 @@
   </p>
 </div>
 </div>
-<div class="row">
-  
+<div class="row search-box">
+<dnsim-loading>
   <div class="col-xs-12 col-md-9">
      <label>name:</label>
      <input type="text" class="form-control" ng-model="skillSearch.nameSearch" />
@@ -25,11 +25,12 @@
     </select>
   </div>
 </div>
-<dnsim-loading>
-  <div class="row" infinite-scroll="skillSearch.showMoreResults()">
-    <div class="col-xs-12">&nbsp;</div>
-    <div class="col-xs-12 dnsim-card" ng-repeat="result in skillSearch.getResults() track by $index">
+<div class="row" infinite-scroll="skillSearch.showMoreResults()">
+  <div class="col-xs-12 search-item" ng-repeat="result in skillSearch.getResults() track by $index">
+    <div class="dnsim-card">
       <dngearsim-build-item item="result"></dngearsim-build-item>
     </div>
   </div>
+  <div class="col-xs-12 hidden-xs search-end"></div>
+</div>
 </dnsim-loading>
