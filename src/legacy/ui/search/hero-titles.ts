@@ -43,21 +43,24 @@ function skillSearchCtrl(dntData, saveHelper, statHelper, itemCategory, itemFact
       t.stats = t.heroStats;
     }
 
-    this.useStats = Object.values(StatLookup).filter(s => s.summaryDisplay && this.currentStats.find(cs => cs.id === s.id) != null);
+    this.useStats = Object.values(StatLookup).filter(s =>
+      s.summaryDisplay && this.currentStats && this.currentStats.find(cs => cs.id === s.id) != null);
 
     this.titles = allTitles.filter(t => t.heroStats && t.heroStats.length);
-    for (const t of this.titles) {
-      const newItems = [t, ...this.build.items];
-      const newStats = statHelper.getCalculatedStatsFromItems(this.build, newItems);
-      t.affectAmounts = {};
-      for (const s of this.useStats) {
-        t.affectAmounts[s.id] =
-          this.calcStatPercent(
-            this.getStat(s.id, newStats).max,
-            this.getStat(s.id, this.currentStats).max);
+    if (this.build) {
+      for (const t of this.titles) {
+        const newItems = [t, ...this.build.items];
+        const newStats = statHelper.getCalculatedStatsFromItems(this.build, newItems);
+        t.affectAmounts = {};
+        for (const s of this.useStats) {
+          t.affectAmounts[s.id] =
+            this.calcStatPercent(
+              this.getStat(s.id, newStats).max,
+              this.getStat(s.id, this.currentStats).max);
+        }
       }
+      this.sortStat = this.useStats[0];
     }
-    this.sortStat = this.useStats[0];
     this.sort();
     this.setupStats();
   };
