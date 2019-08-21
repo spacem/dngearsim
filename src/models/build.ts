@@ -13,7 +13,7 @@ export interface Build {
     enemyStatCaps?: any;
     playerStatCaps?: any;
     conversions?: any;
-    baseStats?: Stat[];
+    baseStats?: any;
     heroStats?: Stat[];
     heroTitleStats?: Stat[];
 }
