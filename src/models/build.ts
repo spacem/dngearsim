@@ -1,3 +1,5 @@
+import { Stat } from './stat';
+
 export interface Build {
     enemyLevel?: any;
     playerLevel?: any;
@@ -11,6 +13,7 @@ export interface Build {
     enemyStatCaps?: any;
     playerStatCaps?: any;
     conversions?: any;
-    baseStats?: any;
-    heroStats?: any;
+    baseStats?: Stat[];
+    heroStats?: Stat[];
+    heroTitleStats?: Stat[];
 }

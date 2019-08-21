@@ -672,3 +672,11 @@ dngearsim-build-item-list > .dnsim-card {
 .talisman-row {
   margin-left: 10px;
 }
+
+button.selected-button > span.glyphicon-ok {
+  color: green;
+}
+
+button.selected-button > span.glyphicon-trash {
+  color: red;
+}
