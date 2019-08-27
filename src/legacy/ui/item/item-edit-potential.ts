@@ -1,4 +1,5 @@
 import { Item } from 'src/models/item';
+import { StatDef } from 'src/models/stat-def';
 
 angular.module('dnsim').controller('itemEditPotentialCtrl',
 
@@ -12,7 +13,7 @@ angular.module('dnsim').controller('itemEditPotentialCtrl',
       this.potential = null;
       this.changingPotentials = false;
       this.potentialStats = {};
-      this.searchStats = [{ name: ''}, ...Object.values(hCodeValues.stats).filter(s => s.searchable)];
+      this.searchStats = [{ name: ''}, ...Object.values(hCodeValues.stats).filter((s: StatDef) => s.searchable)];
 
       if (this.item == null) return;
 
