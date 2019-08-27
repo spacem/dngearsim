@@ -196,22 +196,7 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
   };
   
   this.getStatName = function(id) {
-    var retVal = '';
-    if(hCodeValues.stats[id].element == 'primary') {
-      var eleId = 0;
-      if(vm.savedItems[vm.groupName].element) {
-        eleId = vm.savedItems[vm.groupName].element.id;
-      }
-      retVal += hCodeValues.elements[eleId].name;
-    }
-    else if(hCodeValues.stats[id].element == 'secondary') {
-      var eleId = 0;
-      if(vm.savedItems[vm.groupName].secondaryElement) {
-        eleId = vm.savedItems[vm.groupName].secondaryElement.id;
-      }
-      retVal += hCodeValues.elements[eleId].name;
-    }
-    return retVal + ' ' + hCodeValues.stats[id].name;
+    return statHelper.getStatName(vm.savedItems[vm.groupName], id);
   };
   
   this.getGroupItems = function() {

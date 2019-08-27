@@ -58,7 +58,6 @@ angular.module('dnsim').controller('itemEditPotentialCtrl',
               }
             }
 
-            console.log('filtering to ', vm.searchStat);
             if (vm.searchStat && vm.searchStat.id) {
               for (const p of vm.potentials) {
                 if (vm.potentialStats[p.id].find(s => s.id == vm.searchStat.id) == null) {
@@ -141,22 +140,7 @@ angular.module('dnsim').controller('itemEditPotentialCtrl',
       };
 
       this.getStatName = function(id) {
-        var retVal = '';
-        if(hCodeValues.stats[id].element == 'primary') {
-          var eleId = 0;
-          if(vm.build.element) {
-            eleId = vm.build.element.id;
-          }
-          retVal += hCodeValues.elements[eleId].name;
-        }
-        else if(hCodeValues.stats[id].element == 'secondary') {
-          var eleId = 0;
-          if(vm.build.secondaryElement) {
-            eleId = vm.build.secondaryElement.id;
-          }
-          retVal += hCodeValues.elements[eleId].name;
-        }
-        return retVal + ' ' + hCodeValues.stats[id].name;
+        return statHelper.getStatName(vm.build, id);
       };
 
       function getStat(id, stats) {
