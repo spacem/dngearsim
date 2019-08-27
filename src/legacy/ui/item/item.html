@@ -75,6 +75,11 @@
         <div dnsim-stats stats="::item.setStats" num-in-set="getNumInSet()"></div>
         <br />
       </div>
+      <div class="col-xs-12 col-md-3" ng-if="::item.heroStats != null && item.heroStats.length > 0">
+        <label>hero stats</label><br />
+        <div dnsim-stats stats="::item.heroStats"></div>
+        <br />
+      </div>
     </div>
     <dngearsim-item-edit item="item" on-change="handleChange()" update-item="handleChange()">
     </dngearsim-item-edit>

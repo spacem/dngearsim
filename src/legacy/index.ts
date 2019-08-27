@@ -73,6 +73,7 @@ require('./ui/search/custom-items');
 require('./ui/search/everything-search');
 require('./ui/search/search');
 require('./ui/search/skill-search');
+require('./ui/search/hero-titles');
 require('./ui/widgets/choose-class');
 require('./ui/widgets/dnsim-category-links');
 require('./ui/widgets/dnsim-item-icon');

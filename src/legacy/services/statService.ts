@@ -117,6 +117,9 @@ function statHelper(hCodeValues) {
       if (group.heroStats != null && group.heroStats.length > 0) {
         allStats = allStats.concat(group.heroStats);
       }
+      if (group.heroTitleStats) {
+        allStats = allStats.concat(group.heroTitleStats);
+      }
       allStats = hCodeValues.mergeStats(allStats);
 
       return this.getCalculatedStats(group, allStats);
@@ -538,6 +541,9 @@ function statHelper(hCodeValues) {
       if (build.heroStats && build.heroStats.length) {
         stats.heroStats = build.heroStats;
         stats.allStats = stats.allStats.concat(build.heroStats);
+      }
+      if (build.heroTitleStats) {
+        stats.allStats = stats.allStats.concat(build.heroTitleStats);
       }
       stats.allStats = hCodeValues.mergeStats(stats.allStats);
 

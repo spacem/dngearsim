@@ -66,6 +66,10 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
       return false;
     }
 
+    if ('fixstatDnt' in itemType && !dntData.isLoaded(itemType.fixstatDnt)) {
+      return false;
+    }
+
     return true;
 
   }
@@ -89,7 +93,7 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
       var skillId = dntData.getValue(itemType.mainDnt, r, 'SkillID');
 
       // skip items with no data
-      if (state1Max > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35 || dType == 1 || skillId > 0) {
+      if (state1Max > 0 || dStateValue1 > 0 || dTypeParam1 > 0 || dType == 35 || dType == 1 || skillId > 0 || dType == 0) {
         var potentials = [];
         if (dTypeParam1 > 0 && 'potentialDnt' in itemType) {
           potentials = dntData.find(itemType.potentialDnt, 'PotentialID', dTypeParam1);
@@ -144,8 +148,8 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
       }
 
       if (item.stats == null) {
-        if (item.itemSource in items && items[item.itemSource].skillDnt && d.SkillID && d.SkillLevel) {
-          const itemType = items[item.itemSource];
+        const itemType = items[item.itemSource];
+        if (itemType.skillDnt && d.SkillID && d.SkillLevel) {
           const skills = dntData.find(itemType.skillDnt, 'id', d.SkillID);
           if (skills.length) {
             const levelData = dntData.find(itemType.skillLevelDnt, 'SkillIndex', d.SkillID);
@@ -161,6 +165,13 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
             stats = hCodeValues.mergeStats(stats, potentialStats);
           }
           item.stats = stats;
+        }
+
+        if (itemType.fixstatDnt && d.fixstate) {
+          const heroStats = dntData.find(itemType.fixstatDnt, 'id', d.fixstate);
+          if (heroStats.length) {
+            item.heroStats = hCodeValues.getStats(heroStats[0]);
+          }
         }
       }
 

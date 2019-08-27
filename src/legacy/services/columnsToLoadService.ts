@@ -19,7 +19,8 @@ function itemColumnsToLoad() {
       EnchantID: true,
       SkillID: true,
       dragonjeweltype: true, AbleWStorage: true, ExchangeType: true, IconImageIndex: true, IsCash: true, DisjointDrop1: true, Disjointamount: true,
-      TierName: true
+      TierName: true,
+      fixstate: true
     },
     partsDnt: {
       SetItemID: true

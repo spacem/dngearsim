@@ -15,6 +15,7 @@ export interface ItemSource {
     petLevelDnt?: string;
     skillDnt?: string;
     skillLevelDnt?: string;
+    fixstatDnt?: string;
     type?: string;
     weaponDnt?: string;
     setDnt?: string;

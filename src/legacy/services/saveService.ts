@@ -147,10 +147,23 @@ function saveHelper(itemCategory) {
     getSavedItems: function () {
       try {
         var stringifiedData = LZString.decompressFromUTF16(localStorage.getItem('savedItems'));
-        var savedItems = JSON.parse(stringifiedData);
-        return savedItems;
-      }
-      catch (ex) {
+        if(stringifiedData) {
+          var savedItems = JSON.parse(stringifiedData);
+          const heroTitleStats = localStorage.getItem('dnsim-hero-title-stats');
+          if (heroTitleStats) {
+            try {
+              const heroTitleStatArray = JSON.parse(heroTitleStats);
+              for (const build of Object.values(savedItems)) {
+                (build as any).heroTitleStats = heroTitleStatArray;
+              }
+            } catch (err) {
+              console.error('could not load hero stats', err);
+            }
+          }
+          return savedItems;
+        }
+      } catch (ex) {
+        console.error('could not load builds', ex);
       }
 
       return {};
