@@ -549,6 +549,25 @@ function statHelper(hCodeValues) {
 
       stats.calculatedStats = this.getCalculatedStats(build, stats.allStats);
       return stats;
+    },
+
+    getStatName(build: Build, id) {
+      var retVal = '';
+      if (hCodeValues.stats[id].element == 'primary') {
+        var eleId = 0;
+        if (build.element) {
+          eleId = build.element.id;
+        }
+        retVal += hCodeValues.elements[eleId].name;
+      }
+      else if (hCodeValues.stats[id].element == 'secondary') {
+        var eleId = 0;
+        if (build.secondaryElement) {
+          eleId = build.secondaryElement.id;
+        }
+        retVal += hCodeValues.elements[eleId].name;
+      }
+      return retVal + ' ' + hCodeValues.stats[id].name;
     }
   };
 }

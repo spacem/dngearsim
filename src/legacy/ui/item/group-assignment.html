@@ -27,8 +27,8 @@
       </div>
       
       <span ng-if="editCtrl.getAddAffectAmount(statId) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
-        <b ng-if="editCtrl.getAddAffectAmount(statId) > 0">{{'increase' | translate}}</b>
-        <b ng-if="editCtrl.getAddAffectAmount(statId) < 0">{{'decreases' | translate}}</b>
+        <b class="increases-stat" ng-if="editCtrl.getAddAffectAmount(statId) > 0">{{'increase' | translate}}</b>
+        <b class="decreases-stat" ng-if="editCtrl.getAddAffectAmount(statId) < 0">{{'decreases' | translate}}</b>
         {{editCtrl.getStatName(statId)}} {{editCtrl.getAddAffectAmount(statId)}}%
         <!-- ({{ editCtrl.getOldAffectAmount(statId) + '->' + editCtrl.getNewAffectAmount(statId) }}) -->
         <br />
@@ -51,8 +51,8 @@
     </div>
     <div class="col-xs-12 col-md-6 assign-item-stat" style="padding-top:8px">
       <div ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) != 0" ng-repeat="statId in editCtrl.summaryStatIds track by statId">
-        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">{{'increase' | translate}}</b>
-        <b ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">{{'decrease' | translate}}</b>
+        <b class="increases-stat" ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) > 0">{{'increase' | translate}}</b>
+        <b class="decreases-stat" ng-if="editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem) < 0">{{'decrease' | translate}}</b>
         {{editCtrl.getStatName(statId)}} {{editCtrl.getReplaceAffectAmount(statId, listIndex, groupItem)}}%
       </div>
       <button class="btn btn-default" ng-dblclick="editCtrl.replace(groupItem)" ng-click="editCtrl.replace(groupItem)">{{'replace' | translate}}</button>

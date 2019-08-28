@@ -1,7 +1,7 @@
 angular.module('dnsim').controller('BuildTalismansCtrl',
 
-['$window','$location','$routeParams','$timeout','saveHelper','statHelper','jobs','hCodeValues','itemColumnsToLoad','character',
-function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCodeValues,itemColumnsToLoad,character) {
+['$window','$location','$timeout','saveHelper','statHelper','hCodeValues',
+function($window,$location,$timeout,saveHelper,statHelper,hCodeValues) {
   'use strict';
   
   var vm = this;
@@ -234,22 +234,7 @@ function($window,$location,$routeParams,$timeout,saveHelper,statHelper,jobs,hCod
   };
   
   this.getStatName = function(id) {
-    var retVal = '';
-    if(hCodeValues.stats[id].element == 'primary') {
-      var eleId = 0;
-      if(vm.savedItems[vm.groupName].element) {
-        eleId = vm.savedItems[vm.groupName].element.id;
-      }
-      retVal += hCodeValues.elements[eleId].name;
-    }
-    else if(hCodeValues.stats[id].element == 'secondary') {
-      var eleId = 0;
-      if(vm.savedItems[vm.groupName].secondaryElement) {
-        eleId = vm.savedItems[vm.groupName].secondaryElement.id;
-      }
-      retVal += hCodeValues.elements[eleId].name;
-    }
-    return retVal + ' ' + hCodeValues.stats[id].name;
+    return statHelper.getStatName(vm.savedItems[vm.groupName], id);
   };
   
   this.getStat = function(id, stats) {

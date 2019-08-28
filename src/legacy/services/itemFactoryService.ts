@@ -149,7 +149,7 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
 
       if (item.stats == null) {
         const itemType = items[item.itemSource];
-        if (itemType.skillDnt && d.SkillID && d.SkillLevel) {
+        if (itemType && itemType.skillDnt && d.SkillID && d.SkillLevel) {
           const skills = dntData.find(itemType.skillDnt, 'id', d.SkillID);
           if (skills.length) {
             const levelData = dntData.find(itemType.skillLevelDnt, 'SkillIndex', d.SkillID);
@@ -167,7 +167,7 @@ function itemFactory(translations, dntData, hCodeValues, items, statHelper) {
           item.stats = stats;
         }
 
-        if (itemType.fixstatDnt && d.fixstate) {
+        if (itemType && itemType.fixstatDnt && d.fixstate) {
           const heroStats = dntData.find(itemType.fixstatDnt, 'id', d.fixstate);
           if (heroStats.length) {
             item.heroStats = hCodeValues.getStats(heroStats[0]);

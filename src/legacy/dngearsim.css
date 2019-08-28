@@ -680,3 +680,11 @@ button.selected-button > span.glyphicon-ok {
 button.selected-button > span.glyphicon-trash {
   color: red;
 }
+
+.increases-stat {
+  color: green;
+}
+
+.decreases-stat {
+  color: cadetblue;
+}
