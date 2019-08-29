@@ -44,7 +44,15 @@
 <div class="row" infinite-scroll="$ctrl.showMoreResults()">
     <div class="col-xs-12 search-item" ng-repeat="result in $ctrl.displayTitles track by $index">
         <div class="row dnsim-card">
-            <dngearsim-build-item item="result"></dngearsim-build-item>
+            <div style="float:clear">
+                <dnsim-item-link item="result"></dnsim-item-link>
+            </div>
+            <div style="float:left;width: 140px">
+                <span dnsim-stats stats="result.heroStats" filter="'dps'" separator="'<br />'" />
+            </div>
+            <div style="float:left">
+                <span dnsim-stats stats="result.heroStats" filter="'def'" separator="'<br />'" />
+            </div>
             <div style="float: right">
                 <div ng-repeat="stat in $ctrl.useStats" ng-if="result.affectAmounts[stat.id] > 0">
                     {{stat.name }}: +{{ result.affectAmounts[stat.id] }}%

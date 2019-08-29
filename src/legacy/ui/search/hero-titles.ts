@@ -40,7 +40,6 @@ function skillSearchCtrl(dntData, saveHelper, statHelper, itemCategory, itemFact
     const allTitles = itemCategory.getItems('titles');
     for (const t of allTitles) {
       itemFactory.initItem(t);
-      t.stats = t.heroStats;
     }
 
     this.useStats = Object.values(StatLookup).filter(s =>
@@ -161,7 +160,7 @@ function skillSearchCtrl(dntData, saveHelper, statHelper, itemCategory, itemFact
     for (const id of this.selected) {
       const title = this.titles.find(t => t.id === id);
       if (title) {
-        allStats.push(...title.stats);
+        allStats.push(...title.heroStats);
       }
     }
 
