@@ -36,6 +36,12 @@ class StatCalc {
     stat.max += Math.floor(stat.max * this.getSkillPc(stat));
   }
 
+  applyPcPlusCombined(stat, cStat) {
+    const pc = this.getPc(stat) + cStat.max;
+    stat.max += Math.floor(stat.max * pc);
+    stat.max += Math.floor(stat.max * this.getSkillPc(stat));
+  }
+
   dupeStat(id) {
     const stat = this.statLookup[id];
     if (stat) {
@@ -147,24 +153,27 @@ function statHelper(hCodeValues) {
         eleResist = group.eleResist / 100.0;
       }
 
+      // base stat %
+      const basePc = calc.dupeStat(87);
+
       // base stats
       const str = calc.dupeStat(0);
-      calc.applyPc(str);
+      calc.applyPcPlusCombined(str, basePc);
       const skStr = calc.dupeStat(4000);
       str.max += skStr.max;
 
       const agi = calc.dupeStat(1);
-      calc.applyPc(agi);
+      calc.applyPcPlusCombined(agi, basePc);
       const skAgi = calc.dupeStat(4001);
       agi.max += skAgi.max;
 
       const int = calc.dupeStat(2);
-      calc.applyPc(int);
+      calc.applyPcPlusCombined(int, basePc);
       const skInt = calc.dupeStat(4002);
       int.max += skInt.max;
 
       const vit = calc.dupeStat(3);
-      calc.applyPc(vit);
+      calc.applyPcPlusCombined(vit, basePc);
       const skVit = calc.dupeStat(4003);
       vit.max += skVit.max;
 

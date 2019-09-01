@@ -87,7 +87,8 @@ export const StatLookup: ValueStatDefs = {
     79: { id: 79, name: 'fd%', display: toPercent, dps: true },
     81: { id: 81, name: 'safe move%', display: toPercent, noCustom: true, def: true },
 
-    // this is found on ladder costumes and gives all types of element
+    // these are found on ladder costumes and gives all types of element, all types of base stat, etc
+    87: { id: 87, name: 'int/str/agi/vit%', display: toPercent, noCustom: true, def: false, dps: true },
     88: { id: 88, name: 'all element%', display: toPercent, noCustom: true, def: false, dps: true },
 
     // these are both min and max
