@@ -1,13 +1,12 @@
-(function () {
-'use strict';
+require('angulartics');
 
-// templates are imported via gulp job
-// angular.module('dnsim', ['ngAnimate','ngRoute','angulartics','angulartics.google.analytics','templates', 'ngAria', 'infinite-scroll', 'pascalprecht.translate']);
 angular.module('dnsim', [
     require('angular-animate'),
     require('angular-route'),
     require('ng-infinite-scroll'),
-    require('angular-translate')
+    require('angular-translate'),
+    'angulartics',
+    require('angulartics-google-analytics')
 ]);
 
 angular.module('dnsim').config(['$compileProvider', allowAutoBindings]);
@@ -43,5 +42,3 @@ function dnSimTranslationLoader(translations, $q) {
         });
     };
 }
-
-})();
