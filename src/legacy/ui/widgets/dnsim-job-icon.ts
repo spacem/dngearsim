@@ -20,12 +20,12 @@ function dnsimJobIcon() {
 function dnsimJobIconController() {
   
   if(this.small) {
-    this.sizeValue = '205px 205px';
+    this.sizeValue = '205px 410px';
     this.iconSize = 22;
     this.iconOffset = 0;
   }
   else {
-    this.sizeValue = '410px 410px';
+    this.sizeValue = '410px 820px';
     this.iconSize = 44;
     this.iconOffset = 5;
   }
