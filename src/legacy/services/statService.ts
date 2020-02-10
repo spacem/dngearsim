@@ -335,7 +335,7 @@ function statHelper(hCodeValues) {
 
       var fdSkill = calc.dupeStat(10389);
       var newFdPc = calc.dupeStat(1030);
-      newFdPc.max += fdSkill.max + Math.min(1, (fd.max / maxFd));
+      newFdPc.max += fdSkill.max + Math.min(1.2, (fd.max / maxFd));
       calc.addStat(newFdPc);
 
       // TODO: how is this calculated
