@@ -27,13 +27,13 @@
   </li>
 </ul>
 <div class="container-fluid sim-error" ng-if="simError">
-  if you lost your builds export them from the old site: <a href="https://dngearsim.netlify.com">https://dngearsim.netlify.com</a>
+  {{simError}}
 </div>
 <div class="container-fluid sim-error" ng-if="isDotCom()">
   sorry, site is moving. export your build asap and import to the new site: <a href="https://dngearsim.netlify.app">https://dngearsim.netlify.app</a>
 </div>
 <div class="container-fluid sim-error" ng-if="isDotApp()">
-  
+  if you lost your builds export them from the old site: <a href="https://dngearsim.netlify.com">https://dngearsim.netlify.com</a>
 </div>
 <div class="container-fluid sim-error" ng-if="isHttpOnly()">
   <div class="container">
