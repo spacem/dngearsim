@@ -10,7 +10,7 @@ angular.module('dnsim').directive('dngearsimEverythingSearch', function() {
     },
     controller: ['$window', '$timeout', '$routeParams', '$location', 'hCodeValues', 'translations', 'dntData', everythingSearchCtrl],
     controllerAs: 'items',
-    template: require('./everything-search.html')
+    template: require('!raw-loader!./everything-search.html').default
   };
 });
 

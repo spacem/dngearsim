@@ -119,6 +119,6 @@ function($timeout,saveHelper,quickAdd,itemCategory,jobs,dntData,exportLinkHelper
     },
     controller: 'quickAddCtrl',
     controllerAs: 'quickAdd',
-    template: require('./quick-add.html')
+    template: require('!raw-loader!./quick-add.html').default
   };
 });

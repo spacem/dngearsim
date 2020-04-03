@@ -56,6 +56,6 @@ function($location,saveHelper,exportLinkHelper) {
     },
     controller: 'buildActionsCtrl',
     controllerAs: 'buildActions',
-    template: require('./build-actions.html')
+    template: require('!raw-loader!./build-actions.html').default
   };
 });

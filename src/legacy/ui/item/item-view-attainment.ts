@@ -63,6 +63,6 @@ angular.module('dnsim').controller('itemViewAttainmentCtrl',
     },
     controller: 'itemViewAttainmentCtrl',
     controllerAs: 'ctrl',
-    template: require('./item-view-attainment.html')
+    template: require('!raw-loader!./item-view-attainment.html').default
   };
 });

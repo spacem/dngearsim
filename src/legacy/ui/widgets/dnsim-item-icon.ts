@@ -9,7 +9,7 @@ function dnsimItemIcon() {
     scope: {
       item: '=item',
     },
-    template: require('./dnsim-item-icon.html'),
+    template: require('!raw-loader!./dnsim-item-icon.html').default,
     link: function($scope, element, attrs) {
       
       $scope.$watch('item', function(newValue, oldValue) {

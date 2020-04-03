@@ -8,7 +8,7 @@ angular.module('dnsim').directive('dngearsimCustomItems', function() {
     },
     controller: ['$location','hCodeValues', customItemCtrl],
     controllerAs: 'customItems',
-    template: require('./custom-items.html')
+    template: require('!raw-loader!./custom-items.html').default
   };
 });
 

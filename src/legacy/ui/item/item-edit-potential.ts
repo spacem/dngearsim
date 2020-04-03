@@ -9,20 +9,24 @@ angular.module('dnsim').controller('itemEditPotentialCtrl',
 
       var vm = this;
 
-      this.potentials = null;
-      this.potential = null;
-      this.changingPotentials = false;
-      this.potentialStats = {};
-      this.searchStats = [{ name: ''}, ...Object.values(hCodeValues.stats).filter((s: StatDef) => s.searchable)];
+      this.$onInit = () => {
+        this.potentials = null;
+        this.potential = null;
+        this.changingPotentials = false;
+        this.potentialStats = {};
+        this.searchStats = [{ name: ''}, ...Object.values(hCodeValues.stats).filter((s: StatDef) => s.searchable)];
 
-      if (this.item == null) return;
+        if (this.item == null) return;
 
-      if ('itemSource' in this.item) {
-        this.itemType = items[this.item.itemSource];
-      }
+        if ('itemSource' in this.item) {
+          this.itemType = items[this.item.itemSource];
+        }
 
-      if (!this.itemType || !this.item.pid || !('potentialDnt' in this.itemType)) {
-        return;
+        if (!this.itemType || !this.item.pid || !('potentialDnt' in this.itemType)) {
+          return;
+        }
+
+        this.init();
       }
 
       this.init = async function() {
@@ -180,9 +184,6 @@ angular.module('dnsim').controller('itemEditPotentialCtrl',
 
         return retVal;
       }
-
-      this.init();
-
     }])
   .directive('dngearsimItemEditPotential', function () {
     return {
@@ -194,6 +195,6 @@ angular.module('dnsim').controller('itemEditPotentialCtrl',
       },
       controller: 'itemEditPotentialCtrl',
       controllerAs: 'editCtrl',
-      template: require('./item-edit-potential.html')
+      template: require('!raw-loader!./item-edit-potential.html').default
     };
   });

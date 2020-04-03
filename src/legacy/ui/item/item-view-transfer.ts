@@ -65,6 +65,6 @@ angular.module('dnsim').controller('itemViewTransferCtrl',
     },
     controller: 'itemViewTransferCtrl',
     controllerAs: 'ctrl',
-    template: require('./item-view-transfer.html')
+    template: require('!raw-loader!./item-view-transfer.html').default
   };
 });

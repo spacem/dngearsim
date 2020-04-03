@@ -170,6 +170,6 @@ angular.module('dnsim').controller('itemViewBoxCtrl',
     },
     controller: 'itemViewBoxCtrl',
     controllerAs: 'ctrl',
-    template: require('./item-view-box.html')
+    template: require('!raw-loader!./item-view-box.html').default
   };
 });

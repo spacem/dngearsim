@@ -45,6 +45,6 @@ function(hCodeValues) {
     },
     controller: 'buildItemCtrl',
     controllerAs: 'ctrl',
-    template: require('./build-item.html')
+    template: require('!raw-loader!./build-item.html').default
   };
 });

@@ -6,7 +6,7 @@ angular.module('dnsim').component('dngearsimHeroTitles', {
   bindToController: {
   },
   controller: ['dntData', 'saveHelper', 'statHelper', 'itemCategory', 'itemFactory', 'translations', 'hCodeValues', skillSearchCtrl],
-  template: require('./hero-titles.html')
+  template: require('!raw-loader!./hero-titles.html').default
 });
 
 function skillSearchCtrl(dntData, saveHelper, statHelper, itemCategory, itemFactory, translations, hCodeValues) {

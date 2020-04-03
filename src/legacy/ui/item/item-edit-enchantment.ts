@@ -6,23 +6,39 @@ angular.module('dnsim').controller('itemEditEnchantmentCtrl',
 
       const vm = this;
 
-      if (!vm.item || !vm.item.enchantmentId) {
-        // console.log('no item to ehnance', vm.item);
-        return;
-      }
+      this.$onInit = () => {
+        if (!vm.item || !vm.item.enchantmentId) {
+          // console.log('no item to ehnance', vm.item);
+          return;
+        }
 
-      if ('itemSource' in this.item) {
-        vm.itemType = items[vm.item.itemSource];
-      }
+        if ('itemSource' in this.item) {
+          vm.itemType = items[vm.item.itemSource];
+        }
 
-      if (!vm.itemType) {
-        console.log('no item type to ehnance');
-        return;
-      }
-      if (!('enchantDnt' in vm.itemType) && !('petLevelDnt' in vm.itemType)) {
-        console.log('no dnt for ehnance');
-        return;
-      }
+        if (!vm.itemType) {
+          console.log('no item type to ehnance');
+          return;
+        }
+        if (!('enchantDnt' in vm.itemType) && !('petLevelDnt' in vm.itemType)) {
+          console.log('no dnt for ehnance');
+          return;
+        }
+        init();
+  
+        vm.enchantments = null;
+        vm.enchantment = null;
+        vm.enchantmentAfter = null;
+        vm.enchantmentCost = '';
+        vm.enhancementOptions = [];
+        if (vm.item.enchantmentStats == null) {
+          vm.item.enchantmentStats = [];
+        }
+
+        if (dntData.isLoaded(fileName)) {
+          this.showMaterials();
+        }
+      };
 
       async function init() {
         if (vm.itemType.enchantDnt) {
@@ -38,16 +54,6 @@ angular.module('dnsim').controller('itemEditEnchantmentCtrl',
         }
         vm.setupEnchantments();
         $timeout();
-      }
-      init();
-
-      vm.enchantments = null;
-      vm.enchantment = null;
-      vm.enchantmentAfter = null;
-      vm.enchantmentCost = '';
-      vm.enhancementOptions = [];
-      if (vm.item.enchantmentStats == null) {
-        vm.item.enchantmentStats = [];
       }
 
       this.setEnchantment = function () {
@@ -215,10 +221,6 @@ angular.module('dnsim').controller('itemEditEnchantmentCtrl',
         });
       }
 
-      if (dntData.isLoaded(fileName)) {
-        this.showMaterials();
-      }
-
       function reportProgress(msg) {
         // console.log('progress: ' + msg);
       }
@@ -232,6 +234,6 @@ angular.module('dnsim').controller('itemEditEnchantmentCtrl',
       },
       controller: 'itemEditEnchantmentCtrl',
       controllerAs: 'editCtrl',
-      template: require('./item-edit-enchantment.html')
+      template: require('!raw-loader!./item-edit-enchantment.html').default
     };
   });

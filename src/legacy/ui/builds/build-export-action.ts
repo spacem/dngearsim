@@ -22,6 +22,6 @@ angular.module('dnsim').controller('buildExportActionCtrl',
     },
     controller: 'buildExportActionCtrl',
     controllerAs: 'ctrl',
-    template: require('./build-export-action.html')
+    template: require('!raw-loader!./build-export-action.html').default
   };
 });

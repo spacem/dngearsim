@@ -13,40 +13,55 @@ angular.module('dnsim').directive('dngearsimGroupAssignment', function() {
     },
     controller: ['hCodeValues','statHelper','saveHelper','itemCategory','$scope','exportLinkHelper','dntData', groupAssignment],
     controllerAs: 'editCtrl',
-    template: require('./group-assignment.html')
+    template: require('!raw-loader!./group-assignment.html').default
   };
 });
 
 function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,exportLinkHelper,dntData) {
   
   var vm = this;
-  
-  this.savedItems = saveHelper.getSavedItems();
-  this.groupNames = Object.keys(this.savedItems);
-  if(!this.groupName) {
-    this.groupName = saveHelper.getCurrentBuild();
-  }
 
-  if(!(this.groupName in this.savedItems)) {
-    this.groupName = null;
-  }
-
-  if(!this.groupName && this.savedItems) {
-    for(var savedGroup in this.savedItems) {
-      this.groupName = savedGroup;
-      break;
+  this.$onInit = () => {
+    this.savedItems = saveHelper.getSavedItems();
+    this.groupNames = Object.keys(this.savedItems);
+    if(!this.groupName) {
+      this.groupName = saveHelper.getCurrentBuild();
     }
-  }
 
-  if(!this.groupName) {
-    return;
-  }
-  
-  this.summaryStatIds = [];
-  for(var id in hCodeValues.stats) {
-    if(hCodeValues.stats[id].summaryDisplay) {
-      this.summaryStatIds.push(id);
+    if(!(this.groupName in this.savedItems)) {
+      this.groupName = null;
     }
+
+    if(!this.groupName && this.savedItems) {
+      for(var savedGroup in this.savedItems) {
+        this.groupName = savedGroup;
+        break;
+      }
+    }
+
+    if(!this.groupName) {
+      return;
+    }
+    
+    this.summaryStatIds = [];
+    for(var id in hCodeValues.stats) {
+      if(hCodeValues.stats[id].summaryDisplay) {
+        this.summaryStatIds.push(id);
+      }
+    }
+
+    var dntFiles = exportLinkHelper.getDntFiles(vm.item);
+    angular.forEach(dntFiles, function(columns, fileName) {
+      if(vm.item.fileName && fileName.indexOf(vm.item.fileName) == 0 && dntData.isLoaded(vm.item.fileName + '.optimised.json')) {
+        delete dntFiles[fileName];
+      }
+      else {
+        dntData.init(fileName, columns, function() {}, function() {
+          vm.tryToSetItem(dntFiles);
+        });
+      }
+    });
+    vm.tryToSetItem(dntFiles);
   }
     
   this.clearGroup = function() {
@@ -74,19 +89,6 @@ function groupAssignment(hCodeValues,statHelper,saveHelper,itemCategory,$scope,e
       }
     }
   }
-
-  var dntFiles = exportLinkHelper.getDntFiles(vm.item);
-  angular.forEach(dntFiles, function(columns, fileName) {
-    if(vm.item.fileName && fileName.indexOf(vm.item.fileName) == 0 && dntData.isLoaded(vm.item.fileName + '.optimised.json')) {
-      delete dntFiles[fileName];
-    }
-    else {
-      dntData.init(fileName, columns, function() {}, function() {
-        vm.tryToSetItem(dntFiles);
-      });
-    }
-  });
-  vm.tryToSetItem(dntFiles);
 
   $scope.$watch('editCtrl.item', function() {
     vm.clearGroup();

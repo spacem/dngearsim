@@ -8,120 +8,120 @@ function config($routeProvider) {
   $routeProvider.
   
     when('/about', {
-      template: require('./about/about.html'),
+      template: require('!raw-loader!./about/about.html').default,
       controller: 'AboutCtrl as about'
     }).
 
     when('/desktop-setup', {
-      template: require('./desktop/desktop-setup.html'),
+      template: require('!raw-loader!./desktop/desktop-setup.html').default,
       controller: 'DesktopSetupCtrl as ctrl'
     }).
     
     when('/setup', {
-      template: require('./nav/setup.html'),
+      template: require('!raw-loader!./nav/setup.html').default,
       controller: 'SetupCtrl'
     }).
     // when('/test', {
-    //   template: require('./nav/test.html'),
+    //   template: require('!raw-loader!./nav/test.html').default,
     //   controller: 'TestCtrl'
     // }).
     
     when('/items', {
-      template: require('./search/everything-search.html'),
+      template: require('!raw-loader!./search/everything-search.html').default,
       controller: 'ItemsCtrl as items',
       reloadOnSearch: false,
     }).
     
     when('/', {
-      template: require('./welcome.html'),
+      template: require('!raw-loader!./welcome.html').default,
     }).
     when('/builds', {
-      template: require('./builds/build-list.html'),
+      template: require('!raw-loader!./builds/build-list.html').default,
       controller: 'BuildListCtrl as buildList'
     }).
     when('/build', {
-      template: require('./builds/build-list.html'),
+      template: require('!raw-loader!./builds/build-list.html').default,
       controller: 'BuildListCtrl as buildList'
     }).
     when('/view-group', {
-      template: require('./builds/view-group.html'),
+      template: require('!raw-loader!./builds/view-group.html').default,
       controller: 'ViewGroupCtrl'
     }).
     when('/edit-build', {
-      template: require('./builds/edit-build.html'),
+      template: require('!raw-loader!./builds/edit-build.html').default,
       controller: 'EditBuildCtrl as editGroup',
       // reloadOnSearch: false,
     }).
     when('/new-build', {
-      template: require('./builds/edit-build.html'),
+      template: require('!raw-loader!./builds/edit-build.html').default,
       controller: 'EditBuildCtrl as editGroup',
       // reloadOnSearch: false,
     }).
     when('/delete-build', {
-      template: require('./builds/delete-build.html'),
+      template: require('!raw-loader!./builds/delete-build.html').default,
       controller: 'DeleteBuildCtrl as deleteBuild',
       // reloadOnSearch: false,
     }).
     when('/reload-build', {
-      template: require('./builds/reload-build.html'),
+      template: require('!raw-loader!./builds/reload-build.html').default,
       controller: 'ReloadBuildCtrl as ctrl',
       // reloadOnSearch: false,
     }).
     
     when('/search', {
-      template: require('./search/search.html'),
+      template: require('!raw-loader!./search/search.html').default,
       controller: 'ItemSearchCtrl as ctrl',
       reloadOnSearch: false,
     }).
     
     when('/item', {
-      template: require('./item/item.html'),
+      template: require('!raw-loader!./item/item.html').default,
       controller: 'ItemCtrl',
       // reloadOnSearch: false,
     }).
     when('/item', {
-      template: require('./item/item.html'),
+      template: require('!raw-loader!./item/item.html').default,
       controller: 'ItemCtrl',
       // reloadOnSearch: false,
     }).
     
     when('/export', {
-      template: require('./nav/export.html'),
+      template: require('!raw-loader!./nav/export.html').default,
       controller: 'ExportCtrl',
     }).
     
     when('/talismans', {
-      template: require('./builds/build-talismans.html'),
+      template: require('!raw-loader!./builds/build-talismans.html').default,
       controller: 'BuildTalismansCtrl as ctrl',
     }).
     
     when('/publish', {
-      template: require('./online/publish.html'),
+      template: require('!raw-loader!./online/publish.html').default,
       controller: 'PublishCtrl as ctrl',
     }).
     
     when('/profile', {
-      template: require('./online/profile.html'),
+      template: require('!raw-loader!./online/profile.html').default,
       controller: 'ProfileCtrl as ctrl',
     }).
     
     when('/published', {
-      template: require('./online/published.html'),
+      template: require('!raw-loader!./online/published.html').default,
       controller: 'PublishedCtrl as ctrl',
     }).
     
     when('/import', {
-      template: require('./builds/build-import.html'),
+      template: require('!raw-loader!./builds/build-import.html').default,
       controller: 'BuildImportCtrl as ctrl',
     }).
     
     when('/published', {
-      template: require('./online/published.html'),
+      template: require('!raw-loader!./online/published.html').default,
       controller: 'PublishedCtrl as ctrl',
     }).
     
     when('/build-search', {
-      template: require('./online/build-search.html'),
+      template: require('!raw-loader!./online/build-search.html').default,
       controller: 'BuildSearchCtrl as ctrl',
     }).
     

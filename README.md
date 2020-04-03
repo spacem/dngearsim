@@ -1,10 +1,10 @@
 # dngearsim - Dragon Nest Gear Simulator
 
 In case you came here looking to use the sim here is a link:
-https://dngearsim.netlify.com/
+https://dngearsim.netlify.app/
 
 Also check out my dnt viewer that is hosted here:
-https://dntviewer.netlify.com/
+https://dntviewer.netlify.app/
 
 In the rest of this readme I will discuss the architecture of dngearsim.
 If you want to help with development please feel free to contact me via discord.

@@ -12,7 +12,7 @@ angular.module('dnsim').directive('dngearsimBuildItemList', function() {
     },
     controller: ['hCodeValues', 'itemCategory', 'saveHelper', buildItemListController],
     controllerAs: 'buildCtrl',
-    template: require('./build-item-list.html')
+    template: require('!raw-loader!./build-item-list.html').default
   };
 });
 

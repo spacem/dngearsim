@@ -25,6 +25,6 @@ function() {
     },
     controller: 'itemEditCtrl',
     controllerAs: 'ctrl',
-    template: require('./item-edit.html')
+    template: require('!raw-loader!./item-edit.html').default
   };
 });

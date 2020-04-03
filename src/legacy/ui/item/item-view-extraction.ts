@@ -105,6 +105,6 @@ angular.module('dnsim').controller('itemViewExtractionCtrl',
     },
     controller: 'itemViewExtractionCtrl',
     controllerAs: 'ctrl',
-    template: require('./item-view-extraction.html')
+    template: require('!raw-loader!./item-view-extraction.html').default
   };
 });

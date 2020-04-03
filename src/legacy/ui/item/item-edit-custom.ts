@@ -80,6 +80,6 @@ function(hCodeValues,$scope) {
     },
     controller: 'itemEditCustomCtrl',
     controllerAs: 'editCtrl',
-    template: require('./item-edit-custom.html')
+    template: require('!raw-loader!./item-edit-custom.html').default
   };
 });
