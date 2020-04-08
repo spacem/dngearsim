@@ -51,6 +51,6 @@ function(statHelper,itemCategory) {
     },
     controller: 'buildSummaryCtrl',
     controllerAs: 'buildCtrl',
-    template: require('./build-summary.html')
+    template: require('!raw-loader!./build-summary.html').default
   };
 });

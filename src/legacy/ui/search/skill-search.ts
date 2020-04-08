@@ -9,7 +9,7 @@ angular.module('dnsim').directive('dngearsimSkillSearch', function () {
     },
     controller: ['$timeout', 'region', 'jobs', 'translations', 'dntData', 'hCodeValues', 'itemCategory', '$location', 'exportLinkHelper', skillSearchCtrl],
     controllerAs: 'skillSearch',
-    template: require('./skill-search.html')
+    template: require('!raw-loader!./skill-search.html').default
   };
 });
 

@@ -13,7 +13,7 @@ function dnsimCategoryLinks() {
       buildScreen: '=buildScreen',
       onChange: '&onChange'
     },
-    template: require('./dnsim-category-links.html'),
+    template: require('!raw-loader!./dnsim-category-links.html').default,
     controller: ['itemCategory', '$window', 'translations', '$translate', dnsimCategoryLinksController],
     controllerAs: 'ctrl',
   };
@@ -22,7 +22,6 @@ function dnsimCategoryLinks() {
 function dnsimCategoryLinksController(itemCategory, $window, translations, $translate) {
 
   var vm = this;
-
   vm.categories = itemCategory.categories;
   vm.collapsed = true;
 

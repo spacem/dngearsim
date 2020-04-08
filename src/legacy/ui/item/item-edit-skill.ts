@@ -64,6 +64,6 @@ function($timeout,dntData) {
     },
     controller: 'itemEditSkillCtrl',
     controllerAs: 'editCtrl',
-    template: require('./item-edit-skill.html')
+    template: require('!raw-loader!./item-edit-skill.html').default
   };
 });

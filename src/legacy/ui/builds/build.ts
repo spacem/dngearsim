@@ -9,7 +9,7 @@ angular.module('dnsim').directive('dngearsimBuild', function() {
     },
     controller: ['$timeout', 'statHelper', 'itemCategory', 'saveHelper', bulidController],
     controllerAs: 'buildCtrl',
-    template: require('./build.html')
+    template: require('!raw-loader!./build.html').default
   };
 });
 

@@ -39,6 +39,6 @@ angular.module('dnsim').controller('itemEditTalismanCtrl',
     },
     controller: 'itemEditTalismanCtrl',
     controllerAs: 'editCtrl',
-    template: require('./item-edit-talisman.html')
+    template: require('!raw-loader!./item-edit-talisman.html').default
   };
 });

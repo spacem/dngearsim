@@ -11,7 +11,7 @@ function dnsimLoading(dntData, translations, $timeout, region) {
     scope: {
       alsoShowFor: '=alsoShowFor',
     },
-    template: require('./dnsim-loading.html'),
+    template: require('!raw-loader!./dnsim-loading.html').default,
     link: function($scope, element, attrs) {
       $scope.$on('TRANSLATION_LOAD_EVENT', function() {
         $scope.setLoadCount();

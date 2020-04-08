@@ -193,6 +193,6 @@ angular.module('dnsim').controller('itemViewShopCtrl',
     },
     controller: 'itemViewShopCtrl',
     controllerAs: 'ctrl',
-    template: require('./item-view-shop.html')
+    template: require('!raw-loader!./item-view-shop.html').default
   };
 });

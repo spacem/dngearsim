@@ -15,7 +15,7 @@ angular.module('dnsim').controller('HeaderCtrl',
   }
 ]).directive('dngearsimHeader', function() {
   return {
-    template: require('./header.html'),
+    template: require('!raw-loader!./header.html').default,
     controller: 'HeaderCtrl',
     controllerAs: 'ctrl',
   };

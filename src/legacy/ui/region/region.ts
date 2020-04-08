@@ -91,7 +91,7 @@ angular.module('dnsim').controller('RegionCtrl',
 ])
 .directive('dngearsimRegion', function() {
   return {
-    template: require('./region.html'),
+    template: require('!raw-loader!./region.html').default,
     controllerAs: 'ctrl',
   };
 });
