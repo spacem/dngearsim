@@ -48,15 +48,7 @@ angular.module('dnsim').controller('NavCtrl',
       $scope.isHttpOnly = function() {
         return location.protocol != 'https:' && location.hostname != 'localhost';
       }
-      
-      $scope.isDotCom = function() {
-        return location.hostname.indexOf('.netlify.com') !== -1;
-      }
 
-      $scope.isDotApp = function() {
-        return location.hostname.indexOf('.netlify.app') !== -1;
-      }
-        
       $scope.getActions = function() {
         try {
           var menu = null;
