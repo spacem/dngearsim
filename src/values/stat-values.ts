@@ -146,6 +146,7 @@ export const StatLookup: ValueStatDefs = {
     4062: { id: 4062, name: 'skCrit%', display: toPercent, dps: true },
     4075: { id: 4075, name: 'skHp%', display: toPercent, def: true },
     4076: { id: 4076, name: 'skMp%', display: toPercent, def: true },
+    4103: { id: 4103, name: 'skCdmg', display: inThousands, dps: true },
     // 4079: { id: 4079, name: 'skFd?%', display: toPercent, dps: true },
 
     // special cases for skills

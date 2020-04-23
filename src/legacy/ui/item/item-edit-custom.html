@@ -152,7 +152,18 @@
       <input ng-model="editCtrl.statMap[59]" type="number" dnsim-string-to-percent class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
     </div>
 
-
+    <div class="col-xs-3">
+      <label>skill def</label>
+      <input ng-model="editCtrl.statMap[4008]" type="number" dnsim-string-to-number class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
+    </div>
+    <div class="col-xs-3">&nbsp;
+    </div>
+    <div class="col-xs-3">
+      <label>skill mdef</label>
+      <input ng-model="editCtrl.statMap[4009]" type="number" dnsim-string-to-number class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
+    </div>
+  </div>
+  <div class="row" ng-switch-when="def">
     <div class="col-xs-3">
       <label>hp</label>
       <input ng-model="editCtrl.statMap[25]" type="number" dnsim-string-to-number class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
@@ -165,7 +176,6 @@
       <label>skill hp%</label>
       <input ng-model="editCtrl.statMap[4075]" type="number" dnsim-string-to-percent class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
     </div>
-
   </div>
 
   <div class="row" ng-switch-when="special">
@@ -194,7 +204,12 @@
       <label>crit dmg%</label>
       <input ng-model="editCtrl.statMap[104]" type="number" dnsim-string-to-percent class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
     </div>
-
+    <div class="col-xs-3">
+      <label>skill cdmg</label>
+      <input ng-model="editCtrl.statMap[4103]" type="number" dnsim-string-to-number class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
+    </div>
+  </div>
+  <div class="row" ng-switch-when="special">
     <div class="col-xs-3">
       <label>fd</label>
       <input ng-model="editCtrl.statMap[29]" type="number" dnsim-string-to-number class="form-control" step="any" ng-model-options="{ debounce: 300 }" />
