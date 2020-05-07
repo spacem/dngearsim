@@ -284,12 +284,12 @@ function statHelper(hCodeValues) {
       crit.max += (agi.max * Number(group.conversions.Critical));
       calc.applyPc(crit);
 
-      const skCrit = calc.dupeStat(4012);
-      crit.max += skCrit.max;
       const skCritPc = calc.dupeStat(4062);
       if (skCritPc.max) {
         crit.max += Math.floor(crit.max * skCritPc.max);
       }
+      const skCrit = calc.dupeStat(4012);
+      crit.max += skCrit.max;
       calc.addStat(crit);
       var itemCrit = calc.dupeStat(1012);
 
@@ -321,6 +321,8 @@ function statHelper(hCodeValues) {
       cDmg.max += ((agi.max) * agiToCdmg);
       cDmg.max += ((int.max) * intToCdmg);
       calc.applyPc(cDmg);
+      var skCDmg = calc.dupeStat(4103);
+      cDmg.max += skCDmg.max;
       calc.addStat(cDmg);
 
       var itemCtriDmg = calc.dupeStat(1103);
