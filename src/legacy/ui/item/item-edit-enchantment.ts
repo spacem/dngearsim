@@ -98,7 +98,10 @@ angular.module('dnsim').controller('itemEditEnchantmentCtrl',
 
         if (vm.enchantments && vm.enchantments.length > 0) {
 
-          if (typeof vm.item.enchantmentNum != 'number') {
+          if (vm.enchantments.length === 1) {
+            vm.item.enchantmentNum = getEnchantLevel(0);
+            vm.onChange();
+          } else if (typeof vm.item.enchantmentNum != 'number') {
             vm.item.enchantmentNum = 6;
             vm.onChange();
           }
