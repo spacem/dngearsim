@@ -52,7 +52,7 @@ function editBuildCtrl($window,$location,$routeParams,$timeout,saveHelper,jobs,h
 
     if(vm.job && vm.job.d) {
       var jobName = vm.job.d.EnglishName;
-      if(jobName == 'CRUSADES' || jobName == 'INQUISITOR' || jobName == 'GUARDIAN' || jobName == 'SAINT' || jobName == 'SILVERHUNTER' || jobName == 'STINGBREEZER') {
+      if(jobName == 'CRUSADES' || jobName == 'INQUISITOR' || jobName == 'GUARDIAN' || jobName == 'SAINT' || jobName == 'SILVERHUNTER' || jobName == 'STINGBREEZER' || jobName == 'DUELIST' || jobName == 'TRICKSTER') {
         defaultElement = hCodeValues.elements[3];
         defaultSecondaryElement = hCodeValues.elements[3];
       }

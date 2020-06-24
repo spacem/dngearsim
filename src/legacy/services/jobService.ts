@@ -130,8 +130,11 @@ function jobs(dntData, translations, itemColumnsToLoad) {
         if (alljobs) {
           const numRows = alljobs.length;
           for (let r = 0; r < numRows; ++r) {
-            if (Number(alljobs[r].id) === (job.d.BaseClass + 1) && alljobs[r].d.EnglishName) {
-              return alljobs[r].d.EnglishName;
+            const j = alljobs[r].d;
+            if (Number(j.BaseClass) === Number(job.d.BaseClass) &&
+              Number(j.JobNumber) === 0 &&
+              j.EnglishName) {
+              return j.EnglishName;
             }
           }
         }
