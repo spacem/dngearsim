@@ -5,10 +5,10 @@ body {
 }
 
 .dngearsim-background-image {
-  background: url(//dnskillsim.herokuapp.com/background/background.png);
+  background-color: black;
   background-size: cover;
   background-position: center;
-  opacity: 0.5;
+  opacity: 0.8;
   top: -100px;
   left: 0px;
   right: 0px;
