@@ -14,8 +14,8 @@ Here is my discord server: https://discord.gg/011C92KwJWoCfRcEY
 I wanted an app that is usable on mobile but I didn’t want hosting costs.
 My idea was to use static html/javascript pages which could be hosted on free hosting (ie. github pages).
 
-## Development enviroment
-* Install node.js, gitand an editor (eg. visual studio code)
+## Development environment
+* Install node.js, git and an editor (eg. visual studio code)
 * Open node.js command prompt
 * git clone https://github.com/spacem/dngearsim.git
 * cd dngearsim
@@ -31,7 +31,7 @@ My idea was to use static html/javascript pages which could be hosted on free ho
 I don’t use a database - as such.
 Your data when you use the sim is simply compressed and stored in the browser local storage.
 The data from the game is read directly from optimised versions of the games data files.
-These are mostly the same files that are used by dntviewer however to speed up the sim a little I have a script that preprocesses some of them and saves them with the extension .optimised.json.
+These are mostly the same files that are used by dntviewer however to speed up the sim a little I have a script that pre-processes some of them and saves them with the extension .optimised.json.
 
 ## Code Structure
 The ui folder contains subfolders for each screen and a folder called widgets which has controls shared between the screens.
