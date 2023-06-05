@@ -7,7 +7,7 @@ function region(translations, dntReset, dntData, $route, $location) {
   const alternativeFiles: Region = { region: 'ALT', name: 'Alternative user specified files', url: '' };
   let hostedFiles: Region[] = [
     { region: 'sea', name: 'south east asia', url: 'https://seadnfiles.netlify.app/public' },
-    { region: 'na', name: 'north america', url: 'https://nadnfiles.netlify.app/public' },
+    { region: 'na', name: 'north america', url: 'https://newnafiles.netlify.app/public' },
     // { region: 'eu', name: 'europe', url: 'https://eudnfiles.netlify.com/public' },
     { region: 'th', name: 'thailand', url: 'https://thdnfiles.netlify.app/public' },
     // {region: 'vn', name: 'vietnam ', url : 'https://vndnfiles.firebaseapp.com'},
@@ -15,6 +15,7 @@ function region(translations, dntReset, dntData, $route, $location) {
     {region: 'jdn', name: 'japan 日本', url : 'https://jdnfiles.netlify.app/public'},
     { region: 'cdn', name: 'china 中國', url: 'https://cdnfiles.netlify.app/public' },
     { region: 'kdn', name: 'korea 대한민국', url: 'https://kdnfiles.netlify.app/public' },
+    { region: 'duck', name: 'project duck', url: 'https://duckdnfiles.netlify.app/public' },
     // { region: 'br', name: 'Brazil', url: 'https://dnbr.netlify.com/public' },
   ];
 
