@@ -1,9 +1,9 @@
 (function () {
 'use strict';
   
-angular.module('dnsim').directive('dnsimItemIcon', [dnsimItemIcon]);
+angular.module('dnsim').directive('dnsimItemIcon', ['region', dnsimItemIcon]);
 
-function dnsimItemIcon() {
+function dnsimItemIcon(region) {
   return {
     restrict: 'E',
     scope: {
@@ -40,7 +40,11 @@ function dnsimItemIcon() {
         return null;
       }
       
-      $scope.iconImage = $scope.getIcon();
+      if (region.dntLocation.ownImages) {
+        $scope.iconImage = region.dntLocation.url + '/' + $scope.getIcon();
+      } else {
+        $scope.iconImage = 'assets/images/icons/' +  $scope.getIcon();
+      }
       
       $scope.getIconXPostion = function() {
         if($scope.item && $scope.item.icon > 0) {
