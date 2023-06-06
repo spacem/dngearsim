@@ -4,6 +4,10 @@
 angular.module('dnsim').directive('dnsimItemIcon', ['region', dnsimItemIcon]);
 
 function dnsimItemIcon(region) {
+
+  const getIconPrefix = () =>
+    region?.dntLocation?.ownImages ? region.dntLocation.url + '/' : 'assets/images/icons/';
+
   return {
     restrict: 'E',
     scope: {
@@ -14,7 +18,7 @@ function dnsimItemIcon(region) {
       
       $scope.$watch('item', function(newValue, oldValue) {
         if (newValue) {
-          $scope.iconImage = $scope.getIcon();
+          $scope.iconImage = getIconPrefix() + $scope.getIcon();
         }
       });
       
@@ -40,11 +44,7 @@ function dnsimItemIcon(region) {
         return null;
       }
       
-      if (region.dntLocation.ownImages) {
-        $scope.iconImage = region.dntLocation.url + '/' + $scope.getIcon();
-      } else {
-        $scope.iconImage = 'assets/images/icons/' +  $scope.getIcon();
-      }
+      $scope.iconImage = getIconPrefix() + $scope.getIcon();
       
       $scope.getIconXPostion = function() {
         if($scope.item && $scope.item.icon > 0) {
