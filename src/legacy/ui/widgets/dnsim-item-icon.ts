@@ -13,7 +13,7 @@ function dnsimItemIcon(region) {
     template: require('!raw-loader!./dnsim-item-icon.html').default,
     link: function($scope, element, attrs) {
       const getIconPrefix = (dntLocation) =>
-        dntLocation?.ownImages ? dntLocation.url + '/public/' : 'assets/images/icons/';
+        dntLocation?.ownImages ? dntLocation.url + '/' : 'assets/images/icons/';
       
       $scope.$watch('item', function(newValue, oldValue) {
         if (newValue) {
