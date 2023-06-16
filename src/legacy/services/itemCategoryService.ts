@@ -16,7 +16,7 @@ function itemCategory(itemFactory, items, dntData) {
       { path: 'offensive-gems', name: 'offensive gems', sourceType: 'gems', hideJob: true, limitExchange: [54], limitGemTypes: [1], tId: 'attack dragon jade' },
       { path: 'increasing-gems', name: 'increasing gems', sourceType: 'gems', hideJob: true, limitExchange: [54, 55], limitGemTypes: [2, 3], tId: 1000118219 },
       { path: 'enhancement-plates', name: 'enhancement plates', sourceType: 'plates', hideJob: true, maxExchange: 15, limitExchange: [33], limitRank: [0, 1, 2, 3, 5], tId: 8039 },
-      { path: 'expedition-plates', name: 'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, maxExchange: 15, limitExchange: [33], limitRank: [4, 5], tId: 1000054497 },
+      { path: 'expedition-plates', name: 'expedition plates', sourceType: 'plates', hideRank: true, hideJob: true, maxExchange: 15, limitExchange: [33], limitRank: [4, 5, 6], tId: 1000054497 },
       { path: 'talisman', name: 'talisman', sourceType: 'talisman', hideJob: true, numItemText: '8+4', maxCat: 12, maxExchange: 12, limitExchange: [52, 53], tId: 1000054149 },
       { path: 'costume', name: 'costume', sourceType: 'cash', numItemText: '7', maxCat: 7, maxExchange: 1, hideLevel: true, limitExchange: [16, 17, 18, 19, 20, 21, 22], tId: 7607 },
       { path: 'imprint', name: 'imprint', sourceType: 'imprint', numItemText: '10', maxCat: 10, hideLevel: true, hideJob: true, tId: 1000108314 },
