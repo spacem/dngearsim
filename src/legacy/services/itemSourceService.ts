@@ -2,6 +2,7 @@ import { ItemSource } from 'src/models/item-source';
 import { Item } from 'src/models/item';
 import { DntFiles } from 'src/values/dnt-files';
 import * as angular from 'angular';
+const dntProcessItemTypes = require('./dntProcessItemTypes');
 
 class ItemSourceImpl implements ItemSource {
   items: Item[];
@@ -355,6 +356,34 @@ function items(translations, dntData, itemColumnsToLoad) {
     skillDnt: 'skilltable_farm.json',
     skillLevelDnt: 'skillleveltable_farm.json'
   });
+
+  console.log('adding extra types', dntProcessItemTypes);
+  for (const dntProcessItemType of dntProcessItemTypes) {
+    const { mainDnt } = dntProcessItemType;
+    const exists = Object.values(itemSources).find(s => s.mainDnt.indexOf(mainDnt) > -1);
+    if (!exists) {
+      const fixed: any = Object.keys(dntProcessItemType).reduce((obj: any, key: string) => {
+        if (key.indexOf('Dnt') > 0) {
+          return {
+            ...obj,
+            [key]: `${dntProcessItemType[key]}.json`
+          }
+        } else {
+          return obj;
+        }
+      }, {});
+
+      const combined = {
+        ...dntProcessItemType,
+        ...fixed
+      }
+      console.log('fixed and became', combined);
+
+      itemSources[mainDnt] = new ItemSourceImpl(mainDnt, dntData, translations, itemColumnsToLoad);
+      Object.assign(itemSources[mainDnt], combined);
+    }
+  }
+  
 
   return itemSources;
 }
