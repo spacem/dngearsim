@@ -69,3 +69,5 @@ Data files for each region are uploaded to separate firebase hosting sites each 
 This allows regions to be updated separately from the sim or from each other.
 Potentially they could go anywhere - even to the same location as dngearsim just as long as RegionService.js has the correct url to the locations.
 There are a set of scripts in a separate dntpreprocess project that create the optimised files as well as a few extra files.
+
+# test
