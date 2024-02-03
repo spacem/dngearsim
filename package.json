@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
     "@angular/upgrade": "^9.1.0",
-    "angular": "^1.6.10",
+    "angular": "^1.8.3",
     "angular-animate": "^1.7.5",
     "angular-route": "^1.7.5",
     "angulartics": "^1.6.0",
